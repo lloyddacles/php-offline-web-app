@@ -20,13 +20,13 @@ if ($currentDir && preg_match('#/(\d+)-#', $requestUri, $m)) {
 
 // All sections for sidebar
 $sections = [
-    ['id' => 'logic', 'title' => 'Programming Logic', 'dir' => 'programming-logic', 'prefix' => '/logic', 'icon' => '&#9881;'],
-    ['id' => 'php',   'title' => 'PHP',               'dir' => 'lessons',             'prefix' => '/lesson', 'icon' => '&#60;?'],
-    ['id' => 'python','title' => 'Python',             'dir' => 'python-lessons',      'prefix' => '/python', 'icon' => '&#9651;'],
-    ['id' => 'java',  'title' => 'Java',               'dir' => 'java-lessons',        'prefix' => '/java',   'icon' => '&#9752;'],
-    ['id' => 'dsa',   'title' => 'DSA',                'dir' => 'dsa-lessons',         'prefix' => '/dsa',    'icon' => '&#9830;'],
-    ['id' => 'dbms',  'title' => 'DBMS Theory',        'dir' => 'dbms-lessons',        'prefix' => '/dbms',   'icon' => '&#9901;'],
-    ['id' => 'mysql', 'title' => 'MySQL',              'dir' => 'mysql-lessons',       'prefix' => '/mysql',  'icon' => '&#128451;'],
+    ['id' => 'logic', 'title' => 'Programming Logic', 'dir' => 'programming-logic', 'prefix' => '/logic'],
+    ['id' => 'php',   'title' => 'PHP',               'dir' => 'lessons',             'prefix' => '/lesson'],
+    ['id' => 'python','title' => 'Python',             'dir' => 'python-lessons',      'prefix' => '/python'],
+    ['id' => 'java',  'title' => 'Java',               'dir' => 'java-lessons',        'prefix' => '/java'],
+    ['id' => 'dsa',   'title' => 'DSA',                'dir' => 'dsa-lessons',         'prefix' => '/dsa'],
+    ['id' => 'dbms',  'title' => 'DBMS Theory',        'dir' => 'dbms-lessons',        'prefix' => '/dbms'],
+    ['id' => 'mysql', 'title' => 'MySQL',              'dir' => 'mysql-lessons',       'prefix' => '/mysql'],
 ];
 ?>
 <!DOCTYPE html>

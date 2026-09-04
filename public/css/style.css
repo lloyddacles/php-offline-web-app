@@ -187,6 +187,10 @@ body {
     scrollbar-color: var(--border-light) transparent;
 }
 
+.sidebar.collapsed {
+    transform: translateX(-100%);
+}
+
 .sidebar::-webkit-scrollbar {
     width: 5px;
 }
@@ -968,7 +972,7 @@ tr:hover td {
     border-left-color: var(--accent);
 }
 
-.toc-list .toc-h3 {
+.toc-list a.toc-h3 {
     padding-left: 22px;
 }
 
@@ -1075,16 +1079,6 @@ tr:hover td {
 }
 
 /* === Utility === */
-.hidden { display: none !important; }
-.visible { visibility: visible !important; }
-
-/* Smooth scrollbar for sidebar */
-.sidebar {
-    scrollbar-width: thin;
-    scrollbar-color: var(--border-light) transparent;
-}
-
-/* Selection */
 ::selection {
     background: rgba(137, 180, 250, 0.3);
     color: var(--text-bright);

@@ -6,19 +6,17 @@
 document.addEventListener('DOMContentLoaded', function () {
 
     // === Sidebar Toggle ===
-    const sidebar = document.getElementById('sidebar');
-    const sidebarToggle = document.getElementById('sidebarToggle');
-    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    var sidebar = document.getElementById('sidebar');
+    var sidebarToggle = document.getElementById('sidebarToggle');
+    var sidebarOverlay = document.getElementById('sidebarOverlay');
 
     if (sidebarToggle && sidebar) {
         sidebarToggle.addEventListener('click', function () {
-            const isMobile = window.innerWidth <= 900;
-            if (isMobile) {
+            if (window.innerWidth <= 900) {
                 sidebar.classList.toggle('open');
                 sidebarOverlay.classList.toggle('visible');
             } else {
                 sidebar.classList.toggle('collapsed');
-                document.body.classList.toggle('sidebar-collapsed');
             }
         });
 
@@ -41,28 +39,27 @@ document.addEventListener('DOMContentLoaded', function () {
     // === Sidebar Section Collapse ===
     document.querySelectorAll('.sidebar-section-header').forEach(function (header) {
         header.addEventListener('click', function () {
-            const section = header.closest('.sidebar-section');
+            var section = header.closest('.sidebar-section');
             if (section) section.classList.toggle('collapsed');
         });
     });
 
     // === Auto-generate Table of Contents ===
-    const toc = document.getElementById('toc');
-    const contentWrapper = document.querySelector('.content-wrapper');
+    var toc = document.getElementById('toc');
+    var contentWrapper = document.querySelector('.content-wrapper');
 
     if (toc && contentWrapper) {
-        const headings = contentWrapper.querySelectorAll('h2, h3');
+        var headings = contentWrapper.querySelectorAll('h2, h3');
         if (headings.length > 0) {
-            const tocList = document.createElement('ul');
+            var tocList = document.createElement('ul');
             tocList.className = 'toc-list';
 
-            const tocTitle = document.createElement('div');
+            var tocTitle = document.createElement('div');
             tocTitle.className = 'toc-title';
             tocTitle.textContent = 'On this page';
             toc.appendChild(tocTitle);
 
             headings.forEach(function (heading, i) {
-                // Add id to heading if missing
                 if (!heading.id) {
                     heading.id = 'heading-' + heading.textContent
                         .toLowerCase()
@@ -70,8 +67,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         .replace(/^-|-$/g, '') + '-' + i;
                 }
 
-                const li = document.createElement('li');
-                const a = document.createElement('a');
+                var li = document.createElement('li');
+                var a = document.createElement('a');
                 a.href = '#' + heading.id;
                 a.textContent = heading.textContent;
 
@@ -86,14 +83,13 @@ document.addEventListener('DOMContentLoaded', function () {
             toc.appendChild(tocList);
 
             // Active TOC highlight on scroll
-            const tocLinks = tocList.querySelectorAll('a');
-            let scrollTimer;
+            var tocLinks = tocList.querySelectorAll('a');
+            var ticking = false;
 
             function updateTocActive() {
-                let currentId = '';
+                var currentId = '';
                 headings.forEach(function (h) {
-                    const rect = h.getBoundingClientRect();
-                    if (rect.top <= 120) {
+                    if (h.getBoundingClientRect().top <= 120) {
                         currentId = h.id;
                     }
                 });
@@ -105,11 +101,14 @@ document.addEventListener('DOMContentLoaded', function () {
                         link.classList.remove('active');
                     }
                 });
+                ticking = false;
             }
 
             window.addEventListener('scroll', function () {
-                clearTimeout(scrollTimer);
-                scrollTimer = setTimeout(updateTocActive, 50);
+                if (!ticking) {
+                    window.requestAnimationFrame(updateTocActive);
+                    ticking = true;
+                }
             });
 
             updateTocActive();
@@ -117,8 +116,59 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // === Syntax Highlighting ===
+
+    // Keywords and constants (cached at module scope)
+    var phpKeywords = [
+        'abstract', 'and', 'array', 'as', 'break', 'callable', 'case', 'catch',
+        'class', 'clone', 'const', 'continue', 'declare', 'default', 'die', 'do',
+        'echo', 'else', 'elseif', 'empty', 'enddeclare', 'endfor', 'endforeach',
+        'endif', 'endswitch', 'endwhile', 'eval', 'exit', 'extends', 'final',
+        'finally', 'fn', 'for', 'foreach', 'function', 'global', 'goto',
+        'if', 'implements', 'include', 'include_once', 'instanceof', 'insteadof',
+        'interface', 'isset', 'list', 'match', 'namespace', 'new', 'or', 'print',
+        'private', 'protected', 'public', 'readonly', 'require', 'require_once',
+        'return', 'static', 'switch', 'throw', 'trait', 'try', 'unset', 'use',
+        'var', 'while', 'xor', 'yield', 'yield_from', 'enum'
+    ];
+    var phpConstants = ['true', 'false', 'null', 'TRUE', 'FALSE', 'NULL', '__LINE__', '__FILE__', '__DIR__', '__FUNCTION__', '__CLASS__', '__TRAIT__', '__METHOD__', '__NAMESPACE__'];
+    var pyKeywords = [
+        'False', 'None', 'True', 'and', 'as', 'assert', 'async', 'await',
+        'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except',
+        'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is',
+        'lambda', 'nonlocal', 'not', 'or', 'pass', 'raise', 'return',
+        'try', 'while', 'with', 'yield'
+    ];
+    var pyBuiltins = [
+        'print', 'len', 'range', 'int', 'float', 'str', 'list', 'dict',
+        'set', 'tuple', 'input', 'open', 'type', 'isinstance', 'enumerate',
+        'zip', 'map', 'filter', 'sorted', 'sum', 'min', 'max', 'abs',
+        'round', 'format', 'super', 'property', 'staticmethod', 'classmethod'
+    ];
+    var javaKeywords = [
+        'abstract', 'assert', 'boolean', 'break', 'byte', 'case', 'catch',
+        'char', 'class', 'const', 'continue', 'default', 'do', 'double',
+        'else', 'enum', 'extends', 'final', 'finally', 'float', 'for',
+        'goto', 'if', 'implements', 'import', 'instanceof', 'int',
+        'interface', 'long', 'native', 'new', 'package', 'private',
+        'protected', 'public', 'return', 'short', 'static', 'strictfp',
+        'super', 'switch', 'synchronized', 'this', 'throw', 'throws',
+        'transient', 'try', 'void', 'volatile', 'while', 'var', 'record',
+        'sealed', 'permits', 'yield'
+    ];
+    var javaTypes = ['String', 'System', 'Scanner', 'Math', 'Integer', 'Double', 'Boolean', 'ArrayList', 'HashMap', 'Object'];
+
+    // Cached regexes
+    var rePhpKw = new RegExp('\\b(' + phpKeywords.join('|') + ')\\b', 'g');
+    var rePhpConst = new RegExp('\\b(' + phpConstants.join('|') + ')\\b', 'g');
+    var rePyKw = new RegExp('\\b(' + pyKeywords.join('|') + ')\\b', 'g');
+    var rePyBuiltins = new RegExp('\\b(' + pyBuiltins.join('|') + ')\\b', 'g');
+    var reJavaKw = new RegExp('\\b(' + javaKeywords.join('|') + ')\\b', 'g');
+    var reJavaTypes = new RegExp('\\b(' + javaTypes.join('|') + ')\\b', 'g');
+    var reNumber = /\b(\d+\.?\d*)\b/g;
+    var reNumberJava = /\b(\d+\.?\d*[fFlL]?)\b/g;
+
     function highlightPHP(code) {
-        let escaped = code
+        var escaped = code
             .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;');
@@ -130,33 +180,15 @@ document.addEventListener('DOMContentLoaded', function () {
         escaped = escaped.replace(/('(?:[^'\\]|\\.)*')/g, '<span class="code-string">$1</span>');
         escaped = escaped.replace(/(&lt;\?php|\?&gt;)/g, '<span class="code-php-tag">$1</span>');
         escaped = escaped.replace(/(\$[a-zA-Z_]\w*)/g, '<span class="code-variable">$1</span>');
-
-        const keywords = [
-            'abstract', 'and', 'array', 'as', 'break', 'callable', 'case', 'catch',
-            'class', 'clone', 'const', 'continue', 'declare', 'default', 'die', 'do',
-            'echo', 'else', 'elseif', 'empty', 'enddeclare', 'endfor', 'endforeach',
-            'endif', 'endswitch', 'endwhile', 'eval', 'exit', 'extends', 'final',
-            'finally', 'fn', 'for', 'foreach', 'function', 'global', 'goto',
-            'if', 'implements', 'include', 'include_once', 'instanceof', 'insteadof',
-            'interface', 'isset', 'list', 'match', 'namespace', 'new', 'or', 'print',
-            'private', 'protected', 'public', 'readonly', 'require', 'require_once',
-            'return', 'static', 'switch', 'throw', 'trait', 'try', 'unset', 'use',
-            'var', 'while', 'xor', 'yield', 'yield_from', 'enum'
-        ];
-        const kwRegex = new RegExp('\\b(' + keywords.join('|') + ')\\b', 'g');
-        escaped = escaped.replace(kwRegex, '<span class="code-keyword">$1</span>');
-
-        const constants = ['true', 'false', 'null', 'TRUE', 'FALSE', 'NULL', '__LINE__', '__FILE__', '__DIR__', '__FUNCTION__', '__CLASS__', '__TRAIT__', '__METHOD__', '__NAMESPACE__'];
-        const constRegex = new RegExp('\\b(' + constants.join('|') + ')\\b', 'g');
-        escaped = escaped.replace(constRegex, '<span class="code-constant">$1</span>');
-
-        escaped = escaped.replace(/\b(\d+\.?\d*)\b/g, '<span class="code-number">$1</span>');
+        escaped = escaped.replace(rePhpKw, '<span class="code-keyword">$1</span>');
+        escaped = escaped.replace(rePhpConst, '<span class="code-constant">$1</span>');
+        escaped = escaped.replace(reNumber, '<span class="code-number">$1</span>');
 
         return escaped;
     }
 
     function highlightPython(code) {
-        let escaped = code
+        var escaped = code
             .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;');
@@ -165,33 +197,15 @@ document.addEventListener('DOMContentLoaded', function () {
         escaped = escaped.replace(/(#[^\n]*)/g, '<span class="code-comment">$1</span>');
         escaped = escaped.replace(/(f?"(?:[^"\\]|\\.)*"|f?'(?:[^'\\]|\\.)*')/g, '<span class="code-string">$1</span>');
         escaped = escaped.replace(/(@\w+)/g, '<span class="code-keyword">$1</span>');
-
-        const keywords = [
-            'False', 'None', 'True', 'and', 'as', 'assert', 'async', 'await',
-            'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except',
-            'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is',
-            'lambda', 'nonlocal', 'not', 'or', 'pass', 'raise', 'return',
-            'try', 'while', 'with', 'yield'
-        ];
-        const kwRegex = new RegExp('\\b(' + keywords.join('|') + ')\\b', 'g');
-        escaped = escaped.replace(kwRegex, '<span class="code-keyword">$1</span>');
-
-        const builtins = [
-            'print', 'len', 'range', 'int', 'float', 'str', 'list', 'dict',
-            'set', 'tuple', 'input', 'open', 'type', 'isinstance', 'enumerate',
-            'zip', 'map', 'filter', 'sorted', 'sum', 'min', 'max', 'abs',
-            'round', 'format', 'super', 'property', 'staticmethod', 'classmethod'
-        ];
-        const biRegex = new RegExp('\\b(' + builtins.join('|') + ')\\b', 'g');
-        escaped = escaped.replace(biRegex, '<span class="code-constant">$1</span>');
-
-        escaped = escaped.replace(/\b(\d+\.?\d*)\b/g, '<span class="code-number">$1</span>');
+        escaped = escaped.replace(rePyKw, '<span class="code-keyword">$1</span>');
+        escaped = escaped.replace(rePyBuiltins, '<span class="code-constant">$1</span>');
+        escaped = escaped.replace(reNumber, '<span class="code-number">$1</span>');
 
         return escaped;
     }
 
     function highlightJava(code) {
-        let escaped = code
+        var escaped = code
             .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;');
@@ -201,35 +215,18 @@ document.addEventListener('DOMContentLoaded', function () {
         escaped = escaped.replace(/("(?:[^"\\]|\\.)*")/g, '<span class="code-string">$1</span>');
         escaped = escaped.replace(/('(?:[^'\\]|\\.)*')/g, '<span class="code-string">$1</span>');
         escaped = escaped.replace(/(@\w+)/g, '<span class="code-keyword">$1</span>');
-
-        const keywords = [
-            'abstract', 'assert', 'boolean', 'break', 'byte', 'case', 'catch',
-            'char', 'class', 'const', 'continue', 'default', 'do', 'double',
-            'else', 'enum', 'extends', 'final', 'finally', 'float', 'for',
-            'goto', 'if', 'implements', 'import', 'instanceof', 'int',
-            'interface', 'long', 'native', 'new', 'package', 'private',
-            'protected', 'public', 'return', 'short', 'static', 'strictfp',
-            'super', 'switch', 'synchronized', 'this', 'throw', 'throws',
-            'transient', 'try', 'void', 'volatile', 'while', 'var', 'record',
-            'sealed', 'permits', 'yield'
-        ];
-        const kwRegex = new RegExp('\\b(' + keywords.join('|') + ')\\b', 'g');
-        escaped = escaped.replace(kwRegex, '<span class="code-keyword">$1</span>');
-
-        const types = ['String', 'System', 'Scanner', 'Math', 'Integer', 'Double', 'Boolean', 'ArrayList', 'HashMap', 'Object'];
-        const typeRegex = new RegExp('\\b(' + types.join('|') + ')\\b', 'g');
-        escaped = escaped.replace(typeRegex, '<span class="code-constant">$1</span>');
-
+        escaped = escaped.replace(reJavaKw, '<span class="code-keyword">$1</span>');
+        escaped = escaped.replace(reJavaTypes, '<span class="code-constant">$1</span>');
         escaped = escaped.replace(/\b(true|false|null)\b/g, '<span class="code-constant">$1</span>');
-        escaped = escaped.replace(/\b(\d+\.?\d*[fFlL]?)\b/g, '<span class="code-number">$1</span>');
+        escaped = escaped.replace(reNumberJava, '<span class="code-number">$1</span>');
 
         return escaped;
     }
 
     // Apply highlighting to all <pre><code> blocks
     document.querySelectorAll('pre code').forEach(function (block) {
-        const raw = block.textContent;
-        const lang = block.getAttribute('data-lang') || 'php';
+        var raw = block.textContent;
+        var lang = block.getAttribute('data-lang') || 'php';
         if (lang === 'python') {
             block.innerHTML = highlightPython(raw);
         } else if (lang === 'java') {
@@ -240,24 +237,25 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // === Sandbox Code Execution ===
+    var sandboxEndpoints = {
+        'php': '/sandbox/execute.php',
+        'python': '/sandbox/execute-python.php',
+        'java': '/sandbox/execute-java.php'
+    };
+
     document.querySelectorAll('.sandbox').forEach(function (sandbox) {
-        const textarea = sandbox.querySelector('textarea');
-        const runBtn = sandbox.querySelector('.run-btn');
-        const resultDiv = sandbox.querySelector('.sandbox-result');
-        const outputContent = resultDiv ? resultDiv.querySelector('.output-content') : null;
+        var textarea = sandbox.querySelector('textarea');
+        var runBtn = sandbox.querySelector('.run-btn');
+        var resultDiv = sandbox.querySelector('.sandbox-result');
+        var outputContent = resultDiv ? resultDiv.querySelector('.output-content') : null;
 
         if (!textarea || !runBtn || !resultDiv) return;
 
-        const lang = textarea.getAttribute('data-lang') || 'php';
-        const sandboxEndpoints = {
-            'php': '/sandbox/execute.php',
-            'python': '/sandbox/execute-python.php',
-            'java': '/sandbox/execute-java.php'
-        };
-        const endpoint = sandboxEndpoints[lang] || sandboxEndpoints['php'];
+        var lang = textarea.getAttribute('data-lang') || 'php';
+        var endpoint = sandboxEndpoints[lang] || sandboxEndpoints['php'];
 
         // Pre-fill with example code if provided (base64-encoded)
-        const exampleCode = textarea.getAttribute('data-example');
+        var exampleCode = textarea.getAttribute('data-example');
         if (exampleCode) {
             try {
                 textarea.value = atob(exampleCode);
@@ -267,7 +265,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         runBtn.addEventListener('click', function () {
-            const code = textarea.value.trim();
+            var code = textarea.value.trim();
             if (!code) {
                 resultDiv.classList.add('visible');
                 outputContent.className = 'output-content output-error';
