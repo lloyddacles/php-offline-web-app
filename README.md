@@ -1,122 +1,127 @@
-# LD TechLab Programming Tutorials
+# LD TechLab - Offline Programming Tutorial Web App
 
-An interactive, offline programming tutorial for beginners. Learn PHP, Python, Java, MySQL, DBMS theory, programming logic, and Data Structures & Algorithms through 84 hands-on lessons with live code examples.
+A self-contained, offline programming tutorial website with **84 interactive lessons** across 7 programming topics. Learn by doing — every lesson includes live code sandboxes that execute directly in your browser.
 
-Created by **Mr. Lloyd Christopher F. Dacles, MIS**
+**Created by Mr. Lloyd Christopher F. Dacles, MIS**
 
-## Requirements
+---
 
-- **PHP 7.4** or higher (auto-installed by setup script if missing)
-- A modern web browser (Chrome, Firefox, Edge, Safari)
-- No internet connection needed (after setup)
+## What Is This?
+
+This is a **portable PHP web application** that runs entirely on localhost. Copy it to any computer with PHP installed, run the start script, and you have a full interactive programming tutorial — no internet required.
+
+### Key Features
+
+| Feature | Description |
+|---------|-------------|
+| **84 Interactive Lessons** | PHP, Python, Java, MySQL, DBMS, DSA, Programming Logic |
+| **Live Code Sandboxes** | Edit and run code directly in the browser |
+| **Multi-Language Support** | PHP, Python 3, and Java sandboxes with syntax highlighting |
+| **Fully Offline** | No CDN, no external dependencies — works without internet |
+| **Portable** | Copy the folder to any computer, run one script |
+| **Bundled PHP** | PHP binary included — no pre-installation needed |
+| **Auto Setup** | Setup script downloads PHP if missing, checks all dependencies |
+| **Cross-Platform** | Works on macOS, Linux, and Windows |
+
+---
 
 ## Quick Start
 
-### First Time Setup (installs PHP if missing)
+### 1. Run Setup (first time only)
 ```bash
-./setup.sh        # macOS / Linux
-setup.bat          # Windows (double-click)
+./setup.sh          # macOS / Linux
+# or double-click setup.bat on Windows
 ```
 
-### Start Server
+### 2. Start the Server
 ```bash
-./start-server.sh  # macOS / Linux
-start-server.bat   # Windows (double-click)
+./start-server.sh   # macOS / Linux
+# or double-click start-server.bat on Windows
 ```
 
-Then open **http://localhost:8000** in your browser.
+### 3. Open Your Browser
+Navigate to **http://localhost:8000**
 
-### What the setup does
-- Checks for PHP, Python 3, and Java JDK
-- Downloads and bundles PHP if not found
-- Reports which sandboxes are available
-- Start script auto-opens your browser
+That's it! The server auto-opens your browser.
 
-## Features
+---
 
-- **12 Programming Logic Lessons** — how to think like a programmer, problem-solving, debugging
-- **12 Python Lessons** — interactive Python with live code execution
-- **12 Java Lessons** — interactive Java with live code execution
-- **12 DSA Lessons** — data structures & algorithms with PHP implementations
-- **10 DBMS Theory Lessons** — database design, normalization, ER diagrams, transactions, security
-- **10 MySQL Lessons** — SQL from basics to PHP integration
-- **16 Interactive PHP Lessons** with a live "Try It Yourself" code editor
-- **Syntax Highlighting** — PHP, Python, and Java code examples are color-coded
-- **Fully Offline** — no internet connection required
-- **Portable** — copy the folder to any computer, run setup + start script
-- **Bundled PHP** — PHP binary included, no pre-installation needed
-- **Smart Setup** — auto-downloads dependencies, checks system status
-- **System Status Page** — check which sandboxes are available at `/status`
+## Lesson Library
 
-## Programming Logic Lessons
+### Programming Logic (12 Lessons)
+*Learn how to think like a programmer*
 
-| # | Topic |
-|---|-------|
-| 1 | What is Programming Logic? |
-| 2 | Computational Thinking |
-| 3 | Flowcharts & Pseudocode |
-| 4 | Sequential Thinking |
-| 5 | Conditional Logic |
-| 6 | Loop Thinking |
-| 7 | Functions & Modularity |
-| 8 | Thinking About Data |
-| 9 | Debugging Thinking |
-| 10 | Algorithmic Thinking |
-| 11 | Pattern Recognition & Abstraction |
-| 12 | A Problem-Solving Framework |
+| # | Topic | Sandbox |
+|---|-------|---------|
+| 1 | What is Programming Logic? | Yes |
+| 2 | Computational Thinking | Yes |
+| 3 | Flowcharts & Pseudocode | Yes |
+| 4 | Sequential Thinking | Yes |
+| 5 | Conditional Logic | Yes |
+| 6 | Loop Thinking | Yes |
+| 7 | Functions & Modularity | Yes |
+| 8 | Thinking About Data | Yes |
+| 9 | Debugging Thinking | Yes |
+| 10 | Algorithmic Thinking | Yes |
+| 11 | Pattern Recognition & Abstraction | Yes |
+| 12 | A Problem-Solving Framework | Yes |
 
-## Python Lessons
+### Python (12 Lessons)
+*Interactive Python with live execution*
 
-| # | Topic |
-|---|-------|
-| 1 | Introduction to Python |
-| 2 | Python Syntax Basics |
-| 3 | Variables & Data Types |
-| 4 | Python Operators |
-| 5 | Conditional Statements |
-| 6 | Loop Statements |
-| 7 | Lists & Tuples |
-| 8 | Dictionaries & Sets |
-| 9 | String Mastery |
-| 10 | Functions |
-| 11 | Object-Oriented Programming |
-| 12 | File Handling & Error Handling |
+| # | Topic | Sandbox |
+|---|-------|---------|
+| 1 | Introduction to Python | Yes |
+| 2 | Python Syntax Basics | Yes |
+| 3 | Variables & Data Types | Yes |
+| 4 | Python Operators | Yes |
+| 5 | Conditional Statements | Yes |
+| 6 | Loop Statements | Yes |
+| 7 | Lists & Tuples | Yes |
+| 8 | Dictionaries & Sets | Yes |
+| 9 | String Mastery | Yes |
+| 10 | Functions | Yes |
+| 11 | Object-Oriented Programming | Yes |
+| 12 | File Handling & Error Handling | Yes |
 
-## Java Lessons
+### Java (12 Lessons)
+*Interactive Java with compile-and-run*
 
-| # | Topic |
-|---|-------|
-| 1 | Introduction to Java |
-| 2 | Java Syntax Basics |
-| 3 | Variables & Data Types |
-| 4 | Java Operators |
-| 5 | Conditional Statements |
-| 6 | Loop Statements |
-| 7 | Arrays & Strings |
-| 8 | Methods |
-| 9 | Object-Oriented Programming |
-| 10 | Inheritance & Polymorphism |
-| 11 | Collections & Generics |
-| 12 | File Handling & Exception Handling |
+| # | Topic | Sandbox |
+|---|-------|---------|
+| 1 | Introduction to Java | Yes |
+| 2 | Java Syntax Basics | Yes |
+| 3 | Variables & Data Types | Yes |
+| 4 | Java Operators | Yes |
+| 5 | Conditional Statements | Yes |
+| 6 | Loop Statements | Yes |
+| 7 | Arrays & Strings | Yes |
+| 8 | Methods | Yes |
+| 9 | Object-Oriented Programming | Yes |
+| 10 | Inheritance & Polymorphism | Yes |
+| 11 | Collections & Generics | Yes |
+| 12 | File Handling & Exception Handling | Yes |
 
-## Data Structures & Algorithms Lessons
+### Data Structures & Algorithms (12 Lessons)
+*PHP implementations of classic DSA*
 
-| # | Topic |
-|---|-------|
-| 1 | Introduction to Data Structures & Algorithms |
-| 2 | Big O Notation |
-| 3 | Arrays & Strings |
-| 4 | Linked Lists |
-| 5 | Stacks |
-| 6 | Queues |
-| 7 | Hash Tables |
-| 8 | Binary Trees & BST |
-| 9 | Graphs |
-| 10 | Sorting Algorithms |
-| 11 | Searching Algorithms |
-| 12 | Dynamic Programming |
+| # | Topic | Sandbox |
+|---|-------|---------|
+| 1 | Introduction to DSA | Yes |
+| 2 | Big O Notation | Yes |
+| 3 | Arrays & Strings | Yes |
+| 4 | Linked Lists | Yes |
+| 5 | Stacks | Yes |
+| 6 | Queues | Yes |
+| 7 | Hash Tables | Yes |
+| 8 | Binary Trees & BST | Yes |
+| 9 | Graphs | Yes |
+| 10 | Sorting Algorithms | Yes |
+| 11 | Searching Algorithms | Yes |
+| 12 | Dynamic Programming | Yes |
 
-## DBMS Theory Lessons
+### DBMS Theory (10 Lessons)
+*Database design and management concepts*
 
 | # | Topic |
 |---|-------|
@@ -131,7 +136,8 @@ Then open **http://localhost:8000** in your browser.
 | 9 | Database Security |
 | 10 | Database Design Project |
 
-## MySQL Lessons
+### MySQL (10 Lessons)
+*SQL from basics to PHP integration*
 
 | # | Topic |
 |---|-------|
@@ -146,50 +152,122 @@ Then open **http://localhost:8000** in your browser.
 | 9 | Indexes and Performance |
 | 10 | PHP & MySQL Integration |
 
-## PHP Lessons
+### PHP (16 Lessons)
+*Interactive PHP with live execution*
 
-| # | Topic |
-|---|-------|
-| 1 | Introduction to PHP |
-| 2 | PHP Syntax Basics |
-| 3 | PHP Comments |
-| 4 | PHP Variables |
-| 5 | PHP Data Types |
-| 6 | PHP Strings |
-| 7 | PHP Numbers |
-| 8 | PHP Operators |
-| 9 | PHP Conditionals |
-| 10 | PHP Loops |
-| 11 | PHP Arrays |
-| 12 | PHP Functions |
-| 13 | PHP Superglobals |
-| 14 | PHP Forms |
-| 15 | PHP Sessions & Cookies |
-| 16 | PHP File Handling |
+| # | Topic | Sandbox |
+|---|-------|---------|
+| 1 | Introduction to PHP | Yes |
+| 2 | PHP Syntax Basics | Yes |
+| 3 | PHP Comments | Yes |
+| 4 | PHP Variables | Yes |
+| 5 | PHP Data Types | Yes |
+| 6 | PHP Strings | Yes |
+| 7 | PHP Numbers | Yes |
+| 8 | PHP Operators | Yes |
+| 9 | PHP Conditionals | Yes |
+| 10 | PHP Loops | Yes |
+| 11 | PHP Arrays | Yes |
+| 12 | PHP Functions | Yes |
+| 13 | PHP Superglobals | Yes |
+| 14 | PHP Forms | Yes |
+| 15 | PHP Sessions & Cookies | Yes |
+| 16 | PHP File Handling | Yes |
 
-## Transferring to Another Computer
+---
 
-1. Copy the entire folder to the new computer (or download from GitHub)
-2. Run `./setup.sh` (Mac/Linux) or `setup.bat` (Windows) — installs PHP if missing
-3. Run `./start-server.sh` (Mac/Linux) or `start-server.bat` (Windows)
-4. Open `http://localhost:8000`
+## Project Structure
+
+```
+php-offline-web-app/
+├── bin/                    # Bundled PHP binary
+│   └── php                 # Static PHP 8.5 (macOS ARM64)
+├── public/                 # Web root (DocumentRoot)
+│   ├── index.php           # Homepage
+│   ├── router.php          # Clean URL router
+│   ├── status.php          # System status page
+│   ├── css/style.css       # All styling
+│   └── js/app.js           # Syntax highlighting + sandbox JS
+├── lessons/                # 16 PHP lessons
+├── python-lessons/         # 12 Python lessons
+├── java-lessons/           # 12 Java lessons
+├── dsa-lessons/            # 12 DSA lessons
+├── dbms-lessons/           # 10 DBMS lessons
+├── mysql-lessons/          # 10 MySQL lessons
+├── programming-logic/      # 12 Programming Logic lessons
+├── sandbox/                # Code execution engines
+│   ├── execute.php         # PHP sandbox
+│   ├── execute-python.php  # Python sandbox
+│   ├── execute-java.php    # Java sandbox
+│   └── restricted.ini      # PHP sandbox security config
+├── includes/               # Shared PHP templates
+│   ├── header.php          # Nav + head
+│   ├── footer.php          # Footer
+│   └── functions.php       # Helper functions
+├── setup.sh                # macOS/Linux installer
+├── setup.bat               # Windows installer
+├── start-server.sh         # macOS/Linux launcher
+└── start-server.bat        # Windows launcher
+```
+
+---
 
 ## Sandboxes
 
-Each language sandbox requires its runtime to be installed:
+Each language sandbox runs code server-side with a 5-second timeout:
 
-| Language | Requirement | Install Command |
-|----------|-------------|-----------------|
-| PHP | Bundled (no install needed) | — |
-| Python 3 | `python3` in PATH | `brew install python3` |
-| Java | JDK 17+ | `brew install openjdk@17` |
+| Language | Runtime Required | How It Works |
+|----------|-----------------|--------------|
+| **PHP** | Bundled (included) | Executes via `proc_open` with security restrictions |
+| **Python 3** | System `python3` | Executes via `shell_exec` |
+| **Java** | JDK 17+ | Compiles with `javac`, runs with `java` |
 
-Check status at **http://localhost:8000/status**
+Check which sandboxes are active at **http://localhost:8000/status**
+
+---
+
+## Transferring to Another Computer
+
+### Option 1: Copy the Folder
+1. Copy the entire project folder to a USB drive or shared location
+2. Paste it on the target computer
+3. Run `./setup.sh` (or `setup.bat` on Windows)
+4. Run `./start-server.sh` (or `start-server.bat`)
+5. Open http://localhost:8000
+
+### Option 2: Clone from GitHub
+```bash
+git clone https://github.com/lloyddacles/php-offline-web-app.git
+cd php-offline-web-app
+./setup.sh
+./start-server.sh
+```
+
+### System Requirements
+- **PHP 7.4+** (auto-installed by setup script if missing)
+- **Python 3** (optional — for Python sandboxes)
+- **Java JDK 17+** (optional — for Java sandboxes)
+- A modern web browser
+
+---
 
 ## Troubleshooting
 
-- **"php: command not found"** — Run `./setup.sh` to auto-install PHP
-- **Python sandbox not working** — Install Python: `brew install python3`
-- **Java sandbox not working** — Install JDK: `brew install openjdk@17`
-- **Port 8000 already in use** — change the port in `start-server.sh` / `start-server.bat`
-- **Blank page** — check that PHP is working: `./bin/php -v`
+| Issue | Solution |
+|-------|----------|
+| "php: command not found" | Run `./setup.sh` to auto-install PHP |
+| Python sandbox not working | Install Python: `brew install python3` |
+| Java sandbox not working | Install JDK: `brew install openjdk@17` |
+| Port 8000 already in use | Edit `start-server.sh` and change `PORT=8000` |
+| Blank page | Check PHP: `./bin/php -v` |
+| Page loads but sandbox fails | Visit `/status` to check runtime availability |
+
+---
+
+## License
+
+This project was created by **Mr. Lloyd Christopher F. Dacles, MIS** for educational purposes.
+
+---
+
+*Built with PHP, lots of coffee, and a passion for teaching.*
