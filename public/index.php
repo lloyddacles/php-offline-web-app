@@ -16,9 +16,9 @@ require_once __DIR__ . '/../includes/header.php';
         ['title' => '&#9881; Programming Logic', 'url' => lessonUrl(1, 'what-is-programming-logic', 'programming-logic')],
         ['title' => '&#9651; Python', 'url' => lessonUrl(1, 'introduction', 'python-lessons')],
         ['title' => '&#9752; Java', 'url' => lessonUrl(1, 'introduction', 'java-lessons')],
-        ['title' => '&#9830; DSA', 'url' => lessonUrl(1, 'introduction-to-data-structures-algorithms', 'dsa-lessons')],
-        ['title' => '&#9901; DBMS Theory', 'url' => lessonUrl(1, 'introduction-to-dbms', 'dbms-lessons')],
-        ['title' => '&#128451; MySQL', 'url' => lessonUrl(1, 'introduction-to-mysql', 'mysql-lessons')],
+        ['title' => '&#9830; DSA', 'url' => lessonUrl(1, 'introduction', 'dsa-lessons')],
+        ['title' => '&#9901; DBMS Theory', 'url' => lessonUrl(1, 'introduction', 'dbms-lessons')],
+        ['title' => '&#128451; MySQL', 'url' => lessonUrl(1, 'introduction', 'mysql-lessons')],
         ['title' => '&#60;? PHP', 'url' => lessonUrl(1, 'introduction', 'lessons')],
     ];
     foreach ($quickLinks as $i => $link): ?>
