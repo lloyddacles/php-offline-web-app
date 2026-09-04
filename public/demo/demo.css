@@ -1,0 +1,391 @@
+/* ============================================
+   Student Portal Demo - Styles
+   ============================================ */
+
+/* Demo Layout */
+.demo-layout {
+    display: flex;
+    min-height: 100vh;
+    background: var(--bg-primary);
+}
+
+/* Demo Sidebar */
+.demo-sidebar {
+    width: 260px;
+    background: var(--bg-sidebar);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+}
+
+.demo-sidebar-header {
+    padding: 24px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.demo-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1em;
+    color: var(--bg-primary);
+    flex-shrink: 0;
+}
+
+.demo-sidebar-user {
+    min-width: 0;
+}
+
+.demo-sidebar-name {
+    font-weight: 600;
+    font-size: 0.95em;
+    color: var(--text-bright);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.demo-sidebar-id {
+    font-size: 0.8em;
+    color: var(--text-muted);
+    font-family: 'SF Mono', monospace;
+}
+
+.demo-sidebar-nav {
+    flex: 1;
+    padding: 12px 0;
+    overflow-y: auto;
+}
+
+.demo-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: all 0.15s ease;
+    border-left: 3px solid transparent;
+}
+
+.demo-nav-item:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+.demo-nav-item.active {
+    color: var(--accent);
+    background: var(--accent-dim);
+    border-left-color: var(--accent);
+    font-weight: 500;
+}
+
+.demo-nav-item.logout {
+    color: var(--accent-red);
+    border-left-color: transparent;
+}
+
+.demo-nav-item.logout:hover {
+    background: rgba(243, 139, 168, 0.1);
+    color: var(--accent-red);
+}
+
+.demo-sidebar-footer {
+    border-top: 1px solid var(--border);
+    padding: 8px 0;
+}
+
+/* Demo Content */
+.demo-content {
+    flex: 1;
+    margin-left: 260px;
+    padding: 32px 40px;
+    max-width: 1100px;
+}
+
+.demo-page-header {
+    margin-bottom: 32px;
+}
+
+.demo-page-header h1 {
+    font-size: 1.8em;
+    margin-bottom: 4px;
+}
+
+.demo-page-header p {
+    color: var(--text-secondary);
+    font-size: 0.95em;
+}
+
+/* Stat Cards */
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.stat-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    transition: border-color 0.15s ease;
+}
+
+.stat-card:hover {
+    border-color: var(--border-light);
+}
+
+.stat-card .stat-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    margin-bottom: 12px;
+}
+
+.stat-card .stat-value {
+    font-size: 1.8em;
+    font-weight: 700;
+    color: var(--text-bright);
+    line-height: 1.2;
+}
+
+.stat-card .stat-label {
+    font-size: 0.85em;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+/* Data Table */
+.demo-table-wrap {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: 24px;
+}
+
+.demo-table-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.demo-table-header h2 {
+    font-size: 1.1em;
+    margin: 0;
+    border: none;
+    padding: 0;
+}
+
+.demo-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.demo-table th {
+    background: var(--bg-active);
+    padding: 10px 16px;
+    text-align: left;
+    font-size: 0.8em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+}
+
+.demo-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9em;
+}
+
+.demo-table tr:last-child td {
+    border-bottom: none;
+}
+
+.demo-table tr:hover td {
+    background: var(--bg-hover);
+}
+
+/* Badges */
+.badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: 600;
+}
+
+.badge-green {
+    background: rgba(166, 227, 161, 0.15);
+    color: var(--accent-green);
+}
+
+.badge-blue {
+    background: var(--accent-dim);
+    color: var(--accent);
+}
+
+.badge-yellow {
+    background: rgba(249, 226, 175, 0.15);
+    color: var(--accent-yellow);
+}
+
+.badge-red {
+    background: rgba(243, 139, 168, 0.15);
+    color: var(--accent-red);
+}
+
+/* Grade Display */
+.grade-display {
+    font-weight: 700;
+    font-size: 1.1em;
+}
+
+.grade-a { color: var(--accent-green); }
+.grade-b { color: var(--accent); }
+.grade-c { color: var(--accent-yellow); }
+.grade-d { color: var(--accent-peach); }
+.grade-f { color: var(--accent-red); }
+
+/* GPA Card */
+.gpa-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.gpa-value {
+    font-size: 3em;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.2;
+}
+
+.gpa-label {
+    font-size: 0.9em;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+/* Assignment Card */
+.assignment-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    margin-bottom: 12px;
+    transition: border-color 0.15s ease;
+}
+
+.assignment-card:hover {
+    border-color: var(--border-light);
+}
+
+.assignment-card h3 {
+    font-size: 1em;
+    margin: 0 0 6px 0;
+    color: var(--text-bright);
+}
+
+.assignment-card .course-tag {
+    font-size: 0.8em;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.assignment-card p {
+    color: var(--text-secondary);
+    font-size: 0.9em;
+    margin: 0 0 12px 0;
+}
+
+.assignment-meta {
+    display: flex;
+    gap: 16px;
+    font-size: 0.85em;
+    color: var(--text-muted);
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 48px 20px;
+    color: var(--text-muted);
+}
+
+.empty-state .empty-icon {
+    font-size: 2.5em;
+    margin-bottom: 12px;
+    opacity: 0.5;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .demo-sidebar {
+        transform: translateX(-100%);
+    }
+
+    .demo-sidebar.open {
+        transform: translateX(0);
+        box-shadow: 4px 0 20px rgba(0,0,0,0.5);
+    }
+
+    .demo-content {
+        margin-left: 0;
+        padding: 20px 16px;
+    }
+
+    .stat-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .demo-table {
+        font-size: 0.85em;
+    }
+
+    .demo-table th,
+    .demo-table td {
+        padding: 8px 10px;
+    }
+}
+
+/* Overlay */
+.demo-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 99;
+}
+
+.demo-overlay.visible {
+    display: block;
+}

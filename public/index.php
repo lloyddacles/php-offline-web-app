@@ -8,6 +8,9 @@ require_once __DIR__ . '/../includes/header.php';
 <div class="lesson-header">
     <h1>LD TechLab Programming Tutorials</h1>
     <p class="lesson-desc">Interactive programming lessons with live code execution. Learn by doing — edit and run code directly in your browser.</p>
+    <div style="margin-top: 16px;">
+        <a href="/demo" class="btn btn-primary" style="font-size: 1em;">&#128640; Try Live Demo: Student Portal</a>
+    </div>
 </div>
 
 <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap:10px; margin: 32px 0;">

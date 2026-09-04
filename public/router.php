@@ -109,6 +109,23 @@ if ($uri === '/sandbox/execute-java.php') {
     return true;
 }
 
+// Route Student Portal Demo
+if (preg_match('#^/demo(/.*)?$#', $uri, $m)) {
+    $demoPath = $m[1] ?? '/index.php';
+    $demoFile = __DIR__ . '/demo' . $demoPath;
+    if ($demoPath === '' || $demoPath === '/') {
+        $demoFile = __DIR__ . '/demo/index.php';
+    } elseif (file_exists($demoFile . '.php')) {
+        $demoFile = $demoFile . '.php';
+    } elseif (is_dir($demoFile) && file_exists($demoFile . '/index.php')) {
+        $demoFile = $demoFile . '/index.php';
+    }
+    if (file_exists($demoFile)) {
+        require $demoFile;
+        return true;
+    }
+}
+
 // Home page
 if ($uri === '/' || $uri === '/index.php') {
     require __DIR__ . '/index.php';
