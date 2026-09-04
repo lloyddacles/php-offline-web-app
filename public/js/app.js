@@ -1,42 +1,136 @@
 /**
- * PHP Tutorial Website - Client-side JavaScript
- * Handles syntax highlighting and sandbox code execution
+ * LD TechLab - Main JavaScript
+ * Sidebar, TOC, syntax highlighting, sandbox execution
  */
 
 document.addEventListener('DOMContentLoaded', function () {
 
+    // === Sidebar Toggle ===
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+    if (sidebarToggle && sidebar) {
+        sidebarToggle.addEventListener('click', function () {
+            const isMobile = window.innerWidth <= 900;
+            if (isMobile) {
+                sidebar.classList.toggle('open');
+                sidebarOverlay.classList.toggle('visible');
+            } else {
+                sidebar.classList.toggle('collapsed');
+                document.body.classList.toggle('sidebar-collapsed');
+            }
+        });
+
+        if (sidebarOverlay) {
+            sidebarOverlay.addEventListener('click', function () {
+                sidebar.classList.remove('open');
+                sidebarOverlay.classList.remove('visible');
+            });
+        }
+    }
+
+    // Ctrl+B to toggle sidebar
+    document.addEventListener('keydown', function (e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'b') {
+            e.preventDefault();
+            if (sidebarToggle) sidebarToggle.click();
+        }
+    });
+
+    // === Sidebar Section Collapse ===
+    document.querySelectorAll('.sidebar-section-header').forEach(function (header) {
+        header.addEventListener('click', function () {
+            const section = header.closest('.sidebar-section');
+            if (section) section.classList.toggle('collapsed');
+        });
+    });
+
+    // === Auto-generate Table of Contents ===
+    const toc = document.getElementById('toc');
+    const contentWrapper = document.querySelector('.content-wrapper');
+
+    if (toc && contentWrapper) {
+        const headings = contentWrapper.querySelectorAll('h2, h3');
+        if (headings.length > 0) {
+            const tocList = document.createElement('ul');
+            tocList.className = 'toc-list';
+
+            const tocTitle = document.createElement('div');
+            tocTitle.className = 'toc-title';
+            tocTitle.textContent = 'On this page';
+            toc.appendChild(tocTitle);
+
+            headings.forEach(function (heading, i) {
+                // Add id to heading if missing
+                if (!heading.id) {
+                    heading.id = 'heading-' + heading.textContent
+                        .toLowerCase()
+                        .replace(/[^a-z0-9]+/g, '-')
+                        .replace(/^-|-$/g, '') + '-' + i;
+                }
+
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = '#' + heading.id;
+                a.textContent = heading.textContent;
+
+                if (heading.tagName === 'H3') {
+                    a.className = 'toc-h3';
+                }
+
+                li.appendChild(a);
+                tocList.appendChild(li);
+            });
+
+            toc.appendChild(tocList);
+
+            // Active TOC highlight on scroll
+            const tocLinks = tocList.querySelectorAll('a');
+            let scrollTimer;
+
+            function updateTocActive() {
+                let currentId = '';
+                headings.forEach(function (h) {
+                    const rect = h.getBoundingClientRect();
+                    if (rect.top <= 120) {
+                        currentId = h.id;
+                    }
+                });
+
+                tocLinks.forEach(function (link) {
+                    if (link.getAttribute('href') === '#' + currentId) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', function () {
+                clearTimeout(scrollTimer);
+                scrollTimer = setTimeout(updateTocActive, 50);
+            });
+
+            updateTocActive();
+        }
+    }
+
     // === Syntax Highlighting ===
     function highlightPHP(code) {
-        // Escape HTML first
         let escaped = code
             .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;');
 
-        // Order matters: comments first, then strings, then everything else
-
-        // Multi-line comments /* ... */
         escaped = escaped.replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="code-comment">$1</span>');
-
-        // Single-line comments // and #
         escaped = escaped.replace(/(\/\/[^\n]*|#(?!{)[^\n]*)/g, '<span class="code-comment">$1</span>');
-
-        // Heredoc/Nowdoc
         escaped = escaped.replace(/(&lt;&lt;&lt;['"]?\w+['"]?[\s\S]*?\w+;)/g, '<span class="code-string">$1</span>');
-
-        // Double-quoted strings (with variable interpolation)
         escaped = escaped.replace(/("(?:[^"\\]|\\.)*")/g, '<span class="code-string">$1</span>');
-
-        // Single-quoted strings
         escaped = escaped.replace(/('(?:[^'\\]|\\.)*')/g, '<span class="code-string">$1</span>');
-
-        // PHP tags
         escaped = escaped.replace(/(&lt;\?php|\?&gt;)/g, '<span class="code-php-tag">$1</span>');
-
-        // Variables
         escaped = escaped.replace(/(\$[a-zA-Z_]\w*)/g, '<span class="code-variable">$1</span>');
 
-        // Keywords
         const keywords = [
             'abstract', 'and', 'array', 'as', 'break', 'callable', 'case', 'catch',
             'class', 'clone', 'const', 'continue', 'declare', 'default', 'die', 'do',
@@ -50,17 +144,12 @@ document.addEventListener('DOMContentLoaded', function () {
             'var', 'while', 'xor', 'yield', 'yield_from', 'enum'
         ];
         const kwRegex = new RegExp('\\b(' + keywords.join('|') + ')\\b', 'g');
-        escaped = escaped.replace(kwRegex, function (match) {
-            // Don't re-highlight inside already highlighted spans
-            return '<span class="code-keyword">' + match + '</span>';
-        });
+        escaped = escaped.replace(kwRegex, '<span class="code-keyword">$1</span>');
 
-        // Constants
         const constants = ['true', 'false', 'null', 'TRUE', 'FALSE', 'NULL', '__LINE__', '__FILE__', '__DIR__', '__FUNCTION__', '__CLASS__', '__TRAIT__', '__METHOD__', '__NAMESPACE__'];
         const constRegex = new RegExp('\\b(' + constants.join('|') + ')\\b', 'g');
         escaped = escaped.replace(constRegex, '<span class="code-constant">$1</span>');
 
-        // Numbers
         escaped = escaped.replace(/\b(\d+\.?\d*)\b/g, '<span class="code-number">$1</span>');
 
         return escaped;
@@ -72,19 +161,11 @@ document.addEventListener('DOMContentLoaded', function () {
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;');
 
-        // Multi-line strings (triple quotes)
         escaped = escaped.replace(/("""[\s\S]*?"""|'''[\s\S]*?''')/g, '<span class="code-string">$1</span>');
-
-        // Comments
         escaped = escaped.replace(/(#[^\n]*)/g, '<span class="code-comment">$1</span>');
-
-        // Strings
         escaped = escaped.replace(/(f?"(?:[^"\\]|\\.)*"|f?'(?:[^'\\]|\\.)*')/g, '<span class="code-string">$1</span>');
-
-        // Decorators
         escaped = escaped.replace(/(@\w+)/g, '<span class="code-keyword">$1</span>');
 
-        // Keywords
         const keywords = [
             'False', 'None', 'True', 'and', 'as', 'assert', 'async', 'await',
             'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except',
@@ -95,7 +176,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const kwRegex = new RegExp('\\b(' + keywords.join('|') + ')\\b', 'g');
         escaped = escaped.replace(kwRegex, '<span class="code-keyword">$1</span>');
 
-        // Built-in functions
         const builtins = [
             'print', 'len', 'range', 'int', 'float', 'str', 'list', 'dict',
             'set', 'tuple', 'input', 'open', 'type', 'isinstance', 'enumerate',
@@ -105,7 +185,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const biRegex = new RegExp('\\b(' + builtins.join('|') + ')\\b', 'g');
         escaped = escaped.replace(biRegex, '<span class="code-constant">$1</span>');
 
-        // Numbers
         escaped = escaped.replace(/\b(\d+\.?\d*)\b/g, '<span class="code-number">$1</span>');
 
         return escaped;
@@ -117,22 +196,12 @@ document.addEventListener('DOMContentLoaded', function () {
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;');
 
-        // Multi-line comments
         escaped = escaped.replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="code-comment">$1</span>');
-
-        // Single-line comments
         escaped = escaped.replace(/(\/\/[^\n]*)/g, '<span class="code-comment">$1</span>');
-
-        // Strings
         escaped = escaped.replace(/("(?:[^"\\]|\\.)*")/g, '<span class="code-string">$1</span>');
-
-        // Chars
         escaped = escaped.replace(/('(?:[^'\\]|\\.)*')/g, '<span class="code-string">$1</span>');
-
-        // Annotations
         escaped = escaped.replace(/(@\w+)/g, '<span class="code-keyword">$1</span>');
 
-        // Keywords
         const keywords = [
             'abstract', 'assert', 'boolean', 'break', 'byte', 'case', 'catch',
             'char', 'class', 'const', 'continue', 'default', 'do', 'double',
@@ -147,15 +216,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const kwRegex = new RegExp('\\b(' + keywords.join('|') + ')\\b', 'g');
         escaped = escaped.replace(kwRegex, '<span class="code-keyword">$1</span>');
 
-        // Types
         const types = ['String', 'System', 'Scanner', 'Math', 'Integer', 'Double', 'Boolean', 'ArrayList', 'HashMap', 'Object'];
         const typeRegex = new RegExp('\\b(' + types.join('|') + ')\\b', 'g');
         escaped = escaped.replace(typeRegex, '<span class="code-constant">$1</span>');
 
-        // Constants
         escaped = escaped.replace(/\b(true|false|null)\b/g, '<span class="code-constant">$1</span>');
-
-        // Numbers
         escaped = escaped.replace(/\b(\d+\.?\d*[fFlL]?)\b/g, '<span class="code-number">$1</span>');
 
         return escaped;
@@ -183,7 +248,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (!textarea || !runBtn || !resultDiv) return;
 
-        // Detect language from data-lang attribute
         const lang = textarea.getAttribute('data-lang') || 'php';
         const sandboxEndpoints = {
             'php': '/sandbox/execute.php',

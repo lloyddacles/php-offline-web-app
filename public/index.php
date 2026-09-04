@@ -5,145 +5,150 @@ $pageTitle = 'Home';
 require_once __DIR__ . '/../includes/header.php';
 ?>
 
-<section class="hero">
-    <div class="container">
-        <h1>LD TechLab Programming Tutorials</h1>
-        <p>Interactive PHP, Python, Java, MySQL &amp; DBMS lessons with live code execution. Learn by doing.</p>
-        <div class="hero-buttons">
-            <a href="/programming-logic/" class="btn btn-outline-light">Programming Logic</a>
-            <a href="/python-lessons/" class="btn btn-outline-light">Python</a>
-            <a href="/java-lessons/" class="btn btn-outline-light">Java</a>
-            <a href="/dbms-lessons/" class="btn btn-outline-light">DBMS Theory</a>
-            <a href="/dsa-lessons/" class="btn btn-outline-light">DSA</a>
-            <a href="/mysql-lessons/" class="btn btn-outline-light">MySQL</a>
-            <a href="/lessons/" class="btn btn-primary">PHP Lessons</a>
-        </div>
-    </div>
-</section>
+<div class="lesson-header">
+    <h1>LD TechLab Programming Tutorials</h1>
+    <p class="lesson-desc">Interactive programming lessons with live code execution. Learn by doing — edit and run code directly in your browser.</p>
+</div>
 
-<section class="container">
+<div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap:10px; margin: 32px 0;">
+    <?php
+    $quickLinks = [
+        ['title' => '&#9881; Programming Logic', 'url' => lessonUrl(1, 'what-is-programming-logic', 'programming-logic')],
+        ['title' => '&#9651; Python', 'url' => lessonUrl(1, 'introduction', 'python-lessons')],
+        ['title' => '&#9752; Java', 'url' => lessonUrl(1, 'introduction', 'java-lessons')],
+        ['title' => '&#9830; DSA', 'url' => lessonUrl(1, 'introduction-to-data-structures-algorithms', 'dsa-lessons')],
+        ['title' => '&#9901; DBMS Theory', 'url' => lessonUrl(1, 'introduction-to-dbms', 'dbms-lessons')],
+        ['title' => '&#128451; MySQL', 'url' => lessonUrl(1, 'introduction-to-mysql', 'mysql-lessons')],
+        ['title' => '&#60;? PHP', 'url' => lessonUrl(1, 'introduction', 'lessons')],
+    ];
+    foreach ($quickLinks as $i => $link): ?>
+        <a href="<?= $link['url'] ?>" class="btn <?= $i === 6 ? 'btn-primary' : 'btn-outline' ?>" style="justify-content:center;"><?= $link['title'] ?></a>
+    <?php endforeach; ?>
+</div>
+
+<hr>
+
+<!-- Programming Logic -->
+<section style="margin-top:32px;">
     <div class="section-title">
-        <h2>Programming Logic</h2>
-        <p>Learn how to think like a programmer — master the logic, patterns, and problem-solving skills</p>
+        <h2>&#9881; Programming Logic</h2>
+        <p>Learn how to think like a programmer — logic, patterns, and problem-solving</p>
     </div>
     <div class="lessons-grid">
         <?php foreach (getLessons('programming-logic') as $lesson): ?>
             <a href="<?= lessonUrl($lesson['num'], $lesson['slug'], 'programming-logic') ?>" class="lesson-card">
-                <span class="lesson-card-number">Lesson <?= $lesson['num'] ?></span>
+                <span class="lesson-card-number"><?= str_pad($lesson['num'], 2, '0', STR_PAD_LEFT) ?></span>
                 <h3 class="lesson-card-title"><?= htmlspecialchars($lesson['title']) ?></h3>
             </a>
         <?php endforeach; ?>
     </div>
-    <div class="text-center mt-4">
-        <a href="/programming-logic/" class="btn btn-primary">View All Logic Lessons</a>
-    </div>
 </section>
 
-<section class="container">
-    <div class="section-title">
-        <h2>Database Management Systems (DBMS) Theory</h2>
-        <p>Master the fundamentals of database design, normalization, and security</p>
-    </div>
-    <div class="lessons-grid">
-        <?php foreach (getLessons('dbms-lessons') as $lesson): ?>
-            <a href="<?= lessonUrl($lesson['num'], $lesson['slug'], 'dbms-lessons') ?>" class="lesson-card">
-                <span class="lesson-card-number">Lesson <?= $lesson['num'] ?></span>
-                <h3 class="lesson-card-title"><?= htmlspecialchars($lesson['title']) ?></h3>
-            </a>
-        <?php endforeach; ?>
-    </div>
-    <div class="text-center mt-4">
-        <a href="/dbms-lessons/" class="btn btn-primary">View All DBMS Lessons</a>
-    </div>
-</section>
+<hr>
 
-<section class="container">
+<!-- Python -->
+<section style="margin-top:32px;">
     <div class="section-title">
-        <h2>Data Structures &amp; Algorithms</h2>
-        <p>Master fundamental data structures and algorithms with hands-on PHP implementations</p>
-    </div>
-    <div class="lessons-grid">
-        <?php foreach (getLessons('dsa-lessons') as $lesson): ?>
-            <a href="<?= lessonUrl($lesson['num'], $lesson['slug'], 'dsa-lessons') ?>" class="lesson-card">
-                <span class="lesson-card-number">Lesson <?= $lesson['num'] ?></span>
-                <h3 class="lesson-card-title"><?= htmlspecialchars($lesson['title']) ?></h3>
-            </a>
-        <?php endforeach; ?>
-    </div>
-    <div class="text-center mt-4">
-        <a href="/dsa-lessons/" class="btn btn-primary">View All DSA Lessons</a>
-    </div>
-</section>
-
-<section class="container">
-    <div class="section-title">
-        <h2>MySQL Tutorials</h2>
-        <p>Master SQL queries and database operations</p>
-    </div>
-    <div class="lessons-grid">
-        <?php foreach (getLessons('mysql-lessons') as $lesson): ?>
-            <a href="<?= lessonUrl($lesson['num'], $lesson['slug'], 'mysql-lessons') ?>" class="lesson-card">
-                <span class="lesson-card-number">Lesson <?= $lesson['num'] ?></span>
-                <h3 class="lesson-card-title"><?= htmlspecialchars($lesson['title']) ?></h3>
-            </a>
-        <?php endforeach; ?>
-    </div>
-    <div class="text-center mt-4">
-        <a href="/mysql-lessons/" class="btn btn-primary">View All MySQL Lessons</a>
-    </div>
-</section>
-
-<section class="container">
-    <div class="section-title">
-        <h2>Python Tutorials</h2>
-        <p>Interactive Python lessons with live code execution - edit and run code in your browser!</p>
+        <h2>&#9651; Python</h2>
+        <p>Interactive Python lessons with live code execution</p>
     </div>
     <div class="lessons-grid">
         <?php foreach (getLessons('python-lessons') as $lesson): ?>
             <a href="<?= lessonUrl($lesson['num'], $lesson['slug'], 'python-lessons') ?>" class="lesson-card">
-                <span class="lesson-card-number">Lesson <?= $lesson['num'] ?></span>
+                <span class="lesson-card-number"><?= str_pad($lesson['num'], 2, '0', STR_PAD_LEFT) ?></span>
                 <h3 class="lesson-card-title"><?= htmlspecialchars($lesson['title']) ?></h3>
             </a>
         <?php endforeach; ?>
     </div>
-    <div class="text-center mt-4">
-        <a href="/python-lessons/" class="btn btn-primary">View All Python Lessons</a>
-    </div>
 </section>
 
-<section class="container">
+<hr>
+
+<!-- Java -->
+<section style="margin-top:32px;">
     <div class="section-title">
-        <h2>Java Tutorials</h2>
-        <p>Interactive Java lessons with live code execution - edit and run code in your browser!</p>
+        <h2>&#9752; Java</h2>
+        <p>Interactive Java lessons with compile-and-run sandbox</p>
     </div>
     <div class="lessons-grid">
         <?php foreach (getLessons('java-lessons') as $lesson): ?>
             <a href="<?= lessonUrl($lesson['num'], $lesson['slug'], 'java-lessons') ?>" class="lesson-card">
-                <span class="lesson-card-number">Lesson <?= $lesson['num'] ?></span>
+                <span class="lesson-card-number"><?= str_pad($lesson['num'], 2, '0', STR_PAD_LEFT) ?></span>
                 <h3 class="lesson-card-title"><?= htmlspecialchars($lesson['title']) ?></h3>
             </a>
         <?php endforeach; ?>
     </div>
-    <div class="text-center mt-4">
-        <a href="/java-lessons/" class="btn btn-primary">View All Java Lessons</a>
+</section>
+
+<hr>
+
+<!-- DSA -->
+<section style="margin-top:32px;">
+    <div class="section-title">
+        <h2>&#9830; Data Structures &amp; Algorithms</h2>
+        <p>Master fundamental DSA with hands-on PHP implementations</p>
+    </div>
+    <div class="lessons-grid">
+        <?php foreach (getLessons('dsa-lessons') as $lesson): ?>
+            <a href="<?= lessonUrl($lesson['num'], $lesson['slug'], 'dsa-lessons') ?>" class="lesson-card">
+                <span class="lesson-card-number"><?= str_pad($lesson['num'], 2, '0', STR_PAD_LEFT) ?></span>
+                <h3 class="lesson-card-title"><?= htmlspecialchars($lesson['title']) ?></h3>
+            </a>
+        <?php endforeach; ?>
     </div>
 </section>
 
-<section class="container">
+<hr>
+
+<!-- DBMS -->
+<section style="margin-top:32px;">
     <div class="section-title">
-        <h2>PHP Tutorials</h2>
-        <p>Interactive lessons with live code execution - edit the code and see results instantly!</p>
+        <h2>&#9901; DBMS Theory</h2>
+        <p>Database design, normalization, ER diagrams, and security</p>
+    </div>
+    <div class="lessons-grid">
+        <?php foreach (getLessons('dbms-lessons') as $lesson): ?>
+            <a href="<?= lessonUrl($lesson['num'], $lesson['slug'], 'dbms-lessons') ?>" class="lesson-card">
+                <span class="lesson-card-number"><?= str_pad($lesson['num'], 2, '0', STR_PAD_LEFT) ?></span>
+                <h3 class="lesson-card-title"><?= htmlspecialchars($lesson['title']) ?></h3>
+            </a>
+        <?php endforeach; ?>
+    </div>
+</section>
+
+<hr>
+
+<!-- MySQL -->
+<section style="margin-top:32px;">
+    <div class="section-title">
+        <h2>&#128451; MySQL</h2>
+        <p>SQL from basics to PHP integration</p>
+    </div>
+    <div class="lessons-grid">
+        <?php foreach (getLessons('mysql-lessons') as $lesson): ?>
+            <a href="<?= lessonUrl($lesson['num'], $lesson['slug'], 'mysql-lessons') ?>" class="lesson-card">
+                <span class="lesson-card-number"><?= str_pad($lesson['num'], 2, '0', STR_PAD_LEFT) ?></span>
+                <h3 class="lesson-card-title"><?= htmlspecialchars($lesson['title']) ?></h3>
+            </a>
+        <?php endforeach; ?>
+    </div>
+</section>
+
+<hr>
+
+<!-- PHP -->
+<section style="margin-top:32px;">
+    <div class="section-title">
+        <h2>&#60;? PHP</h2>
+        <p>Interactive PHP lessons with live code execution</p>
     </div>
     <div class="lessons-grid">
         <?php foreach ($lessons as $lesson): ?>
             <a href="<?= lessonUrl($lesson['num'], $lesson['slug'], 'lessons') ?>" class="lesson-card">
-                <span class="lesson-card-number">Lesson <?= $lesson['num'] ?></span>
+                <span class="lesson-card-number"><?= str_pad($lesson['num'], 2, '0', STR_PAD_LEFT) ?></span>
                 <h3 class="lesson-card-title"><?= htmlspecialchars($lesson['title']) ?></h3>
             </a>
         <?php endforeach; ?>
-    </div>
-    <div class="text-center mt-4">
-        <a href="/lessons/" class="btn btn-primary">View All PHP Lessons</a>
     </div>
 </section>
 
