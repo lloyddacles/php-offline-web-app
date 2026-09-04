@@ -16,16 +16,16 @@ require_once __DIR__ . '/../includes/header.php';
 <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap:10px; margin: 32px 0;">
     <?php
     $quickLinks = [
-        ['title' => '&#9881; Programming Logic', 'url' => lessonUrl(1, 'what-is-programming-logic', 'programming-logic')],
-        ['title' => '&#9651; Python', 'url' => lessonUrl(1, 'introduction', 'python-lessons')],
-        ['title' => '&#9752; Java', 'url' => lessonUrl(1, 'introduction', 'java-lessons')],
-        ['title' => '&#9830; DSA', 'url' => lessonUrl(1, 'introduction', 'dsa-lessons')],
-        ['title' => '&#9901; DBMS Theory', 'url' => lessonUrl(1, 'introduction', 'dbms-lessons')],
+        ['title' => '&#128161; Programming Logic', 'url' => lessonUrl(1, 'what-is-programming-logic', 'programming-logic')],
+        ['title' => '&#128421; PHP', 'url' => lessonUrl(1, 'introduction', 'lessons')],
+        ['title' => '&#128013; Python', 'url' => lessonUrl(1, 'introduction', 'python-lessons')],
+        ['title' => '&#9749; Java', 'url' => lessonUrl(1, 'introduction', 'java-lessons')],
+        ['title' => '&#128208; DSA', 'url' => lessonUrl(1, 'introduction', 'dsa-lessons')],
+        ['title' => '&#128202; DBMS Theory', 'url' => lessonUrl(1, 'introduction', 'dbms-lessons')],
         ['title' => '&#128451; MySQL', 'url' => lessonUrl(1, 'introduction', 'mysql-lessons')],
-        ['title' => '&#60;? PHP', 'url' => lessonUrl(1, 'introduction', 'lessons')],
     ];
     foreach ($quickLinks as $i => $link): ?>
-        <a href="<?= $link['url'] ?>" class="btn <?= $i === 6 ? 'btn-primary' : 'btn-outline' ?>" style="justify-content:center;"><?= $link['title'] ?></a>
+        <a href="<?= $link['url'] ?>" class="btn <?= $i === 1 ? 'btn-primary' : 'btn-outline' ?>" style="justify-content:center;"><?= $link['title'] ?></a>
     <?php endforeach; ?>
 </div>
 
@@ -34,7 +34,7 @@ require_once __DIR__ . '/../includes/header.php';
 <!-- Programming Logic -->
 <section style="margin-top:32px;">
     <div class="section-title">
-        <h2>&#9881; Programming Logic</h2>
+        <h2>&#128161; Programming Logic</h2>
         <p>Learn how to think like a programmer — logic, patterns, and problem-solving</p>
     </div>
     <div class="lessons-grid">
@@ -49,10 +49,28 @@ require_once __DIR__ . '/../includes/header.php';
 
 <hr>
 
+<!-- PHP -->
+<section style="margin-top:32px;">
+    <div class="section-title">
+        <h2>&#128421; PHP</h2>
+        <p>Interactive PHP lessons with live code execution</p>
+    </div>
+    <div class="lessons-grid">
+        <?php foreach ($lessons as $lesson): ?>
+            <a href="<?= lessonUrl($lesson['num'], $lesson['slug'], 'lessons') ?>" class="lesson-card">
+                <span class="lesson-card-number"><?= str_pad($lesson['num'], 2, '0', STR_PAD_LEFT) ?></span>
+                <h3 class="lesson-card-title"><?= htmlspecialchars($lesson['title']) ?></h3>
+            </a>
+        <?php endforeach; ?>
+    </div>
+</section>
+
+<hr>
+
 <!-- Python -->
 <section style="margin-top:32px;">
     <div class="section-title">
-        <h2>&#9651; Python</h2>
+        <h2>&#128013; Python</h2>
         <p>Interactive Python lessons with live code execution</p>
     </div>
     <div class="lessons-grid">
@@ -70,7 +88,7 @@ require_once __DIR__ . '/../includes/header.php';
 <!-- Java -->
 <section style="margin-top:32px;">
     <div class="section-title">
-        <h2>&#9752; Java</h2>
+        <h2>&#9749; Java</h2>
         <p>Interactive Java lessons with compile-and-run sandbox</p>
     </div>
     <div class="lessons-grid">
@@ -88,7 +106,7 @@ require_once __DIR__ . '/../includes/header.php';
 <!-- DSA -->
 <section style="margin-top:32px;">
     <div class="section-title">
-        <h2>&#9830; Data Structures &amp; Algorithms</h2>
+        <h2>&#128208; Data Structures &amp; Algorithms</h2>
         <p>Master fundamental DSA with hands-on PHP implementations</p>
     </div>
     <div class="lessons-grid">
@@ -106,7 +124,7 @@ require_once __DIR__ . '/../includes/header.php';
 <!-- DBMS -->
 <section style="margin-top:32px;">
     <div class="section-title">
-        <h2>&#9901; DBMS Theory</h2>
+        <h2>&#128202; DBMS Theory</h2>
         <p>Database design, normalization, ER diagrams, and security</p>
     </div>
     <div class="lessons-grid">
@@ -130,24 +148,6 @@ require_once __DIR__ . '/../includes/header.php';
     <div class="lessons-grid">
         <?php foreach (getLessons('mysql-lessons') as $lesson): ?>
             <a href="<?= lessonUrl($lesson['num'], $lesson['slug'], 'mysql-lessons') ?>" class="lesson-card">
-                <span class="lesson-card-number"><?= str_pad($lesson['num'], 2, '0', STR_PAD_LEFT) ?></span>
-                <h3 class="lesson-card-title"><?= htmlspecialchars($lesson['title']) ?></h3>
-            </a>
-        <?php endforeach; ?>
-    </div>
-</section>
-
-<hr>
-
-<!-- PHP -->
-<section style="margin-top:32px;">
-    <div class="section-title">
-        <h2>&#60;? PHP</h2>
-        <p>Interactive PHP lessons with live code execution</p>
-    </div>
-    <div class="lessons-grid">
-        <?php foreach ($lessons as $lesson): ?>
-            <a href="<?= lessonUrl($lesson['num'], $lesson['slug'], 'lessons') ?>" class="lesson-card">
                 <span class="lesson-card-number"><?= str_pad($lesson['num'], 2, '0', STR_PAD_LEFT) ?></span>
                 <h3 class="lesson-card-title"><?= htmlspecialchars($lesson['title']) ?></h3>
             </a>

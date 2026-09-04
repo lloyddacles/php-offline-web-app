@@ -20,13 +20,13 @@ if ($currentDir && preg_match('#/(\d+)-#', $requestUri, $m)) {
 
 // All sections for sidebar
 $sections = [
-    ['id' => 'logic', 'title' => 'Programming Logic', 'dir' => 'programming-logic', 'prefix' => '/logic'],
-    ['id' => 'php',   'title' => 'PHP',               'dir' => 'lessons',             'prefix' => '/lesson'],
-    ['id' => 'python','title' => 'Python',             'dir' => 'python-lessons',      'prefix' => '/python'],
-    ['id' => 'java',  'title' => 'Java',               'dir' => 'java-lessons',        'prefix' => '/java'],
-    ['id' => 'dsa',   'title' => 'DSA',                'dir' => 'dsa-lessons',         'prefix' => '/dsa'],
-    ['id' => 'dbms',  'title' => 'DBMS Theory',        'dir' => 'dbms-lessons',        'prefix' => '/dbms'],
-    ['id' => 'mysql', 'title' => 'MySQL',              'dir' => 'mysql-lessons',       'prefix' => '/mysql'],
+    ['id' => 'logic', 'title' => 'Programming Logic', 'dir' => 'programming-logic', 'prefix' => '/logic', 'icon' => '&#128161;'],
+    ['id' => 'php',   'title' => 'PHP',               'dir' => 'lessons',             'prefix' => '/lesson', 'icon' => '&#128421;'],
+    ['id' => 'python','title' => 'Python',             'dir' => 'python-lessons',      'prefix' => '/python', 'icon' => '&#128013;'],
+    ['id' => 'java',  'title' => 'Java',               'dir' => 'java-lessons',        'prefix' => '/java',   'icon' => '&#9749;'],
+    ['id' => 'dsa',   'title' => 'DSA',                'dir' => 'dsa-lessons',         'prefix' => '/dsa',    'icon' => '&#128208;'],
+    ['id' => 'dbms',  'title' => 'DBMS Theory',        'dir' => 'dbms-lessons',        'prefix' => '/dbms',   'icon' => '&#128202;'],
+    ['id' => 'mysql', 'title' => 'MySQL',              'dir' => 'mysql-lessons',       'prefix' => '/mysql',  'icon' => '&#128451;'],
 ];
 ?>
 <!DOCTYPE html>
@@ -73,7 +73,7 @@ $sections = [
             ?>
             <div class="sidebar-section <?= $collapsed ? 'collapsed' : '' ?>">
                 <div class="sidebar-section-header" data-section="<?= $sec['id'] ?>">
-                    <span class="sidebar-section-title"><?= $sec['title'] ?></span>
+                    <span class="sidebar-section-title"><?= $sec['icon'] ?> <?= $sec['title'] ?></span>
                     <span class="sidebar-section-chevron">&#9662;</span>
                 </div>
                 <ul class="sidebar-section-items">
