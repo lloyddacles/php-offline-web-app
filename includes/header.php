@@ -50,6 +50,10 @@ $sections = [
             <span class="topbar-hint"><kbd>Ctrl</kbd>+<kbd>B</kbd> sidebar</span>
         </div>
         <div class="topbar-right">
+            <button class="theme-toggle" id="themeToggle" title="Toggle light/dark mode">
+                <svg class="icon-sun" viewBox="0 0 20 20" fill="currentColor" width="18" height="18"><circle cx="10" cy="10" r="4"/><path d="M10 1v2m0 14v2M4.22 4.22l1.42 1.42m8.72 8.72l1.42 1.42M1 10h2m14 0h2M4.22 15.78l1.42-1.42M14.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+                <svg class="icon-moon" viewBox="0 0 20 20" fill="currentColor" width="18" height="18"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.003 8.003 0 1010.586 10.586z"/></svg>
+            </button>
             <a href="/status" class="topbar-link">Status</a>
         </div>
     </header>

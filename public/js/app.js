@@ -5,6 +5,24 @@
 
 document.addEventListener('DOMContentLoaded', function () {
 
+    // === Theme Toggle ===
+    var themeToggle = document.getElementById('themeToggle');
+    var savedTheme = localStorage.getItem('ldtechlab-theme') || 'dark';
+
+    function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('ldtechlab-theme', theme);
+    }
+
+    applyTheme(savedTheme);
+
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function () {
+            var current = document.documentElement.getAttribute('data-theme');
+            applyTheme(current === 'dark' ? 'light' : 'dark');
+        });
+    }
+
     // === Sidebar Toggle ===
     var sidebar = document.getElementById('sidebar');
     var sidebarToggle = document.getElementById('sidebarToggle');
