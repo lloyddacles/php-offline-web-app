@@ -2,6 +2,9 @@
 bin/php
 bin/php.exe
 
+# Demo database (auto-created)
+public/demo/portal.db
+
 # OS files
 .DS_Store
 Thumbs.db
