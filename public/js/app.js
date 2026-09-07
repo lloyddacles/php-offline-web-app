@@ -246,12 +246,20 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('pre code').forEach(function (block) {
         var raw = block.textContent;
         block.setAttribute('data-raw-code', raw);
-        var lang = block.getAttribute('data-lang') || 'php';
+        var lang = block.getAttribute('data-lang') || '';
+        if (!lang) {
+            var cls = block.className || '';
+            if (cls.indexOf('language-python') !== -1) lang = 'python';
+            else if (cls.indexOf('language-java') !== -1) lang = 'java';
+            else if (cls.indexOf('language-sql') !== -1) lang = 'sql';
+            else if (cls.indexOf('language-php') !== -1) lang = 'php';
+            else lang = 'php';
+        }
         if (lang === 'python') {
             block.innerHTML = highlightPython(raw);
         } else if (lang === 'java') {
             block.innerHTML = highlightJava(raw);
-        } else {
+        } else if (lang === 'php') {
             block.innerHTML = highlightPHP(raw);
         }
     });
