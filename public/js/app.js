@@ -242,8 +242,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Apply highlighting to all <pre><code> blocks
+    // Store raw code for Run Code feature
     document.querySelectorAll('pre code').forEach(function (block) {
         var raw = block.textContent;
+        block.setAttribute('data-raw-code', raw);
         var lang = block.getAttribute('data-lang') || 'php';
         if (lang === 'python') {
             block.innerHTML = highlightPython(raw);
@@ -254,13 +256,96 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // === Sandbox Code Execution ===
+    // === Run Code on Code Blocks ===
     var sandboxEndpoints = {
         'php': '/sandbox/execute.php',
         'python': '/sandbox/execute-python.php',
         'java': '/sandbox/execute-java.php'
     };
 
+    // Wrap all code blocks and add Run buttons
+    document.querySelectorAll('pre code').forEach(function (block) {
+        var pre = block.parentElement;
+        if (!pre || pre.parentElement.classList.contains('code-block-wrapper')) return;
+
+        var lang = block.getAttribute('data-lang') || '';
+        if (!lang) {
+            var cls = block.className || '';
+            if (cls.indexOf('language-python') !== -1) lang = 'python';
+            else if (cls.indexOf('language-java') !== -1) lang = 'java';
+            else if (cls.indexOf('language-php') !== -1) lang = 'php';
+            else if (cls.indexOf('language-sql') !== -1) lang = 'sql';
+            else lang = 'php';
+        }
+
+        // Only add Run button for runnable languages
+        if (lang !== 'php' && lang !== 'python' && lang !== 'java') return;
+
+        // Don't add if already wrapped
+        if (pre.previousElementSibling && pre.previousElementSibling.classList && pre.previousElementSibling.classList.contains('code-block-wrapper')) return;
+
+        // Create wrapper
+        var wrapper = document.createElement('div');
+        wrapper.className = 'code-block-wrapper';
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
+
+        // Create Run button
+        var runBtn = document.createElement('button');
+        runBtn.className = 'run-code-btn';
+        runBtn.textContent = 'Run Code';
+        runBtn.type = 'button';
+        wrapper.insertBefore(runBtn, pre);
+
+        // Create output div
+        var outputDiv = document.createElement('div');
+        runBtn.insertAdjacentElement('afterend', outputDiv);
+
+        // Get the clean code (stored before highlighting)
+        var rawCode = block.getAttribute('data-raw-code') || block.textContent;
+
+        runBtn.addEventListener('click', function () {
+            var code = rawCode;
+            if (!code.trim()) {
+                outputDiv.className = 'run-code-output visible output-error';
+                outputDiv.textContent = 'No code to run.';
+                return;
+            }
+
+            runBtn.disabled = true;
+            runBtn.textContent = 'Running...';
+            outputDiv.className = 'run-code-output visible';
+            outputDiv.textContent = 'Executing...';
+
+            var endpoint = sandboxEndpoints[lang] || sandboxEndpoints['php'];
+
+            fetch(endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'code=' + encodeURIComponent(code)
+            })
+            .then(function (response) { return response.json(); })
+            .then(function (data) {
+                if (data.error) {
+                    outputDiv.className = 'run-code-output visible output-error';
+                    outputDiv.textContent = data.error;
+                } else {
+                    outputDiv.className = 'run-code-output visible output-success';
+                    outputDiv.textContent = data.output || '(No output)';
+                }
+            })
+            .catch(function (err) {
+                outputDiv.className = 'run-code-output visible output-error';
+                outputDiv.textContent = 'Connection error: ' + err.message;
+            })
+            .finally(function () {
+                runBtn.disabled = false;
+                runBtn.textContent = 'Run Code';
+            });
+        });
+    });
+
+    // === Sandbox Code Execution (existing) ===
     document.querySelectorAll('.sandbox').forEach(function (sandbox) {
         var textarea = sandbox.querySelector('textarea');
         var runBtn = sandbox.querySelector('.run-btn');
@@ -272,7 +357,6 @@ document.addEventListener('DOMContentLoaded', function () {
         var lang = textarea.getAttribute('data-lang') || 'php';
         var endpoint = sandboxEndpoints[lang] || sandboxEndpoints['php'];
 
-        // Pre-fill with example code if provided (base64-encoded)
         var exampleCode = textarea.getAttribute('data-example');
         if (exampleCode) {
             try {
@@ -322,7 +406,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
 
-        // Ctrl+Enter to run
         textarea.addEventListener('keydown', function (e) {
             if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
                 e.preventDefault();
