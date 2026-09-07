@@ -294,8 +294,11 @@ document.addEventListener('DOMContentLoaded', function () {
             else lang = 'php';
         }
 
-        // Only add Run button for runnable languages
+        // Only add Run button for PHP, Python, Java (not SQL/DBMS)
         if (lang !== 'php' && lang !== 'python' && lang !== 'java') return;
+
+        // Skip code blocks inside teacher answer keys
+        if (wrapper.closest('details')) return;
 
         // Don't add if already wrapped
         if (pre.previousElementSibling && pre.previousElementSibling.classList && pre.previousElementSibling.classList.contains('code-block-wrapper')) return;
