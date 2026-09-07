@@ -186,13 +186,16 @@ document.addEventListener('DOMContentLoaded', function () {
     var reNumberJava = /\b(\d+\.?\d*[fFlL]?)\b/g;
 
     function highlightPHP(code) {
+        // Remove comments first
+        code = code.replace(/\/\*[\s\S]*?\*\//g, '');
+        code = code.replace(/\/\/[^\n]*/g, '');
+        code = code.replace(/#[^{][^\n]*/g, '');
+
         var escaped = code
             .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;');
 
-        escaped = escaped.replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="code-comment">$1</span>');
-        escaped = escaped.replace(/(\/\/[^\n]*|#(?!{)[^\n]*)/g, '<span class="code-comment">$1</span>');
         escaped = escaped.replace(/(&lt;&lt;&lt;['"]?\w+['"]?[\s\S]*?\w+;)/g, '<span class="code-string">$1</span>');
         escaped = escaped.replace(/("(?:[^"\\]|\\.)*")/g, '<span class="code-string">$1</span>');
         escaped = escaped.replace(/('(?:[^'\\]|\\.)*')/g, '<span class="code-string">$1</span>');
@@ -206,13 +209,16 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function highlightPython(code) {
+        // Remove comments first
+        code = code.replace(/"""[\s\S]*?"""/g, '');
+        code = code.replace(/'''[\s\S]*?'''/g, '');
+        code = code.replace(/#[^\n]*/g, '');
+
         var escaped = code
             .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;');
 
-        escaped = escaped.replace(/("""[\s\S]*?"""|'''[\s\S]*?''')/g, '<span class="code-string">$1</span>');
-        escaped = escaped.replace(/(#[^\n]*)/g, '<span class="code-comment">$1</span>');
         escaped = escaped.replace(/(f?"(?:[^"\\]|\\.)*"|f?'(?:[^'\\]|\\.)*')/g, '<span class="code-string">$1</span>');
         escaped = escaped.replace(/(@\w+)/g, '<span class="code-keyword">$1</span>');
         escaped = escaped.replace(rePyKw, '<span class="code-keyword">$1</span>');
@@ -223,13 +229,15 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function highlightJava(code) {
+        // Remove comments first
+        code = code.replace(/\/\*[\s\S]*?\*\//g, '');
+        code = code.replace(/\/\/[^\n]*/g, '');
+
         var escaped = code
             .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;');
 
-        escaped = escaped.replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="code-comment">$1</span>');
-        escaped = escaped.replace(/(\/\/[^\n]*)/g, '<span class="code-comment">$1</span>');
         escaped = escaped.replace(/("(?:[^"\\]|\\.)*")/g, '<span class="code-string">$1</span>');
         escaped = escaped.replace(/('(?:[^'\\]|\\.)*')/g, '<span class="code-string">$1</span>');
         escaped = escaped.replace(/(@\w+)/g, '<span class="code-keyword">$1</span>');

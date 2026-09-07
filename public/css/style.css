@@ -1345,11 +1345,6 @@ tr:hover td {
     outline-offset: 2px;
 }
 
-/* Hide comments in code blocks */
-pre code .code-comment {
-    display: none;
-}
-
 /* === Run Code Button === */
 .code-block-wrapper {
     position: relative;
