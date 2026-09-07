@@ -10,6 +10,9 @@ if (empty(trim($code))) {
     exit;
 }
 
+// Decode HTML entities from extracted code
+$code = html_entity_decode($code, ENT_QUOTES | ENT_HTML5);
+
 // Debug: log what we received
 file_put_contents('/tmp/sandbox_debug.log', "=== RAW CODE ===\n" . $code . "\n=== END ===\n");
 
