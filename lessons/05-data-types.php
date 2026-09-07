@@ -1,264 +1,127 @@
-<?php
-$pageTitle = 'PHP Data Types';
-require_once __DIR__ . '/../includes/functions.php';
-$lessonNum = 5;
-$nav = getPrevNextLesson($lessonNum);
-require_once __DIR__ . '/../includes/header.php';
-?>
+<?php $pageTitle = 'PHP Data Types'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
+<?php $num = 5; $prevNext = getPrevNextLesson($num, 'lessons'); ?>
 
 <div class="lesson-header">
-    <span class="lesson-number">Lesson <?= $lessonNum ?></span>
+    <span class="lesson-number">Lesson <?= $num ?></span>
     <h1>PHP Data Types</h1>
     <p class="lesson-desc">Understand the different types of data PHP can work with.</p>
 </div>
 
-<h2>PHP Data Types</h2>
-<p>PHP has eight data types. Each serves a specific purpose:</p>
-
-<table>
-    <thead>
-        <tr><th>Type</th><th>Description</th><th>Example</th></tr>
-    </thead>
-    <tbody>
-        <tr><td><code>string</code></td><td>Text (sequence of characters)</td><td><code>"Hello"</code></td></tr>
-        <tr><td><code>integer</code></td><td>Whole numbers (no decimal)</td><td><code>42</code>, <code>-7</code></td></tr>
-        <tr><td><code>float</code></td><td>Floating-point numbers (decimal)</td><td><code>3.14</code>, <code>-0.5</code></td></tr>
-        <tr><td><code>boolean</code></td><td>True or false</td><td><code>true</code>, <code>false</code></td></tr>
-        <tr><td><code>array</code></td><td>Collection of values</td><td><code>[1, 2, 3]</code></td></tr>
-        <tr><td><code>NULL</code></td><td>No value / empty</td><td><code>null</code></td></tr>
-        <tr><td><code>object</code></td><td>Instances of classes</td><td><code>new stdClass()</code></td></tr>
-        <tr><td><code>resource</code></td><td>External references (files, DB)</td><td><code>fopen()</code> result</td></tr>
-    </tbody>
-</table>
-
-<h2>Strings</h2>
-<p>A string is a sequence of characters. You can use single or double quotes:</p>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea data-example="<?php echo base64_encode('<?php
-// Single-quoted strings: literal text, no variable parsing
-$single = \'Hello World\';
-echo "Single: " . $single;
-echo "\n";
-
-// Double-quoted strings: variables are parsed
-$name = "Alice";
-$double = "Hello $name";
-echo "Double: " . $double;
-echo "\n";
-
-// Special characters in double quotes
-echo "Line one\nLine two\n";
-echo "Tab\there\n";
-
-// Length of a string
-echo "Length: " . strlen("Hello") . " characters";
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<h2>Integers</h2>
-<p>Integers are whole numbers without a decimal point. They can be positive, negative, or zero.</p>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea data-example="<?php echo base64_encode('<?php
-$positive = 42;
-$negative = -7;
-$zero = 0;
-
-echo "Positive: " . $positive;
-echo "\n";
-echo "Negative: " . $negative;
-echo "\n";
-echo "Zero: " . $zero;
-echo "\n";
-
-// Check if a value is an integer
-echo "42 is int: " . (is_int(42) ? "Yes" : "No");
-echo "\n";
-echo "42.0 is int: " . (is_int(42.0) ? "Yes" : "No");
-echo "\n";
-
-// Integer overflow
-echo "Max PHP int: " . PHP_INT_MAX;
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<h2>Floats</h2>
-<p>Floats (floating-point numbers) have decimal points.</p>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea data-example="<?php echo base64_encode('<?php
-$pi = 3.14159;
-$temperature = -2.5;
-$price = 19.99;
-
-echo "Pi: " . $pi;
-echo "\n";
-echo "Temperature: " . $temperature . " degrees";
-echo "\n";
-echo "Price: $" . $price;
-echo "\n";
-
-// Check float type
-echo "3.14 is float: " . (is_float(3.14) ? "Yes" : "No");
-echo "\n";
-
-// Rounding
-echo "Rounded pi: " . round($pi, 2);
-echo "\n";
-echo "Ceiling: " . ceil(4.2);    // Rounds up
-echo "\n";
-echo "Floor: " . floor(4.8);     // Rounds down
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<h2>Booleans</h2>
-<p>A boolean represents a true or false value.</p>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea data-example="<?php echo base64_encode('<?php
-$isActive = true;
-$isDeleted = false;
-
-echo "Active: " . var_export($isActive, true);
-echo "\n";
-echo "Deleted: " . var_export($isDeleted, true);
-echo "\n";
-
-// Booleans from comparisons
-echo "5 > 3 is: " . var_export(5 > 3, true);
-echo "\n";
-echo "5 < 3 is: " . var_export(5 < 3, true);
-echo "\n";
-echo "5 == 5 is: " . var_export(5 == 5, true);
-echo "\n";
-
-// Truthy and falsy values
-// In PHP, these values are considered "falsy":
-echo "0 is falsy: " . var_export((bool)0, true);
-echo "\n";
-echo "1 is truthy: " . var_export((bool)1, true);
-echo "\n";
-echo "\"\" is falsy: " . var_export((bool)"", true);
-echo "\n";
-echo "\"hello\" is truthy: " . var_export((bool)"hello", true);
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<h2>NULL</h2>
-<p>The <code>null</code> type has only one value: <code>null</code>. It represents an empty or undefined variable.</p>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea data-example="<?php echo base64_encode('<?php
-// A variable with no value
-$nothing = null;
-
-echo "Value: " . var_export($nothing, true);
-echo "\n";
-echo "Is null: " . var_export(is_null($nothing), true);
-echo "\n";
-
-// Unset variable is also null
-$something = "Hello";
-echo "Before unset: " . var_export($something, true);
-echo "\n";
-
-// You cannot unset in sandbox, so show null directly:
-$empty = null;
-echo "Is empty null? " . var_export($empty === null, true);
-echo "\n";
-
-// NULL is the only value where == returns true for both null and false
-echo "null == false: " . var_export(null == false, true);
-echo "\n";
-echo "null === false: " . var_export(null === false, true);
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<h2>Type Checking Functions</h2>
-
-<div class="syntax-ref">
-    <h4>Syntax: Type Checking</h4>
-    <code>gettype($var)      // Returns type as string: "integer", "string", etc.</code>
-    <code>is_int($var)       // Checks if integer</code>
-    <code>is_string($var)    // Checks if string</code>
-    <code>is_float($var)     // Checks if float</code>
-    <code>is_bool($var)      // Checks if boolean</code>
-    <code>is_array($var)     // Checks if array</code>
-    <code>is_null($var)      // Checks if null</code>
-</div>
-
-<div class="exercise">
-    <h4>Practice Exercises</h4>
+<h2>Part 1: Activate Prior Knowledge</h2>
+<p>Connect to what students already know:</p>
+<div class="info-box note">
+    <div class="box-title">Review Questions</div>
     <ol>
-        <li>Create one variable of each basic type (string, int, float, bool, null) and use <code>gettype()</code> to print each type</li>
-        <li>What happens when you add a string "5" to the number 10? Try it and explain why</li>
-        <li>Use <code>var_dump()</code> to display the full details of different variable types</li>
+        <li>What types of information do you deal with every day? (text messages, numbers, photos, true/false questions)</li>
+        <li>If you were organizing items in a closet, would you put shoes with clothes? Why or why not?</li>
+        <li>In the previous lesson, we stored different kinds of data in variables. What kinds of data did we use?</li>
     </ol>
 </div>
 
-<div class="lesson-nav">
-    <?php if ($nav['prev']): ?>
-        <a href="<?= lessonUrl($nav['prev']['num'], $nav['prev']['slug']) ?>">&larr; <?= htmlspecialchars($nav['prev']['title']) ?></a>
-    <?php endif; ?>
-    <?php if ($nav['next']): ?>
-        <a href="<?= lessonUrl($nav['next']['num'], $nav['next']['slug']) ?>"><?= htmlspecialchars($nav['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
+<h2>Part 2: Acquire New Knowledge</h2>
+
+<h3>Definition</h3>
+<p>Data types specify what kind of value a variable can hold. PHP has eight data types, each designed for specific kinds of information.</p>
+
+<h3>Analogy</h3>
+<p>Data types are like different containers in your kitchen: you store liquids in cups, solid food in boxes, and frozen items in the freezer. Each container is designed for a specific type of item - putting the wrong item in the wrong container causes problems.</p>
+
+<h3>How It Works (Step by Step)</h3>
+<p>1. String: Text data enclosed in quotes ("Hello" or 'Hello')</p>
+<p>2. Integer: Whole numbers without decimals (42, -7, 0)</p>
+<p>3. Float: Numbers with decimals (3.14, -0.5)</p>
+<p>4. Boolean: True or false values (true, false)</p>
+<p>5. Array: Collections of values ([1, 2, 3])</p>
+<p>6. NULL: Empty or no value (null)</p>
+
+<h3>Example</h3>
+<pre><code class="language-php">&lt;?php
+// Different data types
+$name = "Alice";          // String - text
+$age = 20;                // Integer - whole number
+$price = 19.99;           // Float - decimal number
+$isActive = true;         // Boolean - true/false
+$scores = [95, 87, 92];   // Array - collection
+$empty = null;            // NULL - no value
+
+// Check types with gettype()
+echo "Name type: " . gettype($name);
+echo "\n";
+echo "Age type: " . gettype($age);
+echo "\n";
+echo "Price type: " . gettype($price);
+echo "\n";
+echo "Active type: " . gettype($isActive);
+echo "\n";
+echo "Scores type: " . gettype($scores);
+echo "\n";
+echo "Empty type: " . gettype($empty);
+?&gt;
+</code></pre>
+<strong>Output:</strong>
+<pre>Name type: string
+Age type: integer
+Price type: double
+Active type: boolean
+Scores type: array
+Empty type: NULL</pre>
+
+<h2>Part 3: Apply New Knowledge</h2>
+
+<h3>Real-World Applications</h3>
+<ul>
+    <li>Choosing the right data type prevents errors in calculations</li>
+    <li>Proper data types ensure data validation and security</li>
+    <li>Understanding types helps with database storage and retrieval</li>
+</ul>
+
+<h3>Tips for Success</h3>
+<ul>
+    <li>Use is_int(), is_string(), is_float() to check specific types</li>
+    <li>Use gettype() to see the type of any variable</li>
+    <li>Use var_dump() for detailed information during debugging</li>
+</ul>
+
+<h3>Common Mistakes to Avoid</h3>
+<ul>
+    <li>Confusing "5" (string) with 5 (integer) - they behave differently in calculations</li>
+    <li>Forgetting that PHP automatically converts types (type juggling)</li>
+    <li>Not checking types before operations - can lead to unexpected results</li>
+</ul>
+
+<h2>Part 4: Assess Your Learning</h2>
+
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You're building a shopping cart and need to identify what data types to use for different information.</p>
+    <p><strong>Task:</strong> Determine the appropriate data type for each item.</p>
+    <ol>
+        <li>Product name: "Wireless Mouse" - What data type?</li>
+        <li>Product price: 29.99 - What data type?</li>
+        <li>Quantity in stock: 150 - What data type?</li>
+        <li>Is product available: true - What data type?</li>
+        <li>Customer reviews: ["Great!", "Works well", "Good value"] - What data type?</li>
+    </ol>
 </div>
 
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answer 1:</strong> String - product name is text</p>
+        <p><strong>Answer 2:</strong> Float - price has decimals</p>
+        <p><strong>Answer 3:</strong> Integer - quantity is a whole number</p>
+        <p><strong>Answer 4:</strong> Boolean - availability is true/false</p>
+        <p><strong>Answer 5:</strong> Array - reviews is a collection of strings</p>
+        <p><strong>Sample Solution:</strong></p>
+        <pre><code>&lt;?php
+$productName = "Wireless Mouse";     // String
+$productPrice = 29.99;               // Float
+$quantity = 150;                     // Integer
+$isAvailable = true;                 // Boolean
+$reviews = ["Great!", "Works well", "Good value"];  // Array
+?&gt;</code></pre>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

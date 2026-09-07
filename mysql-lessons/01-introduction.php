@@ -1,55 +1,39 @@
-<?php
-$pageTitle = 'Introduction to MySQL';
-require_once __DIR__ . '/../includes/functions.php';
-$lessonNum = 1;
-$nav = getPrevNextLesson($lessonNum, 'mysql-lessons');
-require_once __DIR__ . '/../includes/header.php';
-?>
+<?php $pageTitle = 'Introduction to MySQL'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
+<?php $num = 1; $prevNext = getPrevNextLesson($num, 'mysql-lessons'); ?>
 
 <div class="lesson-header">
-    <span class="lesson-number">MySQL Lesson <?= $lessonNum ?></span>
+    <span class="lesson-number">Lesson <?= $num ?></span>
     <h1>Introduction to MySQL</h1>
     <p class="lesson-desc">Learn what MySQL is, why it matters, and how to get started.</p>
 </div>
 
-<h2>What is MySQL?</h2>
-<p>MySQL is the world's most popular <strong>open-source relational database management system</strong> (RDBMS). It stores and organizes data in tables and uses <strong>SQL</strong> (Structured Query Language) to manage that data.</p>
+<h2>Part 1: Activate Prior Knowledge</h2>
+<div class="info-box note">
+    <div class="box-title">Review Questions</div>
+    <ol>
+        <li>What is a database, and how is it different from a spreadsheet?</li>
+        <li>What does SQL stand for, and what is it used for?</li>
+        <li>Can you name two popular websites that use MySQL?</li>
+    </ol>
+</div>
 
-<h2>Why Learn MySQL?</h2>
-<ul>
-    <li>Powers millions of websites: WordPress, Facebook, Twitter, YouTube</li>
-    <li>Essential for backend web development with PHP</li>
-    <li>Fast, reliable, and scalable</li>
-    <li>Free and open-source</li>
-    <li>SQL skills transfer to PostgreSQL, SQLite, and other databases</li>
-</ul>
+<h2>Part 2: Acquire New Knowledge</h2>
 
-<h2>Key Concepts</h2>
+<h3>Definition</h3>
+<p>MySQL is the world's most popular <strong>open-source relational database management system (RDBMS)</strong>. It stores and organizes data in tables and uses <strong>SQL</strong> (Structured Query Language) to manage that data.</p>
 
-<table>
-    <thead>
-        <tr><th>Term</th><th>Meaning</th></tr>
-    </thead>
-    <tbody>
-        <tr><td><strong>Database</strong></td><td>A collection of related tables (like a spreadsheet workbook)</td></tr>
-        <tr><td><strong>Table</strong></td><td>A structured set of rows and columns (like a single spreadsheet)</td></tr>
-        <tr><td><strong>Row</strong></td><td>A single record in a table (like one row in a spreadsheet)</td></tr>
-        <tr><td><strong>Column</strong></td><td>A field/attribute in a table (like one column header)</td></tr>
-        <tr><td><strong>SQL</strong></td><td>Structured Query Language &mdash; the language used to talk to databases</td></tr>
-        <tr><td><strong>Primary Key</strong></td><td>A unique identifier for each row in a table</td></tr>
-    </tbody>
-</table>
+<h3>Analogy</h3>
+<p>Think of MySQL as a <strong>digital filing cabinet</strong>. The cabinet holds folders (databases), each folder contains sheets (tables), and each sheet has rows and columns of information. SQL is the language you use to ask the filing cabinet to find, add, change, or remove information.</p>
 
-<h2>How MySQL Works</h2>
+<h3>How It Works</h3>
 <ol>
     <li>You write <strong>SQL statements</strong> (commands)</li>
     <li>Send them to the <strong>MySQL server</strong></li>
     <li>The server processes them and returns <strong>results</strong></li>
 </ol>
 
-<pre><code>-- This is a SQL comment (same as // in PHP)
-
--- Create a database
+<h3>Example</h3>
+<pre><code class="language-sql">-- Create a database
 CREATE DATABASE my_website;
 
 -- Select it for use
@@ -67,62 +51,71 @@ CREATE TABLE users (
 INSERT INTO users (name, email) VALUES ('Alice', 'alice@example.com');
 
 -- Query data
-SELECT * FROM users;</code></pre>
+SELECT * FROM users;
+</code></pre>
+<strong>Output:</strong>
+<pre>+----+-------+-------------------+---------------------+
+| id | name  | email             | created_at          |
++----+-------+-------------------+---------------------+
+|  1 | Alice | alice@example.com | 2026-09-07 10:00:00 |
++----+-------+-------------------+---------------------+</pre>
 
-<h2>Setting Up MySQL</h2>
+<h2>Part 3: Apply New Knowledge</h2>
 
-<h3>Option 1: MySQL Community Server (Recommended)</h3>
-<ol>
-    <li>Download from <a href="https://dev.mysql.com/downloads/mysql/" target="_blank">dev.mysql.com</a></li>
-    <li>Install with default settings</li>
-    <li>Remember your root password!</li>
-</ol>
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>WordPress</strong> — Stores all blog posts, users, and comments in MySQL</li>
+    <li><strong>E-commerce</strong> — Manages products, orders, and customer data</li>
+    <li><strong>Social Media</strong> — Handles user profiles, posts, and connections</li>
+    <li><strong>Banking</strong> — Tracks accounts, transactions, and balances</li>
+</ul>
 
-<h3>Option 2: XAMPP (Includes MySQL + PHP)</h3>
-<ol>
-    <li>Download from <a href="https://www.apachefriends.org/" target="_blank">apachefriends.org</a></li>
-    <li>Start MySQL from the XAMPP control panel</li>
-    <li>Access via phpMyAdmin at <code>http://localhost/phpmyadmin</code></li>
-</ol>
+<h3>Tips for Success</h3>
+<ul>
+    <li>Always remember your <strong>root password</strong> when installing MySQL</li>
+    <li>Start with XAMPP or MAMP for a quick, bundled setup</li>
+    <li>SQL keywords are <strong>case-insensitive</strong>, but table/column names may be case-sensitive</li>
+    <li>Practice using the command line — it builds deeper understanding</li>
+</ul>
 
-<h3>Option 3: MAMP (Mac)</h3>
-<ol>
-    <li>Download from <a href="https://www.mamp.info/" target="_blank">mamp.info</a></li>
-    <li>Start MySQL from MAMP</li>
-</ol>
+<h3>Common Mistakes</h3>
+<ul>
+    <li>Confusing <strong>database</strong> (collection of tables) with <strong>table</strong> (single sheet of data)</li>
+    <li>Forgetting to run <code>USE database_name;</code> before creating tables</li>
+    <li>Not backing up the root password during installation</li>
+</ul>
 
-<h2>Connecting via Command Line</h2>
-
-<pre><code>-- Connect to MySQL (you'll be prompted for password)
-mysql -u root -p
-
--- Once connected, you'll see:
-mysql></code></pre>
-
-<div class="info-box tip">
-    <div class="box-title">Tip</div>
-    <p class="mb-0">SQL commands are <strong>case-insensitive</strong> for keywords (<code>SELECT</code> = <code>select</code>), but table and column names may be case-sensitive depending on your operating system.</p>
-</div>
-
-<div class="exercise">
-    <h4>Practice Exercises</h4>
+<h2>Part 4: Assess Your Learning</h2>
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You are setting up a new online bookstore. You need to create a database to store book information.</p>
+    <p><strong>Task:</strong> Write the SQL commands to complete the following:</p>
     <ol>
-        <li>Install MySQL on your computer (or use XAMPP/MAMP)</li>
-        <li>Connect to MySQL using the command line: <code>mysql -u root -p</code></li>
-        <li>Run <code>SHOW DATABASES;</code> to see the existing databases</li>
-        <li>Run <code>SELECT VERSION();</code> to check your MySQL version</li>
+        <li>Create a database called <code>bookstore</code></li>
+        <li>Select the <code>bookstore</code> database for use</li>
+        <li>Create a table called <code>books</code> with columns: id (auto-increment primary key), title (varchar 200), author (varchar 100), price (decimal), and created_at (timestamp)</li>
     </ol>
 </div>
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answers:</strong></p>
+        <pre><code>-- 1. Create the database
+CREATE DATABASE bookstore;
 
-<div class="lesson-nav">
-    <?php if ($nav['prev']): ?>
-        <a href="<?= lessonUrl($nav['prev']['num'], $nav['prev']['slug'], 'mysql-lessons') ?>">&larr; <?= htmlspecialchars($nav['prev']['title']) ?></a>
-    <?php else: ?>
-        <span></span>
-    <?php endif; ?>
-    <?php if ($nav['next']): ?>
-        <a href="<?= lessonUrl($nav['next']['num'], $nav['next']['slug'], 'mysql-lessons') ?>"><?= htmlspecialchars($nav['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
-</div>
+-- 2. Select it for use
+USE bookstore;
 
+-- 3. Create the books table
+CREATE TABLE books (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    author VARCHAR(100) NOT NULL,
+    price DECIMAL(10,2),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);</code></pre>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

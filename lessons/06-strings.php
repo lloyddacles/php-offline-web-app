@@ -1,253 +1,125 @@
-<?php
-$pageTitle = 'PHP Strings';
-require_once __DIR__ . '/../includes/functions.php';
-$lessonNum = 6;
-$nav = getPrevNextLesson($lessonNum);
-require_once __DIR__ . '/../includes/header.php';
-?>
+<?php $pageTitle = 'PHP Strings'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
+<?php $num = 6; $prevNext = getPrevNextLesson($num, 'lessons'); ?>
 
 <div class="lesson-header">
-    <span class="lesson-number">Lesson <?= $lessonNum ?></span>
+    <span class="lesson-number">Lesson <?= $num ?></span>
     <h1>PHP Strings</h1>
     <p class="lesson-desc">Master working with text using PHP's powerful string functions.</p>
 </div>
 
-<h2>Creating Strings</h2>
-<p>PHP provides several ways to create strings:</p>
-
-<div class="syntax-ref">
-    <h4>Syntax: String Creation</h4>
-    <code>$str = 'Single quotes';        // Literal - no parsing</code>
-    <code>$str = "Double quotes";        // Parses variables and escape sequences</code>
-    <code>$str = &lt;&lt;&lt;HEREDOC             // Heredoc - multiline, parses variables</code>
-    <code>&nbsp;&nbsp;Hello $name</code>
-    <code>HEREDOC;</code>
-</div>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea data-example="<?php echo base64_encode('<?php
-$name = "Alice";
-
-// Single quotes: literal text only
-echo \'Hello $name\';
-echo "\n";
-
-// Double quotes: variables are parsed
-echo "Hello $name";
-echo "\n";
-
-// Escape sequences in double quotes
-echo "Newline here\n";
-echo "Tab\there\n";
-echo "She said \"Hi!\"\n";
-echo "Path: C:\\Users\\Alice\n";
-
-// Heredoc: multiline with variable parsing
-$lang = "PHP";
-$version = "8";
-echo <<<TEXT
-Learning $lang version $version
-This is a heredoc string
-Variables work inside!
-TEXT;
-echo "\n";
-
-// Nowdoc: multiline, no parsing (like single quotes)
-echo <<<\'NOWDOC\'
-This is a nowdoc string.
-Variables like $name are NOT parsed.
-NOWDOC;
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<h2>Common String Functions</h2>
-
-<h3>Length and Case</h3>
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea data-example="<?php echo base64_encode('<?php
-$text = "Hello, World!";
-
-// String length
-echo "Length: " . strlen($text) . " characters";
-echo "\n";
-
-// Uppercase and lowercase
-echo "Upper: " . strtoupper($text);
-echo "\n";
-echo "Lower: " . strtolower($text);
-echo "\n";
-
-// ucfirst: capitalize first letter
-echo "ucfirst: " . ucfirst("hello world");
-echo "\n";
-
-// ucwords: capitalize each word
-echo "ucwords: " . ucwords("hello beautiful world");
-echo "\n";
-
-// str_repeat: repeat a string
-echo str_repeat("-=", 20);
-echo "\n";
-echo str_repeat("Ha", 3);
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<h3>Finding and Replacing</h3>
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea data-example="<?php echo base64_encode('<?php
-$sentence = "The quick brown fox jumps over the lazy dog";
-
-// Find text position (0-based)
-$pos = strpos($sentence, "fox");
-echo "Position of fox: " . $pos;
-echo "\n";
-
-// Check if text exists
-echo "Contains fox: " . (strpos($sentence, "fox") !== false ? "Yes" : "No");
-echo "\n";
-echo "Contains cat: " . (strpos($sentence, "cat") !== false ? "Yes" : "No");
-echo "\n";
-
-// Replace text
-$newSentence = str_replace("fox", "cat", $sentence);
-echo "Replaced: " . $newSentence;
-echo "\n";
-
-// Extract a substring
-// substr(string, start, length)
-$word = substr($sentence, 4, 5);
-echo "Substring (4,5): " . $word;
-echo "\n";
-
-// Reverse a string
-echo "Reversed: " . strrev("Hello");
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<h3>Trimming and Padding</h3>
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea data-example="<?php echo base64_encode('<?php
-// Trim: remove whitespace from both ends
-$messy = "   Hello World   ";
-echo "Original: [" . $messy . "]";
-echo "\n";
-echo "Trimmed: [" . trim($messy) . "]";
-echo "\n";
-echo "Left trim: [" . ltrim($messy) . "]";
-echo "\n";
-echo "Right trim: [" . rtrim($messy) . "]";
-echo "\n";
-
-// Str_pad: pad a string to a certain length
-echo str_pad("Hi", 20, "-");
-echo "\n";
-echo str_pad("Center", 20, "-=", STR_PAD_BOTH);
-echo "\n";
-
-// Strtoupper with trim (chaining functions)
-$name = "  alice  ";
-echo "Clean name: " . trim(strtoupper($name));
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<h2>String Interpolation (Variables in Strings)</h2>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea data-example="<?php echo base64_encode('<?php
-$name = "Alice";
-$age = 20;
-
-// Method 1: Double quotes with simple variables
-echo "Name is $name and age is $age";
-echo "\n";
-
-// Method 2: Double quotes with curly braces (complex expressions)
-echo "Next year I will be " . ($age + 1) . " years old";
-echo "\n";
-echo "Name length: " . strlen($name) . " characters";
-echo "\n";
-
-// Method 3: Concatenation with single quotes
-echo \'Name is \' . $name . \' and age is \' . $age;
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<div class="info-box tip">
-    <div class="box-title">Tip: Curly Braces</div>
-    <p class="mb-0">When accessing array elements or object properties inside a string, always use curly braces: <code>"{$array['key']}"</code> and <code>"{$object->property}"</code>.</p>
-</div>
-
-<div class="exercise">
-    <h4>Practice Exercises</h4>
+<h2>Part 1: Activate Prior Knowledge</h2>
+<p>Connect to what students already know:</p>
+<div class="info-box note">
+    <div class="box-title">Review Questions</div>
     <ol>
-        <li>Write a script that takes a full name and outputs the first name, last name, and character count</li>
-        <li>Create a string and count how many times the letter "e" appears in it using <code>substr_count()</code></li>
-        <li>Write a script that converts a sentence to uppercase, lowercase, and title case</li>
+        <li>How do you work with text messages on your phone? What operations do you perform on text?</li>
+        <li>When you write an essay, how do you count words, find specific text, or change capitalization?</li>
+        <li>In previous lessons, we used strings with echo. What other operations might we need to perform on text?</li>
     </ol>
 </div>
 
-<div class="lesson-nav">
-    <?php if ($nav['prev']): ?>
-        <a href="<?= lessonUrl($nav['prev']['num'], $nav['prev']['slug']) ?>">&larr; <?= htmlspecialchars($nav['prev']['title']) ?></a>
-    <?php endif; ?>
-    <?php if ($nav['next']): ?>
-        <a href="<?= lessonUrl($nav['next']['num'], $nav['next']['slug']) ?>"><?= htmlspecialchars($nav['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
+<h2>Part 2: Acquire New Knowledge</h2>
+
+<h3>Definition</h3>
+<p>Strings are sequences of characters used to represent text. PHP provides many built-in functions to manipulate and work with strings.</p>
+
+<h3>Analogy</h3>
+<p>Strings are like sentences in a book. You can count the words (strlen), change capitalization (strtoupper), find specific words (strpos), replace words (str_replace), or extract parts (substr).</p>
+
+<h3>How It Works (Step by Step)</h3>
+<p>1. Create strings with single quotes ('literal') or double quotes ("parsed")</p>
+<p>2. Use strlen() to get the length of a string</p>
+<p>3. Use strtoupper() and strtolower() to change case</p>
+<p>4. Use strpos() to find text within a string</p>
+<p>5. Use substr() to extract parts of a string</p>
+
+<h3>Example</h3>
+<pre><code class="language-php">&lt;?php
+$name = "Alice";
+echo "Hello, $name!";  // Double quotes parse variables
+echo "\n";
+
+// String length
+echo "Name length: " . strlen($name) . " characters";
+echo "\n";
+
+// Case conversion
+echo "Upper: " . strtoupper($name);
+echo "\n";
+echo "Lower: " . strtolower($name);
+echo "\n";
+
+// Find position of text
+$ sentence = "Hello World";
+echo "Position of 'World': " . strpos($sentence, "World");
+?&gt;
+</code></pre>
+<strong>Output:</strong>
+<pre>Hello, Alice!
+Name length: 5 characters
+Upper: ALICE
+Lower: alice
+Position of 'World': 6</pre>
+
+<h2>Part 3: Apply New Knowledge</h2>
+
+<h3>Real-World Applications</h3>
+<ul>
+    <li>Formatting user input for display (names, addresses, messages)</li>
+    <li>Validating data (checking if email contains @, password length)</li>
+    <li>Creating dynamic content (personalized messages, search results)</li>
+</ul>
+
+<h3>Tips for Success</h3>
+<ul>
+    <li>Use single quotes for literal text (faster, no parsing)</li>
+    <li>Use double quotes when you need variable interpolation</li>
+    <li>Always check if text exists before extracting (strpos returns false if not found)</li>
+</ul>
+
+<h3>Common Mistakes to Avoid</h3>
+<ul>
+    <li>Forgetting that strpos() returns false (not 0) when text isn't found</li>
+    <li>Using double quotes when you don't need variable parsing (wastes resources)</li>
+    <li>Not trimming whitespace from user input (causes comparison errors)</li>
+</ul>
+
+<h2>Part 4: Assess Your Learning</h2>
+
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You're building a user profile system and need to format names properly.</p>
+    <p><strong>Task:</strong> Create a name formatter that processes user input.</p>
+    <ol>
+        <li>Given "alice smith", capitalize the first letter of each word</li>
+        <li>Count how many characters are in the full name</li>
+        <li>Extract just the first name and last name initials</li>
+    </ol>
 </div>
 
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answer 1:</strong> Use ucwords() to capitalize first letters</p>
+        <p><strong>Answer 2:</strong> Use strlen() to count characters</p>
+        <p><strong>Answer 3:</strong> Use substr() to extract initials</p>
+        <p><strong>Sample Solution:</strong></p>
+        <pre><code>&lt;?php
+$name = "alice smith";
+$formatted = ucwords($name);  // "Alice Smith"
+echo "Formatted: " . $formatted;
+echo "\n";
+
+echo "Length: " . strlen($formatted) . " characters";
+echo "\n";
+
+// Extract initials
+$firstInitial = substr($formatted, 0, 1);  // "A"
+$lastInitial = substr($formatted, strpos($formatted, " ") + 1, 1);  // "S"
+echo "Initials: " . $firstInitial . "." . $lastInitial . ".";
+?&gt;</code></pre>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

@@ -7,174 +7,123 @@
     <p class="lesson-desc">Master the fundamental building blocks of Java: classes, methods, statements, and how to output text to the console.</p>
 </div>
 
-<h2>Program Structure</h2>
-<p>Every Java program follows a predictable structure. At the top level, everything lives inside a <strong>class</strong>. Inside the class, the program starts at the <code>main</code> method.</p>
-
-<pre><code>public class MyClass {
-    public static void main(String[] args) {
-        // Your code goes here
-    }
-}</code></pre>
-
-<table>
-    <thead>
-        <tr><th>Keyword</th><th>Meaning</th></tr>
-    </thead>
-    <tbody>
-        <tr><td><strong>public</strong></td><td>Accessible from anywhere</td></tr>
-        <tr><td><strong>class</strong></td><td>Defines a class (blueprint for objects)</td></tr>
-        <tr><td><strong>static</strong></td><td>Belongs to the class, not an instance</td></tr>
-        <tr><td><strong>void</strong></td><td>Method returns nothing</td></tr>
-        <tr><td><strong>main</strong></td><td>Entry point of the program</td></tr>
-        <tr><td><strong>String[] args</strong></td><td>Command-line arguments</td></tr>
-    </tbody>
-</table>
-
-<h2>Statements and Semicolons</h2>
-<p>In Java, every <strong>statement</strong> must end with a <strong>semicolon</strong> <code>;</code>. This tells the compiler where one instruction ends and the next begins. Missing a semicolon is the most common beginner error.</p>
-
+<h2>Part 1: Activate Prior Knowledge</h2>
 <div class="info-box note">
-    <div class="box-title">Analogy</div>
-    <p class="mb-0">Think of semicolons like periods at the end of sentences. Without them, the reader (compiler) cannot tell where one thought ends.</p>
-</div>
-
-<h2>Code Blocks</h2>
-<p>Code blocks are groups of statements enclosed in <strong>curly braces</strong> <code>{ }</code>. They define scope&mdash;where variables and instructions live.</p>
-
-<pre><code>public class Example {
-    public static void main(String[] args) {  // outer block starts
-        int x = 10;
-        if (x > 5) {  // inner block starts
-            System.out.println("x is greater than 5");
-        }  // inner block ends
-    }  // outer block ends
-}</code></pre>
-
-<h2>Comments</h2>
-<p>Comments are ignored by the compiler. Use them to explain your code to other developers (or your future self).</p>
-
-<table>
-    <thead>
-        <tr><th>Type</th><th>Syntax</th><th>Use Case</th></tr>
-    </thead>
-    <tbody>
-        <tr><td>Single-line</td><td><code>// This is a comment</code></td><td>Quick notes on one line</td></tr>
-        <tr><td>Multi-line</td><td><code>/* ... */</code></td><td>Explanations spanning several lines</td></tr>
-        <tr><td>Javadoc</td><td><code>/** ... */</code></td><td>API documentation for classes and methods</td></tr>
-    </tbody>
-</table>
-
-<h2>Printing to the Console</h2>
-<p>Java provides the <code>System.out</code> object for output. There are two main methods:</p>
-
-<table>
-    <thead>
-        <tr><th>Method</th><th>Behavior</th></tr>
-    </thead>
-    <tbody>
-        <tr><td><code>System.out.println()</code></td><td>Prints text and moves to the next line</td></tr>
-        <tr><td><code>System.out.print()</code></td><td>Prints text without a newline</td></tr>
-    </tbody>
-</table>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea class="sandbox-code" data-lang="java" data-example="<?= base64_encode('public class Sandbox {
-    public static void main(String[] args) {
-        System.out.println("=== Java Syntax Basics ===");
-        System.out.println();
-        System.out.println("Line 1: Variables store data.");
-        System.out.println("Line 2: Statements perform actions.");
-        System.out.print("Line 3: ");
-        System.out.println("print keeps you on the same line.");
-        System.out.println();
-        System.out.println("=== End of Program ===");
-    }
-}') ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<div class="info-box tip">
-    <div class="box-title">Think About It</div>
-    <p class="mb-0">What happens if you call <code>System.out.print()</code> multiple times in a row? Where does the cursor end up? Try it in the sandbox above.</p>
-</div>
-
-<h2>Naming Conventions</h2>
-<p>Java has strict naming rules and strong community conventions:</p>
-
-<table>
-    <thead>
-        <tr><th>Element</th><th>Convention</th><th>Example</th></tr>
-    </thead>
-    <tbody>
-        <tr><td>Class names</td><td>PascalCase</td><td><code>MyClass</code>, <code>StudentRecord</code></td></tr>
-        <tr><td>Method names</td><td>camelCase</td><td><code>calculateTotal</code>, <code>getName</code></td></tr>
-        <tr><td>Variable names</td><td>camelCase</td><td><code>studentName</code>, <code>totalScore</code></td></tr>
-        <tr><td>Constants</td><td>UPPER_SNAKE_CASE</td><td><code>MAX_SIZE</code>, <code>PI</code></td></tr>
-    </tbody>
-</table>
-
-<div class="info-box note">
-    <div class="box-title">Rule vs Convention</div>
-    <p class="mb-0">Rules like "no spaces in names" are <strong>enforced by the compiler</strong>. Conventions like PascalCase are <strong>not enforced</strong> but following them makes your code readable to other Java developers.</p>
-</div>
-
-<h2>Putting It All Together</h2>
-<p>Here is a more complete program that uses comments, variables, and multiple print statements:</p>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea class="sandbox-code" data-lang="java" data-example="<?= base64_encode('public class Sandbox {
-    public static void main(String[] args) {
-        // This program demonstrates basic Java syntax
-        String courseName = "Java Fundamentals";
-        int lessonCount = 10;
-
-        /* Display course information
-           This is a multi-line comment */
-        System.out.println("Course: " + courseName);
-        System.out.println("Lessons: " + lessonCount);
-        System.out.println("Status: In Progress");
-    }
-}') ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<div class="exercise">
-    <h4>Practice Exercises</h4>
+    <div class="box-title">Review Questions</div>
     <ol>
-        <li>Write a program that prints a box pattern using <code>System.out.println()</code> with asterisks</li>
-        <li>Use <code>System.out.print()</code> to display your name, age, and city on a single line</li>
-        <li>Add single-line and multi-line comments to explain what your code does</li>
-        <li>What error do you get if you forget the closing brace <code>}</code>?</li>
+        <li>What is the entry point of every Java program? What is it called?</li>
+        <li>What symbol marks the end of a Java statement?</li>
+        <li>Why does Java require code to be enclosed in curly braces <code>{ }</code>?</li>
     </ol>
 </div>
 
-<div class="lesson-nav">
-    <?php if ($prevNext['prev']): ?>
-        <a href="<?= lessonUrl($prevNext['prev']['num'], $prevNext['prev']['slug'], 'java-lessons') ?>" class="prev-link">&larr; Previous: <?= htmlspecialchars($prevNext['prev']['title']) ?></a>
-    <?php endif; ?>
-    <?php if ($prevNext['next']): ?>
-        <a href="<?= lessonUrl($prevNext['next']['num'], $prevNext['next']['slug'], 'java-lessons') ?>" class="next-link">Next: <?= htmlspecialchars($prevNext['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
-</div>
+<h2>Part 2: Acquire New Knowledge</h2>
 
+<h3>Definition</h3>
+<p>Java syntax is the set of rules that defines how programs must be written. Every Java program lives inside a <strong>class</strong>, starts at the <code>main</code> method, and uses <strong>statements</strong> ending with semicolons to perform actions.</p>
+
+<h3>Analogy</h3>
+<p>Think of Java syntax like grammar rules in English. You need a subject and verb to make a sentence. In Java, you need a class, a main method, and properly terminated statements to make a working program.</p>
+
+<h3>How It Works</h3>
+<p>A Java program has this structure:</p>
+<ul>
+    <li><strong>Class</strong> — A container for your code (name must match filename)</li>
+    <li><strong>Main method</strong> — The starting point: <code>public static void main(String[] args)</code></li>
+    <li><strong>Statements</strong> — Individual instructions ending with <code>;</code></li>
+    <li><strong>Comments</strong> — Notes ignored by the compiler (<code>// single-line</code> or <code>/* multi-line */</code>)</li>
+</ul>
+
+<h3>Example</h3>
+<pre><code class="language-java">// This is a single-line comment
+public class SyntaxDemo {
+    public static void main(String[] args) {
+        // Print text to the console
+        System.out.println("Line 1: Java syntax is straightforward!");
+        System.out.print("Line 2: ");       // print without newline
+        System.out.println("Same line continued.");
+
+        /* This is a multi-line comment.
+           It spans multiple lines. */
+        String course = "Java Basics";
+        int lessonNumber = 2;
+        System.out.println("Course: " + course);
+        System.out.println("Lesson: " + lessonNumber);
+    }
+}
+</code></pre>
+<strong>Output:</strong>
+<pre>Line 1: Java syntax is straightforward!
+Line 2: Same line continued.
+Course: Java Basics
+Lesson: 2</pre>
+
+<h2>Part 3: Apply New Knowledge</h2>
+
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>Logging</strong> — <code>System.out.println()</code> is used to debug and track program behavior</li>
+    <li><strong>Code Documentation</strong> — Comments explain complex logic to other developers</li>
+    <li><strong>Code Organization</strong> — Code blocks group related instructions together</li>
+</ul>
+
+<h3>Tips for Success</h3>
+<ul>
+    <li>Use <strong>PascalCase</strong> for class names (e.g., <code>MyClass</code>)</li>
+    <li>Use <strong>camelCase</strong> for method and variable names (e.g., <code>calculateTotal</code>)</li>
+    <li>Use <strong>UPPER_SNAKE_CASE</strong> for constants (e.g., <code>MAX_SIZE</code>)</li>
+    <li>Always use <code>println</code> when you want output on a new line</li>
+</ul>
+
+<h3>Common Mistakes</h3>
+<ul>
+    <li>Forgetting the semicolon — the most common beginner error</li>
+    <li>Mismatched braces — every <code>{</code> must have a matching <code>}</code></li>
+    <li>Capitalizing <code>System</code> incorrectly — it must be uppercase <code>S</code></li>
+    <li>Using <code>print</code> when you meant <code>println</code> (output stays on same line)</li>
+</ul>
+
+<h2>Part 4: Assess Your Learning</h2>
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You are creating a simple profile card program that displays a person's name, age, and city on separate lines.</p>
+    <p><strong>Task:</strong> Write a complete Java program that prints a formatted profile card using proper syntax.</p>
+    <ol>
+        <li>Create a class called <code>ProfileCard</code></li>
+        <li>Use variables to store name, age, and city</li>
+        <li>Print each piece of information on its own line with a label</li>
+        <li>Add at least one single-line comment and one multi-line comment</li>
+    </ol>
+</div>
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answers:</strong></p>
+        <pre><code class="language-java">public class ProfileCard {
+    public static void main(String[] args) {
+        // Store profile information in variables
+        String name = "Alice Johnson";
+        int age = 25;
+        String city = "Manila";
+
+        /* Display the profile card
+           Each piece of info is printed on its own line */
+        System.out.println("=== Profile Card ===");
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+        System.out.println("City: " + city);
+        System.out.println("====================");
+    }
+}
+</code></pre>
+        <p><strong>Output:</strong></p>
+        <pre>=== Profile Card ===
+Name: Alice Johnson
+Age: 25
+City: Manila
+====================</pre>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

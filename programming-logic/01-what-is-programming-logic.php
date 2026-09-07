@@ -1,5 +1,4 @@
 <?php $pageTitle = 'What is Programming Logic?'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
-
 <?php $num = 1; $prevNext = getPrevNextLesson($num, 'programming-logic'); ?>
 
 <div class="lesson-header">
@@ -8,135 +7,171 @@
     <p class="lesson-desc">Discover that programming is really just structured thinking — and you already do it every day.</p>
 </div>
 
-<h2>What is Programming Logic?</h2>
-<p>Programming logic is the ability to break down a problem into clear, ordered steps that a computer can follow. It's not about memorizing code — it's about <strong>thinking in a structured way</strong>.</p>
-<p>Think about making a cup of coffee. Without realizing it, you follow a sequence of instructions:</p>
-<ol>
-    <li>Get a mug</li>
-    <li>Add coffee powder</li>
-    <li>Boil water</li>
-    <li>Pour hot water into the mug</li>
-    <li>Stir</li>
-</ol>
-<p>That's programming logic in action — you just wrote a recipe, which is essentially an algorithm!</p>
-
-<div class="info-box tip">
-    <div class="box-title">Key Insight</div>
-    <p class="mb-0">Every program you'll ever write is just a list of instructions, like a recipe. The computer follows them step by step. Your job is to write instructions that are clear and complete.</p>
+<h2>Part 1: Activate Prior Knowledge</h2>
+<p>Connect to what students already know:</p>
+<div class="info-box note">
+    <div class="box-title">Review Questions</div>
+    <ol>
+        <li>What instructions do you follow every morning when you get ready for school? Write down each step in order.</li>
+        <li>Have you ever followed a cooking recipe? What happens if you skip a step or do them out of order?</li>
+        <li>If you had to teach someone how to make a sandwich, what steps would you give them?</li>
+    </ol>
 </div>
 
-<h2>Why It Matters</h2>
-<p>You can learn every PHP syntax rule and still struggle to build programs if you don't think logically first. Programming logic is the foundation. Syntax is just the language you use to express your logic.</p>
+<h2>Part 2: Acquire New Knowledge</h2>
 
-<table>
-    <thead>
-        <tr><th>Skill</th><th>Analogy</th><th>Importance</th></tr>
-    </thead>
-    <tbody>
-        <tr><td>Programming Logic</td><td>Knowing how to follow a recipe</td><td>Critical — the core skill</td></tr>
-        <tr><td>Syntax</td><td>Knowing the language the recipe is written in</td><td>Important but learnable</td></tr>
-        <tr><td>Libraries/Tools</td><td>Having fancy kitchen gadgets</td><td>Helpful but not essential</td></tr>
-    </tbody>
-</table>
+<h3>Definition</h3>
+<p>Programming logic is the ability to break down a problem into clear, ordered steps that a computer can follow. It's not about memorizing code — it's about <strong>thinking in a structured way</strong>.</p>
+
+<h3>Analogy</h3>
+<p>Think of programming logic like a cooking recipe. A recipe tells you exactly what to do, in what order, and what ingredients to use. If you follow the recipe correctly, you get the same delicious dish every time. Programming works the same way — you write a "recipe" of instructions for the computer to follow.</p>
+
+<h3>How It Works (Step by Step)</h3>
+<p>Programming logic works by following these principles:</p>
+<ol>
+    <li><strong>Identify the problem:</strong> What are you trying to accomplish?</li>
+    <li><strong>Break it down:</strong> Split the problem into smaller, manageable steps.</li>
+    <li><strong>Order the steps:</strong> Arrange them in the correct sequence — order matters!</li>
+    <li><strong>Write clear instructions:</strong> Each step must be specific and unambiguous.</li>
+    <li><strong>Test and verify:</strong> Run through the steps to make sure they produce the right result.</li>
+</ol>
+
+<h3>Example</h3>
+<pre><code class="language-php">// PHP Example: Making a cup of coffee
+echo "Step 1: Get a mug\n";
+echo "Step 2: Add coffee powder\n";
+echo "Step 3: Boil water\n";
+echo "Step 4: Pour hot water into the mug\n";
+echo "Step 5: Stir\n";
+echo "\nThat's programming logic — a recipe for the computer!\n";
+</code></pre>
+<strong>Output:</strong>
+<pre>Step 1: Get a mug
+Step 2: Add coffee powder
+Step 3: Boil water
+Step 4: Pour hot water into the mug
+Step 5: Stir
+
+That's programming logic — a recipe for the computer!</pre>
+
+<h3>Python Example</h3>
+<pre><code class="language-python"># Python Example: Making a cup of coffee
+print("Step 1: Get a mug")
+print("Step 2: Add coffee powder")
+print("Step 3: Boil water")
+print("Step 4: Pour hot water into the mug")
+print("Step 5: Stir")
+print()
+print("That's programming logic — a recipe for the computer!")
+</code></pre>
+<strong>Output:</strong>
+<pre>Step 1: Get a mug
+Step 2: Add coffee powder
+Step 3: Boil water
+Step 4: Pour hot water into the mug
+Step 5: Stir
+
+That's programming logic — a recipe for the computer!</pre>
+
+<h3>Java Example</h3>
+<pre><code class="language-java">// Java Example: Making a cup of coffee
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Step 1: Get a mug");
+        System.out.println("Step 2: Add coffee powder");
+        System.out.println("Step 3: Boil water");
+        System.out.println("Step 4: Pour hot water into the mug");
+        System.out.println("Step 5: Stir");
+        System.out.println();
+        System.out.println("That's programming logic — a recipe for the computer!");
+    }
+}
+</code></pre>
+<strong>Output:</strong>
+<pre>Step 1: Get a mug
+Step 2: Add coffee powder
+Step 3: Boil water
+Step 4: Pour hot water into the mug
+Step 5: Stir
+
+That's programming logic — a recipe for the computer!</pre>
+
+<h2>Part 3: Apply New Knowledge</h2>
+
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>Mobile apps:</strong> Every app on your phone uses programming logic to decide what to show, when to respond, and how to handle your taps.</li>
+    <li><strong>Video games:</strong> Games use logic to determine when a player scores, loses, or levels up.</li>
+    <li><strong>Websites:</strong> When you fill out a form online, programming logic validates your input and processes your submission.</li>
+    <li><strong>Smart devices:</strong> Your phone's alarm, automatic lights, and voice assistants all follow programmed logic.</li>
+</ul>
+
+<h3>Tips for Success</h3>
+<ul>
+    <li>Always write out your steps on paper before writing code — this builds your logic skills.</li>
+    <li>Think of each instruction as if you're explaining it to someone who has never done the task before.</li>
+    <li>Practice by writing algorithms for everyday activities like getting dressed or making breakfast.</li>
+</ul>
+
+<h3>Common Mistakes to Avoid</h3>
+<ul>
+    <li><strong>Skipping steps:</strong> Don't assume the computer "knows" what to do — every step must be explicit.</li>
+    <li><strong>Wrong order:</strong> Putting steps out of sequence leads to incorrect results, just like a recipe out of order.</li>
+    <li><strong>Focusing on syntax first:</strong> Learn to think logically before worrying about code syntax.</li>
+</ul>
+
+<h2>Part 4: Assess Your Learning</h2>
 
 <div class="info-box note">
-    <div class="box-title">Real-World Analogy</div>
-    <p class="mb-0">A chef who understands cooking principles can adapt to any kitchen. A programmer who understands logic can adapt to any programming language. Logic comes first.</p>
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> Your friend asks you to teach them how to make a peanut butter and jelly sandwich. They have never made one before and need very specific instructions.</p>
+    <p><strong>Task:</strong> Write down the exact steps to make a peanut butter and jelly sandwich, as if explaining to someone who has never seen the ingredients before. Be as specific as possible.</p>
+    <ol>
+        <li>List every step in order, from getting the ingredients to cleaning up.</li>
+        <li>Identify which steps depend on other steps being completed first.</li>
+        <li>What would happen if the steps were done in a different order?</li>
+    </ol>
 </div>
 
-<h2>Programming is Just Thinking</h2>
-<p>Here are everyday activities that use the same thinking patterns as programming:</p>
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answer 1:</strong> A sample algorithm might be: 1) Get two slices of bread. 2) Open the peanut butter jar. 3) Use a knife to scoop peanut butter. 4) Spread peanut butter on one slice. 5) Open the jelly jar. 6) Use a clean knife to scoop jelly. 7) Spread jelly on the other slice. 8) Press the two slices together. 9) Cut the sandwich in half. 10) Clean the knife and close the jars.</p>
+        <p><strong>Answer 2:</strong> Steps 4 and 7 depend on steps 2-3 and 5-6 respectively (you can't spread until you've scooped). Step 8 depends on both slices being prepared. Step 1 must come first.</p>
+        <p><strong>Answer 3:</strong> If you press the slices together before spreading anything, you get plain bread. If you try to spread before opening the jar, you can't do it. Order matters — this is sequential logic in action.</p>
+        <p><strong>Sample Solution:</strong></p>
+        <pre><code>// This is NOT code — it's an algorithm written in plain English
+// The key is being precise and complete
 
-<h3>Getting Dressed</h3>
-<p>You put on socks <em>before</em> shoes. You put on a shirt <em>before</em> a jacket. Order matters — that's sequential logic.</p>
+// Step 1: Gather ingredients
+// - 2 slices of bread
+// - Peanut butter
+// - Jelly
+// - A knife
 
-<h3>Following Directions</h3>
-<p>"Turn left at the traffic light, then go straight for 2 blocks, then turn right." That's an algorithm — a step-by-step procedure to reach a destination.</p>
+// Step 2: Prepare the first slice
+// - Open the peanut butter jar
+// - Use the knife to scoop peanut butter
+// - Spread it evenly on one slice of bread
 
-<h3>Assembling Furniture</h3>
-<p>You read the instructions. Step 1: Attach leg A to panel B. Step 2: Repeat for all four legs. Step 3: Flip the table. Each step depends on the previous one being done correctly.</p>
+// Step 3: Prepare the second slice
+// - Use a CLEAN knife (or wipe the first one)
+// - Open the jelly jar
+// - Scoop jelly
+// - Spread it evenly on the other slice
 
-<div class="exercise">
-    <h4>Think About It</h4>
-    <p>Write down the exact steps to make a sandwich. Be as specific as possible — as if explaining to someone who has never made one. That's programming logic!</p>
-</div>
+// Step 4: Combine
+// - Place the two slices together (peanut butter and jelly facing each other)
 
-<h2>The Difference Between Syntax and Logic</h2>
-<p><strong>Syntax</strong> is the rules of a programming language — the grammar. <strong>Logic</strong> is the strategy behind solving the problem.</p>
+// Step 5: Optional finishing
+// - Cut the sandwich in half diagonally or down the middle
 
-<p>Consider this analogy: if you're writing a letter in English, syntax is grammar and spelling. Logic is the argument and structure of your letter. You can have perfect grammar but a nonsensical letter. Similarly, you can write syntactically correct code that doesn't solve the problem.</p>
-
-<table>
-    <thead>
-        <tr><th>Scenario</th><th>Good Logic + Bad Syntax</th><th>Bad Logic + Good Syntax</th></tr>
-    </thead>
-    <tbody>
-        <tr><td>Result</td><td>Won't run — but the idea is right</td><td>Runs — but produces wrong results</td></tr>
-        <tr><td>Fix</td><td>Learn the syntax rules</td><td>Re-think the approach</td></tr>
-        <tr><td>Difficulty</td><td>Easy to fix</td><td>Harder — requires rethinking</td></tr>
-    </tbody>
-</table>
-
-<div class="info-box warning">
-    <div class="box-title">Common Mistake</div>
-    <p class="mb-0">Beginners often focus on memorizing syntax while neglecting logic. Practice thinking through problems on paper before writing code.</p>
-</div>
-
-<h2>Common Myths About Programming Talent</h2>
-<p>Many people believe you need to be "naturally gifted" to program. That's not true.</p>
-<ul>
-    <li><strong>Myth:</strong> You need to be good at math. <strong>Reality:</strong> Most programming uses basic logic, not advanced math.</li>
-    <li><strong>Myth:</strong> You need to start young. <strong>Reality:</strong> People learn programming at every age.</li>
-    <li><strong>Myth:</strong> Real programmers code in their head. <strong>Reality:</strong> Even experts sketch out ideas on paper first.</li>
-    <li><strong>Myth:</strong> If you don't get it immediately, you're not cut out for it. <strong>Reality:</strong> Programming is a skill built through practice, not talent.</li>
-</ul>
-
-<h2>Your First Logic Exercise</h2>
-<p>Let's see sequential execution in PHP — the computer executes instructions from top to bottom, one at a time. Run the code below and observe the output:</p>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
+// Step 6: Cleanup
+// - Close both jars
+// - Wash the knife
+// - Put away ingredients</code></pre>
     </div>
-    <textarea class="sandbox-code" data-example="<?= base64_encode('<?php
-echo "Step 1: Wake up\n";
-echo "Step 2: Brush teeth\n";
-echo "Step 3: Make coffee\n";
-echo "Step 4: Start coding\n";
-echo "\n";
-echo "Notice: Each step runs in order, top to bottom.\n";
-echo "The computer never skips a step or does them out of order.\n";
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
+</details>
 
-<div class="info-box tip">
-    <div class="box-title">Practice</div>
-    <p class="mb-0">Try changing the order of the echo statements. What happens when Step 3 comes before Step 1? This is why order matters in programming.</p>
-</div>
-
-<h2>Summary</h2>
-<ul>
-    <li>Programming logic is structured thinking — breaking problems into ordered steps</li>
-    <li>It's a skill anyone can learn, not a natural talent</li>
-    <li>Syntax is important, but logic is the foundation</li>
-    <li>You already use programming logic in everyday life</li>
-</ul>
-
-<div class="lesson-nav">
-    <?php if ($prevNext['prev']): ?>
-        <a href="<?= lessonUrl($prevNext['prev']['num'], $prevNext['prev']['slug'], 'programming-logic') ?>" class="prev-link">&larr; Previous: <?= htmlspecialchars($prevNext['prev']['title']) ?></a>
-    <?php endif; ?>
-    <?php if ($prevNext['next']): ?>
-        <a href="<?= lessonUrl($prevNext['next']['num'], $prevNext['next']['slug'], 'programming-logic') ?>" class="next-link">Next: <?= htmlspecialchars($prevNext['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
-</div>
-
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

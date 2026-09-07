@@ -1,32 +1,40 @@
-<?php
-$pageTitle = 'Database Normalization';
-require_once __DIR__ . '/../includes/functions.php';
-$lessonNum = 5;
-$nav = getPrevNextLesson($lessonNum, 'dbms-lessons');
-require_once __DIR__ . '/../includes/header.php';
-?>
+<?php $pageTitle = 'Database Normalization'; require_once __DIR__ . '/../includes/functions.php'; $num = 5; $prevNext = getPrevNextLesson($num, 'dbms-lessons'); require_once __DIR__ . '/../includes/header.php'; ?>
 
 <div class="lesson-header">
-    <span class="lesson-number">DBMS Lesson <?= $lessonNum ?></span>
+    <span class="lesson-number">Lesson <?= $num ?></span>
     <h1>Database Normalization</h1>
     <p class="lesson-desc">Eliminate data redundancy and improve data integrity through normalization.</p>
 </div>
 
-<h2>What is Normalization?</h2>
-<p>Normalization is the process of <strong>organizing data</strong> to reduce redundancy and improve data integrity. It involves breaking large tables into smaller, well-structured tables and defining relationships between them.</p>
+<h2>Part 1: Activate Prior Knowledge</h2>
+<div class="info-box note">
+    <div class="box-title">Review Questions</div>
+    <ol>
+        <li>In Lesson 4, you learned about keys and constraints. Why is it important that a primary key is unique and never NULL?</li>
+        <li>Imagine you store a student's name, email, and department name all in one table. If the department name changes, how many rows would you need to update?</li>
+        <li>What is a "dependency" between two columns? Give an example: if you know a student's ID, what else can you determine?</li>
+    </ol>
+</div>
 
-<h2>Why Normalize?</h2>
+<h2>Part 2: Acquire New Knowledge</h2>
+
+<h3>Definition</h3>
+<p><strong>Normalization</strong> is the process of organizing data to reduce redundancy and improve data integrity. It involves breaking large tables into smaller, well-structured tables and defining relationships between them.</p>
+
+<h3>Analogy</h3>
+<p>Think of normalization like <strong>organizing a cluttered closet</strong>. Instead of throwing all clothes into one big pile (unnormalized), you separate them: shirts in one drawer, pants in another, socks in a third. Each item has one proper place. When you need to find something, you know exactly where to look. When you buy new pants, you put them in the pants drawer — not scattered across the closet.</p>
+
+<h3>Why Normalize?</h3>
 <ul>
     <li><strong>Reduce redundancy</strong> — Don't store the same data in multiple places</li>
     <li><strong>Prevent anomalies</strong> — Avoid insertion, update, and deletion problems</li>
     <li><strong>Improve consistency</strong> — Data changes only need to be made in one place</li>
 </ul>
 
-<h2>The Anomalies</h2>
+<h3>The Anomalies</h3>
 
-<h3>Insertion Anomaly</h3>
+<h4>Insertion Anomaly</h4>
 <p>You can't add certain data without other unrelated data.</p>
-
 <pre><code>-- BAD: All in one table
 CREATE TABLE student_courses (
     student_name VARCHAR(100),
@@ -37,26 +45,25 @@ CREATE TABLE student_courses (
 );
 
 -- PROBLEM: Can't add a new course without a student!
-INSERT INTO student_courses (course_name, course_credits, teacher_name)
-VALUES ('Physics', 4, 'Dr. Newton');
+-- INSERT INTO student_courses (course_name, course_credits, teacher_name)
+-- VALUES ('Physics', 4, 'Dr. Newton');
 -- ERROR: student_name and student_email are NOT NULL</code></pre>
 
-<h3>Update Anomaly</h3>
+<h4>Update Anomaly</h4>
 <p>Updating one piece of data requires updating multiple rows.</p>
-
 <pre><code>-- PROBLEM: If Dr. Newton changes name, we must update ALL rows
 -- where teacher_name = 'Dr. Newton'
 -- Missing even one row creates inconsistent data!</code></pre>
 
-<h3>Deletion Anomaly</h3>
+<h4>Deletion Anomaly</h4>
 <p>Deleting one record unintentionally deletes other data.</p>
-
 <pre><code>-- PROBLEM: If we delete the last student in a course,
 -- we also lose all information about that course!</code></pre>
 
-<h2>First Normal Form (1NF)</h2>
-<p><strong>Rule:</strong> Each cell must contain a single (atomic) value. No repeating groups.</p>
+<h3>Example: Normalization Steps</h3>
 
+<h4>First Normal Form (1NF)</h4>
+<p><strong>Rule:</strong> Each cell must contain a single (atomic) value. No repeating groups.</p>
 <pre><code>-- BAD: Violates 1NF (multiple values in one cell)
 CREATE TABLE students_bad (
     id INT PRIMARY KEY,
@@ -76,18 +83,8 @@ CREATE TABLE enrollments (
     PRIMARY KEY (student_id, course_name)
 );</code></pre>
 
-<table>
-    <thead>
-        <tr><th colspan="3">1NF Checklist</th></tr>
-    </thead>
-    <tbody>
-        <tr><td>Each column contains only atomic values</td><td>Each row is unique</td><td>No repeating groups</td></tr>
-    </tbody>
-</table>
-
-<h2>Second Normal Form (2NF)</h2>
+<h4>Second Normal Form (2NF)</h4>
 <p><strong>Rule:</strong> Must be in 1NF + every non-key column must depend on the <strong>entire</strong> primary key (not just part of it).</p>
-
 <pre><code>-- BAD: Violates 2NF (course_name depends only on course_id, not student_id)
 CREATE TABLE enrollments_bad (
     student_id INT,
@@ -110,9 +107,8 @@ CREATE TABLE enrollments_good (
     PRIMARY KEY (student_id, course_id)
 );</code></pre>
 
-<h2>Third Normal Form (3NF)</h2>
+<h4>Third Normal Form (3NF)</h4>
 <p><strong>Rule:</strong> Must be in 2NF + no <strong>transitive dependencies</strong> (non-key columns shouldn't depend on other non-key columns).</p>
-
 <pre><code>-- BAD: Violates 3NF (department_name depends on department_id, not directly on id)
 CREATE TABLE employees_bad (
     id INT PRIMARY KEY,
@@ -134,8 +130,7 @@ CREATE TABLE employees_good (
     FOREIGN KEY (department_id) REFERENCES departments(id)
 );</code></pre>
 
-<h2>Normalization Summary</h2>
-
+<h3>Normalization Summary</h3>
 <table>
     <thead>
         <tr><th>Normal Form</th><th>Rule</th><th>Eliminates</th></tr>
@@ -147,51 +142,86 @@ CREATE TABLE employees_good (
     </tbody>
 </table>
 
-<h2>Practical Example: Normalizing a Student Table</h2>
+<h2>Part 3: Apply New Knowledge</h2>
 
-<pre><code>-- UNNORMALIZED: One big flat table
-CREATE TABLE student_data (
-    student_name VARCHAR(100),
-    student_email VARCHAR(100),
-    course1 VARCHAR(50),
-    course2 VARCHAR(50),
-    course3 VARCHAR(50),
-    teacher1 VARCHAR(50),
-    teacher2 VARCHAR(50),
-    teacher3 VARCHAR(50)
-);
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>Banking:</strong> Normalizing account and transaction data prevents inconsistencies where a customer's address might differ across tables.</li>
+    <li><strong>E-commerce:</strong> Product catalogs normalized to 3NF ensure that product descriptions exist in one place, reducing storage and update anomalies.</li>
+    <li><strong>Healthcare:</strong> Patient records normalized prevent dangerous inconsistencies where a patient's medical history might differ between departments.</li>
+</ul>
 
--- After 1NF: Remove repeating groups
--- → Students table + Enrollments table
+<h3>Tips for Success</h3>
+<ul>
+    <li><strong>Target 3NF for most applications:</strong> Higher normal forms are rarely needed in practice.</li>
+    <li><strong>Work step by step:</strong> Start with 1NF, then move to 2NF, then 3NF.</li>
+    <li><strong>Identify dependencies first:</strong> Before normalizing, map out which columns depend on which.</li>
+</ul>
 
--- After 2NF: Remove partial dependencies
--- → Students + Courses + Enrollments
+<h3>Common Mistakes</h3>
+<ul>
+    <li><strong>Over-normalizing:</strong> Splitting data into too many tables makes queries complex and slow. Stop at 3NF unless you have a specific reason to go further.</li>
+    <li><strong>Ignoring anomalies:</strong> Skipping normalization leads to data corruption when records are inserted, updated, or deleted.</li>
+    <li><strong>Confusing 2NF with 3NF:</strong> 2NF is about partial dependencies on composite keys; 3NF is about transitive dependencies between non-key columns.</li>
+</ul>
 
--- After 3NF: Remove transitive dependencies
--- → Students + Courses + Teachers + Enrollments</code></pre>
-
-<div class="info-box tip">
-    <div class="box-title">Tip</div>
-    <p class="mb-0">For most applications, <strong>3NF is the target</strong>. Higher normal forms (BCNF, 4NF, 5NF) exist but are rarely needed in practice.</p>
-</div>
-
-<div class="exercise">
-    <h4>Practice Exercises</h4>
+<h2>Part 4: Assess Your Learning</h2>
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> A small clinic has one big table called <code>patient_visits</code> with these columns: visit_id, patient_name, patient_email, doctor_name, doctor_specialty, visit_date, diagnosis, medication. The clinic owner complains that when a doctor changes their specialty, they have to update many rows. Also, they can't add a new doctor without a patient visit.</p>
+    <p><strong>Task:</strong></p>
     <ol>
-        <li>What problems does normalization solve?</li>
-        <li>Given a flat table of order data, normalize it to 3NF</li>
-        <li>What is the difference between 2NF and 3NF?</li>
-        <li>Create an unnormalized table for a hospital, then normalize it step by step</li>
+        <li>Identify which anomalies (insertion, update, deletion) the clinic is experiencing.</li>
+        <li>Normalize the table to 1NF, 2NF, and 3NF. For each step, explain what you changed and why.</li>
+        <li>Write the CREATE TABLE statements for your final 3NF design.</li>
     </ol>
 </div>
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answers:</strong></p>
+        <ol>
+            <li>
+                <ul>
+                    <li><strong>Update Anomaly:</strong> Doctor specialty is repeated in every visit row. If a doctor changes specialty, every row must be updated.</li>
+                    <li><strong>Insertion Anomaly:</strong> Cannot add a new doctor without a patient visit (visit_id, visit_date, etc. would be NULL).</li>
+                    <li><strong>Deletion Anomaly:</strong> If the last visit for a doctor is deleted, all information about that doctor is lost.</li>
+                </ul>
+            </li>
+            <li>
+                <ul>
+                    <li><strong>1NF:</strong> Ensure all values are atomic. The current table already satisfies 1NF if each cell has one value. If "medication" contained multiple medications per visit, split into a separate table.</li>
+                    <li><strong>2NF:</strong> Remove partial dependencies. patient_name and patient_email depend only on patient info (not on visit_id). Create a <code>patients</code> table. doctor_name and doctor_specialty depend only on the doctor. Create a <code>doctors</code> table.</li>
+                    <li><strong>3NF:</strong> Remove transitive dependencies. If doctor_specialty depends on doctor_name (which depends on visit), create a separate <code>doctors</code> table with specialty as its own column. Final tables: patients, doctors, visits.</li>
+                </ul>
+            </li>
+            <li>
+                <pre><code>CREATE TABLE patients (
+    patient_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL
+);
 
-<div class="lesson-nav">
-    <?php if ($nav['prev']): ?>
-        <a href="<?= lessonUrl($nav['prev']['num'], $nav['prev']['slug'], 'dbms-lessons') ?>">&larr; <?= htmlspecialchars($nav['prev']['title']) ?></a>
-    <?php endif; ?>
-    <?php if ($nav['next']): ?>
-        <a href="<?= lessonUrl($nav['next']['num'], $nav['next']['slug'], 'dbms-lessons') ?>"><?= htmlspecialchars($nav['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
-</div>
+CREATE TABLE doctors (
+    doctor_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    specialty VARCHAR(100) NOT NULL
+);
 
+CREATE TABLE visits (
+    visit_id INT AUTO_INCREMENT PRIMARY KEY,
+    patient_id INT NOT NULL,
+    doctor_id INT NOT NULL,
+    visit_date DATE NOT NULL,
+    diagnosis TEXT,
+    medication VARCHAR(200),
+    FOREIGN KEY (patient_id) REFERENCES patients(patient_id),
+    FOREIGN KEY (doctor_id) REFERENCES doctors(doctor_id)
+);</code></pre>
+            </li>
+        </ol>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

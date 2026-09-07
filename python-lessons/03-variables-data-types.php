@@ -1,105 +1,115 @@
 <?php $pageTitle = 'Variables & Data Types'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
 <?php $num = 3; $prevNext = getPrevNextLesson($num, 'python-lessons'); ?>
 
-<div class="lesson-container">
-    <h1>Lesson 3: Variables & Data Types</h1>
-    
-    <div class="lesson-meta">
-        <span>Beginner</span> | <span>Estimated time: 35 minutes</span>
-    </div>
-
-    <section class="lesson-section">
-        <h2>Variables: No Declaration Needed</h2>
-        <p>In Python, you don't declare variable types. Simply assign a value and Python infers the type automatically:</p>
-        
-        <pre><code># Python - just assign!
-name = "Alice"      # string
-age = 25            # integer
-height = 5.6        # float
-is_student = True   # boolean
-
-# vs JavaScript (needs let/const/var)
-# let name = "Alice";
-
-# vs Java (needs type declaration)
-# String name = "Alice";</code></pre>
-    </section>
-
-    <section class="lesson-section">
-        <h2>Naming Rules</h2>
-        <table>
-            <thead>
-                <tr><th>Rule</th><th>Valid</th><th>Invalid</th></tr>
-            </thead>
-            <tbody>
-                <tr><td>Start with letter or _</td><td><code>name</code>, <code>_private</code></td><td><code>2name</code>, <code>-var</code></td></tr>
-                <tr><td>Letters, numbers, _ only</td><td><code>user_name</code>, <code>count2</code></td><td><code>user-name</code>, <code>user name</code></td></tr>
-                <tr><td>Case-sensitive</td><td><code>name</code>, <code>Name</code></td><td>-</td></tr>
-                <tr><td>No reserved words</td><td><code>my_name</code></td><td><code>if</code>, <code>for</code>, <code>class</code></td></tr>
-            </tbody>
-        </table>
-    </section>
-
-    <section class="lesson-section">
-        <h2>Core Data Types</h2>
-        <ul>
-            <li><code>int</code> - Integers: <code>42</code>, <code>-7</code>, <code>0</code></li>
-            <li><code>float</code> - Decimals: <code>3.14</code>, <code>-2.5</code></li>
-            <li><code>str</code> - Strings: <code>"hello"</code>, <code>'world'</code></li>
-            <li><code>bool</code> - Booleans: <code>True</code>, <code>False</code></li>
-            <li><code>None</code> - Null value: <code>None</code></li>
-        </ul>
-        
-        <div class="info-box note">
-            <strong>Note:</strong> Python uses <code>True</code>/<code>False</code> (capitalized), not <code>true</code>/<code>false</code> like JavaScript!
-        </div>
-    </section>
-
-    <section class="lesson-section">
-        <h2>Dynamic Typing</h2>
-        <p>Variables can change types freely:</p>
-        <pre><code>x = 10       # x is int
-x = "hello"  # x is now str
-x = 3.14     # x is now float</code></pre>
-    </section>
-
-    <section class="lesson-section">
-        <h2>Practice: Variables & Type Checking</h2>
-        <p>Try the sandbox to explore variables and the <code>type()</code> function:</p>
-        
-        <div class="sandbox">
-            <textarea class="sandbox-code" data-lang="python" data-example="<?= base64_encode('# Variable assignment and type checking\nname = \"Python\"\nversion = 3.11\nis_awesome = True\nnothing = None\n\nprint(f\"Variable: {name}\")\nprint(f\"Type: {type(name)}\")\nprint()\nprint(f\"Variable: {version}\")\nprint(f\"Type: {type(version)}\")\nprint()\nprint(f\"Variable: {is_awesome}\")\nprint(f\"Type: {type(is_awesome)}\")\nprint()\nprint(f\"Variable: {nothing}\")\nprint(f\"Type: {type(nothing)}\")') ?>"></textarea>
-            <button class="run-btn">Run Code</button>
-            <div class="output-area"></div>
-        </div>
-    </section>
-
-    <section class="lesson-section">
-        <h2>Type Conversion</h2>
-        <p>Convert between types using built-in functions:</p>
-        <pre><code># String to int
-age = int("25")
-
-# Int to string
-count = str(42)
-
-# Int to float
-pi = float(3)
-
-# Float to int (truncates)
-truncate = int(3.7)  # Result: 3</code></pre>
-        
-        <div class="info-box tip">
-            <strong>Think About It:</strong> What happens if you try <code>int("hello")</code>? Why might Python raise an error?
-        </div>
-    </section>
-
-    <section class="lesson-section">
-        <h2>Practice Exercise</h2>
-        <p>Create variables of each type and convert them. Try converting <code>"3.14"</code> to float, then to int. What happens?</p>
-    </section>
-
-    <?php require_once __DIR__ . '/../includes/prev-next-nav.php'; ?>
+<div class="lesson-header">
+    <span class="lesson-number">Lesson <?= $num ?></span>
+    <h1>Variables & Data Types</h1>
+    <p class="lesson-desc">Learn how Python handles variables, data types, and type conversion.</p>
 </div>
 
+<h2>Part 1: Activate Prior Knowledge</h2>
+<div class="info-box note">
+    <div class="box-title">Review Questions</div>
+    <ol>
+        <li>In other languages you may have used, how do you declare a variable? Do you need to specify its type?</li>
+        <li>What is the difference between an integer and a floating-point number?</li>
+        <li>What is a string, and how is it different from a number?</li>
+    </ol>
+</div>
+
+<h2>Part 2: Acquire New Knowledge</h2>
+<h3>Definition</h3>
+<p>Variables in Python are names that reference values stored in memory. Unlike Java or C, you do <strong>not declare the type</strong> — Python infers it automatically. The core data types are <code>int</code> (integers), <code>float</code> (decimals), <code>str</code> (strings), <code>bool</code> (booleans), and <code>None</code> (null value).</p>
+
+<h3>Analogy</h3>
+<p>Imagine variables as labeled storage boxes. You put a value inside (like a number or text) and put a label on the box (the variable name). In Python, the box is <em>smart</em> — it figures out what kind of item you placed inside and adjusts itself accordingly. You don't need to buy separate boxes for different item types.</p>
+
+<h3>How It Works</h3>
+<p>When you write <code>x = 42</code>, Python creates an integer object in memory and makes <code>x</code> point to it. If you later write <code>x = "hello"</code>, Python makes <code>x</code> point to a string object instead — the integer is discarded. You can check a variable's type with <code>type()</code> and convert between types using <code>int()</code>, <code>str()</code>, <code>float()</code>, and <code>bool()</code>.</p>
+
+<h3>Example</h3>
+<pre><code class="language-python"># Variable assignment - no type declaration needed
+name = "Alice"        # str
+age = 25              # int
+height = 5.6          # float
+is_student = True     # bool
+nothing = None        # NoneType
+
+print(f"Name: {name} (type: {type(name).__name__})")
+print(f"Age: {age} (type: {type(age).__name__})")
+print(f"Height: {height} (type: {type(height).__name__})")
+
+# Type conversion
+age_str = str(age)           # int to str: "25"
+price = float("19.99")       # str to float: 19.99
+truncate = int(3.7)          # float to int: 3
+</code></pre>
+<strong>Output:</strong>
+<pre>Name: Alice (type: str)
+Age: 25 (type: int)
+Height: 5.6 (type: float)</pre>
+
+<h2>Part 3: Apply New Knowledge</h2>
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>User Input:</strong> Store form data (names, emails, ages) in variables for processing</li>
+    <li><strong>Calculations:</strong> Use int and float for financial calculations, measurements, and statistics</li>
+    <li><strong>Data Validation:</strong> Check variable types before performing operations to prevent errors</li>
+    <li><strong>Configuration:</strong> Store settings as variables (app name, version, feature flags)</li>
+</ul>
+
+<h3>Tips for Success</h3>
+<ul>
+    <li>Use descriptive variable names: <code>user_age</code> instead of <code>x</code></li>
+    <li>Follow PEP 8: use <code>snake_case</code> for variable names</li>
+    <li>Use <code>type()</code> to verify a variable's type during debugging</li>
+    <li>Convert user input with <code>int()</code> or <code>float()</code> before doing math</li>
+</ul>
+
+<h3>Common Mistakes</h3>
+<ul>
+    <li>Trying to do math with strings: <code>"5" + 3</code> causes a TypeError</li>
+    <li>Forgetting that <code>int("3.7")</code> truncates to 3 — use <code>float()</code> first if you need 3.7</li>
+    <li>Using Python keywords as variable names: <code>if = 5</code> causes a SyntaxError</li>
+    <li>Confusing assignment <code>=</code> with comparison <code>==</code></li>
+</ul>
+
+<h2>Part 4: Assess Your Learning</h2>
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You are building a simple calculator app. A user enters their age, height, and full name through a form. You need to store this data, verify its types, and convert it appropriately.</p>
+    <p><strong>Task:</strong> Create variables to store user data and perform type conversions.</p>
+    <ol>
+        <li>Create variables for name (string), age (integer), and height (float)</li>
+        <li>Convert the age to a string and print a birthday message</li>
+        <li>Use <code>type()</code> to verify all three variables</li>
+        <li>Convert the string "42" to an integer and add 8 to it</li>
+    </ol>
+</div>
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answers:</strong> Students should demonstrate proper variable assignment and type conversion.</p>
+        <pre><code># User data
+name = "Maria Santos"
+age = 28
+height = 5.4
+
+# Verify types
+print(f"Name: {name} -> {type(name).__name__}")
+print(f"Age: {age} -> {type(age).__name__}")
+print(f"Height: {height} -> {type(height).__name__}")
+
+# Type conversion
+age_str = str(age)
+print(f"Next year you'll be {int(age_str) + 1}")
+
+# Convert string to int and do math
+num = int("42")
+result = num + 8
+print(f"42 + 8 = {result}")</code></pre>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

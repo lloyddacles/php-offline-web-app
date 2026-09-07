@@ -7,170 +7,226 @@
     <p class="lesson-desc">Learn to break problems down into clear, step-by-step instructions — the foundation of all programming.</p>
 </div>
 
-<h2>What Is an Algorithm?</h2>
-<p>An <strong>algorithm</strong> is a finite sequence of clear, unambiguous instructions to solve a problem. You already use algorithms every day — following a recipe, getting dressed, or navigating to school are all algorithms.</p>
-
-<div class="info-box tip">
-    <div class="box-title">Key Property</div>
-    <p class="mb-0">An algorithm must have: (1) a clear starting point, (2) definite steps, (3) a stopping point, and (4) it must eventually terminate.</p>
-</div>
-
-<p><strong>Think About It:</strong> Describe the algorithm for making a peanut butter sandwich. Be so precise that someone who has never seen peanut butter could follow your instructions.</p>
-
-<h2>Everyday Algorithms</h2>
-<p>Before we code, let's practice writing algorithms for non-coding tasks. This builds the same thinking skills you need for programming.</p>
-
-<table>
-    <thead>
-        <tr><th>Task</th><th>Bad Algorithm (vague)</th><th>Good Algorithm (precise)</th></tr>
-    </thead>
-    <tbody>
-        <tr><td>Make tea</td><td>"Make some tea"</td><td>1. Fill kettle with water. 2. Turn on kettle. 3. Put tea bag in mug. 4. Pour boiling water into mug. 5. Wait 3 minutes. 6. Remove tea bag.</td></tr>
-        <tr><td>Find a book</td><td>"Look for it"</td><td>1. Check your desk. 2. Check your bag. 3. Check under your bed. 4. Check the bookshelf. 5. If found, stop. If not, ask someone.</td></tr>
-    </tbody>
-</table>
-
-<h2>Writing Algorithms Step by Step</h2>
-<p>The key to algorithmic thinking is being <strong>precise</strong> and <strong>complete</strong>. Every step must be something a computer could do — no assumptions, no shortcuts.</p>
-
+<h2>Part 1: Activate Prior Knowledge</h2>
+<p>Connect to what students already know:</p>
 <div class="info-box note">
-    <div class="box-title">Practice Tip</div>
-    <p class="mb-0">When writing an algorithm, imagine you're explaining it to a very literal robot that does exactly what you say — nothing more, nothing less.</p>
-</div>
-
-<h2>From Algorithm to Code</h2>
-<p>Once you have a clear algorithm, converting it to code is often the easy part. The hard part is thinking through the algorithm first.</p>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea class="sandbox-code" data-example="<?= base64_encode('<?php
-// Algorithm: Find the largest number in a list
-// Step 1: Start with the first number as the largest
-// Step 2: Compare each number to the current largest
-// Step 3: If a number is bigger, it becomes the new largest
-// Step 4: After checking all numbers, we have the answer
-
-$numbers = [14, 7, 23, 3, 19, 8];
-$largest = $numbers[0];
-
-echo "Numbers: " . implode(", ", $numbers) . "\\n";
-echo "Start with: $largest\\n\\n";
-
-for ($i = 1; $i < count($numbers); $i++) {
-    if ($numbers[$i] > $largest) {
-        echo $numbers[$i] . " > $largest -> new largest!\\n";
-        $largest = $numbers[$i];
-    } else {
-        echo $numbers[$i] . " <= $largest -> keep $largest\\n";
-    }
-}
-
-echo "\\nLargest number: $largest\\n";
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<h2>Comparing Two Approaches</h2>
-<p>The same problem can often be solved multiple ways. Algorithmic thinking helps you evaluate which approach is better.</p>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Two Ways to Count</span>
-    </div>
-    <textarea class="sandbox-code" data-example="<?= base64_encode('<?php
-// Problem: Count how many even numbers are in a list
-
-$numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-// Approach 1: Use a counter
-$count = 0;
-foreach ($numbers as $num) {
-    if ($num % 2 == 0) {
-        $count++;
-    }
-}
-echo "Approach 1 (counter): $count even numbers\\n";
-
-// Approach 2: Build a new array
-$evens = [];
-foreach ($numbers as $num) {
-    if ($num % 2 == 0) {
-        $evens[] = $num;
-    }
-}
-echo "Approach 2 (array): " . count($evens) . " even numbers\\n";
-echo "The evens are: " . implode(", ", $evens) . "\\n";
-
-// Which is better? It depends on what you need!
-// If you only need the count, Approach 1 uses less memory.
-// If you need the actual numbers, Approach 2 is necessary.
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<h2>Efficiency Matters</h2>
-<p>Some algorithms are faster than others. When working with large amounts of data, the right algorithm can mean the difference between seconds and hours.</p>
-
-<table>
-    <thead>
-        <tr><th>Approach</th><th>Steps for 10 items</th><th>Steps for 1,000 items</th><th>Steps for 1,000,000 items</th></tr>
-    </thead>
-    <tbody>
-        <tr><td>Check each one (linear)</td><td>10</td><td>1,000</td><td>1,000,000</td></tr>
-        <tr><td>Sort first, then check</td><td>~33</td><td>~10,000</td><td>~20,000,000</td></tr>
-    </tbody>
-</table>
-
-<div class="info-box tip">
-    <div class="box-title">Start Simple</div>
-    <p class="mb-0">Don't worry about efficiency at first. Write the clearest algorithm you can. Optimize later if needed. Clear code is easier to debug than clever code.</p>
-</div>
-
-<h2>Common Algorithmic Patterns</h2>
-<p>As you practice, you'll recognize these patterns appearing over and over:</p>
-
-<ul>
-    <li><strong>Linear Search:</strong> Check each item one by one until you find what you want</li>
-    <li><strong>Counting:</strong> Start at zero, add one each time something matches</li>
-    <li><strong>Finding Maximum/Minimum:</strong> Start with the first item, compare and update</li>
-    <li><strong>Accumulation:</strong> Start with zero, add each value to a running total</li>
-    <li><strong>Filtering:</strong> Check each item, keep only the ones that pass a test</li>
-</ul>
-
-<div class="exercise">
-    <h4>Practice Exercises</h4>
+    <div class="box-title">Review Questions</div>
     <ol>
-        <li>Write an algorithm (in plain English) for finding a word in a dictionary. Then code it in PHP.</li>
-        <li>Write two different algorithms to calculate the average of a list of numbers. Which is clearer?</li>
-        <li>Given a list of numbers, write an algorithm to find the second largest number. Hint: you may need to track two values.</li>
+        <li>How do you solve a math problem like 15 × 12? Do you multiply digit by digit, or use a shortcut?</li>
+        <li>When you solve a jigsaw puzzle, do you start with the edges or the middle? Why?</li>
+        <li>Think about following a recipe. What makes a recipe easy to follow vs. confusing?</li>
     </ol>
 </div>
 
-<p><strong>Remember:</strong> Programming is not about typing code — it's about thinking clearly. The better your algorithm, the easier the code writes itself.</p>
+<h2>Part 2: Acquire New Knowledge</h2>
 
-<div class="lesson-nav">
-    <?php if ($prevNext['prev']): ?>
-        <a href="<?= lessonUrl($prevNext['prev']['num'], $prevNext['prev']['slug'], 'programming-logic') ?>" class="prev-link">&larr; Previous: <?= htmlspecialchars($prevNext['prev']['title']) ?></a>
-    <?php endif; ?>
-    <?php if ($prevNext['next']): ?>
-        <a href="<?= lessonUrl($prevNext['next']['num'], $prevNext['next']['slug'], 'programming-logic') ?>" class="next-link">Next: <?= htmlspecialchars($prevNext['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
+<h3>Definition</h3>
+<p><strong>Algorithmic thinking</strong> is the ability to create a clear, step-by-step set of instructions to solve a problem. An algorithm must have a clear starting point, definite steps, and a guaranteed stopping point. It's the foundation of all programming.</p>
+
+<h3>Analogy</h3>
+<p>An algorithm is like GPS directions. It takes you from where you are (start) to where you want to go (end) with specific, unambiguous steps: "Turn left at Main Street, go 2 blocks, turn right." If the directions are vague ("go somewhere"), you'll get lost. The same applies to programming — vague algorithms produce bugs.</p>
+
+<h3>How It Works (Step by Step)</h3>
+<ol>
+    <li><strong>Understand the problem:</strong> What exactly are you trying to solve?</li>
+    <li><strong>Define inputs and outputs:</strong> What data goes in, and what should come out?</li>
+    <li><strong>Write the steps:</strong> Create precise, ordered instructions that anyone could follow.</li>
+    <li><strong>Refine the algorithm:</strong> Test it mentally with different inputs to make sure it works.</li>
+    <li><strong>Convert to code:</strong> Translate the algorithm into actual programming code.</li>
+</ol>
+
+<h3>Example</h3>
+<pre><code class="language-php">// PHP Example: Algorithm to find the tallest student
+
+// Algorithm steps:
+// 1. Start with the first student as the tallest
+// 2. Compare each student to the current tallest
+// 3. If a student is taller, they become the new tallest
+// 4. After checking all students, we have the answer
+
+$students = [
+    ["name" => "Alice", "height" => 165],
+    ["name" => "Bob", "height" => 180],
+    ["name" => "Charlie", "height" => 170],
+    ["name" => "Diana", "height" => 175],
+    ["name" => "Eve", "height" => 160]
+];
+
+$tallest = $students[0];
+echo "Students:\n";
+for ($i = 0; $i < count($students); $i++) {
+    $s = $students[$i];
+    echo "  {$s['name']}: {$s['height']}cm\n";
+    if ($s['height'] > $tallest['height']) {
+        $tallest = $s;
+    }
+}
+
+echo "\nTallest: {$tallest['name']} ({$tallest['height']}cm)\n";
+</code></pre>
+<strong>Output:</strong>
+<pre>Students:
+  Alice: 165cm
+  Bob: 180cm
+  Charlie: 170cm
+  Diana: 175cm
+  Eve: 160cm
+
+Tallest: Bob (180cm)</pre>
+
+<h3>Python Example</h3>
+<pre><code class="language-python"># Python Example: Algorithm to find the tallest student
+
+students = [
+    {"name": "Alice", "height": 165},
+    {"name": "Bob", "height": 180},
+    {"name": "Charlie", "height": 170},
+    {"name": "Diana", "height": 175},
+    {"name": "Eve", "height": 160}
+]
+
+tallest = students[0]
+print("Students:")
+for student in students:
+    print(f"  {student['name']}: {student['height']}cm")
+    if student['height'] > tallest['height']:
+        tallest = student
+
+print(f"\nTallest: {tallest['name']} ({tallest['height']}cm)")
+</code></pre>
+<strong>Output:</strong>
+<pre>Students:
+  Alice: 165cm
+  Bob: 180cm
+  Charlie: 170cm
+  Diana: 175cm
+  Eve: 160cm
+
+Tallest: Bob (180cm)</pre>
+
+<h3>Java Example</h3>
+<pre><code class="language-java">// Java Example: Algorithm to find the tallest student
+public class Main {
+    public static void main(String[] args) {
+        String[] names = {"Alice", "Bob", "Charlie", "Diana", "Eve"};
+        int[] heights = {165, 180, 170, 175, 160};
+
+        int tallestIndex = 0;
+        System.out.println("Students:");
+        for (int i = 0; i < names.length; i++) {
+            System.out.println("  " + names[i] + ": " + heights[i] + "cm");
+            if (heights[i] > heights[tallestIndex]) {
+                tallestIndex = i;
+            }
+        }
+
+        System.out.println("\nTallest: " + names[tallestIndex] + 
+                           " (" + heights[tallestIndex] + "cm)");
+    }
+}
+</code></pre>
+<strong>Output:</strong>
+<pre>Students:
+  Alice: 165cm
+  Bob: 180cm
+  Charlie: 170cm
+  Diana: 175cm
+  Eve: 160cm
+
+Tallest: Bob (180cm)</pre>
+
+<h2>Part 3: Apply New Knowledge</h2>
+
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>Problem-solving interviews:</strong> Tech companies test your algorithmic thinking with coding challenges.</li>
+    <li><strong>Competitive programming:</strong> Writing efficient algorithms to solve problems under time constraints.</li>
+    <li><strong>Real projects:</strong> Every software project starts with designing the algorithm before writing code.</li>
+    <li><strong>Daily life:</strong> Planning routes, organizing tasks, and solving puzzles all use algorithmic thinking.</li>
+</ul>
+
+<h3>Tips for Success</h3>
+<ul>
+    <li>Start with the simplest version of the algorithm, then add complexity.</li>
+    <li>Write the algorithm in plain English first — if you can't explain it, you can't code it.</li>
+    <li>Test your algorithm mentally with different inputs before coding it.</li>
+</ul>
+
+<h3>Common Mistakes to Avoid</h3>
+<ul>
+    <li><strong>Vague steps:</strong> "Process the data" is not an algorithm. "Add 1 to each number in the list" is.</li>
+    <li><strong>Infinite loops:</strong> Make sure every algorithm has a clear stopping condition.</li>
+    <li><strong>Ignoring edge cases:</strong> What happens with empty input, one item, or very large input?</li>
+</ul>
+
+<h2>Part 4: Assess Your Learning</h2>
+
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> Your teacher asks you to design an algorithm that finds the tallest student in a class of 30 students. You need to write the algorithm in plain English first, then implement it in PHP.</p>
+    <p><strong>Task:</strong> Design and implement an algorithm to find the tallest student.</p>
+    <ol>
+        <li>Write the algorithm in plain English (at least 5 clear steps).</li>
+        <li>Identify what the inputs are and what the output should be.</li>
+        <li>Implement the algorithm in PHP and test it with sample data.</li>
+    </ol>
 </div>
 
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answer 1 (Algorithm in Plain English):</strong></p>
+        <pre><code>Algorithm: Find Tallest Student
+
+INPUT: A list of students with their heights
+OUTPUT: The name and height of the tallest student
+
+Step 1: Check if the list is empty. If yes, return "No students."
+Step 2: Assume the first student is the tallest.
+Step 3: For each remaining student in the list:
+  Step 3a: Compare this student's height to the current tallest.
+  Step 3b: If this student is taller, they become the new tallest.
+Step 4: After checking all students, the current tallest is the answer.
+Step 5: Return the name and height of the tallest student.</code></pre>
+        <p><strong>Answer 2 (Inputs/Outputs):</strong></p>
+        <ul>
+            <li><strong>Input:</strong> An array of student records, each containing a name and height.</li>
+            <li><strong>Output:</strong> The name and height of the tallest student found.</li>
+        </ul>
+        <p><strong>Answer 3 (PHP Implementation):</strong></p>
+        <pre><code>// Complete PHP implementation
+$students = [
+    ["name" => "Alice", "height" => 165],
+    ["name" => "Bob", "height" => 180],
+    ["name" => "Charlie", "height" => 170],
+    ["name" => "Diana", "height" => 175],
+    ["name" => "Eve", "height" => 160]
+];
+
+function findTallest($students) {
+    // Step 1: Check for empty list
+    if (empty($students)) {
+        return "No students.";
+    }
+    
+    // Step 2: Assume first is tallest
+    $tallest = $students[0];
+    
+    // Step 3: Compare each student
+    for ($i = 1; $i < count($students); $i++) {
+        if ($students[$i]['height'] > $tallest['height']) {
+            $tallest = $students[$i];
+        }
+    }
+    
+    // Step 5: Return result
+    return "{$tallest['name']} ({$tallest['height']}cm)";
+}
+
+echo "Tallest: " . findTallest($students) . "\n";
+// Output: Tallest: Bob (180cm)</code></pre>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

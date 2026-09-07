@@ -1,242 +1,195 @@
 <?php $pageTitle = 'Conditional Logic'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
+<?php $num = 5; $prevNext = getPrevNextLesson($num, 'programming-logic'); ?>
 
 <div class="lesson-header">
-    <span class="lesson-number">Lesson 5</span>
+    <span class="lesson-number">Lesson <?= $num ?></span>
     <h1>Conditional Logic</h1>
     <p class="lesson-desc">Learn to think in decisions — every conditional is just asking a question and acting on the answer.</p>
 </div>
 
-<div class="info-box tip">
-    <div class="box-title">Core Idea</div>
-    <p class="mb-0">Every <code>if</code> statement is a <strong>question</strong>. "Is the user logged in?" "Is the score passing?" "Is the file open?" Frame your logic as questions, and the code writes itself.</p>
-</div>
-
-<h2>Decisions Are Questions</h2>
-<p>Real life is full of decisions: If it's raining, grab an umbrella. If the light is red, stop. If you're hungry, eat. Programming works the same way — you ask a question, and based on the answer (true or false), you take different actions.</p>
-<p>The <code>if</code> statement is how PHP asks a question:</p>
-
-<div class="syntax-ref">
-    <h4>Syntax: if Statement</h4>
-    <code>if (condition) {</code>
-    <code>&nbsp;&nbsp;// runs when condition is TRUE</code>
-    <code>}</code>
-</div>
-
-<h2>If / Else / Elseif</h2>
-<p>Use <code>else</code> for the "otherwise" case, and <code>elseif</code> for multiple alternatives:</p>
-
-<div class="syntax-ref">
-    <h4>Syntax: if / elseif / else</h4>
-    <code>if (condition1) {</code>
-    <code>&nbsp;&nbsp;// runs when condition1 is true</code>
-    <code>} elseif (condition2) {</code>
-    <code>&nbsp;&nbsp;// runs when condition1 false, condition2 true</code>
-    <code>} else {</code>
-    <code>&nbsp;&nbsp;// runs when all conditions are false</code>
-    <code>}</code>
-</div>
-
+<h2>Part 1: Activate Prior Knowledge</h2>
+<p>Connect to what students already know:</p>
 <div class="info-box note">
-    <div class="box-title">Real-World Example: Traffic Light</div>
-    <p>A traffic light asks "What color am I?" Green → go, Yellow → slow down, Red → stop. That's <code>if / elseif / else</code> in action.</p>
-</div>
-
-<h2>Boolean Logic</h2>
-<p>Conditions return <code>true</code> or <code>false</code>. You combine conditions using logical operators:</p>
-
-<table>
-    <thead><tr><th>Operator</th><th>Name</th><th>Meaning</th></tr></thead>
-    <tbody>
-        <tr><td><code>&&</code></td><td>AND</td><td>Both must be true</td></tr>
-        <tr><td><code>||</code></td><td>OR</td><td>At least one must be true</td></tr>
-        <tr><td><code>!</code></td><td>NOT</td><td>Reverses true/false</td></tr>
-    </tbody>
-</table>
-
-<h2>Truth Tables</h2>
-<p>Truth tables show every possible combination. Memorize these — they're the foundation of all logic:</p>
-
-<table>
-    <thead><tr><th>A</th><th>B</th><th>A && B</th><th>A || B</th><th>!A</th></tr></thead>
-    <tbody>
-        <tr><td>true</td><td>true</td><td>true</td><td>true</td><td>false</td></tr>
-        <tr><td>true</td><td>false</td><td>false</td><td>true</td><td>false</td></tr>
-        <tr><td>false</td><td>true</td><td>false</td><td>true</td><td>true</td></tr>
-        <tr><td>false</td><td>false</td><td>false</td><td>false</td><td>true</td></tr>
-    </tbody>
-</table>
-
-<div class="info-box tip">
-    <div class="box-title">Think About It</div>
-    <p>If <code>$age >= 18</code> is true and <code>$hasID</code> is false, what does <code>$age >= 18 && $hasID</code> evaluate to? (Answer: false — both must be true for AND.)</p>
-</div>
-
-<h2>Comparison Operators</h2>
-<table>
-    <thead><tr><th>Operator</th><th>Meaning</th><th>Example</th></tr></thead>
-    <tbody>
-        <tr><td><code>==</code></td><td>Equal value</td><td><code>5 == "5"</code> → true</td></tr>
-        <tr><td><code>===</code></td><td>Equal value AND type</td><td><code>5 === "5"</code> → false</td></tr>
-        <tr><td><code>!=</code></td><td>Not equal</td><td><code>5 != 3</code> → true</td></tr>
-        <tr><td><code>!==</code></td><td>Not identical</td><td><code>5 !== "5"</code> → true</td></tr>
-        <tr><td><code>&gt;</code> <code>&lt;</code> <code>&gt;=</code> <code>&lt;=</code></td><td>Greater/Less than</td><td><code>10 &gt; 5</code> → true</td></tr>
-    </tbody>
-</table>
-
-<div class="info-box note">
-    <div class="box-title">Use === Whenever Possible</div>
-    <p class="mb-0"><code>==</code> does type juggling (<code>0 == "foo"</code> is true!). <code>===</code> is stricter and prevents surprising bugs.</p>
-</div>
-
-<h2>Nested Conditions</h2>
-<p>You can put conditions inside other conditions, but keep nesting shallow for readability:</p>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea class="sandbox-code" data-example="<?= base64_encode('<?php
-$age = 25;
-$hasLicense = true;
-
-if ($age >= 18) {
-    echo "Old enough to drive.\\n";
-    if ($hasLicense) {
-        echo "Has a license — go ahead!";
-    } else {
-        echo "No license — cannot drive yet.";
-    }
-} else {
-    echo "Too young to drive.";
-}
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<h2>Guard Clauses</h2>
-<p>A <strong>guard clause</strong> handles edge cases first and returns early, reducing nesting:</p>
-
-<div class="syntax-ref">
-    <h4>Pattern: Guard Clause</h4>
-    <code>function process($user) {</code>
-    <code>&nbsp;&nbsp;if (!$user) return "No user";</code>
-    <code>&nbsp;&nbsp;if (!$user['active']) return "Inactive";</code>
-    <code>&nbsp;&nbsp;// Main logic here — no nesting!</code>
-    <code>}</code>
-</div>
-
-<h2>Common Logic Mistakes</h2>
-<table>
-    <thead><tr><th>Mistake</th><th>Example</th><th>Fix</th></tr></thead>
-    <tbody>
-        <tr><td>Off-by-one</td><td><code>for ($i=0; $i<=10; $i++)</code> loops 11 times</td><td><code>$i &lt; 10</code> for exactly 10</td></tr>
-        <tr><td>Wrong operator</td><td><code>=</code> instead of <code>==</code></td><td>Assignment vs comparison</td></tr>
-        <tr><td>Missing else</td><td>No fallback for unexpected input</td><td>Always handle the else case</td></tr>
-        <tr><td>Confusing && and ||</td><td>Wrong grouping of conditions</td><td>Draw a truth table</td></tr>
-    </tbody>
-</table>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Sandbox: Build a Grading System</span>
-    </div>
-    <textarea class="sandbox-code" data-example="<?= base64_encode('<?php
-function getGrade($score) {
-    if (!is_numeric($score) || $score < 0 || $score > 100) {
-        return "Invalid score";
-    }
-    if ($score >= 90) return "A";
-    if ($score >= 80) return "B";
-    if ($score >= 70) return "C";
-    if ($score >= 60) return "D";
-    return "F";
-}
-
-$scores = [95, 82, 74, 61, 55, -5, 105, 78];
-foreach ($scores as $s) {
-    echo "Score {$s} → Grade: " . getGrade($s) . "\\n";
-}
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Sandbox: Fix Broken Conditional Logic</span>
-    </div>
-    <textarea class="sandbox-code" data-example="<?= base64_encode('<?php
-// This code has bugs — can you spot them?
-// Fix the logic so it works correctly.
-
-$temperature = 35;
-$isRaining = false;
-
-// BUG: Uses = instead of ==
-if ($isRaining = true) {
-    echo "Take an umbrella!\\n";
-}
-
-// BUG: Wrong comparison
-if ($temperature > 30) {
-    echo "It is NOT hot outside.\\n";
-} else {
-    echo "It is hot outside.\\n";
-}
-
-// FIXED version:
-echo "--- Fixed ---\\n";
-if ($isRaining === true) {
-    echo "Take an umbrella!\\n";
-} else {
-    echo "No umbrella needed.\\n";
-}
-if ($temperature > 30) {
-    echo "It is hot outside.\\n";
-} else {
-    echo "It is NOT hot outside.\\n";
-}
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<div class="exercise">
-    <h4>Practice Exercises</h4>
+    <div class="box-title">Review Questions</div>
     <ol>
-        <li>Write a program that checks if a number is positive, negative, or zero</li>
-        <li>Create a login validator: username must be at least 3 chars, password at least 8 chars</li>
-        <li>Write a leap year checker: divisible by 4, but not by 100 unless also by 400</li>
-        <li>Draw a truth table for <code>(A || B) && !C</code> — does the order of operations matter?</li>
+        <li>When do you make decisions during the day? Can you think of a time when you said "If this, then that"?</li>
+        <li>If it's raining outside, what do you do? What if it's sunny? How does the weather determine your actions?</li>
+        <li>Have you ever checked if you had enough money before buying something? How did that decision process work?</li>
     </ol>
 </div>
 
-<div class="lesson-nav">
-    <?php if ($prevNext['prev']): ?>
-        <a href="<?= lessonUrl($prevNext['prev']['num'], $prevNext['prev']['slug'], 'programming-logic') ?>" class="prev-link">&larr; Previous: <?= htmlspecialchars($prevNext['prev']['title']) ?></a>
-    <?php endif; ?>
-    <?php if ($prevNext['next']): ?>
-        <a href="<?= lessonUrl($prevNext['next']['num'], $prevNext['next']['slug'], 'programming-logic') ?>" class="next-link">Next: <?= htmlspecialchars($prevNext['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
+<h2>Part 2: Acquire New Knowledge</h2>
+
+<h3>Definition</h3>
+<p><strong>Conditional logic</strong> is the ability to make decisions in code. You ask a question (a condition), and based on whether the answer is true or false, you take different actions. The main tools are <code>if</code>, <code>else</code>, and <code>elseif</code> statements.</p>
+
+<h3>Analogy</h3>
+<p>Think of a traffic light. The light "asks" a question: "What color am I?" If green → go. If yellow → slow down. If red → stop. Your program does the same thing — it asks a question and acts based on the answer.</p>
+
+<h3>How It Works (Step by Step)</h3>
+<ol>
+    <li><strong>Write a condition:</strong> Use comparison operators (==, !=, >, <, >=, <=) to create a true/false question.</li>
+    <li><strong>Use if:</strong> The code inside the if block runs only when the condition is true.</li>
+    <li><strong>Use else:</strong> The else block runs when the condition is false (the "otherwise" case).</li>
+    <li><strong>Use elseif:</strong> Check additional conditions when the first one is false.</li>
+    <li><strong>Combine conditions:</strong> Use AND (&&), OR (||), and NOT (!) to create complex decisions.</li>
+</ol>
+
+<h3>Example</h3>
+<pre><code class="language-php">// PHP Example: Login validation
+$username = "alice";
+$password = "secret123";
+
+if (strlen($username) < 3) {
+    echo "Error: Username must be at least 3 characters.\n";
+} elseif (strlen($password) < 8) {
+    echo "Error: Password must be at least 8 characters.\n";
+} else {
+    echo "Welcome, $username! You are logged in.\n";
+}
+
+// Using AND and OR operators
+$age = 20;
+$hasID = true;
+
+if ($age >= 18 && $hasID) {
+    echo "Access granted: You may enter.\n";
+} elseif ($age >= 18 || $hasID) {
+    echo "Partial access: Please show ID.\n";
+} else {
+    echo "Access denied: You must be 18 or older.\n";
+}
+</code></pre>
+<strong>Output:</strong>
+<pre>Welcome, alice! You are logged in.
+Access granted: You may enter.</pre>
+
+<h3>Python Example</h3>
+<pre><code class="language-python"># Python Example: Login validation
+
+username = "alice"
+password = "secret123"
+
+if len(username) < 3:
+    print("Error: Username must be at least 3 characters.")
+elif len(password) < 8:
+    print("Error: Password must be at least 8 characters.")
+else:
+    print(f"Welcome, {username}! You are logged in.")
+
+# Using and / or operators
+age = 20
+has_id = True
+
+if age >= 18 and has_id:
+    print("Access granted: You may enter.")
+elif age >= 18 or has_id:
+    print("Partial access: Please show ID.")
+else:
+    print("Access denied: You must be 18 or older.")
+</code></pre>
+<strong>Output:</strong>
+<pre>Welcome, alice! You are logged in.
+Access granted: You may enter.</pre>
+
+<h3>Java Example</h3>
+<pre><code class="language-java">// Java Example: Login validation
+public class Main {
+    public static void main(String[] args) {
+        String username = "alice";
+        String password = "secret123";
+
+        if (username.length() < 3) {
+            System.out.println("Error: Username must be at least 3 characters.");
+        } else if (password.length() < 8) {
+            System.out.println("Error: Password must be at least 8 characters.");
+        } else {
+            System.out.println("Welcome, " + username + "! You are logged in.");
+        }
+
+        // Using && and || operators
+        int age = 20;
+        boolean hasID = true;
+
+        if (age >= 18 && hasID) {
+            System.out.println("Access granted: You may enter.");
+        } else if (age >= 18 || hasID) {
+            System.out.println("Partial access: Please show ID.");
+        } else {
+            System.out.println("Access denied: You must be 18 or older.");
+        }
+    }
+}
+</code></pre>
+<strong>Output:</strong>
+<pre>Welcome, alice! You are logged in.
+Access granted: You may enter.</pre>
+
+<h2>Part 3: Apply New Knowledge</h2>
+
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>Form validation:</strong> Checking if email addresses are valid, passwords meet requirements, or fields aren't empty.</li>
+    <li><strong>Access control:</strong> Determining if a user has permission to view a page or perform an action.</li>
+    <li><strong>Game rules:</strong> Checking if a player has enough health, has collected an item, or has reached a goal.</li>
+    <li><strong>E-commerce:</strong> Applying discounts, checking stock availability, and calculating shipping costs.</li>
+</ul>
+
+<h3>Tips for Success</h3>
+<ul>
+    <li>Always use <code>===</code> (strict comparison) instead of <code>==</code> when possible to avoid type juggling bugs.</li>
+    <li>Handle the "else" case — don't leave unexpected inputs unhandled.</li>
+    <li>Keep nesting shallow (no more than 2-3 levels) for readability.</li>
+</ul>
+
+<h3>Common Mistakes to Avoid</h3>
+<ul>
+    <li><strong>Using = instead of ==:</strong> Writing <code>if ($x = 5)</code> assigns 5 to $x instead of comparing.</li>
+    <li><strong>Missing else case:</strong> Not handling unexpected inputs can cause your program to crash or behave unpredictably.</li>
+    <li><strong>Confusing && and ||:</strong> Draw a truth table if you're unsure how conditions combine.</li>
+</ul>
+
+<h2>Part 4: Assess Your Learning</h2>
+
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You're building a login system for a school portal. The system needs to validate the user's credentials before granting access.</p>
+    <p><strong>Task:</strong> Write conditional logic for the following rules:</p>
+    <ol>
+        <li>Username must be at least 3 characters long and cannot be empty.</li>
+        <li>Password must be at least 8 characters long and must contain at least one number.</li>
+        <li>If both are valid, display "Login successful!" If either fails, display a specific error message explaining what went wrong.</li>
+    </ol>
 </div>
 
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answer 1:</strong> Check <code>strlen($username) >= 3 && !empty($username)</code>. The empty check catches empty strings, while the length check ensures it's at least 3 characters.</p>
+        <p><strong>Answer 2:</strong> Check <code>strlen($password) >= 8</code> AND use <code>preg_match('/[0-9]/', $password)</code> to verify at least one digit exists.</p>
+        <p><strong>Answer 3 (Sample Solution):</strong></p>
+        <pre><code>// PHP Login Validation
+$username = "alice";
+$password = "pass1234";
+
+// Validate username
+if (empty($username)) {
+    echo "Error: Username cannot be empty.\n";
+} elseif (strlen($username) < 3) {
+    echo "Error: Username must be at least 3 characters.\n";
+} elseif (empty($password)) {
+    echo "Error: Password cannot be empty.\n";
+} elseif (strlen($password) < 8) {
+    echo "Error: Password must be at least 8 characters.\n";
+} elseif (!preg_match('/[0-9]/', $password)) {
+    echo "Error: Password must contain at least one number.\n";
+} else {
+    echo "Login successful! Welcome, $username.\n";
+}
+
+// Output: Login successful! Welcome, alice.</code></pre>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

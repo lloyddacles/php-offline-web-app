@@ -1,245 +1,145 @@
-<?php
-$pageTitle = 'PHP Forms';
-require_once __DIR__ . '/../includes/functions.php';
-$lessonNum = 14;
-$nav = getPrevNextLesson($lessonNum);
-require_once __DIR__ . '/../includes/header.php';
-?>
+<?php $pageTitle = 'PHP Forms'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
+<?php $num = 14; $prevNext = getPrevNextLesson($num, 'lessons'); ?>
 
 <div class="lesson-header">
-    <span class="lesson-number">Lesson <?= $lessonNum ?></span>
+    <span class="lesson-number">Lesson <?= $num ?></span>
     <h1>PHP Forms</h1>
     <p class="lesson-desc">Process HTML form data with PHP, handle submissions, and validate input.</p>
 </div>
 
-<h2>How PHP Forms Work</h2>
-<ol>
-    <li>Create an HTML form with input fields</li>
-    <li>User fills in the form and clicks Submit</li>
-    <li>PHP receives the data via <code>$_GET</code> or <code>$_POST</code></li>
-    <li>PHP processes and validates the data</li>
-    <li>PHP sends a response back to the user</li>
-</ol>
-
-<h2>A Simple Form Example</h2>
-<p>Here is how you would create and process a form in real PHP files:</p>
-
-<div class="syntax-ref">
-    <h4>Syntax: HTML Form</h4>
-    <code>&lt;form method="POST" action="process.php"&gt;</code>
-    <code>&nbsp;&nbsp;&lt;input type="text" name="username"&gt;</code>
-    <code>&nbsp;&nbsp;&lt;input type="email" name="email"&gt;</code>
-    <code>&nbsp;&nbsp;&lt;button type="submit"&gt;Submit&lt;/button&gt;</code>
-    <code>&lt;/form&gt;</code>
-</div>
-
-<div class="syntax-ref">
-    <h4>Syntax: Processing Form Data (process.php)</h4>
-    <code>&lt;?php</code>
-    <code>$username = $_POST["username"] ?? "";</code>
-    <code>$email = $_POST["email"] ?? "";</code>
-    <code>echo "Hello, $username!";</code>
-</div>
-
-<h2>GET vs POST for Forms</h2>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea data-example="<?php echo base64_encode('<?php
-echo "=== GET Form ===\n";
-echo "<form method=\"GET\" action=\"\">\n";
-echo "  Search: <input type=\"text\" name=\"q\" placeholder=\"Search...\">\n";
-echo "  <button type=\"submit\">Search</button>\n";
-echo "</form>\n\n";
-
-// Check if form was submitted
-if (isset($_GET["q"]) && $_GET["q"] !== "") {
-    $query = htmlspecialchars($_GET["q"]);
-    echo "You searched for: $query\n";
-    echo "URL would show: ?q=" . urlencode($_GET["q"]) . "\n";
-}
-
-echo "\n=== POST Form ===\n";
-echo "<form method=\"POST\" action=\"\">\n";
-echo "  Name: <input type=\"text\" name=\"name\" placeholder=\"Your name\">\n";
-echo "  <button type=\"submit\">Submit</button>\n";
-echo "</form>\n\n";
-
-if (isset($_POST["name"]) && $_POST["name"] !== "") {
-    $name = htmlspecialchars($_POST["name"]);
-    echo "Hello, $name! (data came via POST, not in URL)";
-}
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<h2>Form Validation</h2>
-<p>Always validate user input before processing it:</p>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea data-example="<?php echo base64_encode('<?php
-// Simulate form processing with validation
-// In real code, this would be in a separate process.php file
-
-$errors = [];
-$data = [];
-
-// Check if form was submitted
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Get and trim input
-    $name = trim($_POST["name"] ?? "");
-    $email = trim($_POST["email"] ?? "");
-    $age = trim($_POST["age"] ?? "");
-    
-    // Validate name
-    if (empty($name)) {
-        $errors[] = "Name is required.";
-    } elseif (strlen($name) < 2) {
-        $errors[] = "Name must be at least 2 characters.";
-    } else {
-        $data["name"] = $name;
-    }
-    
-    // Validate email
-    if (empty($email)) {
-        $errors[] = "Email is required.";
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = "Invalid email format.";
-    } else {
-        $data["email"] = $email;
-    }
-    
-    // Validate age
-    if (empty($age)) {
-        $errors[] = "Age is required.";
-    } elseif (!is_numeric($age) || $age < 1 || $age > 150) {
-        $errors[] = "Age must be between 1 and 150.";
-    } else {
-        $data["age"] = (int)$age;
-    }
-}
-
-echo "=== Registration Form ===\n";
-echo "<form method=\"POST\" action=\"\">\n";
-echo "  Name: <input type=\"text\" name=\"name\" value=\"" . htmlspecialchars($data["name"] ?? "") . "\"><br>\n";
-echo "  Email: <input type=\"email\" name=\"email\" value=\"" . htmlspecialchars($data["email"] ?? "") . "\"><br>\n";
-echo "  Age: <input type=\"number\" name=\"age\" value=\"" . htmlspecialchars((string)($data["age"] ?? "")) . "\"><br>\n";
-echo "  <button type=\"submit\">Register</button>\n";
-echo "</form>\n";
-
-// Display errors or success
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    if (!empty($errors)) {
-        echo "\nErrors:\n";
-        foreach ($errors as $error) {
-            echo "  - $error\n";
-        }
-    } else {
-        echo "\nSuccess! Registration complete.\n";
-        echo "Name: " . htmlspecialchars($data["name"]) . "\n";
-        echo "Email: " . htmlspecialchars($data["email"]) . "\n";
-        echo "Age: " . $data["age"] . "\n";
-    }
-}
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<h2>Sanitization Functions</h2>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea data-example="<?php echo base64_encode('<?php
-echo "=== Input Sanitization ===\n\n";
-
-$rawInput = "  <script>alert(\"XSS Attack!\")</script>  ";
-
-echo "Raw input: $rawInput\n\n";
-
-// htmlspecialchars: convert special chars to HTML entities
-$safe = htmlspecialchars($rawInput);
-echo "After htmlspecialchars():\n$safe\n\n";
-
-// strip_tags: remove HTML tags
-$clean = strip_tags($rawInput);
-echo "After strip_tags(): $clean\n\n";
-
-// trim: remove whitespace
-$padded = "   Hello World   ";
-echo "Before trim: [" . $padded . "]\n";
-echo "After trim: [" . trim($padded) . "]\n\n";
-
-// filter_var: validate and sanitize
-$email = "user@example.com";
-echo "Valid email: " . var_export(filter_var($email, FILTER_VALIDATE_EMAIL), true) . "\n";
-echo "Invalid email: " . var_export(filter_var("not-an-email", FILTER_VALIDATE_EMAIL), true) . "\n\n";
-
-// Validate URL
-$url = "https://www.example.com";
-echo "Valid URL: " . var_export(filter_var($url, FILTER_VALIDATE_URL), true) . "\n";
-
-// Sanitize string
-$dirty = "Hello <b>World</b>";
-$clean = htmlspecialchars($dirty);
-echo "Sanitized: $clean\n";
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<div class="info-box important">
-    <div class="box-title">Critical Security Rules</div>
-    <ul class="mb-0">
-        <li>Always use <code>htmlspecialchars()</code> when outputting user input to prevent XSS attacks</li>
-        <li>Never trust user input &mdash; always validate it on the server side</li>
-        <li>Use prepared statements when working with databases (covered later)</li>
-        <li>Use <code>password_hash()</code> for passwords &mdash; never store plain text</li>
-    </ul>
-</div>
-
-<div class="exercise">
-    <h4>Practice Exercises</h4>
+<h2>Part 1: Activate Prior Knowledge</h2>
+<p>Connect to what students already know:</p>
+<div class="info-box note">
+    <div class="box-title">Review Questions</div>
     <ol>
-        <li>Create a contact form with fields for name, email, and message. Process it and display the submitted data.</li>
-        <li>Add validation to the contact form: check that all fields are filled, the email is valid, and the message is at least 10 characters.</li>
-        <li>Create a simple calculator form that takes two numbers and an operation, then displays the result.</li>
+        <li>How do websites get information from users? (contact forms, search boxes, login pages)</li>
+        <li>When you fill out a registration form online, what happens after you click Submit?</li>
+        <li>In the previous lesson, we learned about $_GET and $_POST. How can we use them to process form data?</li>
     </ol>
 </div>
 
-<div class="lesson-nav">
-    <?php if ($nav['prev']): ?>
-        <a href="<?= lessonUrl($nav['prev']['num'], $nav['prev']['slug']) ?>">&larr; <?= htmlspecialchars($nav['prev']['title']) ?></a>
-    <?php endif; ?>
-    <?php if ($nav['next']): ?>
-        <a href="<?= lessonUrl($nav['next']['num'], $nav['next']['slug']) ?>"><?= htmlspecialchars($nav['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
+<h2>Part 2: Acquire New Knowledge</h2>
+
+<h3>Definition</h3>
+<p>PHP forms allow websites to collect user input through HTML forms and process that data on the server. The form sends data via GET or POST methods.</p>
+
+<h3>Analogy</h3>
+<p>Forms are like order forms at a restaurant. You (the user) fill in your order (input fields), hand it to the waiter (submit button), and the kitchen (PHP) processes your order and brings back your meal (response).</p>
+
+<h3>How It Works (Step by Step)</h3>
+<p>1. Create an HTML form with input fields and a submit button</p>
+<p>2. Set the form's method attribute to GET or POST</p>
+<p>3. Set the action attribute to the PHP file that processes the form</p>
+<p>4. PHP receives the data via $_GET or $_POST superglobal</p>
+<p>5. Validate and sanitize the input before using it</p>
+
+<h3>Example</h3>
+<pre><code class="language-php">&lt;!-- HTML Form --&gt;
+&lt;form method="POST" action="process.php"&gt;
+    &lt;input type="text" name="username" placeholder="Username"&gt;
+    &lt;input type="email" name="email" placeholder="Email"&gt;
+    &lt;button type="submit"&gt;Register&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;?php
+// process.php - Handle form submission
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $username = $_POST["username"] ?? "";
+    $email = $_POST["email"] ?? "";
+    
+    // Validate
+    if (empty($username) || empty($email)) {
+        echo "All fields are required!";
+    } else {
+        echo "Hello, $username! We'll contact you at $email";
+    }
+}
+?&gt;
+</code></pre>
+<strong>Output:</strong>
+<pre>Hello, Alice! We'll contact you at alice@example.com</pre>
+
+<h2>Part 3: Apply New Knowledge</h2>
+
+<h3>Real-World Applications</h3>
+<ul>
+    <li>Contact forms (collecting messages from visitors)</li>
+    <li>Registration forms (creating new user accounts)</li>
+    <li>Search forms (finding content on the website)</li>
+    <li>Survey forms (collecting feedback and opinions)</li>
+</ul>
+
+<h3>Tips for Success</h3>
+<ul>
+    <li>Always validate form data on the server side (never trust client-side validation alone)</li>
+    <li>Use htmlspecialchars() to prevent XSS attacks when displaying user input</li>
+    <li>Use the same file for both the form and processing (check REQUEST_METHOD)</li>
+</ul>
+
+<h3>Common Mistakes to Avoid</h3>
+<ul>
+    <li>Not validating form data (allows malicious input)</li>
+    <li>Forgetting to check if form was actually submitted</li>
+    <li>Not sanitizing output (security vulnerabilities)</li>
+</ul>
+
+<h2>Part 4: Assess Your Learning</h2>
+
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You're building a complete registration system for a new website.</p>
+    <p><strong>Task:</strong> Create a registration form with validation.</p>
+    <ol>
+        <li>Create an HTML form with fields for name, email, and password</li>
+        <li>Add server-side validation to check all fields are filled</li>
+        <li>Validate that the email is in correct format</li>
+        <li>Display appropriate success or error messages</li>
+    </ol>
 </div>
 
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answer 1:</strong> HTML form with POST method and required fields</p>
+        <p><strong>Answer 2:</strong> Check if fields are empty using empty()</p>
+        <p><strong>Answer 3:</strong> Use filter_var() with FILTER_VALIDATE_EMAIL</p>
+        <p><strong>Answer 4:</strong> Display different messages based on validation results</p>
+        <p><strong>Sample Solution:</strong></p>
+        <pre><code>&lt;?php
+$errors = [];
+$name = $email = "";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $name = trim($_POST["name"] ?? "");
+    $email = trim($_POST["email"] ?? "");
+    $password = $_POST["password"] ?? "";
+    
+    if (empty($name)) {
+        $errors[] = "Name is required";
+    }
+    if (empty($email)) {
+        $errors[] = "Email is required";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = "Invalid email format";
+    }
+    if (empty($password)) {
+        $errors[] = "Password is required";
+    }
+    
+    if (empty($errors)) {
+        echo "Registration successful! Welcome, $name!";
+    }
+}
+?&gt;
+
+&lt;form method="POST" action=""&gt;
+    &lt;input type="text" name="name" value="&lt;?= htmlspecialchars($name) ?&gt;"&gt;
+    &lt;input type="email" name="email" value="&lt;?= htmlspecialchars($email) ?&gt;"&gt;
+    &lt;input type="password" name="password"&gt;
+    &lt;button type="submit"&gt;Register&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

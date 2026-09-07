@@ -1,27 +1,35 @@
-<?php
-$pageTitle = 'Updating Data';
-require_once __DIR__ . '/../includes/functions.php';
-$lessonNum = 6;
-$nav = getPrevNextLesson($lessonNum, 'mysql-lessons');
-require_once __DIR__ . '/../includes/header.php';
-?>
+<?php $pageTitle = 'Updating Data'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
+<?php $num = 6; $prevNext = getPrevNextLesson($num, 'mysql-lessons'); ?>
 
 <div class="lesson-header">
-    <span class="lesson-number">MySQL Lesson <?= $lessonNum ?></span>
+    <span class="lesson-number">Lesson <?= $num ?></span>
     <h1>Updating Data</h1>
     <p class="lesson-desc">Modify existing records using UPDATE statements.</p>
 </div>
 
-<h2>UPDATE Statement</h2>
-
-<div class="syntax-ref">
-    <h4>Syntax: UPDATE</h4>
-    <code>UPDATE table_name</code>
-    <code>SET column1 = value1, column2 = value2</code>
-    <code>WHERE condition;</code>
+<h2>Part 1: Activate Prior Knowledge</h2>
+<div class="info-box note">
+    <div class="box-title">Review Questions</div>
+    <ol>
+        <li>What SQL command is used to modify existing data in a table?</li>
+        <li>Why is the <code>WHERE</code> clause critical in an UPDATE statement?</li>
+        <li>How can you preview which rows will be affected before running an UPDATE?</li>
+    </ol>
 </div>
 
-<pre><code>-- Update a single row
+<h2>Part 2: Acquire New Knowledge</h2>
+
+<h3>Definition</h3>
+<p>The <code>UPDATE</code> statement modifies existing rows in a table. You specify which columns to change with <code>SET</code> and which rows to change with <code>WHERE</code>.</p>
+
+<h3>Analogy</h3>
+<p>Think of UPDATE as <strong>editing a spreadsheet</strong>. You find the rows you want to change (WHERE), then overwrite specific cells with new values (SET). Without a WHERE clause, you'd be editing every single row — like changing every student's grade at once!</p>
+
+<h3>How It Works</h3>
+<p>MySQL finds all rows matching the WHERE condition, then applies the new values from the SET clause. If no WHERE is specified, ALL rows are updated.</p>
+
+<h3>Example</h3>
+<pre><code class="language-sql">-- Update a single row
 UPDATE employees
 SET salary = 80000
 WHERE name = 'Alice Smith';
@@ -31,83 +39,84 @@ UPDATE employees
 SET salary = 72000, department = 'Senior Marketing'
 WHERE name = 'Bob Jones';
 
--- Update multiple rows at once
+-- Update with expressions (5% raise for Engineering)
 UPDATE employees
 SET salary = salary * 1.05
 WHERE department = 'Engineering';
--- Gives all Engineering employees a 5% raise</code></pre>
 
-<h2>UPDATE with Conditions</h2>
+-- Preview before updating (ALWAYS do this first!)
+SELECT * FROM employees WHERE department = 'Sales';
+-- Check the results, then run the UPDATE with the same WHERE
+</code></pre>
+<strong>Output (preview):</strong>
+<pre>+----+-------------+----------+----------+------------+
+| id | name        | department | salary | hire_date  |
++----+-------------+----------+----------+------------+
+|  4 | David Brown | Sales    | 58000.00 | 2024-03-01 |
+|  7 | Grace Kim   | Sales    | 55000.00 | NULL       |
++----+-------------+----------+----------+------------+</pre>
 
-<pre><code>-- Update only specific rows
-UPDATE employees
-SET department = 'Lead Engineering'
-WHERE department = 'Engineering' AND salary > 85000;
+<h2>Part 3: Apply New Knowledge</h2>
 
--- Update using IN
-UPDATE employees
-SET department = 'Senior Staff'
-WHERE name IN ('Alice Smith', 'Frank Lee');
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>Price Changes</strong> — Updating product prices during a sale</li>
+    <li><strong>Status Updates</strong> — Marking orders as "shipped" or "delivered"</li>
+    <li><strong>User Profiles</strong> — Allowing users to change their email or password</li>
+    <li><strong>Bulk Adjustments</strong> — Giving all employees a raise or updating department assignments</li>
+</ul>
 
--- Update all rows (no WHERE = updates EVERYTHING!)
-UPDATE employees
-SET is_active = TRUE;
--- Be very careful with this!</code></pre>
+<h3>Tips for Success</h3>
+<ul>
+    <li><strong>Always run SELECT first</strong> with the same WHERE to preview affected rows</li>
+    <li>Use <code>UPDATE ... LIMIT</code> to cap the number of rows changed (MySQL 8+)</li>
+    <li>Wrap updates in a <strong>transaction</strong> so you can rollback if something goes wrong</li>
+    <li>Use <code>CASE</code> statements for conditional updates on different rows</li>
+</ul>
 
-<h2>UPDATE with Expressions</h2>
+<h3>Common Mistakes</h3>
+<ul>
+    <li>Forgetting the <code>WHERE</code> clause — updates EVERY row in the table</li>
+    <li>Using the wrong data type in SET (e.g., putting text in a numeric column)</li>
+    <li>Not backing up data before running bulk updates</li>
+    <li>Updating a primary key that other tables reference (breaks foreign keys)</li>
+</ul>
 
-<pre><code>-- Increase salary by percentage
-UPDATE employees
-SET salary = salary * 1.10
-WHERE department = 'Sales';
-
--- Set a computed value
-UPDATE employees
-SET salary = CASE
-    WHEN department = 'Engineering' THEN salary * 1.08
-    WHEN department = 'Marketing' THEN salary * 1.05
-    ELSE salary * 1.03
-END;
-
--- Reset a column
-UPDATE employees
-SET hire_date = CURDATE()
-WHERE id = 1;</code></pre>
-
-<h2>Common Mistakes</h2>
-
-<pre><code>-- DANGER: Updating all rows!
-UPDATE employees SET salary = 0;
--- This sets ALL salaries to 0!
-
--- Always use a WHERE clause unless you really mean all rows.
-
--- To preview what would be updated, use SELECT first:
-SELECT * FROM employees WHERE department = 'Engineering';
--- Check the results, then run the UPDATE with the same WHERE.</code></pre>
-
-<div class="info-box warning">
-    <div class="box-title">Safety Tip</div>
-    <p class="mb-0">Always run a <code>SELECT</code> with your <code>WHERE</code> clause <strong>before</strong> running an <code>UPDATE</code>. This lets you verify which rows will be affected.</p>
-</div>
-
-<div class="exercise">
-    <h4>Practice Exercises</h4>
+<h2>Part 4: Assess Your Learning</h2>
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You manage a student records system. The school is giving all IT students a scholarship, and you need to update their records.</p>
+    <p><strong>Task:</strong> Write the SQL commands to complete the following:</p>
     <ol>
-        <li>Give all employees in the Sales department a 10% raise</li>
-        <li>Change the department of all employees hired before 2023 to 'Senior Staff'</li>
-        <li>Preview which employees earn less than $60,000, then give them a $5,000 raise</li>
-        <li>Set the hire_date of employee with id=1 to today's date</li>
+        <li>Preview all students enrolled in 'BSIT'</li>
+        <li>Give all BSIT students a 10% tuition discount (reduce tuition_fee by 10%)</li>
+        <li>Change the status of student with id=5 to 'Scholar'</li>
+        <li>Update the contact number of student 'Maria Santos' to '09171234567'</li>
     </ol>
 </div>
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answers:</strong></p>
+        <pre><code>-- 1. Preview BSIT students
+SELECT * FROM students WHERE course = 'BSIT';
 
-<div class="lesson-nav">
-    <?php if ($nav['prev']): ?>
-        <a href="<?= lessonUrl($nav['prev']['num'], $nav['prev']['slug'], 'mysql-lessons') ?>">&larr; <?= htmlspecialchars($nav['prev']['title']) ?></a>
-    <?php endif; ?>
-    <?php if ($nav['next']): ?>
-        <a href="<?= lessonUrl($nav['next']['num'], $nav['next']['slug'], 'mysql-lessons') ?>"><?= htmlspecialchars($nav['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
-</div>
+-- 2. Give BSIT students 10% tuition discount
+UPDATE students
+SET tuition_fee = tuition_fee * 0.90
+WHERE course = 'BSIT';
 
+-- 3. Change status of student id=5
+UPDATE students
+SET status = 'Scholar'
+WHERE id = 5;
+
+-- 4. Update contact number
+UPDATE students
+SET contact_number = '09171234567'
+WHERE first_name = 'Maria' AND last_name = 'Santos';</code></pre>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

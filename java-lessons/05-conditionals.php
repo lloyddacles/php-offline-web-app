@@ -7,33 +7,37 @@
     <p class="lesson-desc">Learn how to make your programs decide between different paths using if/else, switch-case, and the ternary operator.</p>
 </div>
 
-<h2>The if Statement</h2>
-<p>The <code>if</code> statement evaluates a boolean condition and executes a block only when the condition is <code>true</code>.</p>
+<h2>Part 1: Activate Prior Knowledge</h2>
+<div class="info-box note">
+    <div class="box-title">Review Questions</div>
+    <ol>
+        <li>What is a boolean expression? What values can it have?</li>
+        <li>How do the comparison operators (<code>==</code>, <code>!=</code>, <code>&gt;</code>, <code>&lt;</code>) work?</li>
+        <li>Can you think of a real-life decision where you choose between more than two options?</li>
+    </ol>
+</div>
 
-<pre><code>int temperature = 35;
-if (temperature > 30) {
-    System.out.println("It is hot outside!");
-}</code></pre>
+<h2>Part 2: Acquire New Knowledge</h2>
 
-<h2>if-else</h2>
-<p>Add an <code>else</code> block to handle the case when the condition is <code>false</code>.</p>
+<h3>Definition</h3>
+<p>Conditional statements allow your program to make decisions. Based on whether a condition is <code>true</code> or <code>false</code>, Java executes different blocks of code. The three main types are <code>if/else</code>, <code>switch</code>, and the <strong>ternary operator</strong>.</p>
 
-<pre><code>int hour = 14;
-if (hour < 12) {
-    System.out.println("Good morning!");
-} else {
-    System.out.println("Good afternoon!");
-}</code></pre>
+<h3>Analogy</h3>
+<p>Think of conditionals like a traffic light. Green means go (execute this block), red means stop (skip this block), and yellow means check another condition first. Your program checks conditions one by one and follows the path that matches.</p>
 
-<h2>if-else if-else Chain</h2>
-<p>When you have multiple conditions, chain them with <code>else if</code>.</p>
+<h3>How It Works</h3>
+<ul>
+    <li><strong>if</strong> — Executes a block only when the condition is true</li>
+    <li><strong>if-else</strong> — Provides an alternative block when the condition is false</li>
+    <li><strong>if-else if-else</strong> — Chains multiple conditions together</li>
+    <li><strong>switch</strong> — Compares one variable against many specific values</li>
+    <li><strong>Ternary</strong> — A compact one-line if-else: <code>condition ? a : b</code></li>
+</ul>
 
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea class="sandbox-code" data-lang="java" data-example="<?= base64_encode('public class Sandbox {
+<h3>Example</h3>
+<pre><code class="language-java">public class ConditionalsDemo {
     public static void main(String[] args) {
+        // if-else if-else chain
         int score = 85;
         String grade;
 
@@ -48,175 +52,127 @@ if (hour < 12) {
         } else {
             grade = "F";
         }
+        System.out.println("Score: " + score + " => Grade: " + grade);
 
-        System.out.println("Score: " + score);
-        System.out.println("Grade: " + grade);
-    }
-}') ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<div class="info-box tip">
-    <div class="box-title">Think About It</div>
-    <p class="mb-0">What happens if you change <code>score</code> to exactly 90? Which condition catches it? What about 89? Trace through the logic to predict the output before running the code.</p>
-</div>
-
-<h2>Switch-Case Statement</h2>
-<p>When comparing one variable against many specific values, <code>switch</code> is cleaner than a long <code>if-else</code> chain.</p>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea class="sandbox-code" data-lang="java" data-example="<?= base64_encode('public class Sandbox {
-    public static void main(String[] args) {
+        // switch statement
         int day = 3;
         String dayName;
 
         switch (day) {
-            case 1:
-                dayName = "Monday";
-                break;
-            case 2:
-                dayName = "Tuesday";
-                break;
-            case 3:
-                dayName = "Wednesday";
-                break;
-            case 4:
-                dayName = "Thursday";
-                break;
-            case 5:
-                dayName = "Friday";
-                break;
-            case 6:
-                dayName = "Saturday";
-                break;
-            case 7:
-                dayName = "Sunday";
-                break;
-            default:
-                dayName = "Invalid day";
-                break;
+            case 1: dayName = "Monday"; break;
+            case 2: dayName = "Tuesday"; break;
+            case 3: dayName = "Wednesday"; break;
+            case 4: dayName = "Thursday"; break;
+            case 5: dayName = "Friday"; break;
+            default: dayName = "Weekend"; break;
         }
-
         System.out.println("Day " + day + " is " + dayName);
+
+        // Ternary operator
+        int age = 20;
+        String type = (age >= 18) ? "Adult" : "Minor";
+        System.out.println("Age " + age + " => " + type);
     }
-}') ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
+}
+</code></pre>
+<strong>Output:</strong>
+<pre>Score: 85 => Grade: B
+Day 3 is Wednesday
+Age 20 => Adult</pre>
 
-<div class="info-box note">
-    <div class="box-title">Don't Forget break!</div>
-    <p class="mb-0">Each <code>case</code> must end with <code>break</code>. Without it, Java executes the matching case <strong>and all cases below it</strong> (fall-through). This can be a bug or a feature, depending on your intent.</p>
-</div>
+<h2>Part 3: Apply New Knowledge</h2>
 
-<h2>Enhanced Switch (Java 14+)</h2>
-<p>Modern Java offers a cleaner switch syntax using <code>-&gt;</code> arrows. No <code>break</code> needed.</p>
-
-<pre><code>int day = 3;
-String dayName = switch (day) {
-    case 1 -> "Monday";
-    case 2 -> "Tuesday";
-    case 3 -> "Wednesday";
-    case 4 -> "Thursday";
-    case 5 -> "Friday";
-    case 6 -> "Saturday";
-    case 7 -> "Sunday";
-    default -> "Invalid day";
-};
-System.out.println(dayName);</code></pre>
-
-<h2>Ternary Operator</h2>
-<p>For simple if-else assignments, the ternary operator <code>condition ? a : b</code> saves lines.</p>
-
-<pre><code>int age = 20;
-String type = (age >= 18) ? "Adult" : "Minor";
-System.out.println(type);  // prints "Adult"</code></pre>
-
-<h2>Short-Circuit Evaluation</h2>
-<p>The <code>&amp;&amp;</code> and <code>||</code> operators short-circuit:</p>
+<h3>Real-World Applications</h3>
 <ul>
-    <li><code>&amp;&amp;</code> &mdash; If the left side is <code>false</code>, the right side is <strong>never checked</strong></li>
-    <li><code>||</code> &mdash; If the left side is <code>true</code>, the right side is <strong>never checked</strong></li>
+    <li><strong>Grade calculators</strong> — Convert numeric scores to letter grades</li>
+    <li><strong>Authentication</strong> — Check if username and password match before granting access</li>
+    <li><strong>Menu systems</strong> — Use switch to handle user selections (1 = New Game, 2 = Settings, etc.)</li>
+    <li><strong>Form validation</strong> — Check if required fields are filled before submission</li>
 </ul>
 
-<pre><code>// Safe null check using short-circuit
-if (name != null &amp;&amp; name.length() > 0) {
-    System.out.println("Name is: " + name);
-}
-// If name is null, name.length() is never called (no crash!)</code></pre>
+<h3>Tips for Success</h3>
+<ul>
+    <li>Order matters in if-else chains — put the most specific conditions first</li>
+    <li>Always include a <code>default</code> case in switch statements for unexpected values</li>
+    <li>Use the ternary operator for simple assignments — it keeps code concise</li>
+    <li>Use <code>break</code> in each switch case to prevent fall-through</li>
+</ul>
 
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea class="sandbox-code" data-lang="java" data-example="<?= base64_encode('public class Sandbox {
-    public static void main(String[] args) {
-        // Nested conditionals
-        int age = 25;
-        boolean hasID = true;
+<h3>Common Mistakes</h3>
+<ul>
+    <li>Forgetting <code>break</code> in switch cases — causes fall-through to the next case</li>
+    <li>Using <code>=</code> instead of <code>==</code> in conditions — assignment instead of comparison</li>
+    <li>Not handling the else case — leaves unexpected scenarios unhandled</li>
+    <li>Using <code>==</code> to compare Strings — use <code>.equals()</code> instead for content comparison</li>
+</ul>
 
-        if (age >= 18) {
-            if (hasID) {
-                System.out.println("Entry allowed.");
-            } else {
-                System.out.println("Please show your ID.");
-            }
-        } else {
-            System.out.println("Sorry, you must be 18+.");
-        }
-
-        // Combining conditions
-        String role = "admin";
-        int years = 5;
-
-        if (role.equals("admin") || years > 3) {
-            System.out.println("Full access granted.");
-        }
-    }
-}') ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<div class="exercise">
-    <h4>Practice Exercises</h4>
+<h2>Part 4: Assess Your Learning</h2>
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You are building a simple ATM system. The program needs to check the user's balance before allowing a withdrawal, and display different messages based on the account type (savings, checking, premium).</p>
+    <p><strong>Task:</strong> Write a Java program that handles withdrawal logic with conditionals.</p>
     <ol>
-        <li>Write a program that takes an integer (1-12) and prints the corresponding month name using switch</li>
-        <li>Create a grade calculator: input a score (0-100), output letter grade (A/B/C/D/F)</li>
-        <li>Use a ternary operator to find the maximum of two numbers without if-else</li>
-        <li>Write a nested if that checks if a year is a leap year (divisible by 4, except centuries unless divisible by 400)</li>
+        <li>Create a class called <code>ATMSystem</code></li>
+        <li>Declare variables for balance, withdrawal amount, and account type</li>
+        <li>Use if-else to check if the balance is sufficient</li>
+        <li>Use switch to handle different account types and their withdrawal limits</li>
+        <li>Use the ternary operator to display a status message</li>
     </ol>
 </div>
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answers:</strong></p>
+        <pre><code class="language-java">public class ATMSystem {
+    public static void main(String[] args) {
+        double balance = 5000.00;
+        double withdrawAmount = 2000.00;
+        String accountType = "savings";
 
-<div class="lesson-nav">
-    <?php if ($prevNext['prev']): ?>
-        <a href="<?= lessonUrl($prevNext['prev']['num'], $prevNext['prev']['slug'], 'java-lessons') ?>" class="prev-link">&larr; Previous: <?= htmlspecialchars($prevNext['prev']['title']) ?></a>
-    <?php endif; ?>
-    <?php if ($prevNext['next']): ?>
-        <a href="<?= lessonUrl($prevNext['next']['num'], $prevNext['next']['slug'], 'java-lessons') ?>" class="next-link">Next: <?= htmlspecialchars($prevNext['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
-</div>
+        // Check if balance is sufficient
+        if (withdrawAmount > balance) {
+            System.out.println("Insufficient funds!");
+            return;
+        }
 
+        // Determine withdrawal limit based on account type
+        double limit;
+        switch (accountType) {
+            case "savings":
+                limit = 10000.00;
+                break;
+            case "checking":
+                limit = 15000.00;
+                break;
+            case "premium":
+                limit = 50000.00;
+                break;
+            default:
+                limit = 5000.00;
+                break;
+        }
+
+        // Check if within limit
+        if (withdrawAmount > limit) {
+            System.out.println("Exceeds " + accountType + " limit of $" + limit);
+        } else {
+            balance -= withdrawAmount;
+            System.out.println("Withdrew $" + withdrawAmount);
+            System.out.println("Remaining balance: $" + balance);
+        }
+
+        // Ternary operator for status
+        String status = (balance > 1000) ? "Account in good standing" : "Low balance warning";
+        System.out.println("Status: " + status);
+    }
+}
+</code></pre>
+        <p><strong>Output:</strong></p>
+        <pre>Withdrew $2000.0
+Remaining balance: $3000.0
+Status: Account in good standing</pre>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

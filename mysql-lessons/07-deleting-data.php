@@ -1,116 +1,121 @@
-<?php
-$pageTitle = 'Deleting Data';
-require_once __DIR__ . '/../includes/functions.php';
-$lessonNum = 7;
-$nav = getPrevNextLesson($lessonNum, 'mysql-lessons');
-require_once __DIR__ . '/../includes/header.php';
-?>
+<?php $pageTitle = 'Deleting Data'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
+<?php $num = 7; $prevNext = getPrevNextLesson($num, 'mysql-lessons'); ?>
 
 <div class="lesson-header">
-    <span class="lesson-number">MySQL Lesson <?= $lessonNum ?></span>
+    <span class="lesson-number">Lesson <?= $num ?></span>
     <h1>Deleting Data</h1>
     <p class="lesson-desc">Remove records from tables using DELETE and TRUNCATE.</p>
 </div>
 
-<h2>DELETE Statement</h2>
-
-<div class="syntax-ref">
-    <h4>Syntax: DELETE</h4>
-    <code>DELETE FROM table_name WHERE condition;</code>
-</div>
-
-<pre><code>-- Delete a specific row
-DELETE FROM employees
-WHERE name = 'Henry Wu';
-
--- Delete multiple rows
-DELETE FROM employees
-WHERE department = 'Sales';
-
--- Delete with complex conditions
-DELETE FROM employees
-WHERE salary < 50000 AND hire_date < '2023-01-01';
-
--- Preview before deleting (ALWAYS do this first!)
-SELECT * FROM employees WHERE salary < 50000;</code></pre>
-
-<h2>DELETE vs DROP vs TRUNCATE</h2>
-
-<table>
-    <thead>
-        <tr><th>Command</th><th>What It Does</th><th>Can Rollback?</th></tr>
-    </thead>
-    <tbody>
-        <tr><td><code>DELETE FROM table WHERE...</code></td><td>Removes specific rows</td><td>Yes (in transactions)</td></tr>
-        <tr><td><code>DELETE FROM table</code></td><td>Removes all rows</td><td>Yes (in transactions)</td></tr>
-        <tr><td><code>TRUNCATE TABLE table</code></td><td>Removes all rows (faster, resets auto_increment)</td><td>No</td></tr>
-        <tr><td><code>DROP TABLE table</code></td><td>Deletes the table structure AND data</td><td>No</td></tr>
-    </tbody>
-</table>
-
-<pre><code>-- Delete all rows (keeps the table structure)
-DELETE FROM employees;
-
--- TRUNCATE is faster for removing all rows
-TRUNCATE TABLE employees;
--- Also resets AUTO_INCREMENT back to 1
-
--- Drop the table entirely (structure + data)
-DROP TABLE IF EXISTS employees;</code></pre>
-
-<h2>Safe Deletion Practices</h2>
-
-<pre><code>-- Step 1: Preview what you're about to delete
-SELECT * FROM employees
-WHERE department = 'Temp Department';
-
--- Step 2: Count the rows
-SELECT COUNT(*) FROM employees
-WHERE department = 'Temp Department';
-
--- Step 3: Delete with confidence
-DELETE FROM employees
-WHERE department = 'Temp Department';
-
--- Step 4: Verify the deletion
-SELECT * FROM employees;</code></pre>
-
-<h2>Using Subqueries in DELETE</h2>
-
-<pre><code>-- Delete employees who earn below average
-DELETE FROM employees
-WHERE salary < (SELECT AVG(salary) FROM employees);
-
--- Delete employees not in any department
-DELETE FROM employees
-WHERE department NOT IN (
-    SELECT DISTINCT department
-    FROM employees
-    WHERE department IS NOT NULL
-);</code></pre>
-
-<div class="info-box important">
-    <div class="box-title">Golden Rule</div>
-    <p class="mb-0">Before running any DELETE, always: (1) Run a SELECT with the same WHERE clause, (2) Count the rows, (3) Back up important data.</p>
-</div>
-
-<div class="exercise">
-    <h4>Practice Exercises</h4>
+<h2>Part 1: Activate Prior Knowledge</h2>
+<div class="info-box note">
+    <div class="box-title">Review Questions</div>
     <ol>
-        <li>Delete the employee named 'Henry Wu' and verify the deletion</li>
-        <li>Preview all employees earning less than $55,000, then delete them</li>
-        <li>Delete all employees hired before 2023</li>
-        <li>What's the difference between DELETE and TRUNCATE?</li>
+        <li>What is the difference between <code>DELETE</code> and <code>DROP</code>?</li>
+        <li>Why should you always use a <code>WHERE</code> clause with DELETE?</li>
+        <li>What does <code>TRUNCATE</code> do that <code>DELETE</code> does not?</li>
     </ol>
 </div>
 
-<div class="lesson-nav">
-    <?php if ($nav['prev']): ?>
-        <a href="<?= lessonUrl($nav['prev']['num'], $nav['prev']['slug'], 'mysql-lessons') ?>">&larr; <?= htmlspecialchars($nav['prev']['title']) ?></a>
-    <?php endif; ?>
-    <?php if ($nav['next']): ?>
-        <a href="<?= lessonUrl($nav['next']['num'], $nav['next']['slug'], 'mysql-lessons') ?>"><?= htmlspecialchars($nav['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
-</div>
+<h2>Part 2: Acquire New Knowledge</h2>
 
+<h3>Definition</h3>
+<p>The <code>DELETE</code> statement removes specific rows from a table. <code>TRUNCATE</code> removes all rows and resets auto-increment counters. <code>DROP</code> deletes the entire table structure and data.</p>
+
+<h3>Analogy</h3>
+<p>Think of deleting as <strong>removing pages from a notebook</strong>. <code>DELETE</code> tears out specific pages. <code>TRUNCATE</code> rips out all pages but keeps the notebook binding. <code>DROP</code> throws away the entire notebook.</p>
+
+<h3>How It Works</h3>
+<p>DELETE finds rows matching the WHERE condition and removes them one by one. Without WHERE, all rows are deleted. TRUNCATE is faster because it deallocates data pages directly without scanning rows.</p>
+
+<h3>Example</h3>
+<pre><code class="language-sql">-- Delete a specific row
+DELETE FROM employees WHERE name = 'Henry Wu';
+
+-- Delete multiple rows
+DELETE FROM employees WHERE department = 'Sales';
+
+-- Preview before deleting (ALWAYS do this first!)
+SELECT * FROM employees WHERE salary < 55000;
+SELECT COUNT(*) FROM employees WHERE salary < 55000;
+
+-- Delete with confidence after preview
+DELETE FROM employees WHERE salary < 55000;
+
+-- TRUNCATE: remove all rows (faster, resets AUTO_INCREMENT)
+TRUNCATE TABLE employees;
+
+-- DROP: delete the table entirely
+DROP TABLE IF EXISTS employees;
+</code></pre>
+<strong>Output (DELETE comparison):</strong>
+<pre>-- DELETE vs TRUNCATE vs DROP:
+-- +----------+------------------+----------------+----------------+
+-- | Command  | Rows Removed     | Resets Auto_ID | Structure Kept |
+-- +----------+------------------+----------------+----------------+
+-- | DELETE   | Specific/All     | No             | Yes            |
+-- | TRUNCATE | All (fast)       | Yes            | Yes            |
+-- | DROP     | All + Structure  | N/A            | No             |
+-- +----------+------------------+----------------+----------------+</pre>
+
+<h2>Part 3: Apply New Knowledge</h2>
+
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>User Management</strong> — Deleting accounts that violated terms of service</li>
+    <li><strong>Data Cleanup</strong> — Removing duplicate or outdated records</li>
+    <li><strong>Soft Deletes</strong> — Setting a "deleted" flag instead of actually deleting rows</li>
+    <li><strong>Archiving</strong> — Moving old data to archive tables before deleting from main tables</li>
+</ul>
+
+<h3>Tips for Success</h3>
+<ul>
+    <li><strong>Always SELECT first</strong> — preview which rows will be deleted</li>
+    <li>Use <strong>soft deletes</strong> (add a <code>deleted_at</code> timestamp column) for recoverable data</li>
+    <li>Back up important data before running DELETE or TRUNCATE</li>
+    <li>Use <code>DELETE ... LIMIT</code> to delete in batches for large tables</li>
+</ul>
+
+<h3>Common Mistakes</h3>
+<ul>
+    <li>Running <code>DELETE FROM table</code> without WHERE — deletes ALL rows</li>
+    <li>Using <code>DROP</code> when you meant <code>DELETE</code> — table structure is lost forever</li>
+    <li>Not checking foreign key constraints — deleting rows referenced by other tables</li>
+    <li>Using <code>TRUNCATE</code> on a table with foreign key constraints (fails in MySQL InnoDB)</li>
+</ul>
+
+<h2>Part 4: Assess Your Learning</h2>
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You manage a blog platform. Some spam accounts need to be removed, and you need to clean up old data.</p>
+    <p><strong>Task:</strong> Write the SQL commands to complete the following:</p>
+    <ol>
+        <li>Preview all users with email addresses containing 'spam'</li>
+        <li>Delete all users whose email contains 'spam'</li>
+        <li>Delete all comments that are more than 2 years old</li>
+        <li>What is the difference between DELETE and TRUNCATE in this context?</li>
+    </ol>
+</div>
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answers:</strong></p>
+        <pre><code>-- 1. Preview spam users
+SELECT * FROM users WHERE email LIKE '%spam%';
+
+-- 2. Delete spam users
+DELETE FROM users WHERE email LIKE '%spam%';
+
+-- 3. Delete old comments (more than 2 years)
+DELETE FROM comments
+WHERE created_at < DATE_SUB(CURDATE(), INTERVAL 2 YEAR);
+
+-- 4. Answer: DELETE removes specific rows and can be rolled back in a transaction.
+-- TRUNCATE removes ALL rows, resets AUTO_INCREMENT, and is faster but cannot
+-- target specific rows. For cleaning up specific spam accounts, DELETE is correct
+-- because we need the WHERE clause to target specific rows.</code></pre>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

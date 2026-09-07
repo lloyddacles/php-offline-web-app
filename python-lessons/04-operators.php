@@ -1,113 +1,131 @@
 <?php $pageTitle = 'Python Operators'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
 <?php $num = 4; $prevNext = getPrevNextLesson($num, 'python-lessons'); ?>
 
-<div class="lesson-container">
-    <h1>Lesson 4: Python Operators</h1>
-    
-    <div class="lesson-meta">
-        <span>Beginner</span> | <span>Estimated time: 30 minutes</span>
-    </div>
-
-    <section class="lesson-section">
-        <h2>Arithmetic Operators</h2>
-        <table>
-            <thead>
-                <tr><th>Operator</th><th>Name</th><th>Example</th><th>Result</th></tr>
-            </thead>
-            <tbody>
-                <tr><td><code>+</code></td><td>Addition</td><td><code>5 + 3</code></td><td>8</td></tr>
-                <tr><td><code>-</code></td><td>Subtraction</td><td><code>5 - 3</code></td><td>2</td></tr>
-                <tr><td><code>*</code></td><td>Multiplication</td><td><code>5 * 3</code></td><td>15</td></tr>
-                <tr><td><code>/</code></td><td>Division</td><td><code>5 / 2</code></td><td>2.5</td></tr>
-                <tr><td><code>//</code></td><td>Floor Division</td><td><code>5 // 2</code></td><td>2</td></tr>
-                <tr><td><code>%</code></td><td>Modulus</td><td><code>5 % 2</code></td><td>1</td></tr>
-                <tr><td><code>**</code></td><td>Exponent</td><td><code>2 ** 3</code></td><td>8</td></tr>
-            </tbody>
-        </table>
-        
-        <div class="info-box note">
-            <strong>Note:</strong> Python's division <code>/</code> always returns a float. Use <code>//</code> for integer division!
-        </div>
-    </section>
-
-    <section class="lesson-section">
-        <h2>Comparison Operators</h2>
-        <p>Return <code>True</code> or <code>False</code>:</p>
-        <pre><code>5 == 5      # True (equal to)
-5 != 3      # True (not equal to)
-5 > 3       # True (greater than)
-5 < 3       # False (less than)
-5 >= 5      # True (greater or equal)
-5 <= 4      # False (less or equal)</code></pre>
-    </section>
-
-    <section class="lesson-section">
-        <h2>Logical Operators</h2>
-        <table>
-            <thead>
-                <tr><th>Operator</th><th>Description</th><th>Example</th></tr>
-            </thead>
-            <tbody>
-                <tr><td><code>and</code></td><td>True if both true</td><td><code>True and False</code> → False</td></tr>
-                <tr><td><code>or</code></td><td>True if at least one true</td><td><code>True or False</code> → True</td></tr>
-                <tr><td><code>not</code></td><td>Reverses boolean</td><td><code>not True</code> → False</td></tr>
-            </tbody>
-        </table>
-    </section>
-
-    <section class="lesson-section">
-        <h2>Identity and Membership Operators</h2>
-        <pre><code># Identity: checks if same object in memory
-a = [1, 2, 3]
-b = [1, 2, 3]
-c = a
-
-print(a is b)      # False (different objects)
-print(a is c)      # True (same object)
-print(a == b)      # True (same value)
-
-# Membership: checks if value exists in sequence
-fruits = ["apple", "banana", "cherry"]
-print("apple" in fruits)     # True
-print("grape" not in fruits) # True</code></pre>
-    </section>
-
-    <section class="lesson-section">
-        <h2>Practice: Operator Demos</h2>
-        <p>Try the sandbox to see operators in action:</p>
-        
-        <div class="sandbox">
-            <textarea class="sandbox-code" data-lang="python" data-example="<?= base64_encode('# Arithmetic operators\nprint("Arithmetic:")\nprint(f"10 + 3 = {10 + 3}")\nprint(f"10 - 3 = {10 - 3}")\nprint(f"10 * 3 = {10 * 3}")\nprint(f"10 // 3 = {10 // 3}")\nprint(f"10 %% 3 = {10 %% 3}")\nprint(f"10 ** 3 = {10 ** 3}")\n\n# Comparison\nprint("\nComparison:")\nprint(f"5 == 5: {5 == 5}")\nprint(f"5 != 5: {5 != 5}")\nprint(f"5 > 3: {5 > 3}")') ?>" ></textarea>
-            <button class="run-btn">Run Code</button>
-            <div class="output-area"></div>
-        </div>
-    </section>
-
-    <section class="lesson-section">
-        <h2>Operator Precedence</h2>
-        <p>From highest to lowest:</p>
-        <ol>
-            <li><code>**</code> (Exponent)</li>
-            <li><code>~</code>, <code>+</code>, <code>-</code> (Unary)</li>
-            <li><code>*</code>, <code>/</code>, <code>%</code>, <code>//</code></li>
-            <li><code>+</code>, <code>-</code></li>
-            <li>Comparison operators</li>
-            <li><code>not</code></li>
-            <li><code>and</code></li>
-            <li><code>or</code></li>
-        </ol>
-        
-        <div class="info-box tip">
-            <strong>Think About It:</strong> What's the result of <code>2 + 3 * 4</code> vs <code>(2 + 3) * 4</code>? Why does this matter?
-        </div>
-    </section>
-
-    <section class="lesson-section">
-        <h2>Practice Exercise</h2>
-        <p>Create a truth table for <code>(True and False) or not False</code>. Can you predict the result before running it?</p>
-    </section>
-
-    <?php require_once __DIR__ . '/../includes/prev-next-nav.php'; ?>
+<div class="lesson-header">
+    <span class="lesson-number">Lesson <?= $num ?></span>
+    <h1>Python Operators</h1>
+    <p class="lesson-desc">Use arithmetic, comparison, and logical operators to manipulate data and make decisions.</p>
 </div>
 
+<h2>Part 1: Activate Prior Knowledge</h2>
+<div class="info-box note">
+    <div class="box-title">Review Questions</div>
+    <ol>
+        <li>What is the difference between the <code>=</code> and <code>==</code> operators?</li>
+        <li>In mathematics, what does the modulus operator (<code>%</code>) calculate?</li>
+        <li>What is the difference between <code>and</code>, <code>or</code>, and <code>not</code> in programming?</li>
+    </ol>
+</div>
+
+<h2>Part 2: Acquire New Knowledge</h2>
+<h3>Definition</h3>
+<p>Operators are special symbols that perform operations on values (operands). Python provides <strong>arithmetic</strong> operators for math, <strong>comparison</strong> operators for evaluating conditions, and <strong>logical</strong> operators for combining boolean expressions.</p>
+
+<h3>Analogy</h3>
+<p>Think of operators as the verbs in a sentence. If variables are nouns (the things you're working with), operators are the actions you perform on them. Just like verbs tell you what's happening — "add," "compare," "combine" — operators tell Python what to do with your data.</p>
+
+<h3>How It Works</h3>
+<p>Arithmetic operators (+, -, *, /, //, %, **) return numbers. Comparison operators (==, !=, >, <, >=, <=) return <code>True</code> or <code>False</code>. Logical operators (and, or, not) combine boolean expressions. Python also has <strong>identity</strong> (<code>is</code>) and <strong>membership</strong> (<code>in</code>) operators.</p>
+
+<h3>Example</h3>
+<pre><code class="language-python"># Arithmetic operators
+print(f"10 + 3 = {10 + 3}")      # Addition: 13
+print(f"10 - 3 = {10 - 3}")      # Subtraction: 7
+print(f"10 * 3 = {10 * 3}")      # Multiplication: 30
+print(f"10 / 3 = {10 / 3}")      # Division: 3.333...
+print(f"10 // 3 = {10 // 3}")    # Floor Division: 3
+print(f"10 % 3 = {10 % 3}")      # Modulus: 1
+print(f"10 ** 3 = {10 ** 3}")    # Exponent: 1000
+
+# Comparison operators
+print(f"5 == 5: {5 == 5}")       # True
+print(f"5 != 3: {5 != 3}")       # True
+print(f"5 > 3: {5 > 3}")         # True
+
+# Logical operators
+x = 15
+print(f"x > 10 and x < 20: {x > 10 and x < 20}")  # True
+print(f"x > 20 or x < 10: {x > 20 or x < 10}")    # False
+print(f"not (x > 20): {not (x > 20)}")             # True
+</code></pre>
+<strong>Output:</strong>
+<pre>10 + 3 = 13
+10 - 3 = 7
+10 * 3 = 30
+10 / 3 = 3.3333333333333335
+10 // 3 = 3
+10 % 3 = 1
+10 ** 3 = 1000
+5 == 5: True
+5 != 3: True
+5 > 3: True
+x > 10 and x < 20: True
+x > 20 or x < 10: False
+not (x > 20): True</pre>
+
+<h2>Part 3: Apply New Knowledge</h2>
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>E-commerce:</strong> Calculate discounts, taxes, and totals with arithmetic operators</li>
+    <li><strong>Form Validation:</strong> Use comparison operators to check if inputs meet requirements</li>
+    <li><strong>Search Filters:</strong> Combine conditions with logical operators (e.g., price > 10 AND rating >= 4)</li>
+    <li><strong>Game Logic:</strong> Check if a player's score meets thresholds for levels or achievements</li>
+</ul>
+
+<h3>Tips for Success</h3>
+<ul>
+    <li>Remember: <code>/</code> always returns a float. Use <code>//</code> if you need integer division</li>
+    <li>Use parentheses to make complex expressions clear: <code>(a + b) * c</code></li>
+    <li>Use <code>in</code> to check if a value exists in a list or string: <code>"apple" in fruits</code></li>
+    <li>Know operator precedence: <code>**</code> first, then <code>*</code>/<code>/</code>, then <code>+</code>/<code>-</code></li>
+</ul>
+
+<h3>Common Mistakes</h3>
+<ul>
+    <li>Using <code>=</code> (assignment) instead of <code>==</code> (comparison) in conditions</li>
+    <li>Expecting <code>/</code> to return an integer — it always returns a float</li>
+    <li>Confusing <code>is</code> (identity) with <code>==</code> (equality) — they check different things</li>
+    <li>Ignoring operator precedence: <code>2 + 3 * 4</code> is 14, not 20</li>
+</ul>
+
+<h2>Part 4: Assess Your Learning</h2>
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You are building a shopping cart. The cart has items with prices, and you need to apply a discount, calculate tax, and check if the customer qualifies for free shipping (orders over $50).</p>
+    <p><strong>Task:</strong> Use operators to calculate the final price and determine shipping eligibility.</p>
+    <ol>
+        <li>Create variables for item price, quantity, discount percentage, and tax rate</li>
+        <li>Calculate the subtotal, discount amount, tax, and final total</li>
+        <li>Use comparison and logical operators to check if the order qualifies for free shipping</li>
+        <li>Print a receipt showing all values</li>
+    </ol>
+</div>
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answers:</strong> Students should apply arithmetic and comparison operators correctly.</p>
+        <pre><code># Shopping cart calculations
+price = 29.99
+quantity = 2
+discount = 10  # percent
+tax_rate = 0.08
+
+subtotal = price * quantity
+discount_amount = subtotal * (discount / 100)
+after_discount = subtotal - discount_amount
+tax = after_discount * tax_rate
+total = after_discount + tax
+
+print(f"Item: ${price} x {quantity}")
+print(f"Subtotal: ${subtotal:.2f}")
+print(f"Discount ({discount}%): -${discount_amount:.2f}")
+print(f"Tax ({tax_rate*100}%): +${tax:.2f}")
+print(f"Total: ${total:.2f}")
+
+free_shipping = total > 50
+print(f"Free shipping: {free_shipping}")</code></pre>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

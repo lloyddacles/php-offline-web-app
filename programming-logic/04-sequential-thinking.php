@@ -1,5 +1,4 @@
 <?php $pageTitle = 'Sequential Thinking'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
-
 <?php $num = 4; $prevNext = getPrevNextLesson($num, 'programming-logic'); ?>
 
 <div class="lesson-header">
@@ -8,270 +7,169 @@
     <p class="lesson-desc">Understand that code executes top-to-bottom and why the order of operations changes everything.</p>
 </div>
 
-<h2>Order Matters</h2>
-<p>In programming, instructions execute from top to bottom, one line at a time. This seems obvious, but it's one of the biggest sources of bugs for beginners.</p>
-
-<p>Consider two recipes:</p>
-
-<table>
-    <thead>
-        <tr><th>Recipe A (Correct)</th><th>Recipe B (Wrong Order)</th></tr>
-    </thead>
-    <tbody>
-        <tr><td>1. Preheat oven</td><td>1. Put cake in oven</td></tr>
-        <tr><td>2. Mix ingredients</td><td>2. Preheat oven</td></tr>
-        <tr><td>3. Pour into pan</td><td>3. Mix ingredients</td></tr>
-        <tr><td>4. Put in oven</td><td>4. Pour into pan</td></tr>
-        <tr><td>Result: Delicious cake</td><td>Result: Disaster</td></tr>
-    </tbody>
-</table>
-
-<p>The same ingredients, the same steps — but different order produces completely different results. Programming is the same.</p>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea class="sandbox-code" data-example="<?= base64_encode('<?php
-// Same variables, different order = different results
-
-// Version A: Correct order
-$a = 5;
-$b = $a + 3;  // b = 8
-echo "Version A: a=$a, b=$b\n";
-
-// Version B: Wrong order
-$a = 5;
-$a = $a + 3;  // a = 8
-$b = $a;      // b = 8
-echo "Version B: a=$a, b=$b\n";
-
-// Version C: Another wrong order
-$a = 5;
-$b = $a;      // b = 5
-$a = $a + 3;  // a = 8
-echo "Version C: a=$a, b=$b\n";
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
+<h2>Part 1: Activate Prior Knowledge</h2>
+<p>Connect to what students already know:</p>
+<div class="info-box note">
+    <div class="box-title">Review Questions</div>
+    <ol>
+        <li>What is the first thing you do when you wake up? What comes next? Why can't you skip steps?</li>
+        <li>If you were getting ready for school, would you put on your shoes before your socks? What happens if the order is wrong?</li>
+        <li>Think about making instant noodles. What happens if you pour the hot water before boiling it?</li>
+    </ol>
 </div>
 
-<h2>Tracing Code</h2>
-<p><strong>Tracing</strong> means reading through code line by line and tracking what each variable holds at each step. This is the single most important skill for debugging.</p>
+<h2>Part 2: Acquire New Knowledge</h2>
 
-<h3>Example: Trace This Code</h3>
-<p>What will this code output? Try to trace it yourself before looking at the answer.</p>
+<h3>Definition</h3>
+<p><strong>Sequential thinking</strong> means understanding that instructions execute from top to bottom, one line at a time. The order of operations determines the result — changing the sequence changes the outcome.</p>
 
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea class="sandbox-code" data-example="<?= base64_encode('<?php
-// Trace through this code line by line
+<h3>Analogy</h3>
+<p>Think of a assembly line in a factory. Each worker does one task in order: first the frame is built, then the engine is installed, then the wheels are attached. If you try to attach wheels before the frame exists, the process fails. Code works the same way — each line depends on the ones before it.</p>
 
+<h3>How It Works (Step by Step)</h3>
+<ol>
+    <li><strong>Top-to-bottom execution:</strong> PHP reads your code from the first line to the last, one line at a time.</li>
+    <li><strong>Each line completes before the next begins:</strong> The computer doesn't skip ahead or go back unless you tell it to.</li>
+    <li><strong>Variables store their values:</strong> Once a variable is assigned, it keeps that value until you change it.</li>
+    <li><strong>Order matters:</strong> The same operations in a different order can produce completely different results.</li>
+</ol>
+
+<h3>Example</h3>
+<pre><code class="language-php">// PHP Example: Sequential execution and variable assignment
 $x = 10;
-echo "Line 1: x = $x\n";
+echo "Step 1: x = $x\n";
 
 $y = $x + 5;
-echo "Line 2: y = $y\n";
+echo "Step 2: y = $y\n";
 
 $x = $y - $x;
-echo "Line 3: x = $x\n";
+echo "Step 3: x = $x\n";
 
 $y = $x * 2;
-echo "Line 4: y = $y\n";
+echo "Step 4: y = $y\n";
 
 echo "\nFinal: x = $x, y = $y\n";
 echo "The values changed at each step!\n";
-echo "Tracing helps you follow the changes.\n";
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
+</code></pre>
+<strong>Output:</strong>
+<pre>Step 1: x = 10
+Step 2: y = 15
+Step 3: x = 5
+Step 4: y = 10
 
-<div class="info-box tip">
-    <div class="box-title">Practice Tracing</div>
-    <p class="mb-0">Before running any code, grab a piece of paper and trace through it. Write down the value of each variable at each line. This habit will make you a much better programmer.</p>
-</div>
+Final: x = 5, y = 10
+The values changed at each step!</pre>
 
-<h2>Variables as Memory</h2>
-<p>Variables are like labeled boxes that store values. When you assign a value, it goes in the box. When you reassign, the old value is replaced.</p>
+<h3>Python Example</h3>
+<pre><code class="language-python"># Python Example: Sequential execution
 
-<h3>Assignment Overwrites</h3>
-<div class="syntax-ref">
-    <h4>How Assignment Works</h4>
-    <code>$x = 5;&nbsp;&nbsp;&nbsp;&nbsp;// Box labeled $x contains 5</code><br>
-    <code>$x = 10;&nbsp;&nbsp;&nbsp;// Old value (5) is gone, now contains 10</code><br>
-    <code>$x = $x + 1;// Read current value (10), add 1, store result (11)</code><br>
-    <code>// $x is now 11 — the old 10 is replaced</code>
-</div>
+x = 10
+print(f"Step 1: x = {x}")
 
-<p>Think of it like a whiteboard: you can erase and write new values, but only one value exists at a time.</p>
+y = x + 5
+print(f"Step 2: y = {y}")
 
-<h2>Assignment vs Equality</h2>
-<p>This is a critical distinction that confuses many beginners:</p>
+x = y - x
+print(f"Step 3: x = {x}")
 
-<table>
-    <thead>
-        <tr><th>Concept</th><th>Symbol</th><th>Meaning</th><th>Example</th></tr>
-    </thead>
-    <tbody>
-        <tr><td>Assignment</td><td><code>=</code></td><td>Puts a value into a variable</td><td><code>$x = 5;</code></td></tr>
-        <tr><td>Equality check</td><td><code>==</code></td><td>Compares two values</td><td><code>if ($x == 5)</code></td></tr>
-        <tr><td>Strict equality</td><td><code>===</code></td><td>Compares value AND type</td><td><code>if ($x === 5)</code></td></tr>
-    </tbody>
-</table>
+y = x * 2
+print(f"Step 4: y = {y}")
 
-<div class="info-box warning">
-    <div class="box-title">Common Mistake</div>
-    <p class="mb-0">Writing <code>if ($x = 5)</code> instead of <code>if ($x == 5)</code> will assign 5 to $x instead of comparing! PHP won't always warn you about this. Always use <code>===</code> when possible.</p>
-</div>
+print(f"\nFinal: x = {x}, y = {y}")
+</code></pre>
+<strong>Output:</strong>
+<pre>Step 1: x = 10
+Step 2: y = 15
+Step 3: x = 5
+Step 4: y = 10
 
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea class="sandbox-code" data-example="<?= base64_encode('<?php
-// Assignment vs Equality
+Final: x = 5, y = 10</pre>
 
-$x = 10;
+<h3>Java Example</h3>
+<pre><code class="language-java">// Java Example: Sequential execution
+public class Main {
+    public static void main(String[] args) {
+        int x = 10;
+        System.out.println("Step 1: x = " + x);
 
-// This is assignment (=), not comparison
-// It sets $x to 5, then evaluates 5 as true
-if ($x = 5) {
-    echo "Assignment: x is now $x (was 10, now 5)\n";
+        int y = x + 5;
+        System.out.println("Step 2: y = " + y);
+
+        x = y - x;
+        System.out.println("Step 3: x = " + x);
+
+        y = x * 2;
+        System.out.println("Step 4: y = " + y);
+
+        System.out.println("\nFinal: x = " + x + ", y = " + y);
+    }
 }
+</code></pre>
+<strong>Output:</strong>
+<pre>Step 1: x = 10
+Step 2: y = 15
+Step 3: x = 5
+Step 4: y = 10
 
-// Reset
-$x = 10;
+Final: x = 5, y = 10</pre>
 
-// This is comparison (==)
-if ($x == 10) {
-    echo "Comparison: x equals 10 (still 10)\n";
-}
+<h2>Part 3: Apply New Knowledge</h2>
 
-// Reset
-$x = 10;
-
-// This is strict comparison (===)
-if ($x === 10) {
-    echo "Strict: x is exactly 10 (value and type match)\n";
-}
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<h2>Practice Tracing</h2>
-<p>Trace through this code and predict the output before running it:</p>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea class="sandbox-code" data-example="<?= base64_encode('<?php
-// Tracing exercise - predict the output first!
-
-$a = 3;
-$b = 7;
-$c = $a + $b;    // c = ?
-$a = $c - $a;    // a = ?
-$b = $c - $b;    // b = ?
-echo "After swap: a=$a, b=$b, c=$c\n";
-
-// What happened? We swapped a and b using c!
-// Original: a=3, b=7
-// Final:    a=7, b=3
-echo "\nThis is a classic swap algorithm.\n";
-echo "The variable c holds temporary values.\n";
-'); ?></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<h2>Fixing Sequence Errors</h2>
-<p>Sometimes code has the right operations but wrong order. Here's an exercise to practice finding and fixing sequence errors:</p>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea class="sandbox-code" data-example="<?= base64_encode('<?php
-// This code has a bug! The order is wrong.
-// Fix the sequence to get the correct output.
-
-$price = 100;
-$discount = 20;
-
-// BUG: This applies discount to discounted price
-$price = $price - $discount;  // price = 80
-$tax = $price * 0.10;         // tax = 8 (wrong!)
-echo "Buggy result: $price + $tax = " . ($price + $tax) . "\n";
-
-// FIXED: Calculate tax first, then apply discount
-$price = 100;
-$tax = $price * 0.10;         // tax = 10 (correct)
-$price = $price - $discount;  // price = 80
-echo "Fixed result: $price + $tax = " . ($price + $tax) . "\n";
-
-echo "\nThe order of operations matters!\n";
-'); ?></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<div class="info-box note">
-    <div class="box-title">Key Takeaway</div>
-    <p class="mb-0">When your code produces wrong results, the first thing to check is the <strong>order of operations</strong>. Trace through your code line by line and verify that each step happens at the right time.</p>
-</div>
-
-<h2>Summary</h2>
+<h3>Real-World Applications</h3>
 <ul>
-    <li>Code executes top to bottom — order is everything</li>
-    <li><strong>Tracing</strong> is reading code line by line to track variable values</li>
-    <li>Variables store one value at a time; assignment overwrites the old value</li>
-    <li><code>=</code> is assignment, <code>==</code> is comparison, <code>===</code> is strict comparison</li>
-    <li>When debugging, trace through your code on paper first</li>
-    <li>Many bugs come from wrong operation order, not wrong operations</li>
+    <li><strong>Most programs are sequential:</strong> Almost every program starts with sequential logic — it's the foundation for all other concepts.</li>
+    <li><strong>Financial calculations:</strong> Computing taxes, discounts, and totals depends on the order of operations.</li>
+    <li><strong>Data processing:</strong> Reading data, transforming it, and saving results must happen in sequence.</li>
+    <li><strong>User interfaces:</strong> Loading screens, form validation, and saving data follow a specific order.</li>
 </ul>
 
-<div class="lesson-nav">
-    <?php if ($prevNext['prev']): ?>
-        <a href="<?= lessonUrl($prevNext['prev']['num'], $prevNext['prev']['slug'], 'programming-logic') ?>" class="prev-link">&larr; Previous: <?= htmlspecialchars($prevNext['prev']['title']) ?></a>
-    <?php endif; ?>
-    <?php if ($prevNext['next']): ?>
-        <a href="<?= lessonUrl($prevNext['next']['num'], $prevNext['next']['slug'], 'programming-logic') ?>" class="next-link">Next: <?= htmlspecialchars($prevNext['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
+<h3>Tips for Success</h3>
+<ul>
+    <li>Before running any code, grab a piece of paper and trace through it line by line.</li>
+    <li>Write down the value of each variable at each step — this habit will make you a much better programmer.</li>
+    <li>When debugging, trace through your code on paper first to find where things went wrong.</li>
+</ul>
+
+<h3>Common Mistakes to Avoid</h3>
+<ul>
+    <li><strong>Confusing assignment (=) with equality (==):</strong> Writing <code>if ($x = 5)</code> assigns 5 to $x instead of comparing.</li>
+    <li><strong>Expecting the computer to "know" what you mean:</strong> Every step must be explicit and in the right order.</li>
+    <li><strong>Not tracing code:</strong> Many bugs come from wrong operation order, not wrong operations.</li>
+</ul>
+
+<h2>Part 4: Assess Your Learning</h2>
+
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You're building a simple calculator program that takes two numbers, adds them, and displays the result. However, the code below has a bug — the order of operations is wrong.</p>
+    <p><strong>Task:</strong> Trace through the code and fix the sequence errors.</p>
+    <ol>
+        <li>Trace through the "buggy" version line by line. What value does $result have at the end?</li>
+        <li>Identify which line is in the wrong position and why it causes the wrong result.</li>
+        <li>Rewrite the code in the correct order so the calculator works properly.</li>
+    </ol>
 </div>
 
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answer 1:</strong> In the buggy version, $result would have the wrong value because the display happens before the calculation, or the calculation uses uninitialized variables.</p>
+        <p><strong>Answer 2:</strong> The display line (<code>echo</code>) is placed before the calculation line. The variable $result doesn't have a value yet when it's displayed.</p>
+        <p><strong>Answer 3 (Correct Code):</strong></p>
+        <pre><code>// Correct order: calculate first, then display
+$number1 = 10;
+$number2 = 20;
+
+// Step 1: Perform the calculation
+$result = $number1 + $number2;
+
+// Step 2: Display the result
+echo "The sum of $number1 and $number2 is: $result\n";
+
+// Output: The sum of 10 and 20 is: 30</code></pre>
+        <p><strong>Key Lesson:</strong> Always ensure data is processed before it's used. Sequential thinking means understanding what happens first, what happens next, and what depends on what.</p>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

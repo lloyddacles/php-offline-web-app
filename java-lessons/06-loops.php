@@ -4,229 +4,207 @@
 <div class="lesson-header">
     <span class="lesson-number">Lesson <?= $num ?></span>
     <h1>Loop Statements</h1>
-    <p class="lesson-desc">Master repetition in Java: for loops, while loops, do-while loops, break/continue, and nested loops.</p>
+    <p class="lesson-desc">Master repetition in Java: for loops, while loops, do-while loops, for-each, and break/continue.</p>
 </div>
 
-<h2>The for Loop</h2>
-<p>The <code>for</code> loop is ideal when you know how many times to repeat something. It has three parts: initialization, condition, and update.</p>
-
-<pre><code>for (int i = 0; i < 5; i++) {
-    System.out.println("Iteration: " + i);
-}
-// Prints 0, 1, 2, 3, 4</code></pre>
-
-<table>
-    <thead>
-        <tr><th>Part</th><th>Purpose</th><th>Executes</th></tr>
-    </thead>
-    <tbody>
-        <tr><td><code>int i = 0</code></td><td>Initialization</td><td>Once, before the loop starts</td></tr>
-        <tr><td><code>i < 5</code></td><td>Condition</td><td>Before each iteration</td></tr>
-        <tr><td><code>i++</code></td><td>Update</td><td>After each iteration</td></tr>
-    </tbody>
-</table>
-
-<h2>The while Loop</h2>
-<p>The <code>while</code> loop repeats as long as its condition is <code>true</code>. Use it when you do not know the exact number of iterations.</p>
-
-<pre><code>int count = 0;
-while (count < 5) {
-    System.out.println("Count: " + count);
-    count++;
-}</code></pre>
-
+<h2>Part 1: Activate Prior Knowledge</h2>
 <div class="info-box note">
-    <div class="box-title">Warning: Infinite Loops</div>
-    <p class="mb-0">If the condition never becomes <code>false</code>, the loop runs forever. Always make sure the loop variable changes inside the loop body. An infinite loop will freeze your program.</p>
-</div>
-
-<h2>The do-while Loop</h2>
-<p>The <code>do-while</code> loop executes the body <strong>at least once</strong> before checking the condition. It guarantees one execution.</p>
-
-<pre><code>int num = 10;
-do {
-    System.out.println("Number: " + num);
-    num++;
-} while (num < 5);
-// Prints "Number: 10" even though 10 < 5 is false</code></pre>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea class="sandbox-code" data-lang="java" data-example="<?= base64_encode('public class Sandbox {
-    public static void main(String[] args) {
-        System.out.println("=== For Loop ===");
-        for (int i = 1; i <= 5; i++) {
-            System.out.println("for: " + i);
-        }
-
-        System.out.println("\\n=== While Loop ===");
-        int w = 1;
-        while (w <= 5) {
-            System.out.println("while: " + w);
-            w++;
-        }
-
-        System.out.println("\\n=== Do-While Loop ===");
-        int d = 1;
-        do {
-            System.out.println("do-while: " + d);
-            d++;
-        } while (d <= 5);
-    }
-}') ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<h2>break and continue</h2>
-<p>Control loop flow with two powerful keywords:</p>
-
-<table>
-    <thead>
-        <tr><th>Keyword</th><th>Effect</th></tr>
-    </thead>
-    <tbody>
-        <tr><td><code>break</code></td><td>Exits the loop entirely</td></tr>
-        <tr><td><code>continue</code></td><td>Skips the current iteration and moves to the next</td></tr>
-    </tbody>
-</table>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea class="sandbox-code" data-lang="java" data-example="<?= base64_encode('public class Sandbox {
-    public static void main(String[] args) {
-        System.out.println("=== break: Stop at 5 ===");
-        for (int i = 1; i <= 10; i++) {
-            if (i == 6) {
-                System.out.println("Found 6! Breaking...");
-                break;
-            }
-            System.out.println("i = " + i);
-        }
-
-        System.out.println("\\n=== continue: Skip even ===");
-        for (int i = 1; i <= 10; i++) {
-            if (i % 2 == 0) {
-                continue;
-            }
-            System.out.println("odd: " + i);
-        }
-    }
-}') ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<div class="info-box tip">
-    <div class="box-title">Think About It</div>
-    <p class="mb-0">In the break example, the loop checks <code>i == 6</code> after printing. What if you moved the print statement after the if-block? Would anything change?</p>
-</div>
-
-<h2>Enhanced for-each Loop</h2>
-<p>When iterating over an array or collection, the <code>for-each</code> loop is cleaner and less error-prone.</p>
-
-<pre><code>int[] numbers = {10, 20, 30, 40, 50};
-for (int num : numbers) {
-    System.out.println(num);
-}</code></pre>
-
-<div class="info-box note">
-    <div class="box-title">for vs for-each</div>
-    <p class="mb-0">Use the regular <code>for</code> loop when you need the index. Use <code>for-each</code> when you only need the values. The for-each loop is safer because there are no index variables to get wrong.</p>
-</div>
-
-<h2>Nested Loops</h2>
-<p>Put a loop inside another loop to process 2D patterns, matrices, or combinations.</p>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea class="sandbox-code" data-lang="java" data-example="<?= base64_encode('public class Sandbox {
-    public static void main(String[] args) {
-        // Multiplication table (1 to 5)
-        System.out.println("=== Multiplication Table ===");
-        System.out.print("    ");
-        for (int i = 1; i <= 5; i++) {
-            System.out.printf("%4d", i);
-        }
-        System.out.println();
-
-        for (int i = 1; i <= 5; i++) {
-            System.out.printf("%2d |", i);
-            for (int j = 1; j <= 5; j++) {
-                System.out.printf("%4d", i * j);
-            }
-            System.out.println();
-        }
-
-        // Star pattern
-        System.out.println("\\n=== Star Pattern ===");
-        for (int row = 1; row <= 5; row++) {
-            for (int col = 1; col <= row; col++) {
-                System.out.print("* ");
-            }
-            System.out.println();
-        }
-    }
-}') ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<h2>Loop Comparison</h2>
-<table>
-    <thead>
-        <tr><th>Loop Type</th><th>Best For</th><th>Guaranteed Execution</th></tr>
-    </thead>
-    <tbody>
-        <tr><td><code>for</code></td><td>Known number of iterations</td><td>Zero or more</td></tr>
-        <tr><td><code>while</code></td><td>Unknown iterations, condition-first</td><td>Zero or more</td></tr>
-        <tr><td><code>do-while</code></td><td>Must execute at least once</td><td>One or more</td></tr>
-        <tr><td><code>for-each</code></td><td>Iterating arrays/collections</td><td>Zero or more</td></tr>
-    </tbody>
-</table>
-
-<div class="exercise">
-    <h4>Practice Exercises</h4>
+    <div class="box-title">Review Questions</div>
     <ol>
-        <li>Write a for loop that prints all even numbers from 1 to 50</li>
-        <li>Use a while loop to calculate the sum of numbers from 1 to 100</li>
-        <li>Print a right-aligned triangle of stars using nested for loops</li>
-        <li>Use break to find the first number divisible by 7 between 50 and 100</li>
-        <li>Use continue to print all numbers from 1 to 30 that are not divisible by 3</li>
+        <li>If you needed to print "Hello" 10 times, would you write 10 print statements? What's a better approach?</li>
+        <li>What is a condition, and how can it be used to control how many times something repeats?</li>
+        <li>Can you think of a real-life task that repeats until a condition is met (like checking if a door is locked)?</li>
     </ol>
 </div>
 
-<div class="lesson-nav">
-    <?php if ($prevNext['prev']): ?>
-        <a href="<?= lessonUrl($prevNext['prev']['num'], $prevNext['prev']['slug'], 'java-lessons') ?>" class="prev-link">&larr; Previous: <?= htmlspecialchars($prevNext['prev']['title']) ?></a>
-    <?php endif; ?>
-    <?php if ($prevNext['next']): ?>
-        <a href="<?= lessonUrl($prevNext['next']['num'], $prevNext['next']['slug'], 'java-lessons') ?>" class="next-link">Next: <?= htmlspecialchars($prevNext['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
-</div>
+<h2>Part 2: Acquire New Knowledge</h2>
 
+<h3>Definition</h3>
+<p>Loops allow your program to repeat a block of code multiple times. Java provides four loop types: <code>for</code> (known iterations), <code>while</code> (condition-first), <code>do-while</code> (executes at least once), and <code>for-each</code> (iterates over collections).</p>
+
+<h3>Analogy</h3>
+<p>Think of a loop like a washing machine. It goes through the same cycle (wash, rinse, spin) repeatedly until a condition is met (all cycles complete). The <code>for</code> loop is like a machine with a preset number of cycles. The <code>while</code> loop keeps running until you tell it to stop.</p>
+
+<h3>How It Works</h3>
+<ul>
+    <li><strong>for loop</strong> — Best when you know the exact number of iterations</li>
+    <li><strong>while loop</strong> — Best when the number of iterations is unknown</li>
+    <li><strong>do-while loop</strong> — Guarantees at least one execution</li>
+    <li><strong>for-each loop</strong> — Cleanly iterates over arrays and collections</li>
+    <li><strong>break</strong> — Exits the loop immediately</li>
+    <li><strong>continue</strong> — Skips to the next iteration</li>
+</ul>
+
+<h3>Example</h3>
+<pre><code class="language-java">public class LoopsDemo {
+    public static void main(String[] args) {
+        // for loop: count from 1 to 5
+        System.out.println("=== For Loop ===");
+        for (int i = 1; i <= 5; i++) {
+            System.out.println("Count: " + i);
+        }
+
+        // while loop: sum numbers 1 to 5
+        System.out.println("\n=== While Loop ===");
+        int sum = 0;
+        int j = 1;
+        while (j <= 5) {
+            sum += j;
+            j++;
+        }
+        System.out.println("Sum: " + sum);
+
+        // do-while: executes at least once
+        System.out.println("\n=== Do-While Loop ===");
+        int num = 10;
+        do {
+            System.out.println("Number: " + num);
+            num++;
+        } while (num < 5);  // Condition is false, but it ran once!
+
+        // for-each: iterate over an array
+        System.out.println("\n=== For-Each Loop ===");
+        String[] fruits = {"Apple", "Banana", "Cherry"};
+        for (String fruit : fruits) {
+            System.out.println("Fruit: " + fruit);
+        }
+
+        // break and continue
+        System.out.println("\n=== Break at 3 ===");
+        for (int i = 1; i <= 10; i++) {
+            if (i == 4) break;       // Exit loop when i is 4
+            System.out.println(i);
+        }
+
+        System.out.println("\n=== Skip Even Numbers ===");
+        for (int i = 1; i <= 10; i++) {
+            if (i % 2 == 0) continue;  // Skip even numbers
+            System.out.println(i);
+        }
+    }
+}
+</code></pre>
+<strong>Output:</strong>
+<pre>=== For Loop ===
+Count: 1
+Count: 2
+Count: 3
+Count: 4
+Count: 5
+
+=== While Loop ===
+Sum: 15
+
+=== Do-While Loop ===
+Number: 10
+
+=== For-Each Loop ===
+Fruit: Apple
+Fruit: Banana
+Fruit: Cherry
+
+=== Break at 3 ===
+1
+2
+3
+
+=== Skip Even Numbers ===
+1
+3
+5
+7
+9</pre>
+
+<h2>Part 3: Apply New Knowledge</h2>
+
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>Data processing</strong> — Loop through records in a database to calculate totals</li>
+    <li><strong>User input validation</strong> — Keep asking for input until a valid response is given</li>
+    <li><strong>Game loops</strong> — Run the game continuously until the player quits</li>
+    <li><strong>File processing</strong> — Read lines from a file one by one until the end</li>
+</ul>
+
+<h3>Tips for Success</h3>
+<ul>
+    <li>Use <code>for</code> when you know the count — <code>for (int i = 0; i < 10; i++)</code></li>
+    <li>Use <code>while</code> when the condition determines when to stop</li>
+    <li>Always ensure the loop variable changes inside the loop to avoid infinite loops</li>
+    <li>Use <code>for-each</code> when you only need the values, not the index</li>
+</ul>
+
+<h3>Common Mistakes</h3>
+<ul>
+    <li>Infinite loops — forgetting to update the loop variable causes the program to freeze</li>
+    <li>Off-by-one errors — using <code>&lt;</code> vs <code>&lt;=</code> changes whether the last value is included</li>
+    <li>Using <code>continue</code> when you meant <code>break</code> — skip vs exit</li>
+    <li>Modifying a for-each collection during iteration — causes <code>ConcurrentModificationException</code></li>
+</ul>
+
+<h2>Part 4: Assess Your Learning</h2>
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You are building a number guessing game. The program has a secret number (42). It needs to check guesses from 1 to 50, report if each guess is too high or too low, and stop when the correct number is found.</p>
+    <p><strong>Task:</strong> Write a Java program that simulates this game using loops.</p>
+    <ol>
+        <li>Create a class called <code>GuessingGame</code></li>
+        <li>Use a for loop to iterate through guesses 1 to 50</li>
+        <li>Use <code>break</code> when the correct number is found</li>
+        <li>Use <code>continue</code> to skip numbers that are not close to the target</li>
+        <li>Track and display the number of attempts</li>
+    </ol>
+</div>
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answers:</strong></p>
+        <pre><code class="language-java">public class GuessingGame {
+    public static void main(String[] args) {
+        int secretNumber = 42;
+        int attempts = 0;
+
+        System.out.println("Guess the number between 1 and 50!");
+
+        for (int guess = 1; guess <= 50; guess++) {
+            attempts++;
+
+            if (guess == secretNumber) {
+                System.out.println("Correct! " + guess + " is the secret number!");
+                System.out.println("Found in " + attempts + " attempts.");
+                break;  // Exit the loop
+            }
+
+            // Skip numbers that are more than 10 away
+            if (Math.abs(guess - secretNumber) > 10) {
+                continue;  // Skip to next iteration
+            }
+
+            // Give hints for close guesses
+            if (guess < secretNumber) {
+                System.out.println("Guess " + guess + ": Too low! (attempt " + attempts + ")");
+            } else {
+                System.out.println("Guess " + guess + ": Too high! (attempt " + attempts + ")");
+            }
+        }
+    }
+}
+</code></pre>
+        <p><strong>Output:</strong></p>
+        <pre>Guess the number between 1 and 50!
+Guess 32: Too low! (attempt 32)
+Guess 33: Too low! (attempt 33)
+Guess 34: Too low! (attempt 34)
+Guess 35: Too low! (attempt 35)
+Guess 36: Too low! (attempt 36)
+Guess 37: Too low! (attempt 37)
+Guess 38: Too low! (attempt 38)
+Guess 39: Too low! (attempt 39)
+Guess 40: Too low! (attempt 40)
+Guess 41: Too low! (attempt 41)
+Correct! 42 is the secret number!
+Found in 42 attempts.</pre>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

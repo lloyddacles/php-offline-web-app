@@ -1,46 +1,60 @@
 <?php $pageTitle = 'Thinking About Data'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
+<?php $num = 8; $prevNext = getPrevNextLesson($num, 'programming-logic'); ?>
 
 <div class="lesson-header">
-    <span class="lesson-number">Lesson 8</span>
+    <span class="lesson-number">Lesson <?= $num ?></span>
     <h1>Thinking About Data</h1>
     <p class="lesson-desc">Data is the "stuff" programs work with — learn to choose the right structure and model real-world information.</p>
 </div>
 
-<div class="info-box tip">
-    <div class="box-title">Core Idea</div>
-    <p class="mb-0">Programs are just data in, data out. Before you write a single line of code, ask: <strong>"What data do I have? How is it shaped? What do I need to do with it?"</strong> The answers shape your entire program.</p>
-</div>
-
-<h2>Data is the Foundation</h2>
-<p>Every program processes data. A calculator processes numbers. A contacts app processes names, emails, and phone numbers. A game processes player positions and scores. The first step is always: <strong>what data am I working with?</strong></p>
-<p>Think of data like real-world objects: a student has a name, grades, and an ID. An item in a store has a price, quantity, and category. Your job is to represent these in PHP.</p>
-
-<h2>Choosing Structures</h2>
-<p>PHP gives you arrays, and arrays can hold anything. But how you organize them matters:</p>
-
-<table>
-    <thead><tr><th>Structure</th><th>Best For</th><th>Example</th></tr></thead>
-    <tbody>
-        <tr><td>Indexed array</td><td>Simple lists</td><td><code>["red", "green", "blue"]</code></td></tr>
-        <tr><td>Associative array</td><td>One item with properties</td><td><code>["name" => "Alice", "age" => 20]</code></td></tr>
-        <tr><td>Nested array</td><td>Collections of items</td><td>Array of associative arrays</td></tr>
-    </tbody>
-</table>
-
+<h2>Part 1: Activate Prior Knowledge</h2>
+<p>Connect to what students already know:</p>
 <div class="info-box note">
-    <div class="box-title">Think About It</div>
-    <p>Which structure fits? A single student record → associative array. A list of students → nested array. A list of colors → indexed array.</p>
+    <div class="box-title">Review Questions</div>
+    <ol>
+        <li>How do you organize your closet? Do you group clothes by type, color, or season?</li>
+        <li>Think about your desk at home. How do you arrange your things so you can find them quickly?</li>
+        <li>If you were organizing a library, how would you categorize the books? By genre? Author? Title?</li>
+    </ol>
 </div>
 
-<h2>Data Modeling</h2>
-<p>Data modeling means deciding <strong>how to represent</strong> real-world things in your code. Start with the real thing, then list its properties:</p>
+<h2>Part 2: Acquire New Knowledge</h2>
 
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea class="sandbox-code" data-example="<?= base64_encode('<?php
-// Modeling a student
+<h3>Definition</h3>
+<p><strong>Data thinking</strong> is understanding what data your program needs, how to organize it, and how to store it. In PHP, you use <strong>variables</strong> to store data, <strong>data types</strong> to define what kind of data it is, and <strong>arrays</strong> to organize collections of data.</p>
+
+<h3>Analogy</h3>
+<p>Think of your closet again. You need containers (variables) to hold your clothes (data). T-shirts go in one drawer (string), pants in another (integer), and accessories in a separate box (array). The type of container depends on what you're storing — you wouldn't put shoes in a jewelry box. Similarly, the data type depends on what kind of information you're working with.</p>
+
+<h3>How It Works (Step by Step)</h3>
+<ol>
+    <li><strong>Identify the data:</strong> What information does your program need to work with?</li>
+    <li><strong>Choose the right type:</strong> Is it text (string), a number (integer/float), true/false (boolean), or a collection (array)?</li>
+    <li><strong>Use meaningful names:</strong> Name your variables clearly so anyone reading the code knows what they contain.</li>
+    <li><strong>Organize collections:</strong> Use indexed arrays for simple lists, associative arrays for key-value pairs, and nested arrays for complex structures.</li>
+    <li><strong>Validate input:</strong> Always check that data is in the expected format before using it.</li>
+</ol>
+
+<h3>Example</h3>
+<pre><code class="language-php">// PHP Example: Modeling student data
+
+// Simple variables (scalars)
+$name = "Alice";
+$age = 20;
+$gpa = 3.8;
+$isActive = true;
+
+echo "Student: $name\n";
+echo "Age: $age\n";
+echo "GPA: $gpa\n";
+echo "Active: " . ($isActive ? "Yes" : "No") . "\n\n";
+
+// Indexed array (simple list)
+$grades = [85, 92, 78, 95];
+echo "Grades: " . implode(", ", $grades) . "\n";
+echo "Average: " . array_sum($grades) / count($grades) . "\n\n";
+
+// Associative array (one item with properties)
 $student = [
     "name" => "Alice",
     "id" => "S001",
@@ -48,195 +62,175 @@ $student = [
     "active" => true
 ];
 
-echo "Student: {$student[\"name\"]}\\n";
-echo "ID: {$student[\"id\"]}\\n";
-echo "Grades: " . implode(", ", $student[\"grades\"]) . "\\n";
+echo "Student: {$student['name']}\n";
+echo "ID: {$student['id']}\n";
+echo "Grades: " . implode(", ", $student['grades']) . "\n";
+</code></pre>
+<strong>Output:</strong>
+<pre>Student: Alice
+Age: 20
+GPA: 3.8
+Active: Yes
 
-// Modeling a collection of students
-$students = [
-    [
-        "name" => "Alice",
-        "grades" => [85, 92, 78, 95]
-    ],
-    [
-        "name" => "Bob",
-        "grades" => [70, 65, 80, 72]
-    ],
-    [
-        "name" => "Charlie",
-        "grades" => [90, 88, 92, 85]
-    ]
-];
+Grades: 85, 92, 78, 95
+Average: 87.5
 
-echo "\\n--- All Students ---\\n";
-for ($i = 0; $i < count($students); $i++) {
-    $avg = array_sum($students[$i]["grades"]) / count($students[$i]["grades"]);
-    echo "{$students[$i][\"name\"]}: avg = " . round($avg, 1) . "\\n";
+Student: Alice
+ID: S001
+Grades: 85, 92, 78, 95</pre>
+
+<h3>Python Example</h3>
+<pre><code class="language-python"># Python Example: Modeling student data
+
+# Simple variables
+name = "Alice"
+age = 20
+gpa = 3.8
+is_active = True
+
+print(f"Student: {name}")
+print(f"Age: {age}")
+print(f"GPA: {gpa}")
+print(f"Active: {'Yes' if is_active else 'No'}\n")
+
+# List (indexed array)
+grades = [85, 92, 78, 95]
+print(f"Grades: {grades}")
+print(f"Average: {sum(grades) / len(grades)}\n")
+
+# Dictionary (associative array)
+student = {
+    "name": "Alice",
+    "id": "S001",
+    "grades": [85, 92, 78, 95],
+    "active": True
 }
-'); ?></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
 
-<h2>Input Validation Thinking</h2>
-<p>Never trust data from users. Always validate before processing:</p>
+print(f"Student: {student['name']}")
+print(f"ID: {student['id']}")
+print(f"Grades: {student['grades']}")
+</code></pre>
+<strong>Output:</strong>
+<pre>Student: Alice
+Age: 20
+GPA: 3.8
+Active: Yes
 
-<table>
-    <thead><tr><th>Check</th><th>Why</th><th>PHP Function</th></tr></thead>
-    <tbody>
-        <tr><td>Is it empty?</td><td>Missing data</td><td><code>empty()</code></td></tr>
-        <tr><td>Is it the right type?</td><td>Wrong data causes errors</td><td><code>is_numeric()</code>, <code>is_string()</code></td></tr>
-        <tr><td>Is it in range?</td><td>Prevent invalid values</td><td>Comparison operators</td></tr>
-        <tr><td>Is it safe?</td><td>Prevent injection attacks</td><td><code>htmlspecialchars()</code></td></tr>
-    </tbody>
-</table>
+Grades: [85, 92, 78, 95]
+Average: 87.5
 
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Sandbox: Model and Query a Dataset</span>
-    </div>
-    <textarea class="sandbox-code" data-example="<?= base64_encode('<?php
-$students = [
-    ["name" => "Alice", "grade" => 92, "major" => "CS"],
-    ["name" => "Bob", "grade" => 78, "major" => "Math"],
-    ["name" => "Charlie", "grade" => 85, "major" => "CS"],
-    ["name" => "Diana", "grade" => 95, "major" => "English"],
-    ["name" => "Eve", "grade" => 88, "major" => "CS"],
-    ["name" => "Frank", "grade" => 62, "major" => "Math"]
-];
+Student: Alice
+ID: S001
+Grades: [85, 92, 78, 95]</pre>
 
-// Find students with grade above 85
-echo "=== Grade > 85 ===\\n";
-for ($i = 0; $i < count($students); $i++) {
-    if ($students[$i]["grade"] > 85) {
-        echo "{$students[$i][\"name\"]}: {$students[$i][\"grade\"]}\\n";
+<h3>Java Example</h3>
+<pre><code class="language-java">// Java Example: Modeling student data
+import java.util.ArrayList;
+
+public class Main {
+    public static void main(String[] args) {
+        // Simple variables
+        String name = "Alice";
+        int age = 20;
+        double gpa = 3.8;
+        boolean isActive = true;
+
+        System.out.println("Student: " + name);
+        System.out.println("Age: " + age);
+        System.out.println("GPA: " + gpa);
+        System.out.println("Active: " + (isActive ? "Yes" : "No"));
     }
 }
+</code></pre>
+<strong>Output:</strong>
+<pre>Student: Alice
+Age: 20
+GPA: 3.8
+Active: Yes</pre>
 
-// Find CS majors
-echo "\\n=== CS Majors ===\\n";
-for ($i = 0; $i < count($students); $i++) {
-    if ($students[$i]["major"] === "CS") {
-        echo "{$students[$i][\"name\"]}: {$students[$i][\"grade\"]}\\n";
-    }
-}
+<h2>Part 3: Apply New Knowledge</h2>
 
-// Calculate average grade
-$sum = 0;
-for ($i = 0; $i < count($students); $i++) {
-    $sum += $students[$i]["grade"];
-}
-$avg = $sum / count($students);
-echo "\\nClass Average: " . round($avg, 1) . "\\n";
-'); ?></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>User profiles:</strong> Storing name, email, preferences, and settings for each user in an application.</li>
+    <li><strong>Inventory systems:</strong> Tracking product names, prices, quantities, and categories for a store.</li>
+    <li><strong>Calculations:</strong> Using variables to store intermediate results in complex formulas.</li>
+    <li><strong>Record keeping:</strong> Maintaining student grades, employee records, or financial transactions.</li>
+</ul>
 
-<h2>Data Flow</h2>
-<p>Data flows through your program like water through pipes. Input → Processing → Output. Understanding this flow helps you debug and design:</p>
-<ol>
-    <li><strong>Input:</strong> Where does the data come from? (user, file, database)</li>
-    <li><strong>Processing:</strong> What do you need to do with it? (filter, transform, calculate)</li>
-    <li><strong>Output:</strong> Where does the result go? (screen, file, database)</li>
-</ol>
+<h3>Tips for Success</h3>
+<ul>
+    <li>Start by listing all the data you need before writing any code.</li>
+    <li>Use descriptive variable names — <code>$studentName</code> is better than <code>$x</code>.</li>
+    <li>Choose the simplest data structure that fits your needs.</li>
+</ul>
 
-<h2>Transformation Pipelines</h2>
-<p>A pipeline is a series of steps that transform data. Each step takes input, processes it, and passes the result to the next step:</p>
+<h3>Common Mistakes to Avoid</h3>
+<ul>
+    <li><strong>Using the wrong data type:</strong> Storing a number as a string can cause calculation errors.</li>
+    <li><strong>Poor variable naming:</strong> Names like <code>$temp</code> or <code>$data</code> don't tell you what the variable contains.</li>
+    <li><strong>Not validating input:</strong> Always check that data is in the expected format before using it.</li>
+</ul>
 
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Sandbox: Data Transformation Pipeline</span>
-    </div>
-    <textarea class="sandbox-code" data-example="<?= base64_encode('<?php
-// Raw data
-$rawScores = [85, -5, 92, 105, 78, 60, 0, 88, 73, 150];
+<h2>Part 4: Assess Your Learning</h2>
 
-// Step 1: Filter invalid scores (0-100 only)
-$valid = [];
-for ($i = 0; $i < count($rawScores); $i++) {
-    if ($rawScores[$i] >= 0 && $rawScores[$i] <= 100) {
-        $valid[] = $rawScores[$i];
-    }
-}
-echo "Step 1 - Valid scores: " . implode(", ", $valid) . "\\n";
-
-// Step 2: Sort ascending
-sort($valid);
-echo "Step 2 - Sorted: " . implode(", ", $valid) . "\\n";
-
-// Step 3: Map to grades
-$grades = [];
-for ($i = 0; $i < count($valid); $i++) {
-    $s = $valid[$i];
-    if ($s >= 90) $g = "A";
-    elseif ($s >= 80) $g = "B";
-    elseif ($s >= 70) $g = "C";
-    elseif ($s >= 60) $g = "D";
-    else $g = "F";
-    $grades[] = "{$s}->{$g}";
-}
-echo "Step 3 - Mapped: " . implode(", ", $grades) . "\\n";
-
-// Step 4: Aggregate — count each grade
-$counts = ["A" => 0, "B" => 0, "C" => 0, "D" => 0, "F" => 0];
-for ($i = 0; $i < count($valid); $i++) {
-    $s = $valid[$i];
-    if ($s >= 90) $counts["A"]++;
-    elseif ($s >= 80) $counts["B"]++;
-    elseif ($s >= 70) $counts["C"]++;
-    elseif ($s >= 60) $counts["D"]++;
-    else $counts["F"]++;
-}
-echo "Step 4 - Counts:\\n";
-foreach ($counts as $grade => $count) {
-    echo "  {$grade}: {$count}\\n";
-}
-'); ?></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<div class="info-box tip">
-    <div class="box-title">Pipeline Thinking</div>
-    <p class="mb-0">Break complex problems into small, clear steps. Each step does one thing and passes the result forward. This makes code easier to write, test, and debug.</p>
-</div>
-
-<div class="exercise">
-    <h4>Practice Exercises</h4>
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You're building a student information system for your school. The system needs to store and display information about students.</p>
+    <p><strong>Task:</strong> Design the data structures for a student information system.</p>
     <ol>
-        <li>Model an inventory system: items with name, price, quantity, category. Find all items under $10.</li>
-        <li>Build a data pipeline: take a string of comma-separated numbers, filter out negatives, calculate the average.</li>
-        <li>Model a contact list: name, email, phone. Validate that all emails contain "@".</li>
-        <li>Transform a list of temperatures from Celsius to Fahrenheit, then find the hottest day.</li>
+        <li>List all the data fields a student record should contain (name, ID, grades, etc.).</li>
+        <li>Choose the right data structure for a single student and for a list of students.</li>
+        <li>Write code to create one student record and display their information.</li>
     </ol>
 </div>
 
-<div class="lesson-nav">
-    <?php if ($prevNext['prev']): ?>
-        <a href="<?= lessonUrl($prevNext['prev']['num'], $prevNext['prev']['slug'], 'programming-logic') ?>" class="prev-link">&larr; Previous: <?= htmlspecialchars($prevNext['prev']['title']) ?></a>
-    <?php endif; ?>
-    <?php if ($prevNext['next']): ?>
-        <a href="<?= lessonUrl($prevNext['next']['num'], $prevNext['next']['slug'], 'programming-logic') ?>" class="next-link">Next: <?= htmlspecialchars($prevNext['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
-</div>
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answer 1 (Data Fields):</strong> A student record should include: name (string), student ID (string), age (integer), grade level (integer), grades array (array of integers), GPA (float), and active status (boolean).</p>
+        <p><strong>Answer 2 (Data Structure):</strong> A single student: associative array with key-value pairs. A list of students: indexed array of associative arrays (nested structure).</p>
+        <p><strong>Answer 3 (Sample Solution):</strong></p>
+        <pre><code>// Single student record
+$student = [
+    "name" => "Alice Johnson",
+    "id" => "S2024-001",
+    "age" => 16,
+    "grade_level" => 10,
+    "grades" => [88, 92, 85, 90],
+    "gpa" => 3.7,
+    "active" => true
+];
 
+// Display student information
+echo "Student: {$student['name']}\n";
+echo "ID: {$student['id']}\n";
+echo "Age: {$student['age']}\n";
+echo "Grade Level: {$student['grade_level']}\n";
+echo "Grades: " . implode(", ", $student['grades']) . "\n";
+echo "GPA: {$student['gpa']}\n";
+echo "Status: " . ($student['active'] ? "Active" : "Inactive") . "\n";
+
+// List of students
+$students = [
+    $student,
+    [
+        "name" => "Bob Smith",
+        "id" => "S2024-002",
+        "age" => 17,
+        "grade_level" => 11,
+        "grades" => [75, 80, 78, 82],
+        "gpa" => 3.2,
+        "active" => true
+    ]
+];
+
+echo "\nAll Students:\n";
+foreach ($students as $s) {
+    echo "- {$s['name']} ({$s['id']})\n";
+}</code></pre>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

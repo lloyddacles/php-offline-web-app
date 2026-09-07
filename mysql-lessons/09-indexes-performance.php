@@ -1,149 +1,123 @@
-<?php
-$pageTitle = 'Indexes and Performance';
-require_once __DIR__ . '/../includes/functions.php';
-$lessonNum = 9;
-$nav = getPrevNextLesson($lessonNum, 'mysql-lessons');
-require_once __DIR__ . '/../includes/header.php';
-?>
+<?php $pageTitle = 'Indexes and Performance'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
+<?php $num = 9; $prevNext = getPrevNextLesson($num, 'mysql-lessons'); ?>
 
 <div class="lesson-header">
-    <span class="lesson-number">MySQL Lesson <?= $lessonNum ?></span>
+    <span class="lesson-number">Lesson <?= $num ?></span>
     <h1>Indexes and Performance</h1>
     <p class="lesson-desc">Speed up your queries with indexes and learn optimization basics.</p>
 </div>
 
-<h2>What Are Indexes?</h2>
-<p>An index is like a <strong>book's index</strong> &mdash; it helps MySQL find data quickly without scanning every row. Without an index, MySQL must check every row (full table scan).</p>
+<h2>Part 1: Activate Prior Knowledge</h2>
+<div class="info-box note">
+    <div class="box-title">Review Questions</div>
+    <ol>
+        <li>What happens to query performance as a table grows from 1,000 to 1,000,000 rows?</li>
+        <li>What is a "full table scan" and why is it slow?</li>
+        <li>Which columns in a table would you most frequently search by?</li>
+    </ol>
+</div>
 
-<pre><code>-- Without index: MySQL checks ALL rows
+<h2>Part 2: Acquire New Knowledge</h2>
+
+<h3>Definition</h3>
+<p>An <strong>index</strong> is a data structure that helps MySQL find rows quickly without scanning every row. It works like a book's index — instead of reading every page, you look up the page number in the index.</p>
+
+<h3>Analogy</h3>
+<p>Without an index, finding a name in a phone book means reading every single entry. With an index (alphabetical tabs), you jump directly to the right section. MySQL indexes work the same way — they let the database jump to the right rows instantly.</p>
+
+<h3>How It Works</h3>
+<p>When you create an index, MySQL builds a sorted structure (usually a B-tree). Queries using the indexed column can use binary search instead of scanning every row. This turns O(n) lookups into O(log n).</p>
+
+<h3>Example</h3>
+<pre><code class="language-sql">-- Without index: MySQL checks ALL rows
 SELECT * FROM employees WHERE name = 'Alice Smith';
 -- On 1 million rows: checks all 1,000,000 rows
 
--- With index: MySQL jumps directly to the row
+-- Create an index on the name column
 CREATE INDEX idx_name ON employees(name);
+
+-- Now the same query uses the index
 SELECT * FROM employees WHERE name = 'Alice Smith';
--- On 1 million rows: checks ~20 rows (binary search)</code></pre>
-
-<h2>Creating Indexes</h2>
-
-<pre><code>-- Create an index on a single column
-CREATE INDEX idx_name ON employees(name);
+-- On 1 million rows: checks ~20 rows (binary search)
 
 -- Create a UNIQUE index (no duplicate values allowed)
 CREATE UNIQUE INDEX idx_email ON employees(email);
 
--- Create an index on multiple columns (composite index)
+-- Create a composite index (multi-column)
 CREATE INDEX idx_dept_salary ON employees(department, salary);
 
 -- View all indexes on a table
 SHOW INDEX FROM employees;
 
--- Drop an index
-DROP INDEX idx_name ON employees;</code></pre>
+-- Analyze a query with EXPLAIN
+EXPLAIN SELECT * FROM employees WHERE name = 'Alice Smith';
+</code></pre>
+<strong>Output (EXPLAIN):</strong>
+<pre>+----+-------------+-----------+------+---------------+---------+---------+-------+------+-------------+
+| id | select_type | table     | type | possible_keys | key     | key_len | ref   | rows | Extra       |
++----+-------------+-----------+------+---------------+---------+---------+-------+------+-------------+
+|  1 | SIMPLE      | employees | ref  | idx_name      | idx_name| 102     | const |    1 | Using where |
++----+-------------+-----------+------+---------------+---------+---------+-------+------+-------------+
+-- "type: ref" and "rows: 1" = efficient query!</pre>
 
-<h2>When to Create Indexes</h2>
+<h2>Part 3: Apply New Knowledge</h2>
 
-<table>
-    <thead>
-        <tr><th>Create Index On</th><th>Why</th></tr>
-    </thead>
-    <tbody>
-        <tr><td>Columns in WHERE clauses</td><td><code>WHERE name = 'Alice'</code></td></tr>
-        <tr><td>Columns in JOIN conditions</td><td><code>ON e.dept_id = d.id</code></td></tr>
-        <tr><td>Columns in ORDER BY</td><td><code>ORDER BY hire_date</code></td></tr>
-        <tr><td>Columns with high cardinality</td><td>Many unique values (email, username)</td></tr>
-    </tbody>
-</table>
-
-<h2>When NOT to Create Indexes</h2>
-
+<h3>Real-World Applications</h3>
 <ul>
-    <li><strong>Small tables</strong> &mdash; Indexes add overhead; full scan is fast on small data</li>
-    <li><strong>Columns with few unique values</strong> &mdash; e.g., a "gender" column with only 2 values</li>
-    <li><strong>Columns rarely used in queries</strong> &mdash; No point indexing what you don't search by</li>
-    <li><strong>Frequently updated columns</strong> &mdash; Indexes slow down INSERT/UPDATE/DELETE</li>
+    <li><strong>E-commerce Search</strong> — Fast product lookups by name, category, or price</li>
+    <li><strong>User Authentication</strong> — Quick login checks by username or email</li>
+    <li><strong>Reporting</strong> — Speed up reports that filter by date ranges or statuses</li>
+    <li><strong>APIs</strong> — Ensure database queries don't slow down response times</li>
 </ul>
 
-<h2>PRIMARY KEY Index</h2>
+<h3>Tips for Success</h3>
+<ul>
+    <li>Index columns used in <code>WHERE</code>, <code>JOIN</code>, and <code>ORDER BY</code> clauses</li>
+    <li>Use <code>EXPLAIN</code> to check if your query uses indexes effectively</li>
+    <li>Composite indexes follow the <strong>leftmost prefix</strong> rule — order matters</li>
+    <li>Remove indexes that are never used to reduce overhead</li>
+</ul>
 
-<pre><code>-- PRIMARY KEY columns are automatically indexed
-CREATE TABLE students (
-    id INT AUTO_INCREMENT PRIMARY KEY,  -- Already indexed!
-    name VARCHAR(100),
-    email VARCHAR(100) UNIQUE            -- Also automatically indexed!
-);
+<h3>Common Mistakes</h3>
+<ul>
+    <li>Over-indexing — too many indexes slow down INSERT/UPDATE/DELETE operations</li>
+    <li>Using <code>LIKE '%value'</code> — leading wildcards prevent index usage</li>
+    <li>Applying functions to indexed columns (e.g., <code>WHERE YEAR(date) = 2024</code>)</li>
+    <li>Not indexing foreign key columns used in JOINs</li>
+</ul>
 
--- The PRIMARY KEY is the fastest index type
--- Always have one!</code></pre>
-
-<h2>EXPLAIN: Analyze Your Queries</h2>
-
-<pre><code>-- See how MySQL executes a query
-EXPLAIN SELECT * FROM employees WHERE name = 'Alice Smith';
-
--- Key columns to look at:
--- type: ref (good) vs ALL (bad - full table scan)
--- rows: how many rows MySQL estimates it will check
--- key: which index MySQL chose to use</code></pre>
-
-<pre><code>-- Example EXPLAIN output:
--- +----+-------------+-----------+------+---------------+------+---------+------+------+-------------+
--- | id | select_type | table     | type | possible_keys | key  | key_len | ref  | rows | Extra       |
--- +----+-------------+-----------+------+---------------+------+---------+------+------+-------------+
--- |  1 | SIMPLE      | employees | ref  | idx_name      | idx  | 102     | const|    1 | Using where |
--- +----+-------------+-----------+------+---------------+------+---------+------+------+-------------+
--- "type: ref" and "rows: 1" = efficient query!</code></pre>
-
-<h2>Query Optimization Tips</h2>
-
-<pre><code>-- BAD: SELECT * retrieves all columns
-SELECT * FROM employees WHERE name = 'Alice Smith';
-
--- GOOD: Select only the columns you need
-SELECT name, salary FROM employees WHERE name = 'Alice Smith';
-
--- BAD: Functions on indexed columns prevent index usage
-SELECT * FROM employees WHERE YEAR(hire_date) = 2024;
-
--- GOOD: Rewrite to use the index
-SELECT * FROM employees WHERE hire_date >= '2024-01-01' AND hire_date < '2025-01-01';
-
--- BAD: Leading wildcard prevents index usage
-SELECT * FROM employees WHERE name LIKE '%Smith';
-
--- GOOD: Trailing wildcard can use index
-SELECT * FROM employees WHERE name LIKE 'Smith%';
-
--- BAD: OR with different columns
-SELECT * FROM employees WHERE name = 'Alice' OR salary > 80000;
-
--- GOOD: Use UNION for different indexed conditions
-SELECT * FROM employees WHERE name = 'Alice'
-UNION
-SELECT * FROM employees WHERE salary > 80000;</code></pre>
-
-<div class="info-box tip">
-    <div class="box-title">Rule of Thumb</div>
-    <p class="mb-0">If a query is slow, check: (1) Are you selecting <code>*</code>? (2) Is there an index on the WHERE/JOIN columns? (3) Use <code>EXPLAIN</code> to see what MySQL is doing.</p>
-</div>
-
-<div class="exercise">
-    <h4>Practice Exercises</h4>
+<h2>Part 4: Assess Your Learning</h2>
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> Your e-commerce website's product search is getting slower as the product catalog grows to 500,000 items. Users frequently search by product name and filter by category and price range.</p>
+    <p><strong>Task:</strong> Write the SQL commands to complete the following:</p>
     <ol>
-        <li>Create an index on the <code>email</code> column of the employees table</li>
-        <li>Use <code>EXPLAIN</code> to compare a query with and without an index</li>
-        <li>Why can't a <code>LIKE '%value'</code> query use an index?</li>
-        <li>Create a composite index for queries that filter by both department and salary</li>
+        <li>Create an index on the product name column</li>
+        <li>Create a composite index for queries filtering by category and price</li>
+        <li>Use EXPLAIN to analyze a search query that filters by name</li>
+        <li>Explain why <code>WHERE name LIKE '%phone%</code> cannot use the index</li>
     </ol>
 </div>
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answers:</strong></p>
+        <pre><code>-- 1. Index on product name
+CREATE INDEX idx_product_name ON products(name);
 
-<div class="lesson-nav">
-    <?php if ($nav['prev']): ?>
-        <a href="<?= lessonUrl($nav['prev']['num'], $nav['prev']['slug'], 'mysql-lessons') ?>">&larr; <?= htmlspecialchars($nav['prev']['title']) ?></a>
-    <?php endif; ?>
-    <?php if ($nav['next']): ?>
-        <a href="<?= lessonUrl($nav['next']['num'], $nav['next']['slug'], 'mysql-lessons') ?>"><?= htmlspecialchars($nav['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
-</div>
+-- 2. Composite index for category and price
+CREATE INDEX idx_category_price ON products(category, price);
 
+-- 3. Analyze a search query
+EXPLAIN SELECT * FROM products WHERE name LIKE 'iPhone%';
+
+-- 4. Answer: LIKE '%phone%' has a leading wildcard (%). MySQL indexes are
+-- sorted alphabetically. A leading wildcard means MySQL cannot determine
+-- where to start scanning in the index — it must check every entry.
+-- This forces a full table scan. Trailing wildcards (LIKE 'phone%') CAN
+-- use the index because MySQL can jump to entries starting with "phone".</code></pre>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

@@ -1,54 +1,52 @@
 <?php $pageTitle = 'Functions & Modularity'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
+<?php $num = 7; $prevNext = getPrevNextLesson($num, 'programming-logic'); ?>
 
 <div class="lesson-header">
-    <span class="lesson-number">Lesson 7</span>
+    <span class="lesson-number">Lesson <?= $num ?></span>
     <h1>Functions &amp; Modularity</h1>
     <p class="lesson-desc">Give a name to a thought — functions let you write code once and reuse it everywhere.</p>
 </div>
 
-<div class="info-box tip">
-    <div class="box-title">Core Idea</div>
-    <p class="mb-0">A function is a <strong>named thought</strong>. Instead of repeating "check if age is valid, then check if name is empty, then save to database" every time, you write <code>saveUser()</code> once and call it whenever you need it.</p>
+<h2>Part 1: Activate Prior Knowledge</h2>
+<p>Connect to what students already know:</p>
+<div class="info-box note">
+    <div class="box-title">Review Questions</div>
+    <ol>
+        <li>Do you have a favorite recipe you make over and over? How does having it written down make things easier?</li>
+        <li>When you use a calculator, do you type out the full multiplication process every time, or do you just press the "×" button? What does the button represent?</li>
+        <li>Think about shortcuts on your phone or computer. How do they save you time?</li>
+    </ol>
 </div>
 
-<h2>Why Functions?</h2>
-<p>Imagine you're writing a program that calculates grades for three classes. Without functions, you'd copy-paste the grading logic three times. If the grading rules change, you'd have to update three places. That's a bug waiting to happen.</p>
-<p>Functions solve this by letting you write logic <strong>once</strong> and reuse it:</p>
+<h2>Part 2: Acquire New Knowledge</h2>
 
-<div class="syntax-ref">
-    <h4>Syntax: Defining a Function</h4>
-    <code>function functionName($param1, $param2) {</code>
-    <code>&nbsp;&nbsp;// code here</code>
-    <code>&nbsp;&nbsp;return $result;</code>
-    <code>}</code>
-</div>
+<h3>Definition</h3>
+<p><strong>Functions</strong> are reusable blocks of code that perform a specific task. You write the code once, give it a name, and then call it whenever you need it. Functions can take inputs (parameters) and return outputs (return values).</p>
 
-<h2>Anatomy of a Function</h2>
-<table>
-    <thead><tr><th>Part</th><th>What It Is</th><th>Example</th></tr></thead>
-    <tbody>
-        <tr><td><code>function</code></td><td>Keyword to define</td><td><code>function greet()</code></td></tr>
-        <tr><td>Name</td><td>What you call it</td><td><code>greet</code></td></tr>
-        <tr><td>Parameters</td><td>Inputs (variables)</td><td><code>($name, $age)</code></td></tr>
-        <tr><td>Body</td><td>The code to run</td><td><code>{ echo ...; }</code></td></tr>
-        <tr><td><code>return</code></td><td>Output (optional)</td><td><code>return $result;</code></td></tr>
-    </tbody>
-</table>
+<h3>Analogy</h3>
+<p>A function is like a vending machine. You put in money and press a button (input/parameters), the machine does its work (processes), and it gives you a snack (output/return value). You don't need to know how the machine works inside — you just use it. That's abstraction!</p>
 
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea class="sandbox-code" data-example="<?= base64_encode('<?php
-// Simple function — no parameters, no return
+<h3>How It Works (Step by Step)</h3>
+<ol>
+    <li><strong>Define the function:</strong> Use the <code>function</code> keyword, give it a name, and write the code inside curly braces.</li>
+    <li><strong>Add parameters:</strong> List the inputs the function needs in parentheses after the name.</li>
+    <li><strong>Write the body:</strong> The code inside the function runs when you call it.</li>
+    <li><strong>Return a result:</strong> Use <code>return</code> to send a value back to whoever called the function.</li>
+    <li><strong>Call the function:</strong> Use the function name followed by parentheses and any arguments.</li>
+</ol>
+
+<h3>Example</h3>
+<pre><code class="language-php">// PHP Example: Functions for a calculator
+
+// Function with no parameters, no return
 function sayHello() {
-    echo "Hello, World!\\n";
+    echo "Hello, World!\n";
 }
 sayHello();
 
 // Function with parameters
 function greet($name) {
-    echo "Hello, {$name}!\\n";
+    echo "Hello, $name!\n";
 }
 greet("Alice");
 greet("Bob");
@@ -58,207 +56,179 @@ function add($a, $b) {
     return $a + $b;
 }
 $sum = add(5, 3);
-echo "5 + 3 = {$sum}\\n";
+echo "5 + 3 = $sum\n";
 
 // Function returning boolean
 function isEven($n) {
     return $n % 2 === 0;
 }
-echo "4 is even: " . (isEven(4) ? "yes" : "no") . "\\n";
-echo "7 is even: " . (isEven(7) ? "yes" : "no") . "\\n";
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
+echo "4 is even: " . (isEven(4) ? "yes" : "no") . "\n";
+echo "7 is even: " . (isEven(7) ? "yes" : "no") . "\n";
+</code></pre>
+<strong>Output:</strong>
+<pre>Hello, World!
+Hello, Alice!
+Hello, Bob!
+5 + 3 = 8
+4 is even: yes
+7 is even: no</pre>
 
-<h2>Parameters vs Arguments</h2>
-<p><strong>Parameters</strong> are the variables in the function definition. <strong>Arguments</strong> are the actual values you pass when calling it. It's like a form (parameter) vs the data you fill in (argument).</p>
+<h3>Python Example</h3>
+<pre><code class="language-python"># Python Example: Functions for a calculator
 
-<h2>Scope: Local vs Global</h2>
-<p>Variables inside a function are <strong>local</strong> — they vanish when the function ends. Variables outside are <strong>global</strong>. Don't mix them carelessly:</p>
+# Function with no parameters, no return
+def say_hello():
+    print("Hello, World!")
+say_hello()
 
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea class="sandbox-code" data-example="<?= base64_encode('<?php
-$globalVar = "I am global";
+# Function with parameters
+def greet(name):
+    print(f"Hello, {name}!")
+greet("Alice")
+greet("Bob")
 
-function testScope() {
-    // $globalVar is NOT accessible here by default
-    $localVar = "I am local";
-    echo "Inside: {$localVar}\\n";
+# Function with return value
+def add(a, b):
+    return a + b
+total = add(5, 3)
+print(f"5 + 3 = {total}")
+
+# Function returning boolean
+def is_even(n):
+    return n % 2 == 0
+print(f"4 is even: {'yes' if is_even(4) else 'no'}")
+print(f"7 is even: {'yes' if is_even(7) else 'no'}")
+</code></pre>
+<strong>Output:</strong>
+<pre>Hello, World!
+Hello, Alice!
+Hello, Bob!
+5 + 3 = 8
+4 is even: yes
+7 is even: no</pre>
+
+<h3>Java Example</h3>
+<pre><code class="language-java">// Java Example: Functions for a calculator
+public class Main {
+    // Function with no parameters, no return
+    static void sayHello() {
+        System.out.println("Hello, World!");
+    }
+
+    // Function with parameters
+    static void greet(String name) {
+        System.out.println("Hello, " + name + "!");
+    }
+
+    // Function with return value
+    static int add(int a, int b) {
+        return a + b;
+    }
+
+    // Function returning boolean
+    static boolean isEven(int n) {
+        return n % 2 == 0;
+    }
+
+    public static void main(String[] args) {
+        sayHello();
+        greet("Alice");
+        greet("Bob");
+        int sum = add(5, 3);
+        System.out.println("5 + 3 = " + sum);
+        System.out.println("4 is even: " + (isEven(4) ? "yes" : "no"));
+        System.out.println("7 is even: " + (isEven(7) ? "yes" : "no"));
+    }
 }
+</code></pre>
+<strong>Output:</strong>
+<pre>Hello, World!
+Hello, Alice!
+Hello, Bob!
+5 + 3 = 8
+4 is even: yes
+7 is even: no</pre>
 
-testScope();
-// echo $localVar; // ERROR — local variable is gone
+<h2>Part 3: Apply New Knowledge</h2>
 
-// To access a global inside a function:
-function useGlobal() {
-    global $globalVar;
-    echo "Accessed global: {$globalVar}\\n";
-}
-useGlobal();
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>Code reuse:</strong> Write a validation function once and use it across your entire application.</li>
+    <li><strong>Readability:</strong> Functions like <code>calculateTax()</code> make code self-documenting.</li>
+    <li><strong>Team collaboration:</strong> Different team members can work on different functions independently.</li>
+    <li><strong>Testing:</strong> Functions can be tested in isolation, making debugging easier.</li>
+</ul>
+
+<h3>Tips for Success</h3>
+<ul>
+    <li>Give functions descriptive names — <code>calculateTotal()</code> is better than <code>doStuff()</code>.</li>
+    <li>Follow the Single Responsibility Principle: each function should do one thing well.</li>
+    <li>Avoid using <code>global</code> variables — pass data as parameters instead.</li>
+</ul>
+
+<h3>Common Mistakes to Avoid</h3>
+<ul>
+    <li><strong>Functions that do too much:</strong> If a function validates input AND saves to database AND sends email, split it into separate functions.</li>
+    <li><strong>Poor naming:</strong> Names like <code>process()</code> or <code>handle()</code> don't tell you what the function does.</li>
+    <li><strong>Not returning values:</strong> Forgetting <code>return</code> means the function always returns null/None.</li>
+</ul>
+
+<h2>Part 4: Assess Your Learning</h2>
 
 <div class="info-box note">
-    <div class="box-title">Best Practice</div>
-    <p class="mb-0">Avoid <code>global</code>. Pass data as parameters and return results. Global variables make code hard to track and debug.</p>
-</div>
-
-<h2>Naming Functions</h2>
-<p>Good function names read like sentences:</p>
-<ul>
-    <li><code>calculateTotal()</code> — says what it does</li>
-    <li><code>isOldEnough()</code> — returns a boolean, starts with "is"</li>
-    <li><code>getUserById()</code> — describes the action</li>
-</ul>
-
-<div class="info-box warning">
-    <div class="box-title">Avoid Bad Names</div>
-    <p class="mb-0"><code>doStuff()</code>, <code>process()</code>, <code>handle()</code> — these tell you nothing. Be specific.</p>
-</div>
-
-<h2>Single Responsibility Principle</h2>
-<p>Each function should do <strong>one thing</strong> and do it well. If your function validates input AND saves to database AND sends an email, it's doing too much. Split it:</p>
-
-<div class="syntax-ref">
-    <h4>Good Modularity</h4>
-    <code>function validateUser($data) { ... }</code>
-    <code>function saveUser($data) { ... }</code>
-    <code>function sendWelcomeEmail($email) { ... }</code>
-    <code>// Each function does ONE thing</code>
-</div>
-
-<h2>DRY — Don't Repeat Yourself</h2>
-<p>If you see the same code in two places, extract it into a function. Duplication is the enemy of maintainability:</p>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Sandbox: Refactor Into Functions</span>
-    </div>
-    <textarea class="sandbox-code" data-example="<?= base64_encode('<?php
-// BEFORE: repeated code
-$students = ["Alice", "Bob", "Charlie"];
-
-echo "=== WITHOUT FUNCTIONS ===\\n";
-echo "Welcome, Alice!\\n";
-echo "Your grade will be calculated.\\n";
-echo "---\\n";
-echo "Welcome, Bob!\\n";
-echo "Your grade will be calculated.\\n";
-echo "---\\n";
-echo "Welcome, Charlie!\\n";
-echo "Your grade will be calculated.\\n";
-
-// AFTER: using functions
-echo "\\n=== WITH FUNCTIONS ===\\n";
-
-function welcomeStudent($name) {
-    echo "Welcome, {$name}!\\n";
-    echo "Your grade will be calculated.\\n";
-    echo "---\\n";
-}
-
-foreach ($students as $student) {
-    welcomeStudent($student);
-}
-'); ?></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<h2>When to Create a Function</h2>
-<ul>
-    <li>When you copy-paste code more than twice</li>
-    <li>When a block of code has a clear purpose</li>
-    <li>When you want to test a piece of logic independently</li>
-    <li>When the code is getting hard to read</li>
-</ul>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Sandbox: Build a Utility Library</span>
-    </div>
-    <textarea class="sandbox-code" data-example="<?= base64_encode('<?php
-function clamp($value, $min, $max) {
-    if ($value < $min) return $min;
-    if ($value > $max) return $max;
-    return $value;
-}
-
-function repeatStr($text, $times) {
-    $result = "";
-    for ($i = 0; $i < $times; $i++) {
-        $result .= $text;
-    }
-    return $result;
-}
-
-function isBlank($str) {
-    return trim($str) === "";
-}
-
-function capitalize($str) {
-    return strtoupper($str[0]) . substr($str, 1);
-}
-
-// Using the utilities
-echo "clamp(15, 0, 10) = " . clamp(15, 0, 10) . "\\n";
-echo "clamp(-5, 0, 10) = " . clamp(-5, 0, 10) . "\\n";
-echo "repeatStr(\"ha\", 3) = " . repeatStr("ha", 3) . "\\n";
-echo "isBlank(\"\") = " . (isBlank("") ? "true" : "false") . "\\n";
-echo "isBlank(\"hello\") = " . (isBlank("hello") ? "true" : "false") . "\\n";
-echo "capitalize(\"hello\") = " . capitalize("hello") . "\\n";
-'); ?></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<div class="exercise">
-    <h4>Practice Exercises</h4>
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You're building a simple calculator application. The teacher asks you to create four separate functions: add, subtract, multiply, and divide.</p>
+    <p><strong>Task:</strong> Create functions for a calculator and test them.</p>
     <ol>
-        <li>Write a function <code>fahrenheitToCelsius($f)</code> that converts temperature</li>
-        <li>Write a function <code>splitWords($sentence)</code> that returns the word count</li>
-        <li>Create a <code>clamp($value, $min, $max)</code> function and test it with edge cases</li>
-        <li>Refactor this into functions: calculate area of a circle, rectangle, and triangle</li>
+        <li>Write a function <code>add($a, $b)</code> that returns the sum of two numbers.</li>
+        <li>Write functions for subtract, multiply, and divide. For divide, handle the case where the divisor is zero.</li>
+        <li>Write a main program that calls all four functions with different inputs and displays the results.</li>
     </ol>
 </div>
 
-<div class="lesson-nav">
-    <?php if ($prevNext['prev']): ?>
-        <a href="<?= lessonUrl($prevNext['prev']['num'], $prevNext['prev']['slug'], 'programming-logic') ?>" class="prev-link">&larr; Previous: <?= htmlspecialchars($prevNext['prev']['title']) ?></a>
-    <?php endif; ?>
-    <?php if ($prevNext['next']): ?>
-        <a href="<?= lessonUrl($prevNext['next']['num'], $prevNext['next']['slug'], 'programming-logic') ?>" class="next-link">Next: <?= htmlspecialchars($prevNext['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
-</div>
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answer 1 (add function):</strong></p>
+        <pre><code>function add($a, $b) {
+    return $a + $b;
+}</code></pre>
+        <p><strong>Answer 2 (all functions):</strong></p>
+        <pre><code>function subtract($a, $b) {
+    return $a - $b;
+}
 
+function multiply($a, $b) {
+    return $a * $b;
+}
+
+function divide($a, $b) {
+    if ($b == 0) {
+        return "Error: Division by zero";
+    }
+    return $a / $b;
+}</code></pre>
+        <p><strong>Answer 3 (main program):</strong></p>
+        <pre><code>// Calculator test program
+$num1 = 20;
+$num2 = 5;
+
+echo "Numbers: $num1 and $num2\n";
+echo "Add: " . add($num1, $num2) . "\n";
+echo "Subtract: " . subtract($num1, $num2) . "\n";
+echo "Multiply: " . multiply($num1, $num2) . "\n";
+echo "Divide: " . divide($num1, $num2) . "\n";
+echo "Divide by zero: " . divide($num1, 0) . "\n";
+
+// Output:
+// Numbers: 20 and 5
+// Add: 25
+// Subtract: 15
+// Multiply: 100
+// Divide: 4
+// Divide by zero: Error: Division by zero</code></pre>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

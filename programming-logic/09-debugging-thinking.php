@@ -7,229 +7,200 @@
     <p class="lesson-desc">Learn to think like a detective — finding and fixing bugs is a core programmer skill.</p>
 </div>
 
-<h2>Bugs Are Normal</h2>
-<p>Every programmer writes code with bugs. Even experienced developers spend a significant portion of their time debugging. A <strong>bug</strong> is simply an error in your program — it could be a typo, a wrong formula, or an unexpected input.</p>
-
-<div class="info-box tip">
-    <div class="box-title">Mindset Shift</div>
-    <p class="mb-0">Bugs are not a sign of failure. They are a normal part of programming. The difference between a beginner and an expert is that the expert has gotten faster at finding and fixing them.</p>
-</div>
-
-<p><strong>Think About It:</strong> How long did it take you to find the last bug in your code? What helped you find it?</p>
-
-<h2>The Debugging Process</h2>
-<p>Good debugging follows a systematic process. Think of yourself as a detective investigating a crime scene:</p>
-
-<table>
-    <thead>
-        <tr><th>Step</th><th>Action</th><th>Question to Ask</th></tr>
-    </thead>
-    <tbody>
-        <tr><td>1. Reproduce</td><td>Make the bug happen again</td><td>"Can I make this happen reliably?"</td></tr>
-        <tr><td>2. Isolate</td><td>Narrow down where it happens</td><td>"Which part of the code causes this?"</td></tr>
-        <tr><td>3. Understand</td><td>Figure out why it happens</td><td>"What is the code actually doing vs. what I expected?"</td></tr>
-        <tr><td>4. Fix</td><td>Change the code</td><td>"What one change will correct this?"</td></tr>
-        <tr><td>5. Test</td><td>Verify the fix works</td><td>"Does this fix the bug without breaking anything else?"</td></tr>
-    </tbody>
-</table>
-
-<h2>Reading Error Messages</h2>
-<p>PHP error messages are your friends, not your enemies. They tell you exactly what went wrong and where.</p>
-
-<div class="syntax-ref">
-    <h4>Error Message Anatomy</h4>
-    <code>Parse error: syntax error, unexpected '}' in file.php on line 15</code>
-    <code>│ Type of error │ Specific problem │ File │ Line number</code>
-</div>
-
+<h2>Part 1: Activate Prior Knowledge</h2>
+<p>Connect to what students already know:</p>
 <div class="info-box note">
-    <div class="box-title">Common Error Types</div>
-    <p class="mb-0"><strong>Parse error:</strong> Your code has a syntax mistake (missing semicolon, unmatched bracket).<br>
-    <strong>Notice:</strong> Something minor is wrong (undefined variable) but PHP continues.<br>
-    <strong>Warning:</strong> Something unexpected happened but PHP continues.<br>
-    <strong>Fatal error:</strong> Something so wrong PHP must stop immediately.</p>
-</div>
-
-<h2>Debugging Techniques</h2>
-<h3>var_dump and print_r</h3>
-<p>These functions let you inspect what's happening inside your variables:</p>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea class="sandbox-code" data-example="<?= base64_encode('<?php
-// Debugging with var_dump and print_r
-
-$users = ["Alice", "Bob", "Charlie"];
-$score = 85;
-
-// var_dump shows type AND value
-echo "=== var_dump ===" . "\\n";
-var_dump($score);
-echo "\\n";
-
-// print_r shows arrays nicely
-echo "=== print_r ===" . "\\n";
-print_r($users);
-echo "\\n";
-
-// echo to check values at specific points
-echo "=== Step-by-step check ===" . "\\n";
-for ($i = 0; $i < count($users); $i++) {
-    echo "Processing index $i: " . $users[$i] . "\\n";
-}
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<h3>Rubber Duck Debugging</h3>
-<p>Explain your code line by line to someone (or something) who knows nothing about it. The act of explaining forces you to slow down and think clearly. Many bugs become obvious when you verbalize what the code does.</p>
-
-<div class="info-box tip">
-    <div class="box-title">Try This</div>
-    <p class="mb-0">Next time you're stuck, grab a rubber duck (or any object) and explain your code to it. Say: "First I do this, then I check this, then I expect this to happen..." You'll be surprised how often you find the bug mid-sentence.</p>
-</div>
-
-<h2>Common Bug Types</h2>
-<table>
-    <thead>
-        <tr><th>Bug Type</th><th>Example</th><th>How to Spot</th></tr>
-    </thead>
-    <tbody>
-        <tr><td>Syntax</td><td>Missing semicolon, unclosed string</td><td>Parse error on specific line</td></tr>
-        <tr><td>Logic</td><td>Wrong comparison operator (== vs =)</td><td>Code runs but gives wrong result</td></tr>
-        <tr><td>Off-by-one</td><td>Loop goes one too many or too few times</td><td>Wrong number of iterations</td></tr>
-        <tr><td>Runtime</td><td>Divide by zero, undefined variable</td><td>Works sometimes, crashes other times</td></tr>
-    </tbody>
-</table>
-
-<h2>Practice Finding Bugs</h2>
-<p>The following code has several bugs. Can you find and fix them?</p>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Find and Fix the Bugs</span>
-    </div>
-    <textarea class="sandbox-code" data-example="<?= base64_encode('<?php
-// Buggy code - find the errors!
-
-// Bug 1: Missing semicolon
-$names = ["Ana" "Ben" "Cat"]
-
-// Bug 2: Wrong operator (should be count, not strlen)
-for ($i = 0; $i < strlen($names); $i++) {
-    echo $names[$i] . "\\n";
-}
-
-// Bug 3: Off-by-one error
-$numbers = [10, 20, 30, 40, 50];
-$sum = 0;
-for ($i = 0; $i <= count($numbers); $i++) {
-    $sum += $numbers[$i];
-}
-echo "Sum: $sum" . "\\n";
-
-// Bug 4: Logic error
-$temperature = 35;
-if ($temperature = 30) {
-    echo "It is exactly 30 degrees.";
-}
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<h2>Trace Through the Code</h2>
-<p>Sometimes the best way to debug is to trace through the code line by line, writing down what each variable holds at each step.</p>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Trace and Find the Bug</span>
-    </div>
-    <textarea class="sandbox-code" data-example="<?= base64_encode('<?php
-// This code should find the largest number
-// but it has a subtle bug. Trace through it.
-
-$numbers = [3, 7, 2, 9, 5];
-$largest = 0;
-
-for ($i = 0; $i < count($numbers); $i++) {
-    if ($numbers[$i] > $largest) {
-        $largest = $numbers[$i];
-    }
-    echo "Step $i: checking " . $numbers[$i] . ", largest is now $largest" . "\\n";
-}
-
-echo "\\nFinal largest: $largest" . "\\n";
-
-// Now test with negative numbers - does it still work?
-$negatives = [-5, -1, -8, -3];
-$largest = 0;
-
-for ($i = 0; $i < count($negatives); $i++) {
-    if ($negatives[$i] > $largest) {
-        $largest = $negatives[$i];
-    }
-}
-
-echo "Largest of negatives: $largest (should be -1)" . "\\n";
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<h2>Prevention Strategies</h2>
-<ul>
-    <li><strong>Write one line at a time</strong> and test frequently — don't write 50 lines and then try to run it</li>
-    <li><strong>Use meaningful variable names</strong> so you can tell what each variable is supposed to do</li>
-    <li><strong>Add comments</strong> explaining what you expect each section to accomplish</li>
-    <li><strong>Start with known inputs</strong> — if you test with values where you know the answer, you can verify your code works</li>
-    <li><strong>Take breaks</strong> — fresh eyes catch bugs that tired eyes miss</li>
-</ul>
-
-<div class="info-box tip">
-    <div class="box-title">The 15-Minute Rule</div>
-    <p class="mb-0">If you've been stuck on a bug for more than 15 minutes without progress, step away. Take a walk, get water, or explain the problem to someone. When you come back, you'll often see the solution immediately.</p>
-</div>
-
-<div class="exercise">
-    <h4>Practice Exercises</h4>
+    <div class="box-title">Review Questions</div>
     <ol>
-        <li>Write a program that intentionally has 3 different types of bugs (syntax, logic, runtime). Then fix them one by one.</li>
-        <li>Use var_dump to trace through a loop that calculates factorial. Find where the value changes unexpectedly.</li>
-        <li>Explain a piece of buggy code to a rubber duck (or classmate) and see if the bug reveals itself.</li>
+        <li>When you make a mistake on your homework, how do you find and correct the error?</li>
+        <li>Have you ever followed a recipe but the dish didn't turn out right? How did you figure out what went wrong?</li>
+        <li>Think about a time when something didn't work as expected. What steps did you take to fix it?</li>
     </ol>
 </div>
 
-<p><strong>Remember:</strong> Every great programmer was once a beginner who spent hours staring at bugs. Debugging is not a punishment — it is a skill that makes you a stronger programmer.</p>
+<h2>Part 2: Acquire New Knowledge</h2>
 
-<div class="lesson-nav">
-    <?php if ($prevNext['prev']): ?>
-        <a href="<?= lessonUrl($prevNext['prev']['num'], $prevNext['prev']['slug'], 'programming-logic') ?>" class="prev-link">&larr; Previous: <?= htmlspecialchars($prevNext['prev']['title']) ?></a>
-    <?php endif; ?>
-    <?php if ($prevNext['next']): ?>
-        <a href="<?= lessonUrl($prevNext['next']['num'], $prevNext['next']['slug'], 'programming-logic') ?>" class="next-link">Next: <?= htmlspecialchars($prevNext['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
+<h3>Definition</h3>
+<p><strong>Debugging</strong> is the process of finding and fixing errors (bugs) in your code. A bug is any behavior in your program that isn't what you intended. Debugging follows a systematic process: reproduce, isolate, understand, fix, and test.</p>
+
+<h3>Analogy</h3>
+<p>Debugging is like being a detective investigating a crime scene. You look for clues (error messages), narrow down suspects (lines of code), figure out the cause (understand the bug), make an arrest (fix the code), and verify justice was served (test the fix).</p>
+
+<h3>How It Works (Step by Step)</h3>
+<ol>
+    <li><strong>Reproduce:</strong> Make the bug happen again reliably. If you can't reproduce it, you can't fix it.</li>
+    <li><strong>Isolate:</strong> Narrow down where the bug happens. Use print statements or a debugger to trace the code.</li>
+    <li><strong>Understand:</strong> Figure out WHY the bug happens. What is the code actually doing vs. what you expected?</li>
+    <li><strong>Fix:</strong> Make the minimal change that corrects the problem.</li>
+    <li><strong>Test:</strong> Verify the fix works and doesn't break anything else.</li>
+</ol>
+
+<h3>Example</h3>
+<pre><code class="language-php">// PHP Example: Debugging a broken program
+
+// BUGGY CODE: This has several errors
+// $names = ["Ana" "Ben" "Cat"]  // Bug 1: Missing commas
+// for ($i = 0; $i < strlen($names); $i++) {  // Bug 2: strlen on array
+//     echo $names[$i] . "\n";
+// }
+
+// FIXED CODE:
+$names = ["Ana", "Ben", "Cat"];  // Fixed: added commas
+for ($i = 0; $i < count($names); $i++) {  // Fixed: use count()
+    echo $names[$i] . "\n";
+}
+
+echo "\n---\n";
+
+// Another debugging example: finding the largest number
+$numbers = [3, 7, 2, 9, 5];
+$largest = $numbers[0];  // Start with first element, not 0!
+
+for ($i = 1; $i < count($numbers); $i++) {
+    if ($numbers[$i] > $largest) {
+        $largest = $numbers[$i];
+    }
+}
+echo "Largest: $largest\n";
+</code></pre>
+<strong>Output:</strong>
+<pre>Ana
+Ben
+Cat
+
+---
+Largest: 9</pre>
+
+<h3>Python Example</h3>
+<pre><code class="language-python"># Python Example: Debugging techniques
+
+# Using print statements to trace
+def find_largest(numbers):
+    largest = numbers[0]  # Start with first, not 0!
+    print(f"Starting with: {largest}")
+    
+    for i in range(1, len(numbers)):
+        print(f"Checking {numbers[i]}...")
+        if numbers[i] > largest:
+            largest = numbers[i]
+            print(f"  New largest: {largest}")
+    
+    return largest
+
+numbers = [3, 7, 2, 9, 5]
+result = find_largest(numbers)
+print(f"\nFinal largest: {result}")
+</code></pre>
+<strong>Output:</strong>
+<pre>Starting with: 3
+Checking 7...
+  New largest: 7
+Checking 2...
+Checking 9...
+  New largest: 9
+Checking 5...
+
+Final largest: 9</pre>
+
+<h3>Java Example</h3>
+<pre><code class="language-java">// Java Example: Debugging with comments
+
+public class Main {
+    public static void main(String[] args) {
+        int[] numbers = {3, 7, 2, 9, 5};
+        
+        // Bug: Starting with 0 instead of first element
+        // int largest = 0;  // WRONG for negative numbers!
+        
+        // Fix: Start with first element
+        int largest = numbers[0];
+        
+        for (int i = 1; i < numbers.length; i++) {
+            if (numbers[i] > largest) {
+                largest = numbers[i];
+            }
+        }
+        
+        System.out.println("Largest: " + largest);
+    }
+}
+</code></pre>
+<strong>Output:</strong>
+<pre>Largest: 9</pre>
+
+<h2>Part 3: Apply New Knowledge</h2>
+
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>Testing:</strong> Writing tests before and after fixing bugs ensures the bug stays fixed.</li>
+    <li><strong>Error handling:</strong> Using try-catch blocks to handle unexpected inputs gracefully.</li>
+    <li><strong>Code reviews:</strong> Having someone else look at your code often reveals bugs you missed.</li>
+    <li><strong>Preventive debugging:</strong> Writing clear code from the start reduces the number of bugs.</li>
+</ul>
+
+<h3>Tips for Success</h3>
+<ul>
+    <li>Use <code>var_dump()</code> and <code>print_r()</code> to inspect variables at different points in your code.</li>
+    <li>Try "rubber duck debugging" — explain your code line by line to someone (or something) else.</li>
+    <li>If you've been stuck for more than 15 minutes, take a break and come back with fresh eyes.</li>
+</ul>
+
+<h3>Common Mistakes to Avoid</h3>
+<ul>
+    <li><strong>Trying to fix everything at once:</strong> Change one thing at a time and test after each change.</li>
+    <li><strong>Ignoring error messages:</strong> PHP error messages tell you exactly what went wrong and where.</li>
+    <li><strong>Not testing edge cases:</strong> Test with empty inputs, very large inputs, and unexpected values.</li>
+</ul>
+
+<h2>Part 4: Assess Your Learning</h2>
+
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> Your classmate wrote a program to calculate the average of a list of numbers, but it's giving wrong results. They need your help debugging it.</p>
+    <p><strong>Task:</strong> Find and fix the bugs in the code below.</p>
+    <ol>
+        <li>Identify all the bugs in the code (there are at least 3).</li>
+        <li>Explain what each bug does and why it causes incorrect results.</li>
+        <li>Rewrite the code with all bugs fixed.</li>
+    </ol>
 </div>
 
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Buggy Code:</strong></p>
+        <pre><code>$scores = [85, 92, 78, 95]
+$sum = 0
+for ($i = 0; $i <= count($scores); $i++) {
+    $sum += $scores[$i];
+}
+$average = $sum / count($scores) - 1;
+echo "Average: $average";</code></pre>
+        <p><strong>Answer 1 (Bugs Found):</strong></p>
+        <ul>
+            <li>Bug 1: Missing semicolon after the array declaration.</li>
+            <li>Bug 2: Using <code><=</code> instead of <code><</code> in the for loop (off-by-one error).</li>
+            <li>Bug 3: Subtracting 1 from the average calculation.</li>
+        </ul>
+        <p><strong>Answer 2 (Explanation):</strong></p>
+        <ul>
+            <li>Bug 1 causes a parse error — PHP can't understand the code.</li>
+            <li>Bug 2 causes an "undefined offset" error because the loop tries to access an index that doesn't exist.</li>
+            <li>Bug 3 gives the wrong result by subtracting 1 from the correct average.</li>
+        </ul>
+        <p><strong>Answer 3 (Fixed Code):</strong></p>
+        <pre><code>// Fixed: Added semicolon, fixed loop condition, removed -1
+$scores = [85, 92, 78, 95];
+$sum = 0;
+for ($i = 0; $i < count($scores); $i++) {
+    $sum += $scores[$i];
+}
+$average = $sum / count($scores);
+echo "Average: $average\n";
+
+// Output: Average: 87.5</code></pre>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

@@ -1,34 +1,32 @@
-<?php
-$pageTitle = 'Transaction Management';
-require_once __DIR__ . '/../includes/functions.php';
-$lessonNum = 8;
-$nav = getPrevNextLesson($lessonNum, 'dbms-lessons');
-require_once __DIR__ . '/../includes/header.php';
-?>
+<?php $pageTitle = 'Transaction Management'; require_once __DIR__ . '/../includes/functions.php'; $num = 8; $prevNext = getPrevNextLesson($num, 'dbms-lessons'); require_once __DIR__ . '/../includes/header.php'; ?>
 
 <div class="lesson-header">
-    <span class="lesson-number">DBMS Lesson <?= $lessonNum ?></span>
+    <span class="lesson-number">Lesson <?= $num ?></span>
     <h1>Transaction Management</h1>
     <p class="lesson-desc">Keep your data consistent and reliable with transactions and ACID properties.</p>
 </div>
 
-<h2>What is a Transaction?</h2>
-<p>A <strong>transaction</strong> is a sequence of operations performed as a single logical unit of work. Either <strong>all operations succeed</strong>, or <strong>none of them do</strong>.</p>
+<h2>Part 1: Activate Prior Knowledge</h2>
+<div class="info-box note">
+    <div class="box-title">Review Questions</div>
+    <ol>
+        <li>In Lesson 7, you learned about DDL commands like CREATE and ALTER. If you accidentally run DROP TABLE, can you undo it? Why or why not?</li>
+        <li>Imagine two people are buying the last concert ticket at the same time. What could go wrong if the database doesn't handle this properly?</li>
+        <li>What does "all or nothing" mean in the context of a database operation?</li>
+    </ol>
+</div>
 
-<h3>Real-World Example: Bank Transfer</h3>
-<pre><code>-- Transferring $500 from Alice to Bob
--- This is ONE transaction with TWO operations:
+<h2>Part 2: Acquire New Knowledge</h2>
 
-BEGIN;
+<h3>Definition</h3>
+<p>A <strong>transaction</strong> is a sequence of operations performed as a single logical unit of work. Either <strong>all operations succeed</strong>, or <strong>none of them do</strong>. Transactions ensure data consistency even when multiple operations or users are involved.</p>
 
-UPDATE accounts SET balance = balance - 500 WHERE name = 'Alice';
-UPDATE accounts SET balance = balance + 500 WHERE name = 'Bob';
+<h3>Analogy</h3>
+<p>Think of a transaction like an <strong>ATM bank transfer</strong>. When you transfer $500 from Account A to Account B, two things must happen: subtract $500 from A and add $500 to B. If the power goes out after subtracting but before adding, you'd lose money. The bank's system wraps both operations in a transaction — either both happen, or neither does. The money is never in limbo.</p>
 
-COMMIT;</code></pre>
-<p>If the system crashes after deducting but before adding, Alice loses money without Bob receiving it. <strong>Transactions prevent this.</strong></p>
+<h3>How It Works</h3>
 
-<h2>Transaction Commands</h2>
-
+<h4>Transaction Commands</h4>
 <table>
     <thead>
         <tr><th>Command</th><th>Purpose</th></tr>
@@ -42,53 +40,47 @@ COMMIT;</code></pre>
     </tbody>
 </table>
 
-<h2>Transaction Example</h2>
-
+<h3>Example</h3>
 <pre><code>-- Start a transaction
 BEGIN;
 
--- Transfer money
+-- Transfer money from Alice to Bob
 UPDATE accounts SET balance = balance - 500 WHERE id = 1;
 UPDATE accounts SET balance = balance + 500 WHERE id = 2;
 
 -- Check if everything looks right
 SELECT * FROM accounts WHERE id IN (1, 2);
 
--- If OK, save changes
+-- If OK, save changes permanently
 COMMIT;
 
 -- If something went wrong, undo everything
 -- ROLLBACK;</code></pre>
 
-<h2>ACID Properties</h2>
+<h3>ACID Properties</h3>
 <p>Transactions must satisfy four properties, known as <strong>ACID</strong>:</p>
-
 <table>
     <thead>
         <tr><th>Property</th><th>Description</th><th>Example</th></tr>
     </thead>
     <tbody>
-        <tr><td><strong>A</strong>tomicity</td><td>All or nothing — either all operations complete or none do</td><td>Bank transfer: both deductions and additions happen, or neither</td></tr>
+        <tr><td><strong>A</strong>tomicity</td><td>All or nothing — either all operations complete or none do</td><td>Bank transfer: both deduction and addition happen, or neither</td></tr>
         <tr><td><strong>C</strong>onsistency</td><td>Data moves from one valid state to another</td><td>Total money before = total money after transfer</td></tr>
         <tr><td><strong>I</strong>solation</td><td>Concurrent transactions don't interfere with each other</td><td>Two transfers at the same time don't corrupt data</td></tr>
         <tr><td><strong>D</strong>urability</td><td>Once committed, changes are permanent (survive crashes)</td><td>Power failure after COMMIT doesn't lose data</td></tr>
     </tbody>
 </table>
 
-<h2>Concurrency Problems</h2>
+<h3>Concurrency Problems</h3>
 <p>Without proper transaction management, concurrent transactions can cause problems:</p>
-
-<h3>1. Dirty Read</h3>
+<h4>1. Dirty Read</h4>
 <p>Transaction B reads data that Transaction A hasn't committed yet. If A rolls back, B has invalid data.</p>
-
-<h3>2. Non-Repeatable Read</h3>
+<h4>2. Non-Repeatable Read</h4>
 <p>Transaction B reads the same row twice and gets different values because Transaction A modified it in between.</p>
-
-<h3>3. Phantom Read</h3>
+<h4>3. Phantom Read</h4>
 <p>Transaction B runs a query twice and gets different rows because Transaction A inserted or deleted rows.</p>
 
-<h2>Isolation Levels</h2>
-
+<h3>Isolation Levels</h3>
 <table>
     <thead>
         <tr><th>Level</th><th>Dirty Read</th><th>Non-Repeatable</th><th>Phantom</th></tr>
@@ -100,33 +92,13 @@ COMMIT;
         <tr><td><code>SERIALIZABLE</code></td><td>No</td><td>No</td><td>No</td></tr>
     </tbody>
 </table>
-
 <pre><code>-- Set isolation level
 SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;
 
 -- Higher isolation = more safety but slower performance
 -- Lower isolation = faster but riskier</code></pre>
 
-<h2>Locking</h2>
-<p>Databases use <strong>locks</strong> to prevent concurrent transactions from conflicting:</p>
-
-<pre><code>-- Read lock (shared lock) - multiple transactions can read
-SELECT * FROM accounts WHERE id = 1 LOCK IN SHARE MODE;
-
--- Write lock (exclusive lock) - only one transaction can modify
-SELECT * FROM accounts WHERE id = 1 FOR UPDATE;</code></pre>
-
-<div class="info-box note">
-    <div class="box-title">Lock Types</div>
-    <ul class="mb-0">
-        <li><strong>Read Lock (Shared)</strong> — Multiple transactions can read, but nobody can write</li>
-        <li><strong>Write Lock (Exclusive)</strong> — Only one transaction can read and write</li>
-        <li><strong>Deadlock</strong> — Two transactions waiting for each other's locks (both stuck)</li>
-    </ul>
-</div>
-
-<h2>Transactions in PHP (PDO)</h2>
-
+<h3>Transactions in PHP (PDO)</h3>
 <pre><code>&lt;?php
 $pdo->beginTransaction();
 
@@ -141,23 +113,80 @@ try {
 }
 ?&gt;</code></pre>
 
-<div class="exercise">
-    <h4>Practice Exercises</h4>
+<h2>Part 3: Apply New Knowledge</h2>
+
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>Banking:</strong> Every transfer, deposit, and withdrawal is a transaction ensuring money is never lost or duplicated.</li>
+    <li><strong>E-commerce:</strong> Placing an order involves decrementing inventory, creating an order record, and processing payment — all in one transaction.</li>
+    <li><strong>Airline Booking:</strong> Booking a seat involves checking availability, reserving the seat, and charging the customer — all must succeed together.</li>
+    <li><strong>Hospital:</strong> Updating a patient's medical record across multiple departments must be atomic to prevent partial updates.</li>
+</ul>
+
+<h3>Tips for Success</h3>
+<ul>
+    <li><strong>Keep transactions short:</strong> Long-running transactions hold locks and block other users.</li>
+    <li><strong>Use try-catch in PHP:</strong> Always wrap transactions in try-catch so you can rollback on error.</li>
+    <li><strong>Default to READ COMMITTED:</strong> It's a good balance between safety and performance for most applications.</li>
+</ul>
+
+<h3>Common Mistakes</h3>
+<ul>
+    <li><strong>Forgetting to COMMIT or ROLLBACK:</strong> Uncommitted transactions hold locks and can cause deadlocks.</li>
+    <li><strong>Using transactions for single statements:</strong> A single INSERT doesn't need a transaction wrapper — transactions are for multi-step operations.</li>
+    <li><strong>Ignoring isolation levels:</strong> Using the default without understanding it can lead to subtle bugs under concurrent load.</li>
+</ul>
+
+<h2>Part 4: Assess Your Learning</h2>
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> An online store has an <code>inventory</code> table and an <code>orders</code> table. When a customer places an order, the system must: (1) check if the product is in stock, (2) decrease the inventory count, and (3) create an order record. If any step fails, none of the changes should be saved.</p>
+    <p><strong>Task:</strong></p>
     <ol>
-        <li>Explain each ACID property using a library checkout example</li>
-        <li>What is a dirty read? How do isolation levels prevent it?</li>
-        <li>Write a PHP transaction that transfers inventory between two warehouses</li>
-        <li>When would you use READ UNCOMMITTED vs SERIALIZABLE?</li>
+        <li>Explain which ACID property ensures that either all three steps complete or none do.</li>
+        <li>Write a PHP/PDO transaction that implements this order logic for product_id = 42, quantity = 2, customer_id = 10.</li>
+        <li>If two customers try to buy the last item simultaneously, what isolation level would prevent a "dirty read"? What about preventing a "phantom read"?</li>
     </ol>
 </div>
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answers:</strong></p>
+        <ol>
+            <li><strong>Atomicity</strong> ensures that all three steps (check stock, decrease inventory, create order) either all succeed or all fail. If step 2 fails, step 1's changes are rolled back.</li>
+            <li>
+                <pre><code>&lt;?php
+$pdo->beginTransaction();
 
-<div class="lesson-nav">
-    <?php if ($nav['prev']): ?>
-        <a href="<?= lessonUrl($nav['prev']['num'], $nav['prev']['slug'], 'dbms-lessons') ?>">&larr; <?= htmlspecialchars($nav['prev']['title']) ?></a>
-    <?php endif; ?>
-    <?php if ($nav['next']): ?>
-        <a href="<?= lessonUrl($nav['next']['num'], $nav['next']['slug'], 'dbms-lessons') ?>"><?= htmlspecialchars($nav['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
-</div>
+try {
+    // Step 1: Check stock
+    $stmt = $pdo->prepare("SELECT stock FROM inventory WHERE product_id = ?");
+    $stmt->execute([42]);
+    $product = $stmt->fetch();
 
+    if (!$product || $product['stock'] &lt; 2) {
+        throw new Exception("Insufficient stock");
+    }
+
+    // Step 2: Decrease inventory
+    $pdo->exec("UPDATE inventory SET stock = stock - 2 WHERE product_id = 42");
+
+    // Step 3: Create order
+    $pdo->exec("INSERT INTO orders (customer_id, product_id, quantity, order_date)
+                VALUES (10, 42, 2, NOW())");
+
+    $pdo->commit();
+    echo "Order placed successfully!";
+} catch (Exception $e) {
+    $pdo->rollBack();
+    echo "Order failed: " . $e->getMessage();
+}
+?&gt;</code></pre>
+            </li>
+            <li><strong>READ COMMITTED</strong> prevents dirty reads (Transaction B won't see uncommitted changes from Transaction A). To prevent phantom reads, you need <strong>SERIALIZABLE</strong> isolation, which locks the range of rows being queried so no new rows can be inserted by other transactions.</li>
+        </ol>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

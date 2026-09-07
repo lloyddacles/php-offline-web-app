@@ -1,22 +1,35 @@
-<?php
-$pageTitle = 'MySQL JOINs';
-require_once __DIR__ . '/../includes/functions.php';
-$lessonNum = 8;
-$nav = getPrevNextLesson($lessonNum, 'mysql-lessons');
-require_once __DIR__ . '/../includes/header.php';
-?>
+<?php $pageTitle = 'MySQL JOINs'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
+<?php $num = 8; $prevNext = getPrevNextLesson($num, 'mysql-lessons'); ?>
 
 <div class="lesson-header">
-    <span class="lesson-number">MySQL Lesson <?= $lessonNum ?></span>
+    <span class="lesson-number">Lesson <?= $num ?></span>
     <h1>MySQL JOINs</h1>
     <p class="lesson-desc">Combine data from multiple tables using different types of joins.</p>
 </div>
 
-<h2>Why JOINs?</h2>
-<p>Relational databases split data into multiple tables to avoid duplication. JOINs let you <strong>combine related tables</strong> back together.</p>
+<h2>Part 1: Activate Prior Knowledge</h2>
+<div class="info-box note">
+    <div class="box-title">Review Questions</div>
+    <ol>
+        <li>Why do we split data into multiple tables instead of one big table?</li>
+        <li>What is a foreign key, and how does it relate two tables?</li>
+        <li>What happens to a query result when a column contains NULL values?</li>
+    </ol>
+</div>
 
-<pre><code>-- Sample tables for this lesson
+<h2>Part 2: Acquire New Knowledge</h2>
 
+<h3>Definition</h3>
+<p>A <strong>JOIN</strong> combines rows from two or more tables based on a related column. <code>INNER JOIN</code> returns only matching rows. <code>LEFT JOIN</code> returns all rows from the left table plus matches. <code>RIGHT JOIN</code> returns all rows from the right table plus matches.</p>
+
+<h3>Analogy</h3>
+<p>Think of JOINs as <strong>matching two columns in a Venn diagram</strong>. INNER JOIN is the overlapping section. LEFT JOIN is the entire left circle plus the overlap. RIGHT JOIN is the entire right circle plus the overlap.</p>
+
+<h3>How It Works</h3>
+<p>MySQL compares rows from both tables using the ON condition. When a match is found, the rows are combined. The type of JOIN determines which non-matching rows are included.</p>
+
+<h3>Example</h3>
+<pre><code class="language-sql">-- Sample tables
 CREATE TABLE departments (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
@@ -29,153 +42,93 @@ INSERT INTO departments (name, building) VALUES
 ('Sales', 'Building C'),
 ('HR', 'Building D');
 
--- employees table from previous lessons
--- (id, name, department, salary, hire_date)
-
--- Let's add a department_id column
-ALTER TABLE employees ADD department_id INT;
-
--- Link employees to departments
-UPDATE employees SET department_id = 1 WHERE department = 'Engineering';
-UPDATE employees SET department_id = 2 WHERE department = 'Marketing';
-UPDATE employees SET department_id = 3 WHERE department = 'Sales';</code></pre>
-
-<h2>INNER JOIN</h2>
-<p>Returns only rows that have <strong>matching values in both tables</strong>:</p>
-
-<pre><code>-- Get employees with their department building
-SELECT
-    e.name,
-    e.salary,
-    d.name AS department,
-    d.building
+-- INNER JOIN: only employees with a matching department
+SELECT e.name, e.salary, d.name AS department, d.building
 FROM employees e
-INNER JOIN departments d ON e.department_id = d.id;</code></pre>
+INNER JOIN departments d ON e.department_id = d.id;
 
-<pre><code>-- Output (only employees with a matching department):
--- +--------------+----------+-------------+------------+
--- | name         | salary   | department  | building   |
--- +--------------+----------+-------------+------------+
--- | Alice Smith  | 75000.00 | Engineering | Building A |
--- | Bob Jones    | 65000.00 | Marketing   | Building B |
--- | Carol White  | 82000.00 | Engineering | Building A |
--- | David Brown  | 58000.00 | Sales       | Building C |
--- | Eva Green    | 71000.00 | Marketing   | Building B |
--- | Frank Lee    | 90000.00 | Engineering | Building A |
--- | Grace Kim    | 55000.00 | Sales       | Building C |
--- +--------------+----------+-------------+------------+
--- Note: Henry Wu (department_id = NULL) is NOT included</code></pre>
-
-<h2>LEFT JOIN</h2>
-<p>Returns <strong>all rows from the left table</strong>, and matching rows from the right. NULL if no match:</p>
-
-<pre><code>-- Get ALL employees, even those without a department
-SELECT
-    e.name,
-    e.salary,
-    d.name AS department,
-    d.building
+-- LEFT JOIN: all employees, even those without a department
+SELECT e.name, d.name AS department
 FROM employees e
-LEFT JOIN departments d ON e.department_id = d.id;</code></pre>
+LEFT JOIN departments d ON e.department_id = d.id;
 
-<pre><code>-- Output (includes Henry Wu with NULL department):
--- +--------------+----------+-------------+------------+
--- | name         | salary   | department  | building   |
--- +--------------+----------+-------------+------------+
--- | Alice Smith  | 75000.00 | Engineering | Building A |
--- | Bob Jones    | 65000.00 | Marketing   | Building B |
--- | Carol White  | 82000.00 | Engineering | Building A |
--- | David Brown  | 58000.00 | Sales       | Building C |
--- | Eva Green    | 71000.00 | Marketing   | Building B |
--- | Frank Lee    | 90000.00 | Engineering | Building A |
--- | Grace Kim    | 55000.00 | Sales       | Building C |
--- | Henry Wu     | 48000.00 | NULL        | NULL       |
--- +--------------+----------+-------------+------------+</code></pre>
-
-<h2>RIGHT JOIN</h2>
-<p>Returns <strong>all rows from the right table</strong>, and matching rows from the left:</p>
-
-<pre><code>-- Get all departments, even if no employees are in them
-SELECT
-    d.name AS department,
-    e.name AS employee
+-- RIGHT JOIN: all departments, even those with no employees
+SELECT d.name AS department, e.name AS employee
 FROM employees e
-RIGHT JOIN departments d ON e.department_id = d.id;</code></pre>
+RIGHT JOIN departments d ON e.department_id = d.id;
+</code></pre>
+<strong>Output (RIGHT JOIN):</strong>
+<pre>+-------------+--------------+
+| department  | employee     |
++-------------+--------------+
+| Engineering | Alice Smith  |
+| Engineering | Carol White  |
+| Marketing   | Bob Jones    |
+| Sales       | David Brown  |
+| Sales       | Grace Kim    |
+| HR          | NULL         |
++-------------+--------------+</pre>
 
-<pre><code>-- Output (includes HR with no employees):
--- +-------------+--------------+
--- | department  | employee     |
--- +-------------+--------------+
--- | Engineering | Alice Smith  |
--- | Engineering | Carol White  |
--- | Engineering | Frank Lee    |
--- | Marketing   | Bob Jones    |
--- | Marketing   | Eva Green    |
--- | Sales       | David Brown  |
--- | Sales       | Grace Kim    |
--- | HR          | NULL         |
--- +-------------+--------------+</code></pre>
+<h2>Part 3: Apply New Knowledge</h2>
 
-<h2>JOIN Types Summary</h2>
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>E-commerce</strong> — JOIN orders with customers to show who bought what</li>
+    <li><strong>Schools</strong> — JOIN students with their grades and courses</li>
+    <li><strong>HR Systems</strong> — JOIN employees with their departments and managers</li>
+    <li><strong>Reporting</strong> — Combine data from multiple tables for dashboards</li>
+</ul>
 
-<table>
-    <thead>
-        <tr><th>JOIN Type</th><th>Returns</th></tr>
-    </thead>
-    <tbody>
-        <tr><td><code>INNER JOIN</code></td><td>Only matching rows from both tables</td></tr>
-        <tr><td><code>LEFT JOIN</code></td><td>All left rows + matching right rows (NULL if no match)</td></tr>
-        <tr><td><code>RIGHT JOIN</code></td><td>All right rows + matching left rows (NULL if no match)</td></tr>
-        <tr><td><code>CROSS JOIN</code></td><td>All combinations of both tables (cartesian product)</td></tr>
-    </tbody>
-</table>
+<h3>Tips for Success</h3>
+<ul>
+    <li>Use <strong>table aliases</strong> (e.g., <code>e</code> for employees) to keep queries short</li>
+    <li>Always specify the <strong>JOIN type</strong> (INNER, LEFT, etc.) — don't rely on default behavior</li>
+    <li>Use <code>LEFT JOIN ... WHERE right_table.id IS NULL</code> to find unmatched rows</li>
+    <li>Index the columns used in JOIN conditions for better performance</li>
+</ul>
 
-<h2>Multiple JOINs</h2>
+<h3>Common Mistakes</h3>
+<ul>
+    <li>Forgetting the <code>ON</code> condition — produces a Cartesian product (every row paired with every other row)</li>
+    <li>Using INNER JOIN when you need LEFT JOIN — missing rows with no matches</li>
+    <li>Joining on columns with different data types — causes unexpected results</li>
+    <li>Not aliasing tables in multi-table queries — ambiguous column names</li>
+</ul>
 
-<pre><code>-- Join more than 2 tables
-SELECT
-    e.name,
-    d.name AS department,
-    d.building
-FROM employees e
-INNER JOIN departments d ON e.department_id = d.id
-ORDER BY d.name, e.name;</code></pre>
-
-<h2>Self JOIN</h2>
-
-<pre><code>-- Join a table with itself
--- Example: find employees in the same department
-SELECT
-    a.name AS employee1,
-    b.name AS employee2,
-    a.department
-FROM employees a
-INNER JOIN employees b
-    ON a.department = b.department
-    AND a.id < b.id;</code></pre>
-
-<div class="info-box tip">
-    <div class="box-title">Tip: Table Aliases</div>
-    <p class="mb-0">Use short aliases (<code>e</code> for employees, <code>d</code> for departments) to make JOIN queries shorter and more readable.</p>
-</div>
-
-<div class="exercise">
-    <h4>Practice Exercises</h4>
+<h2>Part 4: Assess Your Learning</h2>
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You manage a school database with three tables: <code>students</code>, <code>courses</code>, and <code>enrollments</code> (which links students to courses with a grade).</p>
+    <p><strong>Task:</strong> Write the SQL queries to complete the following:</p>
     <ol>
-        <li>Create a <code>grades</code> table (id, student_id, subject, grade) and JOIN it with the students table</li>
-        <li>Find all employees who don't have a department using LEFT JOIN + WHERE NULL</li>
-        <li>List all departments and count employees in each using JOIN + GROUP BY</li>
-        <li>What's the difference between INNER JOIN and LEFT JOIN?</li>
+        <li>List all students with their enrolled course names and grades (use INNER JOIN)</li>
+        <li>List all courses and any students enrolled in them, including courses with no students (use LEFT JOIN)</li>
+        <li>Find all students who are NOT enrolled in any course</li>
     </ol>
 </div>
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answers:</strong></p>
+        <pre><code>-- 1. Students with their courses and grades
+SELECT s.first_name, s.last_name, c.course_name, e.grade
+FROM students s
+INNER JOIN enrollments e ON s.id = e.student_id
+INNER JOIN courses c ON e.course_id = c.id;
 
-<div class="lesson-nav">
-    <?php if ($nav['prev']): ?>
-        <a href="<?= lessonUrl($nav['prev']['num'], $nav['prev']['slug'], 'mysql-lessons') ?>">&larr; <?= htmlspecialchars($nav['prev']['title']) ?></a>
-    <?php endif; ?>
-    <?php if ($nav['next']): ?>
-        <a href="<?= lessonUrl($nav['next']['num'], $nav['next']['slug'], 'mysql-lessons') ?>"><?= htmlspecialchars($nav['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
-</div>
+-- 2. All courses with enrolled students (including empty courses)
+SELECT c.course_name, s.first_name, s.last_name, e.grade
+FROM courses c
+LEFT JOIN enrollments e ON c.id = e.course_id
+LEFT JOIN students s ON e.student_id = s.id;
 
+-- 3. Students not enrolled in any course
+SELECT s.first_name, s.last_name
+FROM students s
+LEFT JOIN enrollments e ON s.id = e.student_id
+WHERE e.student_id IS NULL;</code></pre>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

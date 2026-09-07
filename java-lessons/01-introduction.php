@@ -7,129 +7,108 @@
     <p class="lesson-desc">Discover what Java is, why it dominates the programming world, and how to write your very first program.</p>
 </div>
 
-<h2>What Is Java?</h2>
-<p>Java is a <strong>high-level, object-oriented, class-based programming language</strong> designed to have as few implementation dependencies as possible. It was created by <strong>James Gosling</strong> at Sun Microsystems and released in <strong>1995</strong>. Today, Java is owned by Oracle and runs on billions of devices worldwide.</p>
-
-<div class="info-box tip">
-    <div class="box-title">Why Learn Java?</div>
-    <ul>
-        <li><strong>Versatility:</strong> Android apps, enterprise systems, web backends, IoT devices</li>
-        <li><strong>Job Market:</strong> One of the most in-demand languages for software engineers</li>
-        <li><strong>Community:</strong> Massive ecosystem with libraries, frameworks, and support</li>
-        <li><strong>Foundation:</strong> Teaches OOP concepts that transfer to C#, C++, and more</li>
-    </ul>
-</div>
-
-<h2>Write Once, Run Anywhere</h2>
-<p>Java's famous motto is <strong>"Write Once, Run Anywhere" (WORA)</strong>. Unlike languages that compile to machine code for a specific platform, Java compiles to <strong>bytecode</strong>, which runs on the <strong>Java Virtual Machine (JVM)</strong>. This means the same Java program can run on Windows, macOS, Linux, or any device with a JVM.</p>
-
-<table>
-    <thead>
-        <tr><th>Component</th><th>Role</th></tr>
-    </thead>
-    <tbody>
-        <tr><td><strong>Source Code (.java)</strong></td><td>Your human-readable Java code</td></tr>
-        <tr><td><strong>Compiler (javac)</strong></td><td>Converts .java to .class bytecode</td></tr>
-        <tr><td><strong>Bytecode (.class)</strong></td><td>Platform-independent intermediate code</td></tr>
-        <tr><td><strong>JVM</strong></td><td>Executes bytecode on any operating system</td></tr>
-    </tbody>
-</table>
-
-<h2>JDK vs JRE vs JVM</h2>
-<p>These three acronyms confuse many beginners. Here is the breakdown:</p>
-
-<table>
-    <thead>
-        <tr><th>Acronym</th><th>Full Name</th><th>What It Does</th></tr>
-    </thead>
-    <tbody>
-        <tr><td><strong>JVM</strong></td><td>Java Virtual Machine</td><td>Runs Java bytecode</td></tr>
-        <tr><td><strong>JRE</strong></td><td>Java Runtime Environment</td><td>JVM + libraries needed to run Java programs</td></tr>
-        <tr><td><strong>JDK</strong></td><td>Java Development Kit</td><td>JRE + compiler (javac) + tools for developing</td></tr>
-    </tbody>
-</table>
-
+<h2>Part 1: Activate Prior Knowledge</h2>
 <div class="info-box note">
-    <div class="box-title">Key Insight</div>
-    <p class="mb-0">To <strong>run</strong> Java programs you only need the JRE. To <strong>develop</strong> Java programs you need the JDK. Always install the JDK when learning to code.</p>
-</div>
-
-<h2>A Brief History of Java</h2>
-<ul>
-    <li><strong>1991:</strong> James Gosling starts "Oak" project at Sun Microsystems</li>
-    <li><strong>1995:</strong> Java 1.0 released with the WORA promise</li>
-    <li><strong>2004:</strong> Java 5 introduces generics, enums, autoboxing</li>
-    <li><strong>2011:</strong> Oracle acquires Sun Microsystems</li>
-    <li><strong>2014:</strong> Java 8 brings lambdas and streams</li>
-    <li><strong>2021:</strong> Java 17 LTS (Long Term Support) release</li>
-    <li><strong>2023:</strong> Java 21 LTS with virtual threads and pattern matching</li>
-</ul>
-
-<h2>The Java Ecosystem</h2>
-<p>Java is more than a language. It is an entire ecosystem of tools and frameworks:</p>
-<ul>
-    <li><strong>Spring Boot</strong> &mdash; Enterprise web applications</li>
-    <li><strong>Android SDK</strong> &mdash; Mobile app development</li>
-    <li><strong>Hibernate</strong> &mdash; Database ORM framework</li>
-    <li><strong>Maven / Gradle</strong> &mdash; Build and dependency management</li>
-    <li><strong>JUnit</strong> &mdash; Testing framework</li>
-</ul>
-
-<h2>Your First Java Program</h2>
-<p>Let us write the classic <strong>Hello World</strong> program. Every Java program needs a class and a <code>main</code> method as the entry point.</p>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea class="sandbox-code" data-lang="java" data-example="<?= base64_encode('public class Sandbox {
-    public static void main(String[] args) {
-        System.out.println("Hello, World!");
-        System.out.println("Welcome to Java programming!");
-        System.out.println("Your first program is running!");
-    }
-}') ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<div class="info-box tip">
-    <div class="box-title">Think About It</div>
-    <p class="mb-0">Why does every Java program need a <code>main</code> method? What would happen if you removed the <code>public</code> keyword from the class declaration?</p>
-</div>
-
-<h2>How Java Compiles and Runs</h2>
-<p>The process from source code to output follows these steps:</p>
-<ol>
-    <li>Write code in a <code>.java</code> file (e.g., <code>Hello.java</code>)</li>
-    <li>Compile with <code>javac Hello.java</code> to produce <code>Hello.class</code></li>
-    <li>Run with <code>java Hello</code> which invokes the JVM</li>
-    <li>The JVM reads the bytecode and executes your program</li>
-</ol>
-
-<div class="exercise">
-    <h4>Practice Exercises</h4>
+    <div class="box-title">Review Questions</div>
     <ol>
-        <li>Modify the sandbox to print your name, age, and favorite hobby on separate lines</li>
-        <li>What happens if you forget the semicolon at the end of a line?</li>
-        <li>Try changing the class name to something else. Does it still compile?</li>
-        <li>Research: What is the difference between <code>System.out.println()</code> and <code>System.out.print()</code>?</li>
+        <li>What programming languages have you heard of or used before? How do they run on a computer?</li>
+        <li>What does it mean when someone says a language is "platform-independent"?</li>
+        <li>Have you ever installed software that required a specific operating system? Why does that matter?</li>
     </ol>
 </div>
 
-<div class="lesson-nav">
-    <?php if ($prevNext['prev']): ?>
-        <a href="<?= lessonUrl($prevNext['prev']['num'], $prevNext['prev']['slug'], 'java-lessons') ?>" class="prev-link">&larr; Previous: <?= htmlspecialchars($prevNext['prev']['title']) ?></a>
-    <?php endif; ?>
-    <?php if ($prevNext['next']): ?>
-        <a href="<?= lessonUrl($prevNext['next']['num'], $prevNext['next']['slug'], 'java-lessons') ?>" class="next-link">Next: <?= htmlspecialchars($prevNext['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
-</div>
+<h2>Part 2: Acquire New Knowledge</h2>
 
+<h3>Definition</h3>
+<p>Java is a <strong>high-level, object-oriented programming language</strong> created by James Gosling at Sun Microsystems in 1995. It compiles to bytecode that runs on the Java Virtual Machine (JVM), allowing the same program to run on Windows, macOS, Linux, and billions of devices worldwide.</p>
+
+<h3>Analogy</h3>
+<p>Think of Java like a universal translator. Instead of writing a separate book for each language, you write one book in "Java," and the translator (JVM) converts it for any audience (operating system). This is Java's famous <strong>"Write Once, Run Anywhere"</strong> promise.</p>
+
+<h3>How It Works</h3>
+<p>Java programs follow a simple pipeline:</p>
+<ol>
+    <li>You write source code in a <code>.java</code> file</li>
+    <li>The compiler (<code>javac</code>) converts it to <strong>bytecode</strong> in a <code>.class</code> file</li>
+    <li>The <strong>JVM</strong> reads the bytecode and executes it on your machine</li>
+</ol>
+
+<p>Three key components you need to know:</p>
+<ul>
+    <li><strong>JDK (Java Development Kit)</strong> — Tools for developing Java programs (includes compiler)</li>
+    <li><strong>JRE (Java Runtime Environment)</strong> — Libraries needed to run Java programs</li>
+    <li><strong>JVM (Java Virtual Machine)</strong> — Executes Java bytecode on any platform</li>
+</ul>
+
+<h3>Example</h3>
+<pre><code class="language-java">// Your first Java program: Hello World
+// Every Java program needs a class and a main method
+
+public class HelloWorld {
+    // The main method is the entry point of every Java program
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");      // Print a message
+        System.out.println("Welcome to Java!");   // Print another message
+    }
+}
+</code></pre>
+<strong>Output:</strong>
+<pre>Hello, World!
+Welcome to Java!</pre>
+
+<h2>Part 3: Apply New Knowledge</h2>
+
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>Android Apps</strong> — Most Android apps are written in Java</li>
+    <li><strong>Enterprise Systems</strong> — Banks, hospitals, and governments use Java for large-scale applications</li>
+    <li><strong>Web Backends</strong> — Spring Boot powers millions of web servers</li>
+    <li><strong>IoT Devices</strong> — Smart TVs, Blu-ray players, and embedded systems run Java</li>
+</ul>
+
+<h3>Tips for Success</h3>
+<ul>
+    <li>Always install the <strong>JDK</strong> (not just the JRE) when learning to code</li>
+    <li>Use an IDE like IntelliJ IDEA, Eclipse, or VS Code for better code editing</li>
+    <li>The class name must match the filename (e.g., <code>HelloWorld.java</code> must contain <code>class HelloWorld</code>)</li>
+</ul>
+
+<h3>Common Mistakes</h3>
+<ul>
+    <li>Forgetting that <code>System</code> must be capitalized — <code>system.out.println()</code> will not compile</li>
+    <li>Missing the semicolon at the end of statements</li>
+    <li>Mismatched curly braces — every <code>{</code> needs a matching <code>}</code></li>
+</ul>
+
+<h2>Part 4: Assess Your Learning</h2>
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> Your friend wants to learn programming. They ask you: "Why should I learn Java instead of another language?"</p>
+    <p><strong>Task:</strong> Write a Java program that prints a comparison showing three benefits of Java.</p>
+    <ol>
+        <li>Create a class called <code>WhyJava</code></li>
+        <li>In the main method, print three lines explaining Java advantages</li>
+        <li>Compile and run your program</li>
+    </ol>
+</div>
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answers:</strong></p>
+        <pre><code class="language-java">public class WhyJava {
+    public static void main(String[] args) {
+        System.out.println("1. Platform Independent: Write Once, Run Anywhere");
+        System.out.println("2. High Job Demand: Java developers are sought after worldwide");
+        System.out.println("3. Rich Ecosystem: Thousands of libraries and frameworks available");
+    }
+}
+</code></pre>
+        <p><strong>Output:</strong></p>
+        <pre>1. Platform Independent: Write Once, Run Anywhere
+2. High Job Demand: Java developers are sought after worldwide
+3. Rich Ecosystem: Thousands of libraries and frameworks available</pre>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

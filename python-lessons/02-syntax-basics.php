@@ -1,102 +1,125 @@
 <?php $pageTitle = 'Python Syntax Basics'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
 <?php $num = 2; $prevNext = getPrevNextLesson($num, 'python-lessons'); ?>
 
-<div class="lesson-container">
-    <h1>Lesson 2: Python Syntax Basics</h1>
-    
-    <div class="lesson-meta">
-        <span>Beginner</span> | <span>Estimated time: 30 minutes</span>
-    </div>
+<div class="lesson-header">
+    <span class="lesson-number">Lesson <?= $num ?></span>
+    <h1>Python Syntax Basics</h1>
+    <p class="lesson-desc">Master indentation, statements, comments, and the rules that make Python unique.</p>
+</div>
 
-    <section class="lesson-section">
-        <h2>Indentation: Python's Defining Feature</h2>
-        <p>Unlike most languages that use braces <code>{}</code>, Python uses <strong>indentation</strong> to define code blocks. This is not just style—it's mandatory!</p>
-        
-        <pre><code># Correct indentation
-if True:
-    print("This runs")
-    print("This too")
+<h2>Part 1: Activate Prior Knowledge</h2>
+<div class="info-box note">
+    <div class="box-title">Review Questions</div>
+    <ol>
+        <li>In what way does Python differ from most other programming languages when it comes to defining code blocks?</li>
+        <li>What is the difference between a single-line comment and a multi-line comment in Python?</li>
+        <li>Why is Python considered a case-sensitive language?</li>
+    </ol>
+</div>
 
-# Wrong - IndentationError!
-if True:
-print("This fails!")</code></pre>
-        
-        <div class="info-box tip">
-            <strong>Best Practice:</strong> Use <strong>4 spaces</strong> per indentation level (Python community standard). Never mix tabs and spaces!
-        </div>
-    </section>
+<h2>Part 2: Acquire New Knowledge</h2>
+<h3>Definition</h3>
+<p>Python syntax refers to the set of rules that define how code must be written. Unlike most languages that use braces <code>{}</code>, Python uses <strong>indentation</strong> to define code blocks. Statements end with colons before indented blocks, and Python is <strong>case-sensitive</strong> — meaning <code>Name</code> and <code>name</code> are different variables.</p>
 
-    <section class="lesson-section">
-        <h2>Statements and Colons</h2>
-        <p>Compound statements end with a <strong>colon</strong> (<code>:</code>) before the indented block:</p>
-        <ul>
-            <li><code>if condition:</code></li>
-            <li><code>for item in list:</code></li>
-            <li><code>while condition:</code></li>
-            <li><code>def function_name():</code></li>
-        </ul>
-    </section>
+<h3>Analogy</h3>
+<p>Think of Python's indentation like an outline in a Word document. A main topic is flush left, subtopics are indented once, and sub-subtopics are indented further. If you mix indentation levels randomly, the outline becomes unreadable. Python enforces this outline structure so that your code is always clean and organized — it's like having an auto-formatter built into the language itself.</p>
 
-    <section class="lesson-section">
-        <h2>Case Sensitivity</h2>
-        <p>Python is <strong>case-sensitive</strong>. <code>Variable</code>, <code>variable</code>, and <code>VARIABLE</code> are three different names!</p>
-        
-        <pre><code>name = "Alice"
+<h3>How It Works</h3>
+<p>Every compound statement in Python (if, for, while, def, class) ends with a colon, followed by an indented block. The standard indentation is <strong>4 spaces</strong>. Python tracks indentation levels to know which code belongs to which block. Mixed tabs and spaces will cause errors.</p>
+
+<h3>Example</h3>
+<pre><code class="language-python"># Correct indentation - 4 spaces per level
+age = 20
+
+if age >= 18:
+    print("You are an adult")
+    print("You can vote")
+else:
+    print("You are a minor")
+
+# Case sensitivity
+name = "Alice"
 Name = "Bob"
 NAME = "Charlie"
-print(name, Name, NAME)  # Alice Bob Charlie</code></pre>
-    </section>
+print(name, Name, NAME)  # Outputs: Alice Bob Charlie
 
-    <section class="lesson-section">
-        <h2>Line Continuation</h2>
-        <p>Long statements can span multiple lines using:</p>
-        <ul>
-            <li><strong>Backslash:</strong> <code>total = 1 + 2 + 3 + 4 + 5</code></li>
-            <li><strong>Parentheses:</strong> <code>total = (1 + 2 + 3 + 4 + 5)</code></li>
-        </ul>
-        
-        <pre><code># Line continuation examples
+# Line continuation with parentheses
 total = (1 + 2 + 3 +
          4 + 5 + 6)
 
-message = ("This is a very long "
-           "string that spans "
-           "multiple lines")</code></pre>
-    </section>
-
-    <section class="lesson-section">
-        <h2>Practice: Indentation Blocks</h2>
-        <p>Try the code below and experiment with indentation levels:</p>
-        
-        <div class="sandbox">
-            <textarea class="sandbox-code" data-lang="python" data-example="<?= base64_encode('# Indentation example\nfor i in range(3):\n    print(f\"Level 1: iteration {i}\")\n    for j in range(2):\n        print(f\"  Level 2: inner {j}\")\n    print(\"Back to Level 1\")') ?>"></textarea>
-            <button class="run-btn">Run Code</button>
-            <div class="output-area"></div>
-        </div>
-        
-        <div class="info-box note">
-            <strong>Note:</strong> Python's indentation style enforces clean, readable code. It may feel restrictive at first, but developers grow to love it!
-        </div>
-    </section>
-
-    <section class="lesson-section">
-        <h2>Comments</h2>
-        <p>Comments start with <code>#</code> and extend to end of line:</p>
-        <pre><code># This is a comment
-x = 5  # This is an inline comment
+# Comments
+# This is a comment
+x = 5  # Inline comment
 
 """
-Triple-quoted strings can be
-multi-line comments/docstrings
-"""</code></pre>
-    </section>
+This is a multi-line
+comment (docstring)
+"""
+</code></pre>
+<strong>Output:</strong>
+<pre>You are an adult
+You can vote
+Alice Bob Charlie</pre>
 
-    <section class="lesson-section">
-        <h2>Think About It</h2>
-        <p>Why do you think Python enforces indentation instead of using braces like C or JavaScript? What benefits might this provide?</p>
-    </section>
+<h2>Part 3: Apply New Knowledge</h2>
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>Team Projects:</strong> Enforced indentation ensures all developers write code in the same style</li>
+    <li><strong>Code Reviews:</strong> Python code is immediately readable without needing extra formatting tools</li>
+    <li><strong>Debugging:</strong> Indentation errors point you directly to where a block of code went wrong</li>
+    <li><strong>Documentation:</strong> Docstrings (triple-quoted strings) serve as inline documentation</li>
+</ul>
 
-    <?php require_once __DIR__ . '/../includes/prev-next-nav.php'; ?>
+<h3>Tips for Success</h3>
+<ul>
+    <li>Configure your editor to use 4 spaces for indentation (not tabs)</li>
+    <li>Use parentheses for line continuation instead of backslashes — it's cleaner</li>
+    <li>Write comments that explain <em>why</em>, not <em>what</em> the code does</li>
+    <li>Use docstrings at the top of functions and classes to describe their purpose</li>
+</ul>
+
+<h3>Common Mistakes</h3>
+<ul>
+    <li>Mixing tabs and spaces — this causes <code>IndentationError</code></li>
+    <li>Forgetting the colon after if/for/while/def/class statements</li>
+    <li>Over-indenting or under-indenting code blocks</li>
+    <li>Using <code>#</code> for multi-line comments when triple quotes are more appropriate for docstrings</li>
+</ul>
+
+<h2>Part 4: Assess Your Learning</h2>
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You are reviewing a junior developer's Python code. The code has several syntax errors that prevent it from running. Your job is to identify and fix all the issues.</p>
+    <p><strong>Task:</strong> Find and fix the errors in the following code.</p>
+    <ol>
+        <li>Identify the missing colon</li>
+        <li>Fix the indentation error</li>
+        <li>Fix the case sensitivity issue</li>
+        <li>Run the corrected code and verify the output</li>
+    </ol>
 </div>
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answers:</strong> The broken code has multiple issues. Here is the corrected version:</p>
+        <pre><code># BEFORE (broken code):
+# if age >= 18
+# print("Adult")
+#   print("Can vote")
 
+# AFTER (fixed code):
+age = 22
+
+if age >= 18:  # Added colon
+    print("Adult")  # Fixed indentation
+    print("Can vote")  # Fixed indentation
+
+# Case sensitivity fix
+firstName = "John"
+firstname = "Jane"  # These are DIFFERENT variables
+print(firstName, firstname)</code></pre>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

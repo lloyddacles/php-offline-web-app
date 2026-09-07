@@ -1,46 +1,41 @@
-<?php
-$pageTitle = 'Databases and Tables';
-require_once __DIR__ . '/../includes/functions.php';
-$lessonNum = 2;
-$nav = getPrevNextLesson($lessonNum, 'mysql-lessons');
-require_once __DIR__ . '/../includes/header.php';
-?>
+<?php $pageTitle = 'Databases and Tables'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
+<?php $num = 2; $prevNext = getPrevNextLesson($num, 'mysql-lessons'); ?>
 
 <div class="lesson-header">
-    <span class="lesson-number">MySQL Lesson <?= $lessonNum ?></span>
+    <span class="lesson-number">Lesson <?= $num ?></span>
     <h1>Databases and Tables</h1>
     <p class="lesson-desc">Create databases and design tables with the right data types.</p>
 </div>
 
-<h2>Creating a Database</h2>
-
-<pre><code>-- Create a new database
-CREATE DATABASE school;
-
--- Check if it exists before creating
-CREATE DATABASE IF NOT EXISTS school;
-
--- See all databases
-SHOW DATABASES;
-
--- Select a database to use
-USE school;
-
--- Delete a database (careful!)
-DROP DATABASE school;</code></pre>
-
-<h2>Creating Tables</h2>
-
-<div class="syntax-ref">
-    <h4>Syntax: CREATE TABLE</h4>
-    <code>CREATE TABLE table_name (</code>
-    <code>&nbsp;&nbsp;column_name data_type constraints,</code>
-    <code>&nbsp;&nbsp;column_name data_type constraints,</code>
-    <code>&nbsp;&nbsp;PRIMARY KEY (column_name)</code>
-    <code>);</code>
+<h2>Part 1: Activate Prior Knowledge</h2>
+<div class="info-box note">
+    <div class="box-title">Review Questions</div>
+    <ol>
+        <li>What SQL command do you use to create a new database?</li>
+        <li>What is a primary key, and why does every table need one?</li>
+        <li>What is the difference between a database and a table?</li>
+    </ol>
 </div>
 
-<pre><code>-- Create a students table
+<h2>Part 2: Acquire New Knowledge</h2>
+
+<h3>Definition</h3>
+<p>A <strong>database</strong> is a container that holds related tables. A <strong>table</strong> is a structured set of rows and columns that stores specific data. <strong>Data types</strong> define what kind of data each column can hold.</p>
+
+<h3>Analogy</h3>
+<p>Think of a database as a <strong>filing cabinet</strong>. Each drawer is a table — one for students, one for courses, one for grades. The data type of each column is like a <strong>label on a folder</strong>: it tells you what can go inside (numbers, text, dates).</p>
+
+<h3>How It Works</h3>
+<p>MySQL requires you to define the structure of your data before storing it. You create a database, then create tables inside it with specific columns and data types. This ensures data consistency and integrity.</p>
+
+<h3>Example</h3>
+<pre><code class="language-sql">-- Create a database
+CREATE DATABASE IF NOT EXISTS school;
+
+-- Select it for use
+USE school;
+
+-- Create a students table with various data types
 CREATE TABLE students (
     id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(50) NOT NULL,
@@ -53,98 +48,86 @@ CREATE TABLE students (
 
 -- View the table structure
 DESCRIBE students;
--- or
-SHOW COLUMNS FROM students;</code></pre>
+</code></pre>
+<strong>Output:</strong>
+<pre>+------------------+--------------+------+-----+---------------------+-------+
+| Field            | Type         | Null | Key | Default             | Extra |
++------------------+--------------+------+-----+---------------------+-------+
+| id               | int          | NO   | PRI | NULL                | auto  |
+| first_name       | varchar(50)  | NO   |     | NULL                |       |
+| last_name        | varchar(50)  | NO   |     | NULL                |       |
+| email            | varchar(100) | NO   | UNI | NULL                |       |
+| age              | int          | YES  |     | NULL                |       |
+| enrollment_date  | date         | YES  |     | CURRENT_DATE        |       |
+| is_active        | tinyint(1)   | YES  |     | 1                   |       |
++------------------+--------------+------+-----+---------------------+-------+</pre>
 
-<h2>Data Types</h2>
+<h2>Part 3: Apply New Knowledge</h2>
 
-<table>
-    <thead>
-        <tr><th>Type</th><th>Description</th><th>Example</th></tr>
-    </thead>
-    <tbody>
-        <tr><td><code>INT</code></td><td>Whole numbers</td><td><code>42</code>, <code>-7</code></td></tr>
-        <tr><td><code>BIGINT</code></td><td>Large whole numbers</td><td><code>9999999999</code></td></tr>
-        <tr><td><code>FLOAT</code></td><td>Floating-point (approximate)</td><td><code>3.14</code></td></tr>
-        <tr><td><code>DECIMAL(10,2)</code></td><td>Exact decimal (for money)</td><td><code>19.99</code></td></tr>
-        <tr><td><code>VARCHAR(n)</code></td><td>Variable-length string (max n chars)</td><td><code>"Alice"</code></td></tr>
-        <tr><td><code>TEXT</code></td><td>Long text</td><td>Articles, descriptions</td></tr>
-        <tr><td><code>DATE</code></td><td>Date (YYYY-MM-DD)</td><td><code>"2024-01-15"</code></td></tr>
-        <tr><td><code>DATETIME</code></td><td>Date and time</td><td><code>"2024-01-15 14:30:00"</code></td></tr>
-        <tr><td><code>BOOLEAN</code></td><td>True/False (stored as 0/1)</td><td><code>TRUE</code>, <code>FALSE</code></td></tr>
-        <tr><td><code>AUTO_INCREMENT</code></td><td>Auto-increments number</td><td>1, 2, 3...</td></tr>
-    </tbody>
-</table>
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>Schools</strong> — Student records, courses, grades, and attendance</li>
+    <li><strong>Hospitals</strong> — Patient records, appointments, and medical history</li>
+    <li><strong>Stores</strong> — Inventory, sales, and customer information</li>
+    <li><strong>Apps</strong> — User accounts, settings, and activity logs</li>
+</ul>
 
-<h2>Table Constraints</h2>
+<h3>Tips for Success</h3>
+<ul>
+    <li>Use <code>DECIMAL</code> for money, not <code>FLOAT</code> (FLOAT is approximate)</li>
+    <li>Always set a <strong>PRIMARY KEY</strong> — use <code>AUTO_INCREMENT</code> for simplicity</li>
+    <li>Use <code>NOT NULL</code> for required fields to prevent missing data</li>
+    <li>Run <code>DESCRIBE table_name;</code> to check your table structure anytime</li>
+</ul>
 
-<pre><code>-- A table with various constraints
-CREATE TABLE courses (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    course_code VARCHAR(10) UNIQUE NOT NULL,
-    course_name VARCHAR(100) NOT NULL,
-    credits INT NOT NULL CHECK (credits > 0),
-    max_students INT DEFAULT 30,
-    description TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);</code></pre>
+<h3>Common Mistakes</h3>
+<ul>
+    <li>Using <code>VARCHAR(255)</code> for everything — choose appropriate sizes</li>
+    <li>Forgetting <code>NOT NULL</code> on required fields, allowing empty data</li>
+    <li>Running <code>DROP TABLE</code> without <code>IF EXISTS</code>, causing errors on re-runs</li>
+</ul>
 
-<table>
-    <thead>
-        <tr><th>Constraint</th><th>Purpose</th></tr>
-    </thead>
-    <tbody>
-        <tr><td><code>PRIMARY KEY</code></td><td>Unique identifier for each row</td></tr>
-        <tr><td><code>NOT NULL</code></td><td>Column cannot be empty</td></tr>
-        <tr><td><code>UNIQUE</code></td><td>All values in column must be different</td></tr>
-        <tr><td><code>DEFAULT value</code></td><td>Sets a default if no value provided</td></tr>
-        <tr><td><code>CHECK (condition)</code></td><td>Validates data meets a condition</td></tr>
-        <tr><td><code>AUTO_INCREMENT</code></td><td>Automatically generates sequential numbers</td></tr>
-    </tbody>
-</table>
-
-<h2>Modifying Tables</h2>
-
-<pre><code>-- Add a new column
-ALTER TABLE students ADD phone VARCHAR(20);
-
--- Modify a column type
-ALTER TABLE students MODIFY phone VARCHAR(30);
-
--- Drop a column
-ALTER TABLE students DROP phone;
-
--- Rename a table
-ALTER TABLE students RENAME TO learners;
-
--- Delete a table (careful!)
-DROP TABLE learners;
-
--- Delete table only if it exists
-DROP TABLE IF EXISTS learners;</code></pre>
-
-<div class="info-box warning">
-    <div class="box-title">Warning</div>
-    <p class="mb-0"><code>DROP TABLE</code> permanently deletes the table and all its data. Always back up your data before running destructive commands.</p>
-</div>
-
-<div class="exercise">
-    <h4>Practice Exercises</h4>
+<h2>Part 4: Assess Your Learning</h2>
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You are building a library management system. You need to create a database to track books and their authors.</p>
+    <p><strong>Task:</strong> Write the SQL commands to complete the following:</p>
     <ol>
-        <li>Create a database called <code>practice</code> and select it</li>
-        <li>Create a <code>books</code> table with columns: id, title, author, isbn (unique), price, published_date</li>
-        <li>Add a <code>genre</code> column to your books table</li>
-        <li>View the table structure using <code>DESCRIBE books</code></li>
+        <li>Create a database called <code>library</code></li>
+        <li>Create a <code>books</code> table with: id, title (varchar 200), isbn (varchar 13, unique), published_year (int), and is_available (boolean, default true)</li>
+        <li>Create an <code>authors</code> table with: id, name (varchar 100), and birth_year (int)</li>
+        <li>View the structure of both tables</li>
     </ol>
 </div>
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answers:</strong></p>
+        <pre><code>-- 1. Create the database
+CREATE DATABASE IF NOT EXISTS library;
+USE library;
 
-<div class="lesson-nav">
-    <?php if ($nav['prev']): ?>
-        <a href="<?= lessonUrl($nav['prev']['num'], $nav['prev']['slug'], 'mysql-lessons') ?>">&larr; <?= htmlspecialchars($nav['prev']['title']) ?></a>
-    <?php endif; ?>
-    <?php if ($nav['next']): ?>
-        <a href="<?= lessonUrl($nav['next']['num'], $nav['next']['slug'], 'mysql-lessons') ?>"><?= htmlspecialchars($nav['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
-</div>
+-- 2. Create the books table
+CREATE TABLE books (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    isbn VARCHAR(13) UNIQUE NOT NULL,
+    published_year INT,
+    is_available BOOLEAN DEFAULT TRUE
+);
 
+-- 3. Create the authors table
+CREATE TABLE authors (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    birth_year INT
+);
+
+-- 4. View structures
+DESCRIBE books;
+DESCRIBE authors;</code></pre>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

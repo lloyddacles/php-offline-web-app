@@ -1,135 +1,100 @@
-<?php
-$pageTitle = 'Introduction to PHP';
-require_once __DIR__ . '/../includes/functions.php';
-$lessonNum = 1;
-$nav = getPrevNextLesson($lessonNum);
-require_once __DIR__ . '/../includes/header.php';
-?>
+<?php $pageTitle = 'Introduction to PHP'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
+<?php $num = 1; $prevNext = getPrevNextLesson($num, 'lessons'); ?>
 
 <div class="lesson-header">
-    <span class="lesson-number">Lesson <?= $lessonNum ?></span>
+    <span class="lesson-number">Lesson <?= $num ?></span>
     <h1>Introduction to PHP</h1>
     <p class="lesson-desc">Learn what PHP is, how it works, and write your first PHP script.</p>
 </div>
 
-<h2>What is PHP?</h2>
-<p>PHP (PHP: Hypertext Preprocessor) is a server-side scripting language designed for web development. When a user visits a PHP page:</p>
-<ol>
-    <li>The web server reads the PHP file</li>
-    <li>PHP processes the code and generates HTML</li>
-    <li>The server sends the resulting HTML to the user's browser</li>
-    <li>The browser displays the page &mdash; the user never sees the PHP code</li>
-</ol>
-
+<h2>Part 1: Activate Prior Knowledge</h2>
+<p>Connect to what students already know:</p>
 <div class="info-box note">
-    <div class="box-title">Server-Side vs Client-Side</div>
-    <p><strong>Client-side</strong> (HTML, CSS, JavaScript) runs in the user's browser.</p>
-    <p class="mb-0"><strong>Server-side</strong> (PHP) runs on the web server before sending output to the browser.</p>
-</div>
-
-<h2>Why Learn PHP?</h2>
-<ul>
-    <li>Over 77% of websites with known server-side languages use PHP</li>
-    <li>Powers WordPress, Facebook, Wikipedia, and millions of sites</li>
-    <li>Easy to learn for beginners</li>
-    <li>Works with virtually every web hosting service</li>
-    <li>Large community and extensive documentation</li>
-</ul>
-
-<h2>Your First PHP Script</h2>
-<p>A PHP file ends with the <code>.php</code> extension and contains PHP code between <code>&lt;?php</code> and <code>?&gt;</code> tags.</p>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea data-example="<?php echo base64_encode('<?php
-// This is my first PHP program!
-echo "Hello, World!";
-echo "\n";
-echo "Welcome to PHP!";
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<h2>How to Run PHP</h2>
-
-<h3>1. PHP Built-in Server (Recommended for Learning)</h3>
-<p>PHP comes with a built-in development server. Navigate to this project's folder and run:</p>
-<pre><code>php -S localhost:8000</code></pre>
-<p>Then open <code>http://localhost:8000</code> in your browser.</p>
-
-<h3>2. Web Hosting</h3>
-<p>Upload your <code>.php</code> files to a web server with PHP support. The server processes the files and returns HTML.</p>
-
-<h3>3. Command Line</h3>
-<p>You can also run PHP scripts from the terminal:</p>
-<pre><code>php script.php</code></pre>
-
-<h2>PHP Tag Structure</h2>
-
-<div class="syntax-ref">
-    <h4>Syntax: PHP Tags</h4>
-    <code>&lt;?php ... ?&gt;    // Standard PHP opening and closing tags</code>
-    <code>&lt;?= expression ?&gt;  // Shorthand for echo (output)</code>
-</div>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea data-example="<?php echo base64_encode('<?php
-// PHP can be mixed with HTML
-// The echo statement outputs text
-
-echo "PHP can generate HTML output!";
-echo "\n";
-echo "You can mix PHP with any text.";
-echo "\n";
-
-// Simple math
-echo "2 + 3 = " . (2 + 3);
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<div class="info-box tip">
-    <div class="box-title">Tip</div>
-    <p class="mb-0">The <code>echo</code> statement is the most common way to output text in PHP. It can output strings, numbers, and variables.</p>
-</div>
-
-<div class="exercise">
-    <h4>Practice Exercises</h4>
+    <div class="box-title">Review Questions</div>
     <ol>
-        <li>Write a PHP script that outputs your name</li>
-        <li>Write a script that outputs your favorite song title and artist on separate lines</li>
-        <li>Try outputting a simple math equation as text (e.g., "5 * 10 = 50")</li>
+        <li>Have you ever visited a website like Facebook or Wikipedia? How do you think they work behind the scenes?</li>
+        <li>What happens when you type a URL in your browser and press Enter?</li>
+        <li>Have you ever used HTML or CSS before? What's the difference between what happens in the browser versus on a server?</li>
     </ol>
 </div>
 
-<div class="lesson-nav">
-    <?php if ($nav['prev']): ?>
-        <a href="<?= lessonUrl($nav['prev']['num'], $nav['prev']['slug']) ?>">&larr; <?= htmlspecialchars($nav['prev']['title']) ?></a>
-    <?php else: ?>
-        <span></span>
-    <?php endif; ?>
-    <?php if ($nav['next']): ?>
-        <a href="<?= lessonUrl($nav['next']['num'], $nav['next']['slug']) ?>"><?= htmlspecialchars($nav['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
+<h2>Part 2: Acquire New Knowledge</h2>
+
+<h3>Definition</h3>
+<p>PHP (PHP: Hypertext Preprocessor) is a server-side scripting language designed for web development. It runs on the web server and generates HTML that is sent to the user's browser.</p>
+
+<h3>Analogy</h3>
+<p>Think of a restaurant: the customer (browser) places an order (request), the waiter (PHP) takes it to the kitchen (server), the chef prepares the food (processes the code), and the waiter brings back the finished dish (HTML) for the customer to enjoy. The customer never sees the kitchen operations.</p>
+
+<h3>How It Works (Step by Step)</h3>
+<p>1. A user visits a PHP page in their browser</p>
+<p>2. The web server reads the PHP file</p>
+<p>3. PHP processes the code and generates HTML</p>
+<p>4. The server sends the resulting HTML to the user's browser</p>
+<p>5. The browser displays the page - the user never sees the PHP code</p>
+
+<h3>Example</h3>
+<pre><code class="language-php">&lt;?php
+// This is my first PHP program!
+echo "Hello, World!";  // Output text to the browser
+echo "\n";  // Add a new line
+echo "Welcome to PHP!";  // Output another line
+?&gt;
+</code></pre>
+<strong>Output:</strong>
+<pre>Hello World
+Welcome to PHP!</pre>
+
+<h2>Part 3: Apply New Knowledge</h2>
+
+<h3>Real-World Applications</h3>
+<ul>
+    <li>WordPress powers over 40% of all websites - it's built with PHP</li>
+    <li>Facebook, Wikipedia, and millions of websites use PHP for server-side processing</li>
+    <li>PHP can handle form submissions, manage databases, create dynamic pages, and build complete web applications</li>
+</ul>
+
+<h3>Tips for Success</h3>
+<ul>
+    <li>Start with PHP's built-in server for learning - it's simple and requires no setup</li>
+    <li>Always save PHP files with the .php extension</li>
+    <li>Use echo to output text and test your code as you learn</li>
+</ul>
+
+<h3>Common Mistakes to Avoid</h3>
+<ul>
+    <li>Forgetting to include &lt;?php ?&gt; tags around PHP code</li>
+    <li>Trying to run PHP files directly in a browser instead of through a server</li>
+    <li>Not understanding the difference between client-side (browser) and server-side (PHP) processing</li>
+</ul>
+
+<h2>Part 4: Assess Your Learning</h2>
+
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You're building your first website and want to display a welcome message to visitors.</p>
+    <p><strong>Task:</strong> Write a complete PHP script that outputs a personalized welcome message.</p>
+    <ol>
+        <li>What tags do you need to open and close PHP code?</li>
+        <li>Write a PHP script that outputs "Hello, [Your Name]!" to the browser</li>
+        <li>Add a second echo statement that outputs "Welcome to my first PHP website!"</li>
+    </ol>
 </div>
 
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answer 1:</strong> You need &lt;?php to open and ?&gt; to close PHP code.</p>
+        <p><strong>Answer 2:</strong> echo "Hello, [Your Name]!";</p>
+        <p><strong>Answer 3:</strong> Complete script with both echo statements</p>
+        <p><strong>Sample Solution:</strong></p>
+        <pre><code>&lt;?php
+echo "Hello, John!";
+echo "\n";
+echo "Welcome to my first PHP website!";
+?&gt;</code></pre>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

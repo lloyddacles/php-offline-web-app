@@ -7,175 +7,67 @@
     <p class="lesson-desc">Learn the foundations of OOP in Java: classes, constructors, the <code>this</code> keyword, access modifiers, and getters/setters.</p>
 </div>
 
-<h2>Classes & Objects</h2>
-<p>A <strong>class</strong> is a blueprint; an <strong>object</strong> is an instance of that class. Classes define what data (fields) and behavior (methods) an object has.</p>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself &mdash; Your First Class</span>
-    </div>
-    <textarea class="sandbox-code" data-lang="java" data-example="<?= base64_encode('public class Sandbox {
-    
-    static class Car {
-        String brand;
-        String color;
-        int year;
-        
-        void displayInfo() {
-            System.out.println(year + " " + color + " " + brand);
-        }
-    }
-    
-    public static void main(String[] args) {
-        Car car1 = new Car();
-        car1.brand = "Toyota";
-        car1.color = "Red";
-        car1.year = 2023;
-        
-        Car car2 = new Car();
-        car2.brand = "Honda";
-        car2.color = "Blue";
-        car2.year = 2024;
-        
-        car1.displayInfo();
-        car2.displayInfo();
-    }
-}'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
+<h2>Part 1: Activate Prior Knowledge</h2>
+<div class="info-box note">
+    <div class="box-title">Review Questions</div>
+    <ol>
+        <li>What is the difference between a blueprint and the actual thing it creates? Can you give an example?</li>
+        <li>Why would you want to group related data and behavior together in one place?</li>
+        <li>What is encapsulation? Why is it important to hide internal details from the outside world?</li>
+    </ol>
 </div>
 
-<h2>Constructors</h2>
-<p>A <strong>constructor</strong> initializes an object when it's created. It has the same name as the class and no return type.</p>
+<h2>Part 2: Acquire New Knowledge</h2>
 
-<table>
-    <thead>
-        <tr><th>Type</th><th>Syntax</th><th>When Used</th></tr>
-    </thead>
-    <tbody>
-        <tr><td>No-arg</td><td><code>public Car() { }</code></td><td>Default initialization</td></tr>
-        <tr><td>Parameterized</td><td><code>public Car(String brand) { ... }</code></td><td>Initialize with values</td></tr>
-        <tr><td>Copy</td><td><code>public Car(Car other) { ... }</code></td><td>Clone an object</td></tr>
-    </tbody>
-</table>
+<h3>Definition</h3>
+<p><strong>Object-Oriented Programming (OOP)</strong> is a programming paradigm organized around objects rather than functions. A <strong>class</strong> is a blueprint that defines fields (data) and methods (behavior). An <strong>object</strong> is an instance of that class. <strong>Constructors</strong> initialize objects when they are created.</p>
 
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself &mdash; Constructors</span>
-    </div>
-    <textarea class="sandbox-code" data-lang="java" data-example="<?= base64_encode('public class Sandbox {
-    
-    static class Student {
-        String name;
-        int age;
-        double gpa;
-        
-        Student() {
-            name = "Unknown";
-            age = 0;
-            gpa = 0.0;
-        }
-        
-        Student(String name, int age, double gpa) {
-            this.name = name;
-            this.age = age;
-            this.gpa = gpa;
-        }
-        
-        void display() {
-            System.out.println(name + " (age " + age + ", GPA: " + gpa + ")");
-        }
-    }
-    
-    public static void main(String[] args) {
-        Student s1 = new Student();
-        Student s2 = new Student("Alice", 20, 3.8);
-        Student s3 = new Student("Bob", 22, 3.5);
-        
-        s1.display();
-        s2.display();
-        s3.display();
-    }
-}'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
+<h3>Analogy</h3>
+<p>Think of a class like a cookie cutter. The cutter defines the shape (fields and methods). Each cookie you make is an object — same shape, but each is its own independent cookie with its own frosting (data). The <code>this</code> keyword is like pointing to yourself: "I'm talking about <em>this</em> specific cookie."</p>
 
-<h2>The <code>this</code> Keyword</h2>
-<p><code>this</code> refers to the current object. It's essential when parameter names shadow instance variables.</p>
+<h3>How It Works</h3>
+<ul>
+    <li><strong>Class</strong> — Defines the structure (fields) and behavior (methods)</li>
+    <li><strong>Object</strong> — An instance created with <code>new</code>: <code>Car myCar = new Car();</code></li>
+    <li><strong>Constructor</strong> — Special method called when creating an object (same name as class, no return type)</li>
+    <li><strong>this keyword</strong> — Refers to the current object instance</li>
+    <li><strong>Access modifiers</strong> — Control visibility: <code>public</code>, <code>private</code>, <code>protected</code></li>
+    <li><strong>Getters/Setters</strong> — Provide controlled access to private fields</li>
+</ul>
 
-<div class="info-box tip">
-    <div class="box-title">When to Use <code>this</code></div>
-    <ul class="mb-0">
-        <li>Resolve name ambiguity (parameter shadows field)</li>
-        <li>Pass current object as a method argument</li>
-        <li>Call another constructor: <code>this();</code> or <code>this(args);</code></li>
-    </ul>
-</div>
+<h3>Example</h3>
+<pre><code class="language-java">public class OOPDemo {
 
-<h2>Access Modifiers</h2>
-<p>Access modifiers control who can see and use your fields and methods:</p>
-
-<table>
-    <thead>
-        <tr><th>Modifier</th><th>Same Class</th><th>Same Package</th><th>Subclass</th><th>Everywhere</th></tr>
-    </thead>
-    <tbody>
-        <tr><td><code>public</code></td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
-        <tr><td><code>protected</code></td><td>Yes</td><td>Yes</td><td>Yes</td><td>No</td></tr>
-        <tr><td>default (no keyword)</td><td>Yes</td><td>Yes</td><td>No</td><td>No</td></tr>
-        <tr><td><code>private</code></td><td>Yes</td><td>No</td><td>No</td><td>No</td></tr>
-    </tbody>
-</table>
-
-<h2>Getters & Setters</h2>
-<p>Encapsulation means hiding internal data and exposing it through controlled access. Use <strong>private</strong> fields with <strong>public</strong> getters and setters.</p>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself &mdash; Encapsulation</span>
-    </div>
-    <textarea class="sandbox-code" data-lang="java" data-example="<?= base64_encode('public class Sandbox {
-    
     static class BankAccount {
-        private String owner;
+        private String owner;       // private = only accessible inside this class
         private double balance;
-        
+
+        // Constructor: called when creating a new object
         BankAccount(String owner, double initialBalance) {
-            this.owner = owner;
+            this.owner = owner;             // 'this' refers to the current object
             this.balance = (initialBalance > 0) ? initialBalance : 0;
         }
-        
+
+        // Getter: provides read access
         public String getOwner() {
             return owner;
         }
-        
+
         public double getBalance() {
             return balance;
         }
-        
+
+        // Method: defines behavior
         public boolean deposit(double amount) {
             if (amount <= 0) {
-                System.out.println("Invalid deposit amount.");
+                System.out.println("Invalid deposit.");
                 return false;
             }
             balance += amount;
             System.out.println("Deposited $" + amount + ". Balance: $" + balance);
             return true;
         }
-        
+
         public boolean withdraw(double amount) {
             if (amount <= 0 || amount > balance) {
                 System.out.println("Invalid withdrawal.");
@@ -185,45 +77,144 @@
             System.out.println("Withdrew $" + amount + ". Balance: $" + balance);
             return true;
         }
-        
+
         public String toString() {
-            return owner + "\'s account: $" + balance;
+            return owner + "'s account: $" + balance;
         }
     }
-    
+
     public static void main(String[] args) {
-        BankAccount account = new BankAccount("Alice", 1000);
-        System.out.println(account);
-        
-        account.deposit(500);
-        account.withdraw(200);
-        account.withdraw(2000);
-        
-        System.out.println("Final: " + account);
+        // Create objects using the constructor
+        BankAccount account1 = new BankAccount("Alice", 1000);
+        BankAccount account2 = new BankAccount("Bob", 500);
+
+        System.out.println(account1);
+        account1.deposit(500);
+        account1.withdraw(200);
+
+        System.out.println(account2);
+        account2.withdraw(100);
     }
-}'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
+}
+</code></pre>
+<strong>Output:</strong>
+<pre>Alice's account: $1000.0
+Deposited $500.0. Balance: $1500.0
+Withdrew $200.0. Balance: $1300.0
+Bob's account: $500.0
+Withdrew $100.0. Balance: $400.0</pre>
 
+<h2>Part 3: Apply New Knowledge</h2>
+
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>User accounts</strong> — Classes model users with name, email, and permissions</li>
+    <li><strong>Game entities</strong> — Player, enemy, and item classes with health, position, and actions</li>
+    <li><strong>Product catalogs</strong> — Product classes with name, price, and inventory methods</li>
+    <li><strong>Banking systems</strong> — Account classes with deposit, withdrawal, and balance tracking</li>
+</ul>
+
+<h3>Tips for Success</h3>
+<ul>
+    <li>Always make fields <code>private</code> and provide getters/setters for controlled access</li>
+    <li>Use constructors to ensure objects are created in a valid state</li>
+    <li>Use <code>this</code> to resolve naming conflicts between parameters and fields</li>
+    <li>Override <code>toString()</code> for meaningful object representations</li>
+</ul>
+
+<h3>Common Mistakes</h3>
+<ul>
+    <li>Making fields public — breaks encapsulation and allows invalid states</li>
+    <li>Forgetting the <code>new</code> keyword — <code>Car myCar;</code> creates a null reference, not an object</li>
+    <li>Confusing <code>=</code> (assignment) with <code>==</code> (comparison) for objects</li>
+    <li>Not calling the constructor — objects start with null/zero values if not initialized</li>
+</ul>
+
+<h2>Part 4: Assess Your Learning</h2>
 <div class="info-box note">
-    <div class="box-title">Think About It</div>
-    <p class="mb-0">Why make <code>balance</code> private? If it were public, anyone could set it to any value. Getters/setters let you add validation logic&mdash;like rejecting negative deposits.</p>
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You are building a library management system. Each book has a title, author, and availability status. The system needs to allow borrowing and returning books.</p>
+    <p><strong>Task:</strong> Write a Java program that models a Book class and demonstrates creating and using book objects.</p>
+    <ol>
+        <li>Create a <code>Book</code> class with private fields for title, author, and isAvailable</li>
+        <li>Create a constructor that initializes all fields</li>
+        <li>Create methods: <code>borrowBook()</code> and <code>returnBook()</code></li>
+        <li>Create a getter method for the availability status</li>
+        <li>Create two Book objects and demonstrate borrowing and returning</li>
+    </ol>
 </div>
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answers:</strong></p>
+        <pre><code class="language-java">public class LibrarySystem {
 
-<div class="lesson-nav">
-    <?php if ($prevNext['prev']): ?>
-        <a href="<?= lessonUrl($prevNext['prev']['num'], $prevNext['prev']['slug'], 'java-lessons') ?>" class="prev-link">&larr; Previous: <?= htmlspecialchars($prevNext['prev']['title']) ?></a>
-    <?php endif; ?>
-    <?php if ($prevNext['next']): ?>
-        <a href="<?= lessonUrl($prevNext['next']['num'], $prevNext['next']['slug'], 'java-lessons') ?>" class="next-link">Next: <?= htmlspecialchars($prevNext['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
-</div>
+    static class Book {
+        private String title;
+        private String author;
+        private boolean isAvailable;
 
+        Book(String title, String author) {
+            this.title = title;
+            this.author = author;
+            this.isAvailable = true;  // New books are available
+        }
+
+        public boolean isAvailable() {
+            return isAvailable;
+        }
+
+        public void borrowBook() {
+            if (isAvailable) {
+                isAvailable = false;
+                System.out.println("\"" + title + "\" has been borrowed.");
+            } else {
+                System.out.println("\"" + title + "\" is not available.");
+            }
+        }
+
+        public void returnBook() {
+            isAvailable = true;
+            System.out.println("\"" + title + "\" has been returned.");
+        }
+
+        public String toString() {
+            return title + " by " + author + " [" + (isAvailable ? "Available" : "Borrowed") + "]";
+        }
+    }
+
+    public static void main(String[] args) {
+        Book book1 = new Book("Java Programming", "James Gosling");
+        Book book2 = new Book("Clean Code", "Robert Martin");
+
+        System.out.println(book1);
+        System.out.println(book2);
+
+        book1.borrowBook();
+        book1.borrowBook();  // Already borrowed
+
+        book2.borrowBook();
+        book2.returnBook();
+
+        System.out.println("\nFinal Status:");
+        System.out.println(book1);
+        System.out.println(book2);
+    }
+}
+</code></pre>
+        <p><strong>Output:</strong></p>
+        <pre>Java Programming by James Gosling [Available]
+Clean Code by Robert Martin [Available]
+"Java Programming" has been borrowed.
+"Java Programming" is not available.
+"Clean Code" has been borrowed.
+"Clean Code" has been returned.
+
+Final Status:
+Java Programming by James Gosling [Borrowed]
+Clean Code by Robert Martin [Available]</pre>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

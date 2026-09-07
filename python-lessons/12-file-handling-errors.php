@@ -1,161 +1,166 @@
 <?php $pageTitle = 'File Handling & Error Handling'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
 <?php $num = 12; $prevNext = getPrevNextLesson($num, 'python-lessons'); ?>
 
-<div class="lesson-container">
-    <h1>Lesson 12: File Handling & Error Handling</h1>
-    
-    <div class="lesson-meta">
-        <span>Intermediate</span> | <span>Estimated time: 35 minutes</span>
-    </div>
+<div class="lesson-header">
+    <span class="lesson-number">Lesson <?= $num ?></span>
+    <h1>File Handling & Error Handling</h1>
+    <p class="lesson-desc">Read and write files safely, and handle errors gracefully with try/except.</p>
+</div>
 
-    <section class="lesson-section">
-        <h2>File Operations</h2>
-        <p>Python makes it easy to read from and write to files. Always use the <code>with</code> statement — it automatically closes files even if errors occur.</p>
-        
-        <pre><code># Writing to a file (creates or overwrites)
+<h2>Part 1: Activate Prior Knowledge</h2>
+<div class="info-box note">
+    <div class="box-title">Review Questions</div>
+    <ol>
+        <li>What is the advantage of using the <code>with</code> statement when opening files?</li>
+        <li>What is the difference between writing (<code>"w"</code>) and appending (<code>"a"</code>) to a file?</li>
+        <li>Why is it bad practice to use a bare <code>except:</code> clause without specifying an exception type?</li>
+    </ol>
+</div>
+
+<h2>Part 2: Acquire New Knowledge</h2>
+<h3>Definition</h3>
+<p>Python provides built-in functions for file I/O: <code>open()</code>, <code>read()</code>, <code>write()</code>, and <code>close()</code>. The <code>with</code> statement ensures files are automatically closed. <strong>Error handling</strong> uses <code>try/except</code> blocks to catch and respond to exceptions, preventing programs from crashing unexpectedly. <code>finally</code> runs regardless of whether an error occurred.</p>
+
+<h3>Analogy</h3>
+<p>File handling is like checking out a library book. You open it (open), read it (read), write notes in your notebook (write), and return it (close). The <code>with</code> statement is like an automatic return system — even if you get distracted, the book goes back on the shelf. Error handling is like having a backup plan: if the book is missing, you don't panic — you just check out a different one.</p>
+
+<h3>How It Works</h3>
+<p>Open files with <code>open(filename, mode)</code>. Modes include <code>"r"</code> (read), <code>"w"</code> (write/overwrite), <code>"a"</code> (append), and <code>"x"</code> (create, fail if exists). Wrap risky code in <code>try:</code> blocks and handle specific exceptions with <code>except ExceptionType:</code>. Use <code>finally</code> for cleanup code that must always run. Use <code>raise</code> to create your own exceptions.</p>
+
+<h3>Example</h3>
+<pre><code class="language-python"># Writing to a file
 with open("notes.txt", "w") as file:
-    file.write("Hello, World!\\n")
-    file.write("Second line\\n")
+    file.write("Hello, World!\n")
+    file.write("Second line\n")
 
 # Appending to a file
 with open("notes.txt", "a") as file:
-    file.write("Third line\\n")
+    file.write("Third line\n")
 
 # Reading entire file
 with open("notes.txt", "r") as file:
     content = file.read()
     print(content)
 
-# Reading line by line
-with open("notes.txt", "r") as file:
-    for line in file:
-        print(line.strip())</code></pre>
-        
-        <div class="info-box tip">
-            <strong>Think About It:</strong> Why is the <code>with</code> statement better than manually calling <code>close()</code>? What happens if an error occurs between <code>open()</code> and <code>close()</code>?
-        </div>
-    </section>
+# Safe division with error handling
+def safe_divide(a, b):
+    try:
+        return a / b
+    except ZeroDivisionError:
+        return "Error: Cannot divide by zero!"
+    except TypeError:
+        return "Error: Both arguments must be numbers!"
 
-    <section class="lesson-section">
-        <h2>File Modes</h2>
-        <table>
-            <thead>
-                <tr><th>Mode</th><th>Description</th></tr>
-            </thead>
-            <tbody>
-                <tr><td><code>"r"</code></td><td>Read (default) — file must exist</td></tr>
-                <tr><td><code>"w"</code></td><td>Write — creates new or truncates existing</td></tr>
-                <tr><td><code>"a"</code></td><td>Append — creates new or adds to end</td></tr>
-                <tr><td><code>"x"</code></td><td>Exclusive create — fails if file exists</td></tr>
-                <tr><td><code>"r+"</code></td><td>Read and write — file must exist</td></tr>
-                <tr><td><code>"rb"</code></td><td>Read binary (images, etc.)</td></tr>
-                <tr><td><code>"wb"</code></td><td>Write binary</td></tr>
-            </tbody>
-        </table>
-        
-        <div class="info-box note">
-            <strong>Binary Mode:</strong> Use <code>"rb"</code> and <code>"wb"</code> for non-text files like images, PDFs, or audio files.
-        </div>
-    </section>
+print(f"10 / 3 = {safe_divide(10, 3):.2f}")
+print(f"10 / 0 = {safe_divide(10, 0)}")
 
-    <section class="lesson-section">
-        <h2>Try/Except: Handling Errors</h2>
-        <p>Errors happen. Instead of crashing, use <code>try/except</code> to handle them gracefully:</p>
-        
-        <pre><code># Basic try/except
-try:
-    result = 10 / 0
-except ZeroDivisionError:
-    print("Cannot divide by zero!")
-
-# Catching specific exceptions
-try:
-    numbers = [1, 2, 3]
-    print(numbers[10])
-except IndexError as e:
-    print(f"Index error: {e}")
-except Exception as e:
-    print(f"Something else went wrong: {e}")
-
-# try/except/finally
-try:
-    file = open("data.txt", "r")
-    content = file.read()
-except FileNotFoundError:
-    print("File not found!")
-finally:
-    print("This always runs, even if no error occurred.")</code></pre>
-        
-        <div class="info-box tip">
-            <strong>Rule:</strong> Never use bare <code>except:</code> — it catches everything including <code>KeyboardInterrupt</code>. Always specify the exception type.
-        </div>
-    </section>
-
-    <section class="lesson-section">
-        <h2>Raising Exceptions</h2>
-        <p>You can raise your own exceptions to signal errors in your code:</p>
-        
-        <pre><code>def set_age(age):
+# Raising custom exceptions
+def validate_age(age):
     if not isinstance(age, int):
         raise TypeError("Age must be an integer")
     if age < 0 or age > 150:
         raise ValueError("Age must be between 0 and 150")
-    return age
+    return "Valid age!"
 
 try:
-    set_age(-5)
-except ValueError as e:
-    print(e)  # Age must be between 0 and 150
+    print(validate_age(25))
+    print(validate_age(-5))
+except (TypeError, ValueError) as e:
+    print(f"Validation error: {e}")
+</code></pre>
+<strong>Output:</strong>
+<pre>Hello, World!
+Second line
+Third line
+10 / 3 = 3.33
+10 / 0 = Error: Cannot divide by zero!
+Valid age!
+Validation error: Age must be between 0 and 150</pre>
 
-try:
-    set_age("thirty")
-except TypeError as e:
-    print(e)  # Age must be an integer</code></pre>
-        
-        <div class="info-box note">
-            <strong>Built-in Exceptions:</strong> Common ones include <code>ValueError</code>, <code>TypeError</code>, <code>IndexError</code>, <code>KeyError</code>, <code>FileNotFoundError</code>, and <code>AttributeError</code>.
-        </div>
-    </section>
+<h2>Part 3: Apply New Knowledge</h2>
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>Log Files:</strong> Write application logs with timestamps for debugging</li>
+    <li><strong>Data Import:</strong> Read CSV/JSON files and handle missing or corrupted data</li>
+    <li><strong>Configuration:</strong> Load settings from files with fallback defaults on errors</li>
+    <li><strong>User Input:</strong> Validate form data and provide friendly error messages</li>
+</ul>
 
-    <section class="lesson-section">
-        <h2>Common Exceptions</h2>
-        <table>
-            <thead>
-                <tr><th>Exception</th><th>Cause</th><th>Example</th></tr>
-            </thead>
-            <tbody>
-                <tr><td><code>ValueError</code></td><td>Wrong value</td><td><code>int("abc")</code></td></tr>
-                <tr><td><code>TypeError</code></td><td>Wrong type</td><td><code>"2" + 2</code></td></tr>
-                <tr><td><code>IndexError</code></td><td>Index out of range</td><td><code>[1,2][5]</code></td></tr>
-                <tr><td><code>KeyError</code></td><td>Dict key not found</td><td><code>{"a":1}["b"]</code></td></tr>
-                <tr><td><code>FileNotFoundError</code></td><td>File doesn't exist</td><td><code>open("nope.txt")</code></td></tr>
-                <tr><td><code>ZeroDivisionError</code></td><td>Division by zero</td><td><code>10/0</code></td></tr>
-                <tr><td><code>AttributeError</code></td><td>Invalid attribute</td><td><code>"hi".push("!")</code></td></tr>
-            </tbody>
-        </table>
-    </section>
+<h3>Tips for Success</h3>
+<ul>
+    <li>Always use the <code>with</code> statement for file handling — it's safer and cleaner</li>
+    <li>Catch specific exceptions, not generic <code>Exception</code> — it makes debugging easier</li>
+    <li>Use <code>finally</code> for cleanup (closing connections, releasing resources)</li>
+    <li>Log errors instead of just printing them — it helps with production debugging</li>
+</ul>
 
-    <section class="lesson-section">
-        <h2>Practice: Try/Except Exercise</h2>
-        <p>Practice handling errors with try/except blocks:</p>
-        
-        <div class="sandbox">
-            <textarea class="sandbox-code" data-lang="python" data-example="<?= base64_encode('# Safe division with error handling\ndef safe_divide(a, b):\n    try:\n        result = a / b\n    except ZeroDivisionError:\n        return \"Error: Cannot divide by zero!\"\n    except TypeError:\n        return \"Error: Both arguments must be numbers!\"\n    return result\n\nprint(f\"10 / 3 = {safe_divide(10, 3):.2f}\")\nprint(f\"10 / 0 = {safe_divide(10, 0)}\")\nprint(f\"10 / \'a\' = {safe_divide(10, \'a\')}\")\n\n# Safe dictionary access\ndef safe_get(d, key, default=\"Not Found\"):\n    try:\n        return d[key]\n    except KeyError:\n        return default\n\nperson = {\"name\": \"Alice\", \"age\": 30}\nprint(f\"\\nName: {safe_get(person, \'name\')}\")\nprint(f\"Email: {safe_get(person, \'email\', \'No email\')}\")\n\n# File reading with error handling\ndef read_file(filename):\n    try:\n        with open(filename, \'r\') as f:\n            return f.read()\n    except FileNotFoundError:\n        return f\"Error: {filename} not found\"\n    except PermissionError:\n        return f\"Error: No permission to read {filename}\"\n\nprint(f\"\\nReading: {read_file(\'test.txt\')}\")\n\n# Raise your own exceptions\ndef validate_age(age):\n    if not isinstance(age, int):\n        raise TypeError(\"Age must be an integer\")\n    if age < 0 or age > 150:\n        raise ValueError(\"Age must be 0-150\")\n    return \"Valid age!\"\n\ntry:\n    print(f\"\\n{validate_age(25)}\")\n    print(validate_age(-5))\nexcept (TypeError, ValueError) as e:\n    print(f\"Validation error: {e}\")') ?>"></textarea>
-            <button class="run-btn">Run Code</button>
-            <div class="output-area"></div>
-        </div>
-        
-        <div class="info-box tip">
-            <strong>Practice:</strong> Write a function that safely converts a string to an integer, returning a default value if conversion fails.
-        </div>
-    </section>
+<h3>Common Mistakes</h3>
+<ul>
+    <li>Opening files without <code>with</code> — files may not close if an error occurs</li>
+    <li>Using <code>"w"</code> mode when you mean <code>"a"</code> — this overwrites the file</li>
+    <li>Catching all exceptions with bare <code>except:</code> — hides bugs and catches Ctrl+C</li>
+    <li>Not handling <code>FileNotFoundError</code> when opening user-provided file paths</li>
+</ul>
 
-    <section class="lesson-section">
-        <h2>Practice Exercise</h2>
-        <p>Create a program that: (1) reads a file and counts words, handling file not found errors, (2) validates user input using try/except, and (3) writes results to a new file with proper error handling.</p>
-    </section>
-
-    <?php require_once __DIR__ . '/../includes/prev-next-nav.php'; ?>
+<h2>Part 4: Assess Your Learning</h2>
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You are building a word counter tool. The program reads a text file, counts the number of words, and writes a summary report to a new file. The program must handle the case where the input file doesn't exist and provide a friendly error message.</p>
+    <p><strong>Task:</strong> Create a word counter that reads a file, processes the content, and writes a report.</p>
+    <ol>
+        <li>Write a function that reads a file and returns its content, handling FileNotFoundError</li>
+        <li>Write a function that counts words in a string and returns a dictionary of word frequencies</li>
+        <li>Write a function that writes the report to a new file</li>
+        <li>Chain the functions together in a main program flow</li>
+    </ol>
 </div>
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answers:</strong> Students should demonstrate file handling with proper error handling and data processing.</p>
+        <pre><code>def read_file(filename):
+    """Read a file and return its content."""
+    try:
+        with open(filename, "r") as f:
+            return f.read()
+    except FileNotFoundError:
+        print(f"Error: '{filename}' not found.")
+        return None
+    except PermissionError:
+        print(f"Error: No permission to read '{filename}'.")
+        return None
 
+def count_words(text):
+    """Count word frequencies in a string."""
+    words = text.lower().split()
+    word_count = {}
+    for word in words:
+        word_count[word] = word_count.get(word, 0) + 1
+    return word_count
+
+def write_report(filename, word_count, total_words):
+    """Write a word count report to a file."""
+    with open(filename, "w") as f:
+        f.write("===== Word Count Report =====\n")
+        f.write(f"Total words: {total_words}\n\n")
+        f.write("Word Frequency:\n")
+        for word, count in sorted(word_count.items(),
+                                   key=lambda x: x[1], reverse=True):
+            f.write(f"  {word:15} : {count}\n")
+    print(f"Report written to '{filename}'")
+
+# Main program
+content = read_file("sample.txt")
+
+if content is not None:
+    word_count = count_words(content)
+    total = sum(word_count.values())
+    print(f"Found {total} words in the file.")
+    write_report("report.txt", word_count, total)
+else:
+    print("Could not generate report.")</code></pre>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

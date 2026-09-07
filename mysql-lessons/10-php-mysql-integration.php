@@ -1,21 +1,40 @@
-<?php
-$pageTitle = 'PHP & MySQL Integration';
-require_once __DIR__ . '/../includes/functions.php';
-$lessonNum = 10;
-$nav = getPrevNextLesson($lessonNum, 'mysql-lessons');
-require_once __DIR__ . '/../includes/header.php';
-?>
+<?php $pageTitle = 'PHP & MySQL Integration'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
+<?php $num = 10; $prevNext = getPrevNextLesson($num, 'mysql-lessons'); ?>
 
 <div class="lesson-header">
-    <span class="lesson-number">MySQL Lesson <?= $lessonNum ?></span>
+    <span class="lesson-number">Lesson <?= $num ?></span>
     <h1>PHP &amp; MySQL Integration</h1>
     <p class="lesson-desc">Connect PHP to MySQL and build dynamic database-driven applications.</p>
 </div>
 
-<h2>Connecting PHP to MySQL</h2>
-<p>PHP has built-in extensions to connect to MySQL. The modern way is using <strong>PDO</strong> (PHP Data Objects):</p>
+<h2>Part 1: Activate Prior Knowledge</h2>
+<div class="info-box note">
+    <div class="box-title">Review Questions</div>
+    <ol>
+        <li>What are the four basic CRUD operations in a database?</li>
+        <li>What is SQL injection, and why is it dangerous?</li>
+        <li>What is a prepared statement, and how does it protect against attacks?</li>
+    </ol>
+</div>
 
-<pre><code>&lt;?php
+<h2>Part 2: Acquire New Knowledge</h2>
+
+<h3>Definition</h3>
+<p><strong>PDO</strong> (PHP Data Objects) is PHP's modern extension for connecting to databases. It supports multiple database systems and provides <strong>prepared statements</strong> that protect against SQL injection by separating SQL logic from user data.</p>
+
+<h3>Analogy</h3>
+<p>Think of PDO as a <strong>secure translator</strong> between PHP and MySQL. Instead of handing the database a message with user input mixed in (which could be hijacked), PDO sends the SQL template first, then fills in the values separately — like filling out a form with blank fields that get populated safely.</p>
+
+<h3>How It Works</h3>
+<ol>
+    <li>Create a PDO connection with host, database, username, and password</li>
+    <li>Prepare SQL statements with placeholders (<code>:name</code> or <code>?</code>)</li>
+    <li>Execute with actual values — PDO handles safe escaping</li>
+    <li>Fetch results as arrays</li>
+</ol>
+
+<h3>Example</h3>
+<pre><code class="language-php">&lt;?php
 // Database configuration
 $host = 'localhost';
 $dbname = 'school';
@@ -33,184 +52,148 @@ try {
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         ]
     );
-    echo "Connected successfully!";
 } catch (PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
+    die("Connection failed: " . $e->getMessage());
 }
-?&gt;</code></pre>
 
-<div class="info-box note">
-    <div class="box-title">PDO vs MySQLi</div>
-    <p><strong>PDO</strong> supports multiple databases (MySQL, PostgreSQL, SQLite). <strong>MySQLi</strong> is MySQL-only. PDO is the recommended choice.</p>
-    <p class="mb-0">Both support <strong>prepared statements</strong> which protect against SQL injection.</p>
-</div>
-
-<h2>CRUD Operations with PDO</h2>
-
-<h3>CREATE &mdash; Insert Data</h3>
-<pre><code>&lt;?php
-// INSERT with prepared statement (SAFE from SQL injection)
+// CREATE - Insert with prepared statement (SAFE from SQL injection)
 $stmt = $pdo->prepare(
     "INSERT INTO students (first_name, last_name, email, age)
      VALUES (:first_name, :last_name, :email, :age)"
 );
-
 $stmt->execute([
     ':first_name' => 'Alice',
     ':last_name' => 'Smith',
     ':email' => 'alice@example.com',
     ':age' => 20
 ]);
-
 echo "New student ID: " . $pdo->lastInsertId();
-?&gt;</code></pre>
 
-<h3>READ &mdash; Query Data</h3>
-<pre><code>&lt;?php
-// Fetch all rows
+// READ - Fetch all rows
 $stmt = $pdo->query("SELECT * FROM students");
 $students = $stmt->fetchAll();
-
 foreach ($students as $student) {
     echo $student['first_name'] . ' ' . $student['last_name'];
-    echo '&lt;br&gt;';
 }
 
-// Fetch a single row
-$stmt = $pdo->prepare("SELECT * FROM students WHERE id = :id");
-$stmt->execute([':id' => 1]);
-$student = $stmt->fetch();
-
-if ($student) {
-    echo "Found: " . $student['first_name'];
-}
-?&gt;</code></pre>
-
-<h3>UPDATE &mdash; Modify Data</h3>
-<pre><code>&lt;?php
+// UPDATE - Modify data
 $stmt = $pdo->prepare(
     "UPDATE students SET email = :email WHERE id = :id"
 );
-
-$stmt->execute([
-    ':email' => 'newemail@example.com',
-    ':id' => 1
-]);
-
+$stmt->execute([':email' => 'newemail@example.com', ':id' => 1]);
 echo "Rows updated: " . $stmt->rowCount();
-?&gt;</code></pre>
 
-<h3>DELETE &mdash; Remove Data</h3>
-<pre><code>&lt;?php
+// DELETE - Remove data
 $stmt = $pdo->prepare("DELETE FROM students WHERE id = :id");
 $stmt->execute([':id' => 1]);
-
 echo "Rows deleted: " . $stmt->rowCount();
-?&gt;</code></pre>
-
-<h2>SQL Injection &mdash; The Danger</h2>
-
-<pre><code>&lt;?php
-// DANGEROUS! Never do this!
-$username = $_POST['username'];
-$query = "SELECT * FROM users WHERE username = '$username'";
-$pdo->query($query);
-
-// If user types: ' OR '1'='1
-// Query becomes: SELECT * FROM users WHERE username = '' OR '1'='1'
-// This returns ALL rows! Potential data breach.
-
-// SAFE: Use prepared statements
-$stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username");
-$stmt->execute([':username' => $_POST['username']]);
-// The user input is NEVER part of the SQL string
-?&gt;</code></pre>
-
-<div class="info-box important">
-    <div class="box-title">SQL Injection Rule</div>
-    <p class="mb-0"><strong>NEVER</strong> put user input directly in SQL strings. <strong>ALWAYS</strong> use prepared statements with parameterized queries.</p>
-</div>
-
-<h2>Practical Example: Simple Login</h2>
-
-<pre><code>&lt;?php
-session_start();
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = trim($_POST['username'] ?? '');
-    $password = $_POST['password'] ?? '';
-
-    $pdo = new PDO("mysql:host=localhost;dbname=school", "root", "password");
-
-    // Step 1: Find the user
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username");
-    $stmt->execute([':username' => $username]);
-    $user = $stmt->fetch();
-
-    // Step 2: Verify the password
-    if ($user && password_verify($password, $user['password_hash'])) {
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['username'] = $user['username'];
-        header("Location: dashboard.php");
-        exit;
-    } else {
-        $error = "Invalid username or password";
-    }
-}
 ?&gt;
+</code></pre>
+<strong>Output:</strong>
+<pre>New student ID: 1
+Alice Smith
+Bob Jones
+Rows updated: 1
+Rows deleted: 1</pre>
 
-&lt;form method="POST"&gt;
-    &lt;input type="text" name="username" placeholder="Username" required&gt;
-    &lt;input type="password" name="password" placeholder="Password" required&gt;
-    &lt;button type="submit"&gt;Login&lt;/button&gt;
-&lt;/form&gt;</code></pre>
+<h2>Part 3: Apply New Knowledge</h2>
 
-<h2>Best Practices</h2>
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>Login Systems</strong> — Authenticate users with hashed passwords</li>
+    <li><strong>Content Management</strong> — Dynamic pages that pull content from MySQL</li>
+    <li><strong>E-commerce</strong> — Product catalogs, shopping carts, and order processing</li>
+    <li><strong>APIs</strong> — Backend services that read/write data for mobile apps</li>
+</ul>
 
-<table>
-    <thead>
-        <tr><th>Do</th><th>Don't</th></tr>
-    </thead>
-    <tbody>
-        <tr><td>Use prepared statements</td><td>Concatenate user input into SQL</td></tr>
-        <tr><td>Use <code>password_hash()</code> for passwords</td><td>Store plain-text passwords</td></tr>
-        <tr><td>Close connections when done</td><td>Leave connections open</td></tr>
-        <tr><td>Handle errors gracefully</td><td>Display raw SQL errors to users</td></tr>
-        <tr><td>Validate input before processing</td><td>Trust user input</td></tr>
-    </tbody>
-</table>
+<h3>Tips for Success</h3>
+<ul>
+    <li>Always use <strong>prepared statements</strong> — never concatenate user input into SQL</li>
+    <li>Use <code>password_hash()</code> and <code>password_verify()</code> for passwords</li>
+    <li>Set <code>PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION</code> for proper error handling</li>
+    <li>Store database credentials in a separate config file, not in your main code</li>
+</ul>
 
-<h2>What You've Learned</h2>
-<div class="card">
-    <p>Congratulations! You've completed the MySQL tutorial. Here's what you now know:</p>
-    <ul>
-        <li><strong>SQL Basics</strong> &mdash; CREATE, INSERT, SELECT, UPDATE, DELETE</li>
-        <li><strong>Querying</strong> &mdash; WHERE, ORDER BY, LIMIT, LIKE, BETWEEN, IN</li>
-        <li><strong>Functions</strong> &mdash; COUNT, SUM, AVG, GROUP BY, HAVING</li>
-        <li><strong>JOINs</strong> &mdash; INNER, LEFT, RIGHT joins</li>
-        <li><strong>Performance</strong> &mdash; Indexes, EXPLAIN, optimization</li>
-        <li><strong>PHP Integration</strong> &mdash; PDO, prepared statements, CRUD</li>
-    </ul>
-    <p><strong>Next Steps:</strong> Build a complete PHP + MySQL project, learn about transactions, stored procedures, and database design patterns!</p>
-</div>
+<h3>Common Mistakes</h3>
+<ul>
+    <li>Concatenating user input into SQL strings — <strong>SQL injection vulnerability</strong></li>
+    <li>Storing plain-text passwords — always use <code>password_hash()</code></li>
+    <li>Not handling connection errors — the app crashes silently</li>
+    <li>Leaving database connections open — waste server resources</li>
+</ul>
 
-<div class="exercise">
-    <h4>Practice Exercises</h4>
+<h2>Part 4: Assess Your Learning</h2>
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You are building a student management system for a training center. The system needs to allow administrators to add, view, update, and delete student records through a web interface.</p>
+    <p><strong>Task:</strong> Write the PHP/PDO code to complete the following:</p>
     <ol>
-        <li>Create a complete PHP page that lists all students from a MySQL table</li>
-        <li>Build a registration form that stores new users with hashed passwords</li>
-        <li>Create a search page that lets users search students by name</li>
-        <li>Build a simple CRUD app: Create, Read, Update, Delete students</li>
+        <li>Establish a PDO connection to a database called <code>training_center</code></li>
+        <li>Write a prepared INSERT statement to add a new student with first_name, last_name, and email</li>
+        <li>Write a SELECT query to fetch and display all students</li>
+        <li>Write an UPDATE statement to change a student's email</li>
+        <li>Write a DELETE statement to remove a student by ID</li>
     </ol>
 </div>
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answers:</strong></p>
+        <pre><code>&lt;?php
+// 1. Establish PDO connection
+try {
+    $pdo = new PDO(
+        "mysql:host=localhost;dbname=training_center;charset=utf8mb4",
+        "root",
+        "password",
+        [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        ]
+    );
+} catch (PDOException $e) {
+    die("Connection failed: " . $e->getMessage());
+}
 
-<div class="lesson-nav">
-    <?php if ($nav['prev']): ?>
-        <a href="<?= lessonUrl($nav['prev']['num'], $nav['prev']['slug'], 'mysql-lessons') ?>">&larr; <?= htmlspecialchars($nav['prev']['title']) ?></a>
-    <?php endif; ?>
-    <?php if ($nav['next']): ?>
-        <a href="<?= lessonUrl($nav['next']['num'], $nav['next']['slug'], 'mysql-lessons') ?>"><?= htmlspecialchars($nav['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
-</div>
+// 2. INSERT a new student
+$stmt = $pdo->prepare(
+    "INSERT INTO students (first_name, last_name, email)
+     VALUES (:first_name, :last_name, :email)"
+);
+$stmt->execute([
+    ':first_name' => 'Juan',
+    ':last_name' => 'Dela Cruz',
+    ':email' => 'juan@example.com'
+]);
+echo "New student ID: " . $pdo->lastInsertId();
 
+// 3. SELECT and display all students
+$stmt = $pdo->query("SELECT * FROM students");
+$students = $stmt->fetchAll();
+foreach ($students as $student) {
+    echo $student['id'] . ' - ' .
+         $student['first_name'] . ' ' .
+         $student['last_name'] . ' (' .
+         $student['email'] . ')&lt;br&gt;';
+}
+
+// 4. UPDATE a student's email
+$stmt = $pdo->prepare(
+    "UPDATE students SET email = :email WHERE id = :id"
+);
+$stmt->execute([
+    ':email' => 'newjuan@example.com',
+    ':id' => 1
+]);
+echo "Updated " . $stmt->rowCount() . " row(s)";
+
+// 5. DELETE a student by ID
+$stmt = $pdo->prepare("DELETE FROM students WHERE id = :id");
+$stmt->execute([':id' => 1]);
+echo "Deleted " . $stmt->rowCount() . " row(s)";
+?&gt;</code></pre>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

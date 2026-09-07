@@ -1,5 +1,4 @@
 <?php $pageTitle = 'Flowcharts & Pseudocode'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
-
 <?php $num = 3; $prevNext = getPrevNextLesson($num, 'programming-logic'); ?>
 
 <div class="lesson-header">
@@ -8,253 +7,200 @@
     <p class="lesson-desc">Learn to plan your programs before writing code — save time, catch errors early, and think clearly.</p>
 </div>
 
-<h2>Why Plan Before Coding?</h2>
-<p>Imagine building a house without blueprints. You'd make mistakes, waste materials, and end up with something that doesn't work. The same happens when you code without planning.</p>
-<p><strong>Flowcharts</strong> and <strong>pseudocode</strong> are your blueprints. They help you:</p>
-<ul>
-    <li>Think through the logic before writing syntax</li>
-    <li>Spot errors early when they're easy to fix</li>
-    <li>Communicate your plan to others</li>
-    <li>Save time by reducing trial and error</li>
-</ul>
-
-<div class="info-box tip">
-    <div class="box-title">Pro Tip</div>
-    <p class="mb-0">Professional developers spend more time planning than beginners expect. A 30-minute plan can save hours of debugging.</p>
-</div>
-
-<h2>Flowcharts</h2>
-<p>A flowchart is a visual diagram that shows the flow of a program using shapes and arrows. It makes logic visible and easy to follow.</p>
-
-<h3>Common Flowchart Symbols</h3>
-<table>
-    <thead>
-        <tr><th>Shape</th><th>Meaning</th><th>Example</th></tr>
-    </thead>
-    <tbody>
-        <tr><td>Oval / Rounded Rectangle</td><td>Start or End</td><td>"Start", "End"</td></tr>
-        <tr><td>Rectangle</td><td>Process / Action</td><td>"Add 1 to counter"</td></tr>
-        <tr><td>Diamond</td><td>Decision (Yes/No)</td><td>"Is age >= 18?"</td></tr>
-        <tr><td>Parallelogram</td><td>Input / Output</td><td>"Read name", "Print result"</td></tr>
-        <tr><td>Arrow</td><td>Flow direction</td><td>Connects shapes in order</td></tr>
-    </tbody>
-</table>
-
-<h3>Flowchart Example: Grade Calculator</h3>
-<p>Let's plan a program that determines a letter grade from a numeric score:</p>
-
+<h2>Part 1: Activate Prior Knowledge</h2>
+<p>Connect to what students already know:</p>
 <div class="info-box note">
-    <div class="box-title">Flowchart Steps</div>
-    <p><strong>1.</strong> Start (Oval)<br>
-    <strong>2.</strong> Input: Read score (Parallelogram)<br>
-    <strong>3.</strong> Decision: Is score >= 90? (Diamond)<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;Yes → Grade = "A"<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;No → Decision: Is score >= 80?<br>
-    <strong>4.</strong> ...continue checking ranges...<br>
-    <strong>5.</strong> Output: Print grade (Parallelogram)<br>
-    <strong>6.</strong> End (Oval)</p>
+    <div class="box-title">Review Questions</div>
+    <ol>
+        <li>Have you ever drawn a map or floor plan before? How did the visual help you understand the layout?</li>
+        <li>When you follow directions to a new place, do you prefer written instructions or a visual map? Why?</li>
+        <li>Think about the steps to get from your house to school. Can you list them in order without forgetting anything?</li>
+    </ol>
 </div>
 
-<h2>Pseudocode</h2>
-<p>Pseudocode is English-like code that describes what a program does without using actual programming syntax. It's readable by humans and translates easily into real code.</p>
+<h2>Part 2: Acquire New Knowledge</h2>
 
-<h3>Pseudocode Example: Greeting</h3>
-<div class="syntax-ref">
-    <h4>Pseudocode</h4>
-    <code>START</code><br>
-    <code>&nbsp;&nbsp;READ name</code><br>
-    <code>&nbsp;&nbsp;IF name is not empty THEN</code><br>
-    <code>&nbsp;&nbsp;&nbsp;&nbsp;PRINT "Hello, " + name</code><br>
-    <code>&nbsp;&nbsp;ELSE</code><br>
-    <code>&nbsp;&nbsp;&nbsp;&nbsp;PRINT "Hello, Guest"</code><br>
-    <code>&nbsp;&nbsp;END IF</code><br>
-    <code>END</code>
-</div>
+<h3>Definition</h3>
+<p><strong>Flowcharts</strong> are visual diagrams that show the flow of a program using shapes and arrows. <strong>Pseudocode</strong> is English-like code that describes what a program does without using actual programming syntax. Both are planning tools that help you think through logic before coding.</p>
 
-<h3>Same Logic in PHP</h3>
-<div class="syntax-ref">
-    <h4>PHP Code</h4>
-    <code>&lt;?php</code><br>
-    <code>&nbsp;&nbsp;$name = "Alice";</code><br>
-    <code>&nbsp;&nbsp;if (!empty($name)) {</code><br>
-    <code>&nbsp;&nbsp;&nbsp;&nbsp;echo "Hello, $name";</code><br>
-    <code>&nbsp;&nbsp;} else {</code><br>
-    <code>&nbsp;&nbsp;&nbsp;&nbsp;echo "Hello, Guest";</code><br>
-    <code>&nbsp;&nbsp;}</code><br>
-    <code>?&gt;</code>
-</div>
+<h3>Analogy</h3>
+<p>A flowchart is like a map for your code — it shows you the route your program will take, including decision points (turn left or right?). Pseudocode is like writing directions in plain English before translating them into a formal programming language. Together, they're your blueprints before building the house.</p>
 
-<div class="info-box note">
-    <div class="box-title">Notice</div>
-    <p class="mb-0">The pseudocode and the PHP code have the same structure. Pseudocode is just the logic without the syntax rules. Once you can write pseudocode, converting to PHP is straightforward.</p>
-</div>
+<h3>How It Works (Step by Step)</h3>
+<p>Using flowcharts and pseudocode follows these steps:</p>
+<ol>
+    <li><strong>Understand the problem:</strong> Know what the program needs to do.</li>
+    <li><strong>Draw the flowchart:</strong> Use shapes to represent each step — ovals for start/end, rectangles for actions, diamonds for decisions, parallelograms for input/output.</li>
+    <li><strong>Write pseudocode:</strong> Translate the flowchart into English-like steps.</li>
+    <li><strong>Review and refine:</strong> Check for missing steps or logic errors.</li>
+    <li><strong>Convert to code:</strong> Translate the pseudocode into actual PHP, Python, or Java.</li>
+</ol>
 
-<h2>From Problem to Plan</h2>
-<p>Let's walk through converting a real problem into both pseudocode and a flowchart:</p>
-
-<h3>Problem: "Is this number even or odd?"</h3>
-
-<h4>Pseudocode:</h4>
-<div class="syntax-ref">
-    <code>START</code><br>
-    <code>&nbsp;&nbsp;READ number</code><br>
-    <code>&nbsp;&nbsp;IF number MODULO 2 equals 0 THEN</code><br>
-    <code>&nbsp;&nbsp;&nbsp;&nbsp;PRINT "Even"</code><br>
-    <code>&nbsp;&nbsp;ELSE</code><br>
-    <code>&nbsp;&nbsp;&nbsp;&nbsp;PRINT "Odd"</code><br>
-    <code>&nbsp;&nbsp;END IF</code><br>
-    <code>END</code>
-</div>
-
-<h4>PHP Translation:</h4>
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea class="sandbox-code" data-example="<?= base64_encode('<?php
-$number = 7;
-
-if ($number % 2 == 0) {
-    echo "$number is Even";
-} else {
-    echo "$number is Odd";
-}
-echo "\n";
-
-// Try different numbers
-foreach ([10, 15, 22, 33, 40] as $num) {
-    $result = ($num % 2 == 0) ? "Even" : "Odd";
-    echo "$num is $result\n";
-}
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<h2>Practice Converting</h2>
-<p>Try converting this problem to pseudocode, then to PHP:</p>
-
-<div class="exercise">
-    <h4>Problem</h4>
-    <p>Write a program that takes a person's age and tells them if they can vote (18 or older) or not.</p>
-</div>
-
-<p><strong>Pseudocode:</strong></p>
-<div class="syntax-ref">
-    <code>START</code><br>
-    <code>&nbsp;&nbsp;READ age</code><br>
-    <code>&nbsp;&nbsp;IF age >= 18 THEN</code><br>
-    <code>&nbsp;&nbsp;&nbsp;&nbsp;PRINT "You can vote!"</code><br>
-    <code>&nbsp;&nbsp;ELSE</code><br>
-    <code>&nbsp;&nbsp;&nbsp;&nbsp;PRINT "You cannot vote yet."</code><br>
-    <code>&nbsp;&nbsp;END IF</code><br>
-    <code>END</code>
-</div>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea class="sandbox-code" data-example="<?= base64_encode('<?php
-// Voting age check - translated from pseudocode
-$age = 20;
-
-if ($age >= 18) {
-    echo "You can vote!";
-} else {
-    echo "You cannot vote yet.";
-}
-echo "\n\n";
-
-// Test with multiple ages
-$ages = [15, 17, 18, 21, 65];
-foreach ($ages as $a) {
-    $status = ($a >= 18) ? "Can vote" : "Cannot vote";
-    echo "Age $a: $status\n";
-}
-'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
-
-<h2>More Complex Example</h2>
-<p>Here's a slightly more complex problem — a simple calculator:</p>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea class="sandbox-code" data-example="<?= base64_encode('<?php
-// Simple calculator from pseudocode
+<h3>Example</h3>
+<pre><code class="language-php">// PHP Example: Grade Calculator based on pseudocode
 // Pseudocode:
-//   READ num1, operator, num2
-//   IF operator is "+" THEN result = num1 + num2
-//   ELSE IF operator is "-" THEN result = num1 - num2
-//   ELSE IF operator is "*" THEN result = num1 * num2
-//   ELSE IF operator is "/" THEN result = num1 / num2
-//   PRINT result
+//   START
+//   READ score
+//   IF score >= 90 THEN grade = "A"
+//   ELSE IF score >= 80 THEN grade = "B"
+//   ELSE IF score >= 70 THEN grade = "C"
+//   ELSE IF score >= 60 THEN grade = "D"
+//   ELSE grade = "F"
+//   PRINT grade
+//   END
 
-$num1 = 10;
-$operator = "+";
-$num2 = 5;
+$score = 85;
 
-switch ($operator) {
-    case "+":
-        $result = $num1 + $num2;
-        break;
-    case "-":
-        $result = $num1 - $num2;
-        break;
-    case "*":
-        $result = $num1 * $num2;
-        break;
-    case "/":
-        $result = ($num2 != 0) ? $num1 / $num2 : "Error: division by zero";
-        break;
-    default:
-        $result = "Unknown operator";
+if ($score >= 90) {
+    $grade = "A";
+} elseif ($score >= 80) {
+    $grade = "B";
+} elseif ($score >= 70) {
+    $grade = "C";
+} elseif ($score >= 60) {
+    $grade = "D";
+} else {
+    $grade = "F";
 }
 
-echo "$num1 $operator $num2 = $result\n";
-'); ?></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
+echo "Score: $score\n";
+echo "Grade: $grade\n";
+</code></pre>
+<strong>Output:</strong>
+<pre>Score: 85
+Grade: B</pre>
 
-<h2>Summary</h2>
+<h3>Python Example</h3>
+<pre><code class="language-python"># Python Example: Grade Calculator based on pseudocode
+
+score = 85
+
+if score >= 90:
+    grade = "A"
+elif score >= 80:
+    grade = "B"
+elif score >= 70:
+    grade = "C"
+elif score >= 60:
+    grade = "D"
+else:
+    grade = "F"
+
+print(f"Score: {score}")
+print(f"Grade: {grade}")
+</code></pre>
+<strong>Output:</strong>
+<pre>Score: 85
+Grade: B</pre>
+
+<h3>Java Example</h3>
+<pre><code class="language-java">// Java Example: Grade Calculator based on pseudocode
+public class Main {
+    public static void main(String[] args) {
+        int score = 85;
+        char grade;
+
+        if (score >= 90) {
+            grade = 'A';
+        } else if (score >= 80) {
+            grade = 'B';
+        } else if (score >= 70) {
+            grade = 'C';
+        } else if (score >= 60) {
+            grade = 'D';
+        } else {
+            grade = 'F';
+        }
+
+        System.out.println("Score: " + score);
+        System.out.println("Grade: " + grade);
+    }
+}
+</code></pre>
+<strong>Output:</strong>
+<pre>Score: 85
+Grade: B</pre>
+
+<h2>Part 3: Apply New Knowledge</h2>
+
+<h3>Real-World Applications</h3>
 <ul>
-    <li><strong>Flowcharts</strong> are visual diagrams using shapes to represent logic flow</li>
-    <li><strong>Pseudocode</strong> is English-like descriptions of program logic</li>
-    <li>Both help you plan before coding, reducing errors and saving time</li>
-    <li>Common flowchart symbols: Oval (start/end), Rectangle (process), Diamond (decision), Parallelogram (input/output)</li>
-    <li>Pseudocode translates directly into real code with minimal changes</li>
+    <li><strong>Documenting processes:</strong> Companies use flowcharts to document how things work, from customer onboarding to manufacturing.</li>
+    <li><strong>Team communication:</strong> Pseudocode helps non-programmers understand what a program will do before it's built.</li>
+    <li><strong>Debugging:</strong> Drawing a flowchart of your logic helps you spot errors before they become bugs.</li>
+    <li><strong>Interviews:</strong> Tech companies often ask candidates to write pseudocode during interviews to test their thinking process.</li>
 </ul>
 
-<div class="lesson-nav">
-    <?php if ($prevNext['prev']): ?>
-        <a href="<?= lessonUrl($prevNext['prev']['num'], $prevNext['prev']['slug'], 'programming-logic') ?>" class="prev-link">&larr; Previous: <?= htmlspecialchars($prevNext['prev']['title']) ?></a>
-    <?php endif; ?>
-    <?php if ($prevNext['next']): ?>
-        <a href="<?= lessonUrl($prevNext['next']['num'], $prevNext['next']['slug'], 'programming-logic') ?>" class="next-link">Next: <?= htmlspecialchars($prevNext['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
+<h3>Tips for Success</h3>
+<ul>
+    <li>Start with pseudocode — it's faster to write and easier to change than a flowchart.</li>
+    <li>Use standard flowchart symbols so others can understand your diagrams.</li>
+    <li>Always include a start and end point in your flowcharts.</li>
+</ul>
+
+<h3>Common Mistakes to Avoid</h3>
+<ul>
+    <li><strong>Skipping the planning phase:</strong> Jumping straight to code leads to more bugs and wasted time.</li>
+    <li><strong>Making flowcharts too detailed:</strong> Keep them high-level — the details go in the code.</li>
+    <li><strong>Using programming syntax in pseudocode:</strong> Pseudocode should be readable by anyone, not just programmers.</li>
+</ul>
+
+<h2>Part 4: Assess Your Learning</h2>
+
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> Your school wants a simple program that determines a student's letter grade based on their numeric score. The grading scale is: 90-100 = A, 80-89 = B, 70-79 = C, 60-69 = D, below 60 = F.</p>
+    <p><strong>Task:</strong> Create both a flowchart (describe it in words) and pseudocode for this grading system.</p>
+    <ol>
+        <li>Draw a flowchart using the standard symbols (describe each shape and what it contains).</li>
+        <li>Write the pseudocode for the same logic.</li>
+        <li>Test your logic with three different scores: 95, 72, and 58. What grade does each receive?</li>
+    </ol>
 </div>
 
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answer 1 (Flowchart):</strong></p>
+        <pre><code>OVAL: Start
+  ↓
+PARALLELOGRAM: Input score
+  ↓
+DIAMOND: Is score >= 90?
+  → YES: RECTANGLE: grade = "A" → go to Output
+  → NO: ↓
+DIAMOND: Is score >= 80?
+  → YES: RECTANGLE: grade = "B" → go to Output
+  → NO: ↓
+DIAMOND: Is score >= 70?
+  → YES: RECTANGLE: grade = "C" → go to Output
+  → NO: ↓
+DIAMOND: Is score >= 60?
+  → YES: RECTANGLE: grade = "D" → go to Output
+  → NO: RECTANGLE: grade = "F" → go to Output
+  ↓
+PARALLELOGRAM: Output grade
+  ↓
+OVAL: End</code></pre>
+        <p><strong>Answer 2 (Pseudocode):</strong></p>
+        <pre><code>START
+  READ score
+  IF score >= 90 THEN
+    grade = "A"
+  ELSE IF score >= 80 THEN
+    grade = "B"
+  ELSE IF score >= 70 THEN
+    grade = "C"
+  ELSE IF score >= 60 THEN
+    grade = "D"
+  ELSE
+    grade = "F"
+  END IF
+  PRINT grade
+END</code></pre>
+        <p><strong>Answer 3 (Testing):</strong> Score 95 → A (95 >= 90). Score 72 → C (72 >= 70 but less than 80). Score 58 → F (58 is below 60).</p>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

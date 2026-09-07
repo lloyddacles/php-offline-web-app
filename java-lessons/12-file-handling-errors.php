@@ -3,95 +3,62 @@
 
 <div class="lesson-header">
     <span class="lesson-number">Lesson <?= $num ?></span>
-    <h1>File Handling & Exception Handling</h1>
+    <h1>File Handling &amp; Exception Handling</h1>
     <p class="lesson-desc">Learn to work with files using the <code>File</code> class and readers/writers, and master exception handling with <code>try-catch-finally</code>.</p>
 </div>
 
-<h2>The File Class</h2>
-<p>Java's <code>File</code> class represents file and directory paths. It can check existence, create files, and list directory contents.</p>
-
-<table>
-    <thead>
-        <tr><th>Method</th><th>Returns</th><th>Description</th></tr>
-    </thead>
-    <tbody>
-        <tr><td><code>exists()</code></td><td><code>boolean</code></td><td>File or directory exists</td></tr>
-        <tr><td><code>isFile()</code></td><td><code>boolean</code></td><td>Is it a regular file?</td></tr>
-        <tr><td><code>isDirectory()</code></td><td><code>boolean</code></td><td>Is it a directory?</td></tr>
-        <tr><td><code>getName()</code></td><td><code>String</code></td><td>File name without path</td></tr>
-        <tr><td><code>length()</code></td><td><code>long</code></td><td>File size in bytes</td></tr>
-        <tr><td><code>delete()</code></td><td><code>boolean</code></td><td>Deletes the file</td></tr>
-        <tr><td><code>mkdir()</code></td><td><code>boolean</code></td><td>Creates directory</td></tr>
-    </tbody>
-</table>
-
+<h2>Part 1: Activate Prior Knowledge</h2>
 <div class="info-box note">
-    <div class="box-title">File I/O Requires Exception Handling</div>
-    <p class="mb-0">File operations can fail (file not found, permission denied, disk full). Java forces you to handle these with <strong>try-catch</strong> blocks.</p>
+    <div class="box-title">Review Questions</div>
+    <ol>
+        <li>What happens when a program tries to read a file that doesn't exist? How should the program handle this?</li>
+        <li>What is the difference between a compile-time error and a runtime error?</li>
+        <li>Can you think of a real-life situation where something might fail unexpectedly (like a power outage)? How would you prepare for it?</li>
+    </ol>
 </div>
 
-<h2>Writing to Files</h2>
-<p>Use <code>FileWriter</code> or <code>BufferedWriter</code> to write text to files. Always close your writers or use try-with-resources.</p>
+<h2>Part 2: Acquire New Knowledge</h2>
 
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself &mdash; File Writing</span>
-    </div>
-    <textarea class="sandbox-code" data-lang="java" data-example="<?= base64_encode('import java.io.FileWriter;
-import java.io.BufferedWriter;
-import java.io.IOException;
+<h3>Definition</h3>
+<p><strong>File handling</strong> allows your program to read from and write to files on disk. Java uses the <code>File</code> class for file operations and <code>BufferedReader</code>/<code>BufferedWriter</code> for efficient reading and writing. <strong>Exception handling</strong> uses <code>try-catch-finally</code> blocks to gracefully handle errors without crashing the program.</p>
 
-public class Sandbox {
+<h3>Analogy</h3>
+<p>Think of file handling like working with a filing cabinet. You need to open the drawer (File), read the document (BufferedReader), or write a new one (BufferedWriter). Sometimes the drawer is stuck or the file is missing — that's when exception handling kicks in, like having a backup plan when things go wrong.</p>
+
+<h3>How It Works</h3>
+<ul>
+    <li><strong>File class</strong> — Checks existence, gets info, creates/deletes files</li>
+    <li><strong>BufferedWriter</strong> — Writes text to files efficiently</li>
+    <li><strong>BufferedReader</strong> — Reads text from files line by line</li>
+    <li><strong>try-catch</strong> — Catches and handles exceptions</li>
+    <li><strong>finally</strong> — Runs cleanup code regardless of whether an exception occurred</li>
+    <li><strong>try-with-resources</strong> — Automatically closes resources when done</li>
+</ul>
+
+<h3>Example</h3>
+<pre><code class="language-java">import java.io.*;
+
+public class FileHandlingDemo {
     public static void main(String[] args) {
-        String filename = "sandbox_test.txt";
-        
+        String filename = "demo.txt";
+
+        // Writing to a file using try-with-resources
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
             writer.write("Line 1: Hello from Java!");
             writer.newLine();
             writer.write("Line 2: File handling is useful.");
             writer.newLine();
-            writer.write("Line 3: " + System.currentTimeMillis());
+            writer.write("Line 3: Writing data to disk.");
             System.out.println("Successfully wrote to " + filename);
         } catch (IOException e) {
-            System.out.println("Error writing file: " + e.getMessage());
+            System.out.println("Error writing: " + e.getMessage());
         }
-        
-        java.io.File file = new java.io.File(filename);
+
+        // Reading from a file
+        File file = new File(filename);
         System.out.println("File exists: " + file.exists());
         System.out.println("File size: " + file.length() + " bytes");
-    }
-}'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
 
-<h2>Reading from Files</h2>
-<p>Use <code>BufferedReader</code> to read files line by line. It's efficient and easy to use.</p>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself &mdash; File Reading</span>
-    </div>
-    <textarea class="sandbox-code" data-lang="java" data-example="<?= base64_encode('import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-
-public class Sandbox {
-    public static void main(String[] args) {
-        String filename = "sandbox_test.txt";
-        
-        java.io.File file = new java.io.File(filename);
-        if (!file.exists()) {
-            System.out.println("File not found. Run the writing example first.");
-            return;
-        }
-        
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
             int lineNum = 1;
@@ -100,195 +67,132 @@ public class Sandbox {
                 lineNum++;
             }
         } catch (IOException e) {
-            System.out.println("Error reading file: " + e.getMessage());
+            System.out.println("Error reading: " + e.getMessage());
         }
-    }
-}'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
 
-<h2>try-catch-finally</h2>
-<p>Exception handling protects your program from crashing. The <code>try-catch-finally</code> structure handles errors gracefully.</p>
-
-<table>
-    <thead>
-        <tr><th>Block</th><th>Purpose</th><th>Required?</th></tr>
-    </thead>
-    <tbody>
-        <tr><td><code>try</code></td><td>Code that might throw an exception</td><td>Yes</td></tr>
-        <tr><td><code>catch</code></td><td>Handle the exception</td><td>At least one catch or finally</td></tr>
-        <tr><td><code>finally</code></td><td>Cleanup code (always runs)</td><td>Optional</td></tr>
-    </tbody>
-</table>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself &mdash; Exception Handling</span>
-    </div>
-    <textarea class="sandbox-code" data-lang="java" data-example="<?= base64_encode('public class Sandbox {
-    
-    static int divide(int a, int b) {
-        if (b == 0) {
-            throw new ArithmeticException("Cannot divide by zero");
-        }
-        return a / b;
-    }
-    
-    static int getElement(int[] arr, int index) {
-        if (index < 0 || index >= arr.length) {
-            throw new ArrayIndexOutOfBoundsException("Index " + index + " out of bounds");
-        }
-        return arr[index];
-    }
-    
-    public static void main(String[] args) {
-        System.out.println("--- Division ---");
+        // Exception handling demo
+        System.out.println("\n--- Exception Handling ---");
         try {
-            int result = divide(10, 3);
-            System.out.println("10 / 3 = " + result);
+            int result = 10 / 0;  // ArithmeticException
         } catch (ArithmeticException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-        
-        try {
-            int result = divide(10, 0);
-            System.out.println("10 / 0 = " + result);
-        } catch (ArithmeticException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-        
-        System.out.println("\\n--- Array Access ---");
-        int[] numbers = {10, 20, 30};
-        
-        try {
-            System.out.println("Element at 1: " + getElement(numbers, 1));
-            System.out.println("Element at 5: " + getElement(numbers, 5));
-        } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-        
-        System.out.println("\\n--- Finally Block ---");
-        try {
-            System.out.println("Trying risky operation...");
-            int x = Integer.parseInt("abc");
-            System.out.println("Parsed: " + x);
-        } catch (NumberFormatException e) {
             System.out.println("Caught: " + e.getMessage());
         } finally {
             System.out.println("Finally block always runs!");
         }
     }
-}'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
+}
+</code></pre>
+<strong>Output:</strong>
+<pre>Successfully wrote to demo.txt
+File exists: true
+File size: 105 bytes
+1: Line 1: Hello from Java!
+2: Line 2: File handling is useful.
+3: Line 3: Writing data to disk.
 
-<h2>Common Exceptions</h2>
+--- Exception Handling ---
+Caught: / by zero
+Finally block always runs!</pre>
 
-<table>
-    <thead>
-        <tr><th>Exception</th><th>Cause</th><th>Example</th></tr>
-    </thead>
-    <tbody>
-        <tr><td><code>NullPointerException</code></td><td>Using null reference</td><td><code>String s = null; s.length();</code></td></tr>
-        <tr><td><code>ArrayIndexOutOfBoundsException</code></td><td>Invalid array index</td><td><code>int[] a = {1}; a[5];</code></td></tr>
-        <tr><td><code>NumberFormatException</code></td><td>Invalid string-to-number</td><td><code>Integer.parseInt("abc");</code></td></tr>
-        <tr><td><code>FileNotFoundException</code></td><td>File doesn't exist</td><td><code>new FileReader("missing.txt");</code></td></tr>
-        <tr><td><code>ArithmeticException</code></td><td>Math error</td><td><code>5 / 0;</code></td></tr>
-    </tbody>
-</table>
+<h2>Part 3: Apply New Knowledge</h2>
 
-<div class="info-box tip">
-    <div class="box-title">Try-With-Resources</div>
-    <p class="mb-0">Always use <code>try (resource) { }</code> syntax for files, connections, and streams. It automatically closes resources even if an exception occurs.</p>
-</div>
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>Log files</strong> — Write application logs for debugging and monitoring</li>
+    <li><strong>Data import/export</strong> — Read CSV files or write reports to disk</li>
+    <li><strong>Configuration files</strong> — Read settings from a properties file</li>
+    <li><strong>Error handling</strong> — Catch and log errors without crashing the application</li>
+</ul>
 
-<h2>Custom Exceptions</h2>
-<p>Create your own exceptions by extending <code>Exception</code>. This lets you throw meaningful, domain-specific errors.</p>
+<h3>Tips for Success</h3>
+<ul>
+    <li>Always use <strong>try-with-resources</strong> (<code>try (resource) { }</code>) to auto-close files</li>
+    <li>Catch specific exceptions — <code>FileNotFoundException</code> before <code>IOException</code></li>
+    <li>Use <code>finally</code> for cleanup that must always run (like closing connections)</li>
+    <li>Log exceptions with <code>e.getMessage()</code> and <code>e.printStackTrace()</code> for debugging</li>
+</ul>
 
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself &mdash; Custom Exceptions</span>
-    </div>
-    <textarea class="sandbox-code" data-lang="java" data-example="<?= base64_encode('public class Sandbox {
-    
-    static class InsufficientFundsException extends Exception {
-        private double deficit;
-        
-        InsufficientFundsException(double deficit) {
-            super("Insufficient funds. Deficit: $" + String.format("%.2f", deficit));
-            this.deficit = deficit;
-        }
-        
-        double getDeficit() { return deficit; }
-    }
-    
-    static class Wallet {
-        private double balance;
-        
-        Wallet(double balance) { this.balance = balance; }
-        
-        void withdraw(double amount) throws InsufficientFundsException {
-            if (amount > balance) {
-                throw new InsufficientFundsException(amount - balance);
-            }
-            balance -= amount;
-            System.out.println("Withdrew $" + amount + ". Remaining: $" + balance);
-        }
-        
-        double getBalance() { return balance; }
-    }
-    
-    public static void main(String[] args) {
-        Wallet wallet = new Wallet(100);
-        
-        try {
-            wallet.withdraw(30);
-            wallet.withdraw(50);
-            wallet.withdraw(30);
-        } catch (InsufficientFundsException e) {
-            System.out.println("Error: " + e.getMessage());
-            System.out.println("You need $" + String.format("%.2f", e.getDeficit()) + " more.");
-        }
-        
-        System.out.println("Final balance: $" + wallet.getBalance());
-    }
-}'); ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
+<h3>Common Mistakes</h3>
+<ul>
+    <li>Not closing files — causes resource leaks and memory problems</li>
+    <li>Catching <code>Exception</code> instead of specific types — hides bugs</li>
+    <li>Ignoring exceptions with empty catch blocks — errors go unnoticed</li>
+    <li>Forgetting that <code>finally</code> runs even after <code>return</code> — can cause unexpected behavior</li>
+</ul>
 
+<h2>Part 4: Assess Your Learning</h2>
 <div class="info-box note">
-    <div class="box-title">Think About It</div>
-    <p class="mb-0">When should you create a custom exception vs using a built-in one? Use custom exceptions when you need to carry additional information (like <code>deficit</code>) or when the error represents a specific business rule violation.</p>
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You are building a simple note-taking application. The program needs to save notes to a file, read them back, and handle errors gracefully if the file is missing or corrupted.</p>
+    <p><strong>Task:</strong> Write a Java program that saves and reads notes with proper exception handling.</p>
+    <ol>
+        <li>Create a class called <code>NoteApp</code></li>
+        <li>Write 3 notes to a file using <code>BufferedWriter</code></li>
+        <li>Read and display all notes using <code>BufferedReader</code></li>
+        <li>Handle the case where the file doesn't exist</li>
+        <li>Use <code>finally</code> to display a message when operations complete</li>
+    </ol>
 </div>
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answers:</strong></p>
+        <pre><code class="language-java">import java.io.*;
 
-<div class="lesson-nav">
-    <?php if ($prevNext['prev']): ?>
-        <a href="<?= lessonUrl($prevNext['prev']['num'], $prevNext['prev']['slug'], 'java-lessons') ?>" class="prev-link">&larr; Previous: <?= htmlspecialchars($prevNext['prev']['title']) ?></a>
-    <?php endif; ?>
-    <?php if ($prevNext['next']): ?>
-        <a href="<?= lessonUrl($prevNext['next']['num'], $prevNext['next']['slug'], 'java-lessons') ?>" class="next-link">Next: <?= htmlspecialchars($prevNext['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
-</div>
+public class NoteApp {
+    public static void main(String[] args) {
+        String filename = "notes.txt";
 
+        // Write notes to file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+            writer.write("Note 1: Learn Java basics");
+            writer.newLine();
+            writer.write("Note 2: Practice exception handling");
+            writer.newLine();
+            writer.write("Note 3: Master file I/O operations");
+            writer.newLine();
+            System.out.println("Notes saved successfully!");
+        } catch (IOException e) {
+            System.out.println("Error saving notes: " + e.getMessage());
+        }
+
+        // Read notes from file
+        System.out.println("\n--- Your Notes ---");
+        File file = new File(filename);
+
+        if (!file.exists()) {
+            System.out.println("No notes file found. Create some notes first!");
+            return;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            int lineNum = 1;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(lineNum + ". " + line);
+                lineNum++;
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("Error reading notes: " + e.getMessage());
+        } finally {
+            System.out.println("\n--- Session Complete ---");
+        }
+    }
+}
+</code></pre>
+        <p><strong>Output:</strong></p>
+        <pre>Notes saved successfully!
+
+--- Your Notes ---
+1. Note 1: Learn Java basics
+2. Note 2: Practice exception handling
+3. Note 3: Master file I/O operations
+
+--- Session Complete ---</pre>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

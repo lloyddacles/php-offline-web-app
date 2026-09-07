@@ -4,194 +4,153 @@
 <div class="lesson-header">
     <span class="lesson-number">Lesson <?= $num ?></span>
     <h1>Java Operators</h1>
-    <p class="lesson-desc">Explore the full range of Java operators: arithmetic, comparison, logical, bitwise, and the ternary operator.</p>
+    <p class="lesson-desc">Explore the full range of Java operators: arithmetic, comparison, logical, and the ternary operator.</p>
 </div>
 
-<h2>Arithmetic Operators</h2>
-<p>These operators perform mathematical calculations on numeric values.</p>
-
-<table>
-    <thead>
-        <tr><th>Operator</th><th>Name</th><th>Example</th><th>Result</th></tr>
-    </thead>
-    <tbody>
-        <tr><td><code>+</code></td><td>Addition</td><td><code>7 + 3</code></td><td>10</td></tr>
-        <tr><td><code>-</code></td><td>Subtraction</td><td><code>7 - 3</code></td><td>4</td></tr>
-        <tr><td><code>*</code></td><td>Multiplication</td><td><code>7 * 3</code></td><td>21</td></tr>
-        <tr><td><code>/</code></td><td>Division</td><td><code>7 / 2</code></td><td>3 (integer division)</td></tr>
-        <tr><td><code>%</code></td><td>Modulus (remainder)</td><td><code>7 % 2</code></td><td>1</td></tr>
-        <tr><td><code>++</code></td><td>Increment</td><td><code>i++</code></td><td>Adds 1 to i</td></tr>
-        <tr><td><code>--</code></td><td>Decrement</td><td><code>i--</code></td><td>Subtracts 1 from i</td></tr>
-    </tbody>
-</table>
-
+<h2>Part 1: Activate Prior Knowledge</h2>
 <div class="info-box note">
-    <div class="box-title">Integer Division Warning</div>
-    <p class="mb-0">When both operands are integers, Java performs <strong>integer division</strong>. <code>7 / 2</code> gives <code>3</code>, not <code>3.5</code>. To get decimal results, use <code>7.0 / 2</code> or cast: <code>(double) 7 / 2</code>.</p>
+    <div class="box-title">Review Questions</div>
+    <ol>
+        <li>In math, what does the <code>+</code>, <code>-</code>, <code>*</code>, and <code>/</code> operator do? How might they behave differently in programming?</li>
+        <li>What does it mean to compare two values? What result do you expect from <code>5 > 3</code>?</li>
+        <li>Can you think of a situation where you need to check if two conditions are both true at the same time?</li>
+    </ol>
 </div>
 
-<h2>Comparison Operators</h2>
-<p>These operators compare two values and return a <code>boolean</code> result.</p>
+<h2>Part 2: Acquire New Knowledge</h2>
 
-<table>
-    <thead>
-        <tr><th>Operator</th><th>Meaning</th><th>Example</th><th>Result</th></tr>
-    </thead>
-    <tbody>
-        <tr><td><code>==</code></td><td>Equal to</td><td><code>5 == 5</code></td><td>true</td></tr>
-        <tr><td><code>!=</code></td><td>Not equal to</td><td><code>5 != 3</code></td><td>true</td></tr>
-        <tr><td><code>&gt;</code></td><td>Greater than</td><td><code>7 &gt; 3</code></td><td>true</td></tr>
-        <tr><td><code>&lt;</code></td><td>Less than</td><td><code>7 &lt; 3</code></td><td>false</td></tr>
-        <tr><td><code>&gt;=</code></td><td>Greater or equal</td><td><code>7 &gt;= 7</code></td><td>true</td></tr>
-        <tr><td><code>&lt;=</code></td><td>Less or equal</td><td><code>7 &lt;= 3</code></td><td>false</td></tr>
-    </tbody>
-</table>
+<h3>Definition</h3>
+<p>Operators are symbols that perform operations on values (<strong>operands</strong>). Java provides arithmetic operators for math, comparison operators for decisions, logical operators for combining conditions, and assignment operators for storing results.</p>
 
-<h2>Logical Operators</h2>
-<p>Used to combine boolean expressions.</p>
+<h3>Analogy</h3>
+<p>Think of operators like tools in a toolbox. A hammer (+) adds things together. A ruler (==) measures if two things are equal. A filter (&&) checks if multiple conditions pass. Each tool serves a specific purpose.</p>
 
-<table>
-    <thead>
-        <tr><th>Operator</th><th>Meaning</th><th>Example</th><th>Result</th></tr>
-    </thead>
-    <tbody>
-        <tr><td><code>&amp;&amp;</code></td><td>Logical AND</td><td><code>true &amp;&amp; false</code></td><td>false</td></tr>
-        <tr><td><code>||</code></td><td>Logical OR</td><td><code>true || false</code></td><td>true</td></tr>
-        <tr><td><code>!</code></td><td>Logical NOT</td><td><code>!true</code></td><td>false</td></tr>
-    </tbody>
-</table>
+<h3>How It Works</h3>
+<p>Java has four main categories of operators:</p>
+<ul>
+    <li><strong>Arithmetic</strong> — <code>+ - * / % ++ --</code> (math operations)</li>
+    <li><strong>Comparison</strong> — <code>== != > < >= <=</code> (return true or false)</li>
+    <li><strong>Logical</strong> — <code>&& || !</code> (combine boolean expressions)</li>
+    <li><strong>Assignment</strong> — <code>= += -= *= /= %=</code> (store and modify values)</li>
+</ul>
 
-<h3>Truth Table for AND and OR</h3>
-<table>
-    <thead>
-        <tr><th>A</th><th>B</th><th>A &amp;&amp; B</th><th>A || B</th></tr>
-    </thead>
-    <tbody>
-        <tr><td>true</td><td>true</td><td>true</td><td>true</td></tr>
-        <tr><td>true</td><td>false</td><td>false</td><td>true</td></tr>
-        <tr><td>false</td><td>true</td><td>false</td><td>true</td></tr>
-        <tr><td>false</td><td>false</td><td>false</td><td>false</td></tr>
-    </tbody>
-</table>
-
-<div class="info-box tip">
-    <div class="box-title">Short-Circuit Evaluation</div>
-    <p class="mb-0"><code>&amp;&amp;</code> and <code>||</code> use <strong>short-circuit</strong> logic. If the first operand determines the result, the second is never evaluated. For example, in <code>false &amp;&amp; anything</code>, the result is always false, so <code>anything</code> is skipped.</p>
-</div>
-
-<h2>Assignment Operators</h2>
-<table>
-    <thead>
-        <tr><th>Operator</th><th>Equivalent To</th><th>Example</th></tr>
-    </thead>
-    <tbody>
-        <tr><td><code>=</code></td><td><code>x = 5</code></td><td>Assign 5 to x</td></tr>
-        <tr><td><code>+=</code></td><td><code>x = x + 3</code></td><td>Add 3 to x</td></tr>
-        <tr><td><code>-=</code></td><td><code>x = x - 2</code></td><td>Subtract 2 from x</td></tr>
-        <tr><td><code>*=</code></td><td><code>x = x * 4</code></td><td>Multiply x by 4</td></tr>
-        <tr><td><code>/=</code></td><td><code>x = x / 2</code></td><td>Divide x by 2</td></tr>
-        <tr><td><code>%=</code></td><td><code>x = x % 3</code></td><td>Modulus x by 3</td></tr>
-    </tbody>
-</table>
-
-<h2>Ternary Operator</h2>
-<p>A compact one-line if-else: <code>condition ? valueIfTrue : valueIfFalse</code></p>
-
-<pre><code>int age = 20;
-String status = (age >= 18) ? "Adult" : "Minor";
-// status is "Adult"</code></pre>
-
-<div class="sandbox">
-    <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
-    </div>
-    <textarea class="sandbox-code" data-lang="java" data-example="<?= base64_encode('public class Sandbox {
+<h3>Example</h3>
+<pre><code class="language-java">public class OperatorsDemo {
     public static void main(String[] args) {
         int a = 10;
         int b = 3;
 
-        System.out.println("=== Arithmetic ===");
-        System.out.println("a + b = " + (a + b));
-        System.out.println("a - b = " + (a - b));
-        System.out.println("a * b = " + (a * b));
-        System.out.println("a / b = " + (a / b));
-        System.out.println("a % b = " + (a % b));
+        // Arithmetic operators
+        System.out.println("a + b = " + (a + b));   // 13
+        System.out.println("a - b = " + (a - b));   // 7
+        System.out.println("a * b = " + (a * b));   // 30
+        System.out.println("a / b = " + (a / b));   // 3 (integer division!)
+        System.out.println("a % b = " + (a % b));   // 1 (remainder)
 
-        System.out.println("\\n=== Comparison ===");
-        System.out.println("a == b: " + (a == b));
-        System.out.println("a != b: " + (a != b));
-        System.out.println("a > b:  " + (a > b));
-        System.out.println("a < b:  " + (a < b));
+        // Comparison operators
+        System.out.println("a == b: " + (a == b));  // false
+        System.out.println("a != b: " + (a != b));  // true
+        System.out.println("a > b:  " + (a > b));   // true
 
-        System.out.println("\\n=== Logical ===");
+        // Logical operators
         boolean x = true;
         boolean y = false;
-        System.out.println("x && y: " + (x && y));
-        System.out.println("x || y: " + (x || y));
-        System.out.println("!x:     " + (!x));
+        System.out.println("x && y: " + (x && y));  // false (both must be true)
+        System.out.println("x || y: " + (x || y));  // true  (at least one true)
+        System.out.println("!x:     " + (!x));       // false (inverts)
 
-        System.out.println("\\n=== Ternary ===");
+        // Ternary operator: condition ? valueIfTrue : valueIfFalse
         String result = (a > b) ? "a is bigger" : "b is bigger";
-        System.out.println(result);
+        System.out.println(result);  // a is bigger
     }
-}') ?>"></textarea>
-    <div class="sandbox-actions">
-        <button class="btn btn-success run-btn">Run Code</button>
-        <span class="text-muted" style="font-size:0.85em;">Ctrl+Enter to run</span>
-    </div>
-    <div class="sandbox-result">
-        <div class="output-label">Output:</div>
-        <div class="output-content"></div>
-    </div>
-</div>
+}
+</code></pre>
+<strong>Output:</strong>
+<pre>a + b = 13
+a - b = 7
+a * b = 30
+a / b = 3
+a % b = 1
+a == b: false
+a != b: true
+a > b:  true
+x && y: false
+x || y: true
+!x:     false
+a is bigger</pre>
 
-<div class="info-box tip">
-    <div class="box-title">Think About It</div>
-    <p class="mb-0">What is the difference between <code>=</code> and <code>==</code>? Why does confusing them cause bugs? Try using <code>=</code> inside an <code>if</code> condition to see what the compiler says.</p>
-</div>
+<h2>Part 3: Apply New Knowledge</h2>
 
-<h2>Bitwise Operators</h2>
-<p>These operate on individual bits of integer values. They are less common but powerful for low-level programming.</p>
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>Shopping cart</strong> — Use <code>+</code> and <code>*</code> to calculate total price</li>
+    <li><strong>Age verification</strong> — Use <code>>=</code> to check if someone is 18 or older</li>
+    <li><strong>Login system</strong> — Use <code>&&</code> to check if both username AND password are correct</li>
+    <li><strong>Discount calculator</strong> — Use ternary to apply different rates based on conditions</li>
+</ul>
 
-<table>
-    <thead>
-        <tr><th>Operator</th><th>Name</th><th>Description</th></tr>
-    </thead>
-    <tbody>
-        <tr><td><code>&amp;</code></td><td>Bitwise AND</td><td>Sets bit to 1 if both bits are 1</td></tr>
-        <tr><td><code>|</code></td><td>Bitwise OR</td><td>Sets bit to 1 if either bit is 1</td></tr>
-        <tr><td><code>^</code></td><td>Bitwise XOR</td><td>Sets bit to 1 if bits are different</td></tr>
-        <tr><td><code>~</code></td><td>Bitwise NOT</td><td>Inverts all bits</td></tr>
-        <tr><td><code>&lt;&lt;</code></td><td>Left shift</td><td>Shifts bits left (multiplies by 2)</td></tr>
-        <tr><td><code>&gt;&gt;</code></td><td>Right shift</td><td>Shifts bits right (divides by 2)</td></tr>
-    </tbody>
-</table>
+<h3>Tips for Success</h3>
+<ul>
+    <li>Use parentheses <code>( )</code> to make your intent clear — <code>(a + b) * c</code> is safer than <code>a + b * c</code></li>
+    <li>Remember: <code>7 / 2</code> gives <code>3</code>, not <code>3.5</code> — use <code>7.0 / 2</code> for decimal results</li>
+    <li>Use <code>+=</code> to increment: <code>count += 5</code> is the same as <code>count = count + 5</code></li>
+</ul>
 
-<h2>Operator Precedence</h2>
-<p>When an expression has multiple operators, Java follows <strong>precedence rules</strong> (like PEMDAS in math). Higher precedence operators are evaluated first.</p>
+<h3>Common Mistakes</h3>
+<ul>
+    <li>Confusing <code>=</code> (assignment) with <code>==</code> (comparison) — this causes logic bugs</li>
+    <li>Integer division truncating decimals — <code>10 / 3</code> gives <code>3</code>, not <code>3.33</code></li>
+    <li>Forgetting parentheses in complex expressions — operator precedence can surprise you</li>
+</ul>
 
+<h2>Part 4: Assess Your Learning</h2>
 <div class="info-box note">
-    <div class="box-title">When in Doubt, Use Parentheses</div>
-    <p class="mb-0">Instead of memorizing precedence tables, use parentheses <code>( )</code> to make your intent explicit. <code>(a + b) * c</code> is always clearer than <code>a + b * c</code>.</p>
-</div>
-
-<div class="exercise">
-    <h4>Practice Exercises</h4>
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You are building a simple calculator app. A customer buys 3 items at $15.50 each with a 10% discount. You need to calculate the final price and determine if they qualify for free shipping (orders over $40).</p>
+    <p><strong>Task:</strong> Write a Java program that calculates the total and checks the shipping condition.</p>
     <ol>
-        <li>What is the result of <code>10 / 3</code>? What about <code>10.0 / 3</code>? Why are they different?</li>
-        <li>Write a ternary expression that checks if a number is even or odd</li>
-        <li>Use compound assignment (<code>+=</code>) to double a variable 5 times in a row. What is the final value?</li>
-        <li>Construct a truth table for <code>(A || B) &amp;&amp; !C</code> with all possible combinations</li>
+        <li>Declare variables for quantity, price, and discount rate</li>
+        <li>Calculate the subtotal, discount amount, and final price</li>
+        <li>Use a comparison operator to check if the order qualifies for free shipping</li>
+        <li>Use the ternary operator to print "Free Shipping" or "Standard Shipping"</li>
     </ol>
 </div>
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answers:</strong></p>
+        <pre><code class="language-java">public class Calculator {
+    public static void main(String[] args) {
+        int quantity = 3;
+        double price = 15.50;
+        double discountRate = 0.10;
 
-<div class="lesson-nav">
-    <?php if ($prevNext['prev']): ?>
-        <a href="<?= lessonUrl($prevNext['prev']['num'], $prevNext['prev']['slug'], 'java-lessons') ?>" class="prev-link">&larr; Previous: <?= htmlspecialchars($prevNext['prev']['title']) ?></a>
-    <?php endif; ?>
-    <?php if ($prevNext['next']): ?>
-        <a href="<?= lessonUrl($prevNext['next']['num'], $prevNext['next']['slug'], 'java-lessons') ?>" class="next-link">Next: <?= htmlspecialchars($prevNext['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
-</div>
+        // Calculate totals
+        double subtotal = quantity * price;          // 46.50
+        double discount = subtotal * discountRate;   // 4.65
+        double finalPrice = subtotal - discount;     // 41.85
 
+        // Check free shipping (orders over $40)
+        boolean freeShipping = finalPrice > 40;
+
+        // Print results
+        System.out.println("Subtotal: $" + subtotal);
+        System.out.println("Discount: $" + discount);
+        System.out.println("Final Price: $" + finalPrice);
+
+        // Ternary operator for shipping
+        String shipping = freeShipping ? "Free Shipping" : "Standard Shipping";
+        System.out.println("Shipping: " + shipping);
+    }
+}
+</code></pre>
+        <p><strong>Output:</strong></p>
+        <pre>Subtotal: $46.5
+Discount: $4.65
+Final Price: $41.85
+Shipping: Free Shipping</pre>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

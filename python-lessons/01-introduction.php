@@ -1,87 +1,103 @@
 <?php $pageTitle = 'Introduction to Python'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
 <?php $num = 1; $prevNext = getPrevNextLesson($num, 'python-lessons'); ?>
 
-<div class="lesson-container">
-    <h1>Lesson 1: Introduction to Python</h1>
-    
-    <div class="lesson-meta">
-        <span>Beginner</span> | <span>Estimated time: 25 minutes</span>
-    </div>
-
-    <section class="lesson-section">
-        <h2>What is Python?</h2>
-        <p>Python is a high-level, interpreted, general-purpose programming language created by <strong>Guido van Rossum</strong> and first released in <strong>1991</strong>. It emphasizes code readability with its notable use of significant whitespace.</p>
-        
-        <div class="info-box tip">
-            <strong>Why Learn Python?</strong>
-            <ul>
-                <li>Consistently ranked #1 in popularity indices</li>
-                <li>Used by companies like Google, Netflix, Instagram, and NASA</li>
-                <li>Versatile: web development, data science, AI/ML, automation, game development</li>
-                <li>Beginner-friendly with gentle learning curve</li>
-            </ul>
-        </div>
-    </section>
-
-    <section class="lesson-section">
-        <h2>Python vs Other Languages</h2>
-        <table>
-            <thead>
-                <tr><th>Feature</th><th>Python</th><th>JavaScript</th><th>Java</th></tr>
-            </thead>
-            <tbody>
-                <tr><td>Typing</td><td>Dynamic</td><td>Dynamic</td><td>Static</td></tr>
-                <tr><td>Compilation</td><td>Interpreted</td><td>Interpreted</td><td>Compiled</td></tr>
-                <tr><td>Learning Curve</td><td>Easy</td><td>Moderate</td><td>Steep</td></tr>
-                <tr><td>Indentation</td><td>Required</td><td>Optional</td><td>Optional</td></tr>
-            </tbody>
-        </table>
-    </section>
-
-    <section class="lesson-section">
-        <h2>The Zen of Python</h2>
-        <p>Type <code>import this</code> in Python to discover guiding principles:</p>
-        <pre><code>import this</code></pre>
-        <div class="info-box note">
-            <strong>Key Philosophy:</strong> "Beautiful is better than ugly. Explicit is better than implicit. Simple is better than complex."
-        </div>
-    </section>
-
-    <section class="lesson-section">
-        <h2>Practice: Hello World</h2>
-        <p>Try running your first Python code in the sandbox below:</p>
-        
-        <div class="sandbox">
-            <textarea class="sandbox-code" data-lang="python" data-example="<?= base64_encode('# Your first Python program\nprint("Hello, World!")\nprint("Welcome to Python!")') ?>"></textarea>
-            <button class="run-btn">Run Code</button>
-            <div class="output-area"></div>
-        </div>
-        
-        <div class="info-box tip">
-            <strong>Think About It:</strong> How does Python's <code>print()</code> function differ from other languages you've used?
-        </div>
-    </section>
-
-    <section class="lesson-section">
-        <h2>Running Python Code</h2>
-        <p>You can run Python in multiple ways:</p>
-        <ul>
-            <li><strong>REPL (Interactive Mode):</strong> Type <code>python</code> in terminal</li>
-            <li><strong>Script Mode:</strong> Save code in <code>.py</code> files and run with <code>python filename.py</code></li>
-            <li><strong>Online Sandboxes:</strong> Use this interactive environment!</li>
-        </ul>
-        
-        <pre><code># Example script: hello.py
-print("Hello from a script!")
-print("Python is fun!")</code></pre>
-    </section>
-
-    <section class="lesson-section">
-        <h2>Practice Exercise</h2>
-        <p>Modify the sandbox to print your name and favorite programming language on separate lines.</p>
-    </section>
-
-    <?php require_once __DIR__ . '/../includes/prev-next-nav.php'; ?>
+<div class="lesson-header">
+    <span class="lesson-number">Lesson <?= $num ?></span>
+    <h1>Introduction to Python</h1>
+    <p class="lesson-desc">Discover what Python is, why it's so popular, and how to run your first program.</p>
 </div>
 
+<h2>Part 1: Activate Prior Knowledge</h2>
+<div class="info-box note">
+    <div class="box-title">Review Questions</div>
+    <ol>
+        <li>Have you used any programming language before? If so, which one and what did you build with it?</li>
+        <li>What is the difference between a compiled language and an interpreted language?</li>
+        <li>Why do you think code readability matters in software development?</li>
+    </ol>
+</div>
+
+<h2>Part 2: Acquire New Knowledge</h2>
+<h3>Definition</h3>
+<p>Python is a high-level, interpreted, general-purpose programming language created by <strong>Guido van Rossum</strong> in 1991. It emphasizes code readability with its use of significant whitespace (indentation) and a clean, English-like syntax.</p>
+
+<h3>Analogy</h3>
+<p>Think of Python as a Swiss Army knife for programming. Just as a Swiss Army knife has a tool for almost every task — cutting, screwing, opening bottles — Python has a library or framework for almost every programming domain: web development, data science, artificial intelligence, automation, and more. It's the one tool that does many jobs well.</p>
+
+<h3>How It Works</h3>
+<p>Python runs in two main modes: <strong>Interactive Mode (REPL)</strong> where you type commands and see results immediately, and <strong>Script Mode</strong> where you save code in <code>.py</code> files and run them. Python reads your code line by line, converting it to bytecode, and executes it — no separate compilation step needed.</p>
+
+<h3>Example</h3>
+<pre><code class="language-python"># Your first Python program
+print("Hello, World!")
+print("Welcome to Python!")
+
+# Python variables (no type declaration needed)
+language = "Python"
+version = 3.11
+is_easy = True
+
+print(f"I'm learning {language} version {version}")
+print(f"Is it easy? {is_easy}")
+</code></pre>
+<strong>Output:</strong>
+<pre>Hello, World!
+Welcome to Python!
+I'm learning Python version 3.11
+Is it easy? True</pre>
+
+<h2>Part 3: Apply New Knowledge</h2>
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>Web Development:</strong> Instagram, Spotify, and Pinterest use Python (Django/Flask frameworks)</li>
+    <li><strong>Data Science & AI:</strong> Netflix recommendations, Tesla self-driving cars rely on Python libraries</li>
+    <li><strong>Automation:</strong> Automate repetitive tasks like file management, web scraping, and report generation</li>
+    <li><strong>Game Development:</strong> Studios use Python for prototyping and tools</li>
+</ul>
+
+<h3>Tips for Success</h3>
+<ul>
+    <li>Install Python from <code>python.org</code> and use a code editor like VS Code</li>
+    <li>Start with the interactive shell (REPL) to experiment before writing scripts</li>
+    <li>Run <code>import this</code> in Python to read "The Zen of Python" — guiding principles for the language</li>
+    <li>Use <code>print()</code> liberally to understand what your code is doing at each step</li>
+</ul>
+
+<h3>Common Mistakes</h3>
+<ul>
+    <li>Confusing Python 2 with Python 3 — always use Python 3 (current version)</li>
+    <li>Forgetting to install Python or not adding it to PATH during installation</li>
+    <li>Trying to use semicolons at end of lines like in Java or C — Python doesn't need them</li>
+    <li>Using curly braces <code>{}</code> for code blocks — Python uses indentation instead</li>
+</ul>
+
+<h2>Part 4: Assess Your Learning</h2>
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You are an intern at a tech startup. Your manager asks you to write a quick Python script that displays the company name, number of employees, and whether the company is currently hiring.</p>
+    <p><strong>Task:</strong> Write a Python script that stores this information in variables and prints a formatted report.</p>
+    <ol>
+        <li>Create a variable for the company name, employee count, and hiring status</li>
+        <li>Use <code>print()</code> with f-strings to display a clean report</li>
+        <li>Run your script and verify the output</li>
+    </ol>
+</div>
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answers:</strong> Students should create variables and use print statements.</p>
+        <pre><code># Company report script
+company_name = "TechNova Solutions"
+employees = 45
+is_hiring = True
+
+print("===== Company Report =====")
+print(f"Company: {company_name}")
+print(f"Employees: {employees}")
+print(f"Currently Hiring: {is_hiring}")
+print("==========================")</code></pre>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

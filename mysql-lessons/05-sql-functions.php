@@ -1,160 +1,129 @@
-<?php
-$pageTitle = 'SQL Functions';
-require_once __DIR__ . '/../includes/functions.php';
-$lessonNum = 5;
-$nav = getPrevNextLesson($lessonNum, 'mysql-lessons');
-require_once __DIR__ . '/../includes/header.php';
-?>
+<?php $pageTitle = 'SQL Functions'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
+<?php $num = 5; $prevNext = getPrevNextLesson($num, 'mysql-lessons'); ?>
 
 <div class="lesson-header">
-    <span class="lesson-number">MySQL Lesson <?= $lessonNum ?></span>
+    <span class="lesson-number">Lesson <?= $num ?></span>
     <h1>SQL Functions</h1>
     <p class="lesson-desc">Aggregate and string functions to analyze and transform data.</p>
 </div>
 
-<h2>Aggregate Functions</h2>
-<p>Functions that operate on a set of rows and return a single value:</p>
-
-<pre><code>-- Using the employees table
-
--- COUNT: number of rows
-SELECT COUNT(*) AS total_employees FROM employees;
-SELECT COUNT(*) AS engineering_count FROM employees WHERE department = 'Engineering';
-
--- SUM: total of a numeric column
-SELECT SUM(salary) AS total_salaries FROM employees;
-
--- AVG: average value
-SELECT AVG(salary) AS average_salary FROM employees;
-
--- MIN / MAX: smallest and largest values
-SELECT MIN(salary) AS lowest_salary FROM employees;
-SELECT MAX(salary) AS highest_salary FROM employees;</code></pre>
-
-<h2>GROUP BY</h2>
-<p>Groups rows that share values so aggregate functions work per group:</p>
-
-<pre><code>-- Average salary by department
-SELECT
-    department,
-    COUNT(*) AS employee_count,
-    AVG(salary) AS avg_salary,
-    MIN(salary) AS min_salary,
-    MAX(salary) AS max_salary
-FROM employees
-GROUP BY department;</code></pre>
-
-<pre><code>-- Output:
--- +-------------+----------------+-------------+-------------+-------------+
--- | department  | employee_count | avg_salary  | min_salary  | max_salary  |
--- +-------------+----------------+-------------+-------------+-------------+
--- | Engineering |              3 | 82333.33    | 75000.00    | 90000.00    |
--- | Marketing   |              2 | 68000.00    | 65000.00    | 71000.00    |
--- | Sales       |              2 | 56500.00    | 55000.00    | 58000.00    |
--- | NULL        |              1 | 48000.00    | 48000.00    | 48000.00    |
--- +-------------+----------------+-------------+-------------+-------------+</code></pre>
-
-<h2>HAVING Clause</h2>
-<p>Filters groups (like WHERE, but for grouped data):</p>
-
-<pre><code>-- Departments with more than 2 employees
-SELECT department, COUNT(*) AS count
-FROM employees
-GROUP BY department
-HAVING count > 2;
-
--- Departments with average salary above 70000
-SELECT department, AVG(salary) AS avg_salary
-FROM employees
-GROUP BY department
-HAVING avg_salary > 70000;</code></pre>
-
+<h2>Part 1: Activate Prior Knowledge</h2>
 <div class="info-box note">
-    <div class="box-title">WHERE vs HAVING</div>
-    <p><strong>WHERE</strong> filters rows <em>before</em> grouping</p>
-    <p class="mb-0"><strong>HAVING</strong> filters groups <em>after</em> grouping</p>
-</div>
-
-<h2>String Functions</h2>
-
-<pre><code>-- CONCAT: join strings
-SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM students;
-
--- LENGTH: character count
-SELECT name, LENGTH(name) AS name_length FROM employees;
-
--- UPPER / LOWER: change case
-SELECT UPPER(name) AS uppercase_name FROM employees;
-SELECT LOWER(name) AS lowercase_name FROM employees;
-
--- TRIM: remove whitespace
-SELECT TRIM('  Hello  ') AS trimmed;
-
--- SUBSTRING: extract part of a string
-SELECT SUBSTRING('Hello World', 1, 5) AS extracted;  -- 'Hello'
-
--- REPLACE: find and replace
-SELECT REPLACE('Hello World', 'World', 'MySQL') AS replaced;
-
--- LEFT / RIGHT: first/last n characters
-SELECT LEFT('Hello World', 5) AS first_five;   -- 'Hello'
-SELECT RIGHT('Hello World', 5) AS last_five;   -- 'World'</code></pre>
-
-<h2>Date Functions</h2>
-
-<pre><code>-- Current date and time
-SELECT NOW() AS current_datetime;
-SELECT CURDATE() AS today;
-SELECT CURTIME() AS current_time;
-
--- Extract parts of a date
-SELECT YEAR(hire_date) AS hire_year FROM employees;
-SELECT MONTH(hire_date) AS hire_month FROM employees;
-SELECT DAYNAME(hire_date) AS day_of_week FROM employees;
-
--- Date arithmetic
-SELECT
-    name,
-    hire_date,
-    DATEDIFF(CURDATE(), hire_date) AS days_employed
-FROM employees;
-
--- Format dates
-SELECT DATE_FORMAT(NOW(), '%M %d, %Y') AS formatted_date;
--- Output: "August 26, 2026"</code></pre>
-
-<h2>Alias with AS</h2>
-
-<pre><code>-- Rename columns in output
-SELECT
-    name AS Employee,
-    salary AS "Annual Salary",
-    salary / 12 AS "Monthly Salary"
-FROM employees;
-
--- Rename tables (useful for joins)
-SELECT e.name, e.salary
-FROM employees AS e
-WHERE e.department = 'Engineering';</code></pre>
-
-<div class="exercise">
-    <h4>Practice Exercises</h4>
+    <div class="box-title">Review Questions</div>
     <ol>
-        <li>Find the total, average, minimum, and maximum salary across all employees</li>
-        <li>Count how many employees were hired each year</li>
-        <li>Find departments where the average salary is above $70,000</li>
-        <li>List all employees with their name in uppercase and salary formatted with commas</li>
-        <li>Calculate how many days each employee has been working at the company</li>
+        <li>What is the difference between the <code>WHERE</code> and <code>HAVING</code> clauses?</li>
+        <li>How do you count the number of rows in a table using SQL?</li>
+        <li>What does <code>GROUP BY</code> do, and when would you use it?</li>
     </ol>
 </div>
 
-<div class="lesson-nav">
-    <?php if ($nav['prev']): ?>
-        <a href="<?= lessonUrl($nav['prev']['num'], $nav['prev']['slug'], 'mysql-lessons') ?>">&larr; <?= htmlspecialchars($nav['prev']['title']) ?></a>
-    <?php endif; ?>
-    <?php if ($nav['next']): ?>
-        <a href="<?= lessonUrl($nav['next']['num'], $nav['next']['slug'], 'mysql-lessons') ?>"><?= htmlspecialchars($nav['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
-</div>
+<h2>Part 2: Acquire New Knowledge</h2>
 
+<h3>Definition</h3>
+<p>SQL functions are built-in operations that perform calculations on data. <strong>Aggregate functions</strong> (COUNT, SUM, AVG, MAX, MIN) operate on groups of rows and return a single value. <strong>String functions</strong> (CONCAT, UPPER, LOWER) transform text data.</p>
+
+<h3>Analogy</h3>
+<p>Think of aggregate functions as a <strong>calculator for your data</strong>. Just as a calculator can add up a list of numbers, <code>SUM()</code> adds up a column. <code>COUNT()</code> counts items, and <code>AVG()</code> finds the average. GROUP BY is like sorting items into piles before calculating.</p>
+
+<h3>How It Works</h3>
+<p>Aggregate functions scan through rows and combine them into a single result. When used with <code>GROUP BY</code>, they calculate separately for each group. The <code>HAVING</code> clause then filters those groups.</p>
+
+<h3>Example</h3>
+<pre><code class="language-sql">-- Aggregate functions
+SELECT COUNT(*) AS total_employees FROM employees;
+SELECT SUM(salary) AS total_salaries FROM employees;
+SELECT AVG(salary) AS average_salary FROM employees;
+SELECT MIN(salary) AS lowest, MAX(salary) AS highest FROM employees;
+
+-- GROUP BY: aggregate per department
+SELECT
+    department,
+    COUNT(*) AS employee_count,
+    AVG(salary) AS avg_salary
+FROM employees
+GROUP BY department;
+
+-- HAVING: filter groups
+SELECT department, AVG(salary) AS avg_salary
+FROM employees
+GROUP BY department
+HAVING avg_salary > 70000;
+
+-- String functions
+SELECT UPPER(name) AS uppercase_name FROM employees;
+SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM students;
+</code></pre>
+<strong>Output (GROUP BY):</strong>
+<pre>+-------------+----------------+-------------+
+| department  | employee_count | avg_salary  |
++-------------+----------------+-------------+
+| Engineering |              3 | 82333.33    |
+| Marketing   |              2 | 68000.00    |
+| Sales       |              2 | 56500.00    |
++-------------+----------------+-------------+</pre>
+
+<h2>Part 3: Apply New Knowledge</h2>
+
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>Sales Reports</strong> — Total revenue, average order value, top-selling products</li>
+    <li><strong>HR Analytics</strong> — Average salary by department, headcount by location</li>
+    <li><strong>Inventory Management</strong> — Total stock, items below reorder level</li>
+    <li><strong>Marketing</strong> — Customer segments, conversion rates by campaign</li>
+</ul>
+
+<h3>Tips for Success</h3>
+<ul>
+    <li>Use <code>COUNT(*)</code> to count all rows, <code>COUNT(column)</code> to count non-NULL values</li>
+    <li>Remember: <code>WHERE</code> filters rows <em>before</em> grouping, <code>HAVING</code> filters <em>after</em> grouping</li>
+    <li>Use <code>AS</code> to give aggregate results meaningful names</li>
+    <li>Combine <code>GROUP BY</code> with <code>ORDER BY</code> for sorted aggregate reports</li>
+</ul>
+
+<h3>Common Mistakes</h3>
+<ul>
+    <li>Using <code>WHERE</code> with aggregate results — use <code>HAVING</code> instead</li>
+    <li>Forgetting to include non-aggregated columns in <code>GROUP BY</code></li>
+    <li>Confusing <code>COUNT(column)</code> (excludes NULLs) with <code>COUNT(*)</code> (counts all rows)</li>
+    <li>Using <code>AVG()</code> on text columns — it only works on numeric data</li>
+</ul>
+
+<h2>Part 4: Assess Your Learning</h2>
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You are a data analyst for a retail company. The manager wants to understand sales performance by product category.</p>
+    <p><strong>Task:</strong> Write the SQL queries to complete the following:</p>
+    <ol>
+        <li>Find the total number of orders and total revenue across all orders</li>
+        <li>Calculate the average order value for each product category</li>
+        <li>List only categories where the average order value exceeds ₱5,000</li>
+        <li>Find the highest and lowest individual order amounts</li>
+    </ol>
+</div>
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answers:</strong></p>
+        <pre><code>-- 1. Total orders and total revenue
+SELECT COUNT(*) AS total_orders, SUM(amount) AS total_revenue
+FROM orders;
+
+-- 2. Average order value per category
+SELECT category, AVG(amount) AS avg_order_value
+FROM orders
+GROUP BY category;
+
+-- 3. Categories with average above 5000
+SELECT category, AVG(amount) AS avg_order_value
+FROM orders
+GROUP BY category
+HAVING avg_order_value > 5000;
+
+-- 4. Highest and lowest order amounts
+SELECT MAX(amount) AS highest_order, MIN(amount) AS lowest_order
+FROM orders;</code></pre>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
