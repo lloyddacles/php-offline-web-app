@@ -18,178 +18,155 @@
 
 <h2>Part 2: Acquire New Knowledge</h2>
 
-<h3>Definition</h3>
+<h3>What is Database Security?</h3>
 <p><strong>Database security</strong> involves protecting databases from unauthorized access, misuse, and data breaches. It includes authentication (verifying identity), authorization (controlling access), encryption (protecting data), and protecting against attacks like SQL injection.</p>
 
 <h3>Analogy</h3>
 <p>Think of database security like a <strong>bank vault</strong>:</p>
-<ul>
-    <li><strong>Authentication:</strong> You need a key card AND a PIN to enter — verifying who you are.</li>
-    <li><strong>Authorization:</strong> Regular customers can access their safety deposit boxes, but only managers can access the main vault — controlling what you can do.</li>
-    <li><strong>Encryption:</strong> Even if someone steals a safety deposit box, the contents inside are locked — protecting the data itself.</li>
-    <li><strong>SQL Injection Prevention:</strong> The bank verifies your ID at the door instead of letting anyone walk in with a fake story.</li>
-</ul>
+<table>
+    <thead>
+        <tr><th>Security Layer</th><th>Bank Vault Analogy</th><th>Database Equivalent</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>Authentication</strong></td><td>Key card + PIN to enter</td><td>Username + password login</td></tr>
+        <tr><td><strong>Authorization</strong></td><td>Customers access their boxes; managers access vault</td><td>Role-based permissions (SELECT, INSERT, etc.)</td></tr>
+        <tr><td><strong>Encryption</strong></td><td>Contents locked inside the box</td><td>Data encrypted at rest and in transit</td></tr>
+        <tr><td><strong>SQL Injection Prevention</strong></td><td>ID verification at the door</td><td>Prepared statements</td></tr>
+    </tbody>
+</table>
 
-<h3>How It Works</h3>
+<h3>Security Threats and Solutions</h3>
+<table>
+    <thead>
+        <tr><th>Threat</th><th>Description</th><th>Solution</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>SQL Injection</strong></td><td>Attacker injects malicious SQL via user input</td><td>Prepared statements</td></tr>
+        <tr><td><strong>Weak Passwords</strong></td><td>Easily guessable or cracked passwords</td><td>Password hashing (bcrypt)</td></tr>
+        <tr><td><strong>Excessive Privileges</strong></td><td>Users have more access than needed</td><td>Principle of least privilege</td></tr>
+        <tr><td><strong>Plain-text Storage</strong></td><td>Passwords/data stored unencrypted</td><td>Encrypt sensitive data</td></tr>
+        <tr><td><strong>Error Leaks</strong></td><td>Database errors reveal structure to attackers</td><td>Generic error messages</td></tr>
+    </tbody>
+</table>
 
-<h4>SQL Injection (Most Common Attack)</h4>
-<pre><code class="language-php">&lt;?php
-// VULNERABLE: User input goes directly into SQL
-$username = $_POST['username'];
-$password = $_POST['password'];
+<h3>SQL Injection — How It Works</h3>
+<pre><code>VULNERABLE CODE:
+┌────────────────────────────────────────────────┐
+│ username = $_POST['username']                   │
+│ query = "SELECT * FROM users                    │
+│          WHERE username = '$username'"           │
+└────────────────────────────────────────────────┘
 
-$query = "SELECT * FROM users
-          WHERE username = '$username'
-          AND password = '$password'";
-$result = $pdo->query($query);
-?&gt;</code></pre>
-<p><strong>Attack:</strong> User enters <code>' OR '1'='1' --</code> as username. The query returns ALL users!</p>
+ATTACK:
+┌────────────────────────────────────────────────┐
+│ User enters: ' OR '1'='1' --                   │
+│                                                  │
+│ Resulting query:                                 │
+│ SELECT * FROM users                              │
+│ WHERE username = '' OR '1'='1' --'              │
+│                                                  │
+│ '1'='1' is ALWAYS TRUE → returns ALL users!     │
+└────────────────────────────────────────────────┘</code></pre>
 
-<h4>Prevention: Prepared Statements</h4>
-<pre><code class="language-php">&lt;?php
-// SAFE: Prepared statements separate data from SQL
-$stmt = $pdo->prepare(
-    "SELECT * FROM users
-     WHERE username = :username
-     AND password = :password"
-);
+<h3>Prepared Statements — How They Prevent It</h3>
+<pre><code>SAFE CODE:
+┌────────────────────────────────────────────────┐
+│ stmt = $pdo->prepare(                           │
+│     "SELECT * FROM users                        │
+│      WHERE username = :username"                │
+│ );                                              │
+│ stmt->execute([':username' => $input]);         │
+└────────────────────────────────────────────────┘
 
-$stmt->execute([
-    ':username' => $_POST['username'],
-    ':password' => $_POST['password']
-]);
+WHY IT'S SAFE:
+┌────────────────────────────────────────────────┐
+│ User input is treated as DATA, not CODE.        │
+│ The SQL structure is fixed; only the value      │
+│ changes. Injection is impossible.               │
+└────────────────────────────────────────────────┘</code></pre>
 
-$user = $stmt->fetch();
-?&gt;</code></pre>
-
-<h3>Example</h3>
-
-<h4>Authentication &amp; Passwords</h4>
-<pre><code class="language-php">&lt;?php
-// Hash a password (when creating user)
-$hash = password_hash('user_password', PASSWORD_DEFAULT);
-
-// Verify a password (when logging in)
-if (password_verify($input_password, $stored_hash)) {
-    echo "Password correct!";
-} else {
-    echo "Wrong password.";
-}
-?&gt;</code></pre>
-
-<h4>Access Control</h4>
-<pre><code class="language-sql">-- Create a user with limited privileges
-CREATE USER 'app_user'@'localhost'
-IDENTIFIED BY 'secure_password';
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<pre><code class="language-sql">-- Grant specific permissions only
-GRANT SELECT, INSERT, UPDATE
-ON school.* TO 'app_user'@'localhost';
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<pre><code class="language-sql">-- View grants
-SHOW GRANTS FOR 'app_user'@'localhost';
-</code></pre>
-<strong>Output:</strong>
-<pre>+----------------------------------------------------+
-| Grants for app_user@localhost                       |
-+----------------------------------------------------+
-| GRANT SELECT, INSERT, UPDATE ON school.* TO ...    |
-+----------------------------------------------------+</pre>
-
-<h4>Data Encryption</h4>
-<pre><code class="language-sql">-- Encrypt sensitive data
-INSERT INTO users (name, ssn_encrypted)
-VALUES ('Alice', AES_ENCRYPT('123-45-6789', 'secret_key'));
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 1 row affected</pre>
-
-<pre><code class="language-sql">-- Decrypt when reading
-SELECT name,
-       AES_DECRYPT(ssn_encrypted, 'secret_key') AS ssn
-FROM users;
-</code></pre>
-<strong>Output:</strong>
-<pre>+-------+-------------+
-| name  | ssn         |
-+-------+-------------+
-| Alice | 123-45-6789 |
-+-------+-------------+</pre>
+<h3>User Privileges (GRANT/REVOKE)</h3>
+<table>
+    <thead>
+        <tr><th>Privilege</th><th>What It Allows</th><th>Risk if Misused</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>SELECT</strong></td><td>Read data from tables</td><td>Data exposure</td></tr>
+        <tr><td><strong>INSERT</strong></td><td>Add new rows</td><td>Fake data injection</td></tr>
+        <tr><td><strong>UPDATE</strong></td><td>Modify existing rows</td><td>Data tampering</td></tr>
+        <tr><td><strong>DELETE</strong></td><td>Remove rows</td><td>Data destruction</td></tr>
+        <tr><td><strong>CREATE</strong></td><td>Create databases/tables</td><td>Unauthorized schema changes</td></tr>
+        <tr><td><strong>DROP</strong></td><td>Delete databases/tables</td><td>Total data loss</td></tr>
+    </tbody>
+</table>
 
 <h3>Principle of Least Privilege</h3>
 <table>
     <thead>
-        <tr><th>User Type</th><th>Permissions Needed</th></tr>
+        <tr><th>User Type</th><th>Permissions Needed</th><th>Why</th></tr>
     </thead>
     <tbody>
-        <tr><td><strong>Web Application</strong></td><td>SELECT, INSERT, UPDATE (on specific tables only)</td></tr>
-        <tr><td><strong>Admin</strong></td><td>Full access (SELECT, INSERT, UPDATE, DELETE, CREATE, DROP)</td></tr>
-        <tr><td><strong>Read-Only Analyst</strong></td><td>SELECT only</td></tr>
-        <tr><td><strong>Backup Service</strong></td><td>SELECT (to read data for backup)</td></tr>
+        <tr><td><strong>Web Application</strong></td><td>SELECT, INSERT, UPDATE (specific tables)</td><td>App needs to read/write data but not delete tables</td></tr>
+        <tr><td><strong>Admin</strong></td><td>Full access</td><td>Manages the database</td></tr>
+        <tr><td><strong>Read-Only Analyst</strong></td><td>SELECT only</td><td>Needs reports but shouldn't modify data</td></tr>
+        <tr><td><strong>Backup Service</strong></td><td>SELECT (read data for backup)</td><td>Only needs to read for backups</td></tr>
     </tbody>
 </table>
-<pre><code class="language-sql">-- BAD: Giving all privileges
-GRANT ALL PRIVILEGES ON *.* TO 'app_user'@'localhost';
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
 
-<pre><code class="language-sql">-- GOOD: Give only what's needed
-GRANT SELECT, INSERT, UPDATE
-ON school.students TO 'app_user'@'localhost';
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<h3>Error Handling (Don't Leak Info)</h3>
-<pre><code class="language-php">&lt;?php
-// BAD: Show raw database errors to users
-try {
-    $pdo->query("SELECT * FROM nonexistent");
-} catch (PDOException $e) {
-    echo $e->getMessage();  // Exposes table name!
-}
-
-// GOOD: Log errors, show generic message
-try {
-    $pdo->query("SELECT * FROM nonexistent");
-} catch (PDOException $e) {
-    error_log("DB error: " . $e->getMessage());
-    echo "An error occurred. Please try again.";
-}
-?&gt;</code></pre>
+<h3>Password Security</h3>
+<table>
+    <thead>
+        <tr><th>Method</th><th>Security</th><th>Recommendation</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>Plain text</strong></td><td>None — visible to anyone</td><td>NEVER use</td></tr>
+        <tr><td><strong>MD5</strong></td><td>Weak — fast to crack</td><td>NEVER use</td></tr>
+        <tr><td><strong>SHA1</strong></td><td>Weak — fast to crack</td><td>NEVER use</td></tr>
+        <tr><td><strong>bcrypt</strong></td><td>Strong — slow, salted</td><td>USE THIS</td></tr>
+        <tr><td><strong>Argon2</strong></td><td>Strongest — memory-hard</td><td>Best choice if available</td></tr>
+    </tbody>
+</table>
 
 <h2>Part 3: Apply New Knowledge</h2>
 
 <h3>Real-World Applications</h3>
-<ul>
-    <li><strong>Banking:</strong> Customer financial data is encrypted at rest and in transit. Access is restricted to authorized systems only.</li>
-    <li><strong>Healthcare:</strong> Patient records (PHI) must comply with HIPAA — encryption, access logging, and role-based access are mandatory.</li>
-    <li><strong>E-commerce:</strong> Payment data is encrypted, and web apps use prepared statements to prevent SQL injection attacks.</li>
-    <li><strong>Social Media:</strong> User passwords are hashed, and access controls prevent users from viewing private profiles.</li>
-</ul>
+<table>
+    <thead>
+        <tr><th>Industry</th><th>Security Measures</th><th>Why Critical</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>Banking</strong></td><td>Encryption at rest and in transit, access logging</td><td>Financial data is high-value target</td></tr>
+        <tr><td><strong>Healthcare</strong></td><td>HIPAA compliance, encryption, role-based access</td><td>Patient records are legally protected</td></tr>
+        <tr><td><strong>E-commerce</strong></td><td>Payment encryption, prepared statements</td><td>Payment data is target for theft</td></tr>
+        <tr><td><strong>Social Media</strong></td><td>Password hashing, access controls</td><td>User privacy protection</td></tr>
+    </tbody>
+</table>
 
 <h3>Tips for Success</h3>
-<ul>
-    <li><strong>Always use prepared statements:</strong> Never concatenate user input into SQL queries.</li>
-    <li><strong>Hash passwords with bcrypt:</strong> Use <code>password_hash()</code> and <code>password_verify()</code> — never MD5 or SHA1.</li>
-    <li><strong>Apply least privilege:</strong> Give database users only the permissions they need, nothing more.</li>
-    <li><strong>Use HTTPS:</strong> Encrypts data in transit, preventing password interception.</li>
-</ul>
+<table>
+    <thead>
+        <tr><th>Tip</th><th>Why It Matters</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>Always use prepared statements</strong></td><td>Never concatenate user input into SQL</td></tr>
+        <tr><td><strong>Hash passwords with bcrypt</strong></td><td>Use password_hash() and password_verify()</td></tr>
+        <tr><td><strong>Apply least privilege</strong></td><td>Give users only the permissions they need</td></tr>
+        <tr><td><strong>Use HTTPS</strong></td><td>Encrypts data in transit</td></tr>
+    </tbody>
+</table>
 
 <h3>Common Mistakes</h3>
-<ul>
-    <li><strong>Storing plain-text passwords:</strong> If the database is compromised, all user accounts are exposed.</li>
-    <li><strong>Showing database errors to users:</strong> Errors reveal table names, column names, and database structure to attackers.</li>
-    <li><strong>Granting ALL PRIVILEGES to application users:</strong> A compromised web app could then DROP tables or access sensitive data.</li>
-    <li><strong>Hardcoding encryption keys:</strong> If the source code is leaked, the encryption is useless.</li>
-</ul>
+<table>
+    <thead>
+        <tr><th>Mistake</th><th>Problem</th><th>Solution</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Storing plain-text passwords</td><td>All accounts exposed if DB is hacked</td><td>Use bcrypt hashing</td></tr>
+        <tr><td>Showing database errors to users</td><td>Reveals table/column names to attackers</td><td>Log errors, show generic messages</td></tr>
+        <tr><td>Granting ALL PRIVILEGES</td><td>Compromised app could DROP tables</td><td>Use least privilege principle</td></tr>
+        <tr><td>Hardcoding encryption keys</td><td>Encryption useless if code is leaked</td><td>Use environment variables</td></tr>
+    </tbody>
+</table>
 
 <h2>Part 4: Assess Your Learning</h2>
 <div class="info-box note">
@@ -198,8 +175,8 @@ try {
     <p><strong>Task:</strong></p>
     <ol>
         <li>Explain two reasons why using MD5 for password hashing is insecure.</li>
-        <li>Write a safe login query using prepared statements that checks username and password.</li>
-        <li>The system needs three user roles: admin (full access), instructor (can view and update grades), and student (can only view own grades). Write the GRANT statements for each role using the principle of least privilege.</li>
+        <li>Describe how a prepared statement prevents SQL injection (in your own words, no code needed).</li>
+        <li>The system needs three user roles: admin (full access), instructor (can view and update grades), and student (can only view own grades). Create a table showing the privileges each role needs.</li>
     </ol>
 </div>
 <details>
@@ -210,48 +187,21 @@ try {
             <li>
                 <ul>
                     <li><strong>MD5 is too fast:</strong> Modern hardware can compute billions of MD5 hashes per second, making brute-force and rainbow table attacks trivial.</li>
-                    <li><strong>No salt:</strong> MD5 doesn't use a random salt, so identical passwords produce identical hashes. An attacker can precompute hashes for common passwords (rainbow tables) and match them against stolen data.</li>
+                    <li><strong>No salt:</strong> MD5 doesn't use a random salt, so identical passwords produce identical hashes. An attacker can precompute hashes for common passwords and match them against stolen data.</li>
                 </ul>
             </li>
+            <li>A prepared statement separates the SQL structure from the user data. The database compiles the SQL query first (with placeholders), then binds the user input as parameters. This means the user input is always treated as data, never as executable SQL commands. Even if someone tries to inject SQL code, the database will treat it as a literal string value, not as part of the query structure.</li>
             <li>
-                <pre><code class="language-php">&lt;?php
-// Safe login with prepared statements
-$stmt = $pdo->prepare(
-    "SELECT id, password_hash, role
-     FROM users WHERE username = :username"
-);
-
-$stmt->execute([':username' => $_POST['username']]);
-$user = $stmt->fetch();
-
-if ($user && password_verify($_POST['password'], $user['password_hash'])) {
-    $_SESSION['user_id'] = $user['id'];
-    $_SESSION['role'] = $user['role'];
-    echo "Welcome!";
-} else {
-    echo "Invalid username or password.";
-}
-?&gt;</code></pre>
-            </li>
-            <li>
-                <pre><code class="language-sql">-- Admin: full access
-GRANT ALL PRIVILEGES ON portal.* TO 'admin_role'@'localhost';
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<pre><code class="language-sql">-- Instructor: can view and update grades
-GRANT SELECT ON portal.students TO 'instructor_role'@'localhost';
-GRANT SELECT, UPDATE ON portal.grades TO 'instructor_role'@'localhost';
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<pre><code class="language-sql">-- Student: can only view own grades
-GRANT SELECT ON portal.grades TO 'student_role'@'localhost';
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
+                <table>
+                    <thead>
+                        <tr><th>Role</th><th>SELECT</th><th>INSERT</th><th>UPDATE</th><th>DELETE</th><th>Tables</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Admin</strong></td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>All tables</td></tr>
+                        <tr><td><strong>Instructor</strong></td><td>✓</td><td>—</td><td>✓</td><td>—</td><td>grades, students</td></tr>
+                        <tr><td><strong>Student</strong></td><td>✓</td><td>—</td><td>—</td><td>—</td><td>grades (own only)</td></tr>
+                    </tbody>
+                </table>
             </li>
         </ol>
     </div>

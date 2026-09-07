@@ -18,185 +18,175 @@
 
 <h2>Part 2: Acquire New Knowledge</h2>
 
-<h3>Definition</h3>
+<h3>What is DDL?</h3>
 <p><strong>DDL (Data Definition Language)</strong> commands are used to define, modify, and delete database structures (tables, indexes, views). They don't manipulate data — they define the <strong>schema</strong>.</p>
 
 <h3>Analogy</h3>
-<p>DDL is like the <strong>architect and construction crew</strong> building a house. They lay the foundation (CREATE DATABASE), build the walls and rooms (CREATE TABLE), renovate rooms (ALTER TABLE), demolish structures (DROP TABLE), or clear out all the furniture while keeping the rooms (TRUNCATE TABLE). They don't arrange the furniture inside — that's DML's job.</p>
+<p>DDL is like the <strong>architect and construction crew</strong> building a house. They lay the foundation (CREATE DATABASE), build the walls and rooms (CREATE TABLE), renovate rooms (ALTER TABLE), demolish structures (DROP TABLE), or clear out all the furniture while keeping the rooms (TRUNCATE TABLE).</p>
 
-<h3>How It Works</h3>
+<h3>DDL Commands Quick Reference</h3>
 <table>
     <thead>
-        <tr><th>Command</th><th>Purpose</th></tr>
+        <tr><th>Command</th><th>Purpose</th><th>Reversible?</th><th>Analogy</th></tr>
     </thead>
     <tbody>
-        <tr><td><code>CREATE</code></td><td>Create new database objects</td></tr>
-        <tr><td><code>ALTER</code></td><td>Modify existing database objects</td></tr>
-        <tr><td><code>DROP</code></td><td>Delete database objects</td></tr>
-        <tr><td><code>TRUNCATE</code></td><td>Remove all data from a table (keep structure)</td></tr>
-        <tr><td><code>RENAME</code></td><td>Rename database objects</td></tr>
+        <tr><td><code>CREATE</code></td><td>Create new database objects</td><td>Yes (DROP)</td><td>Build a new room</td></tr>
+        <tr><td><code>ALTER</code></td><td>Modify existing database objects</td><td>Yes (ALTER again)</td><td>Renovate a room</td></tr>
+        <tr><td><code>DROP</code></td><td>Delete database objects permanently</td><td>No</td><td>Demolish a room</td></tr>
+        <tr><td><code>TRUNCATE</code></td><td>Remove all data from a table (keep structure)</td><td>No</td><td>Empty a room but keep walls</td></tr>
+        <tr><td><code>RENAME</code></td><td>Rename database objects</td><td>Yes (RENAME again)</td><td>Change room name</td></tr>
     </tbody>
 </table>
-
-<h3>Example</h3>
-
-<h4>CREATE DATABASE</h4>
-<pre><code class="language-sql">-- Create a new database
-CREATE DATABASE university;
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 1 row affected</pre>
-
-<pre><code class="language-sql">-- Create only if it doesn't exist
-CREATE DATABASE IF NOT EXISTS university;
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 1 row affected, 1 warning</pre>
-
-<pre><code class="language-sql">-- Select a database to use
-USE university;
-</code></pre>
-<strong>Output:</strong>
-<pre>Database changed</pre>
-
-<h4>CREATE TABLE</h4>
-<pre><code class="language-sql">-- Create a students table with constraints
-CREATE TABLE students (
-    id INT PRIMARY KEY,              -- Unique identifier
-    name VARCHAR(50) NOT NULL,       -- Required name
-    email VARCHAR(50) UNIQUE,        -- Must be unique
-    grade INT CHECK (grade >= 0)     -- Must be non-negative
-);
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<h4>ALTER TABLE</h4>
-<pre><code class="language-sql">-- Add a column
-ALTER TABLE students ADD phone VARCHAR(20);
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<pre><code class="language-sql">-- Modify column type
-ALTER TABLE students MODIFY phone VARCHAR(30);
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<pre><code class="language-sql">-- Drop a column
-ALTER TABLE students DROP phone;
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<h4>DROP TABLE</h4>
-<pre><code class="language-sql">-- Delete a table permanently
-DROP TABLE students;
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<pre><code class="language-sql">-- Delete only if it exists
-DROP TABLE IF EXISTS students;
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected, 1 warning</pre>
-
-<h4>TRUNCATE TABLE</h4>
-<pre><code class="language-sql">-- Remove all rows, keep structure
-TRUNCATE TABLE students;
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<h4>Views</h4>
-<pre><code class="language-sql">-- Create a view (virtual table)
-CREATE VIEW active_students AS
-SELECT id, name, grade
-FROM students
-WHERE grade >= 90;
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<pre><code class="language-sql">-- Use the view like a table
-SELECT * FROM active_students;
-</code></pre>
-<strong>Output:</strong>
-<pre>+----+-------+-------+
-| id | name  | grade |
-+----+-------+-------+
-|  1 | Alice |    90 |
-+----+-------+-------+</pre>
-
-<pre><code class="language-sql">-- Delete a view
-DROP VIEW IF EXISTS active_students;
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<h4>Indexes</h4>
-<pre><code class="language-sql">-- Create an index (speeds up queries)
-CREATE INDEX idx_name ON students(name);
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<pre><code class="language-sql">-- Drop an index
-DROP INDEX idx_name ON students;
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
 
 <h3>DDL vs DML</h3>
 <table>
     <thead>
-        <tr><th>DDL</th><th>DML</th></tr>
+        <tr><th>Aspect</th><th>DDL</th><th>DML</th></tr>
     </thead>
     <tbody>
-        <tr><td>Defines structure (schema)</td><td>Manipulates data</td></tr>
-        <tr><td>CREATE, ALTER, DROP</td><td>SELECT, INSERT, UPDATE, DELETE</td></tr>
-        <tr><td>Affects tables, views, indexes</td><td>Affects rows in tables</td></tr>
-        <tr><td>Implicitly commits</td><td>Can be rolled back (in transactions)</td></tr>
+        <tr><td><strong>Purpose</strong></td><td>Defines structure (schema)</td><td>Manipulates data</td></tr>
+        <tr><td><strong>Commands</strong></td><td>CREATE, ALTER, DROP, TRUNCATE</td><td>SELECT, INSERT, UPDATE, DELETE</td></tr>
+        <tr><td><strong>Affects</strong></td><td>Tables, views, indexes</td><td>Rows in tables</td></tr>
+        <tr><td><strong>Transactions</strong></td><td>Implicitly commits</td><td>Can be rolled back</td></tr>
+    </tbody>
+</table>
+
+<h3>CREATE — Build New Structures</h3>
+<table>
+    <thead>
+        <tr><th>What</th><th>Syntax</th><th>Example</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Database</td><td>CREATE DATABASE name;</td><td>CREATE DATABASE school;</td></tr>
+        <tr><td>Table</td><td>CREATE TABLE name (...);</td><td>CREATE TABLE students (id INT PRIMARY KEY, name VARCHAR(50));</td></tr>
+        <tr><td>View</td><td>CREATE VIEW name AS ...;</td><td>CREATE VIEW honor_roll AS SELECT * FROM students WHERE grade >= 90;</td></tr>
+        <tr><td>Index</td><td>CREATE INDEX name ON table(col);</td><td>CREATE INDEX idx_name ON students(name);</td></tr>
+    </tbody>
+</table>
+
+<h3>ALTER — Modify Structures</h3>
+<table>
+    <thead>
+        <tr><th>Action</th><th>Syntax</th><th>Example</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Add column</td><td>ALTER TABLE t ADD col type;</td><td>ALTER TABLE students ADD phone VARCHAR(20);</td></tr>
+        <tr><td>Modify column</td><td>ALTER TABLE t MODIFY col type;</td><td>ALTER TABLE students MODIFY phone VARCHAR(30);</td></tr>
+        <tr><td>Drop column</td><td>ALTER TABLE t DROP col;</td><td>ALTER TABLE students DROP phone;</td></tr>
+        <tr><td>Add constraint</td><td>ALTER TABLE t ADD CONSTRAINT ...;</td><td>ALTER TABLE students ADD UNIQUE(email);</td></tr>
+    </tbody>
+</table>
+
+<h3>DROP vs TRUNCATE — Critical Difference</h3>
+<table>
+    <thead>
+        <tr><th>Aspect</th><th>DROP TABLE</th><th>TRUNCATE TABLE</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>What happens</strong></td><td>Table structure AND data are permanently deleted</td><td>Only data is deleted; structure remains</td></tr>
+        <tr><td><strong>Data recovery</strong></td><td>Cannot recover without backup</td><td>Cannot recover without backup</td></tr>
+        <tr><td><strong>Auto-increment reset</strong></td><td>N/A (table gone)</td><td>Resets to starting value</td></tr>
+        <tr><td><strong>Triggers</strong></td><td>No triggers fired</td><td>Triggers are fired</td></tr>
+        <tr><td><strong>Can WHERE clause?</strong></td><td>No (deletes entire table)</td><td>No (deletes all rows)</td></tr>
+    </tbody>
+</table>
+
+<h3>Example: Building a Library Database</h3>
+
+<p><strong>Step 1: Create database</strong></p>
+<table>
+    <thead>
+        <tr><th>Command</th><th>Result</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>CREATE DATABASE library;</td><td>New database created</td></tr>
+    </tbody>
+</table>
+
+<p><strong>Step 2: Create tables</strong></p>
+<table>
+    <thead>
+        <tr><th>Table</th><th>Columns</th><th>Constraints</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>books</td><td>isbn (PK), title, author, genre</td><td>isbn is PRIMARY KEY</td></tr>
+        <tr><td>members</td><td>id (PK), name, email, join_date</td><td>email is UNIQUE</td></tr>
+        <tr><td>loans</td><td>id (PK), isbn (FK), member_id (FK), loan_date, due_date</td><td>FK references books and members</td></tr>
+    </tbody>
+</table>
+
+<p><strong>Step 3: Add a column later</strong></p>
+<table>
+    <thead>
+        <tr><th>Command</th><th>Result</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>ALTER TABLE loans ADD returned_date DATE;</td><td>New column added to existing table</td></tr>
+    </tbody>
+</table>
+
+<h3>Views and Indexes</h3>
+<table>
+    <thead>
+        <tr><th>Feature</th><th>View</th><th>Index</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>What is it?</strong></td><td>Virtual table based on a query</td><td>Structure that speeds up data retrieval</td></tr>
+        <tr><td><strong>Stores data?</strong></td><td>No (stores the query)</td><td>No (stores a lookup reference)</td></tr>
+        <tr><td><strong>Purpose</strong></td><td>Simplify complex queries</td><td>Speed up WHERE/JOIN/ORDER BY</td></tr>
+        <tr><td><strong>Trade-off</strong></td><td>Reads are simpler</td><td>Reads are faster, writes are slower</td></tr>
     </tbody>
 </table>
 
 <h2>Part 3: Apply New Knowledge</h2>
 
 <h3>Real-World Applications</h3>
-<ul>
-    <li><strong>Application Development:</strong> Every web app starts with DDL — creating the database and tables before any data is inserted.</li>
-    <li><strong>Database Migrations:</strong> When requirements change, ALTER TABLE adds new columns or constraints without losing existing data.</li>
-    <li><strong>Data Warehousing:</strong> Views simplify complex reports by pre-defining JOINs and aggregations.</li>
-    <li><strong>Performance Tuning:</strong> Indexes created with DDL dramatically speed up slow queries.</li>
-</ul>
+<table>
+    <thead>
+        <tr><th>Application</th><th>DDL Usage</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>App Development</strong></td><td>Every web app starts with DDL — creating the database and tables</td></tr>
+        <tr><td><strong>Database Migrations</strong></td><td>ALTER TABLE adds new columns or constraints without losing data</td></tr>
+        <tr><td><strong>Data Warehousing</strong></td><td>Views simplify complex reports by pre-defining JOINs</td></tr>
+        <tr><td><strong>Performance Tuning</strong></td><td>Indexes dramatically speed up slow queries</td></tr>
+    </tbody>
+</table>
 
 <h3>Tips for Success</h3>
-<ul>
-    <li><strong>Always use IF EXISTS/IF NOT EXISTS:</strong> Prevents errors when scripts run multiple times.</li>
-    <li><strong>Back up before DROP:</strong> DROP TABLE is permanent. Always have a backup.</li>
-    <li><strong>Use meaningful names:</strong> Table and column names should describe their content (e.g., <code>student_enrollment_date</code> not <code>date1</code>).</li>
-    <li><strong>Index strategically:</strong> Index columns used in WHERE, JOIN, and ORDER BY clauses, but avoid over-indexing (slows down writes).</li>
-</ul>
+<table>
+    <thead>
+        <tr><th>Tip</th><th>Why It Matters</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>Always use IF EXISTS/IF NOT EXISTS</strong></td><td>Prevents errors when scripts run multiple times</td></tr>
+        <tr><td><strong>Back up before DROP</strong></td><td>DROP TABLE is permanent</td></tr>
+        <tr><td><strong>Use meaningful names</strong></td><td>student_enrollment_date not date1</td></tr>
+        <tr><td><strong>Index strategically</strong></td><td>Index columns in WHERE/JOIN/ORDER BY, avoid over-indexing</td></tr>
+    </tbody>
+</table>
 
 <h3>Common Mistakes</h3>
-<ul>
-    <li><strong>Confusing DROP with TRUNCATE:</strong> DROP removes the table structure entirely; TRUNCATE keeps the structure but removes all data.</li>
-    <li><strong>Forgetting constraints:</strong> Without CHECK, UNIQUE, or FOREIGN KEY constraints, invalid data can enter your tables.</li>
-    <li><strong>Over-indexing:</strong> Every index speeds up reads but slows down writes. Only index columns that are frequently queried.</li>
-</ul>
+<table>
+    <thead>
+        <tr><th>Mistake</th><th>Problem</th><th>Solution</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Confusing DROP with TRUNCATE</td><td>DROP deletes table; TRUNCATE deletes data only</td><td>Know the difference before executing</td></tr>
+        <tr><td>Forgetting constraints</td><td>Invalid data enters tables</td><td>Add CHECK, UNIQUE, FK constraints</td></tr>
+        <tr><td>Over-indexing</td><td>Speeds up reads but slows down writes</td><td>Only index frequently queried columns</td></tr>
+    </tbody>
+</table>
 
 <h2>Part 4: Assess Your Learning</h2>
 <div class="info-box note">
     <div class="box-title">Scenario-Based Activity</div>
-    <p><strong>Scenario:</strong> You are building a library management system. You need to create a database with tables for books, members, and loans. Requirements: books have ISBN (PK), title, author, and genre. Members have member_id (PK), name, email, and join_date. Loans track which member borrowed which book, with loan_date and due_date. A book can be loaned many times, and a member can have many loans.</p>
+    <p><strong>Scenario:</strong> You are building a library management system. Requirements: books have ISBN (PK), title, author, and genre. Members have member_id (PK), name, email, and join_date. Loans track which member borrowed which book, with loan_date and due_date. A book can be loaned many times, and a member can have many loans.</p>
     <p><strong>Task:</strong></p>
     <ol>
-        <li>Write the CREATE DATABASE and USE statements.</li>
-        <li>Write the CREATE TABLE statements for all three tables with proper primary keys, foreign keys, and constraints.</li>
-        <li>After creating the tables, the library decides to add a "returned_date" column to the loans table. Write the ALTER TABLE statement.</li>
-        <li>Create a view called "overdue_loans" that shows all loans where due_date is in the past and returned_date is NULL.</li>
+        <li>List the DDL commands needed to create this database (database, 3 tables, and a view for overdue loans).</li>
+        <li>After creating the tables, the library decides to add a "returned_date" column to the loans table. What command is needed?</li>
+        <li>The library wants a view showing only overdue loans. What would this view show?</li>
     </ol>
 </div>
 <details>
@@ -205,64 +195,21 @@ DROP INDEX idx_name ON students;
         <p><strong>Answers:</strong></p>
         <ol>
             <li>
-                <pre><code class="language-sql">-- Create library database
-CREATE DATABASE IF NOT EXISTS library;
-USE library;
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 1 row affected</pre>
-
-<pre><code class="language-sql">-- Create books table
-CREATE TABLE books (
-    isbn VARCHAR(20) PRIMARY KEY,
-    title VARCHAR(50) NOT NULL,
-    author VARCHAR(50) NOT NULL
-);
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<pre><code class="language-sql">-- Create members table
-CREATE TABLE members (
-    id INT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    email VARCHAR(50) UNIQUE
-);
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<pre><code class="language-sql">-- Create loans table
-CREATE TABLE loans (
-    id INT PRIMARY KEY,
-    isbn VARCHAR(20),
-    member_id INT,
-    loan_date DATE,
-    due_date DATE,
-    FOREIGN KEY (isbn) REFERENCES books(isbn),
-    FOREIGN KEY (member_id) REFERENCES members(id)
-);
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<pre><code class="language-sql">-- Add returned_date column
-ALTER TABLE loans ADD returned_date DATE;
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<pre><code class="language-sql">-- Create overdue_loans view
-CREATE VIEW overdue_loans AS
-SELECT l.id, b.title, m.name, l.due_date
-FROM loans l
-JOIN books b ON l.isbn = b.isbn
-JOIN members m ON l.member_id = m.id
-WHERE l.due_date < CURRENT_DATE AND l.returned_date IS NULL;
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
+                <table>
+                    <thead>
+                        <tr><th>Step</th><th>Command</th><th>Purpose</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>CREATE DATABASE library;</td><td>Create the database</td></tr>
+                        <tr><td>2</td><td>CREATE TABLE books (isbn VARCHAR(20) PRIMARY KEY, title VARCHAR(100) NOT NULL, author VARCHAR(50) NOT NULL, genre VARCHAR(30));</td><td>Create books table</td></tr>
+                        <tr><td>3</td><td>CREATE TABLE members (id INT PRIMARY KEY, name VARCHAR(50) NOT NULL, email VARCHAR(50) UNIQUE, join_date DATE);</td><td>Create members table</td></tr>
+                        <tr><td>4</td><td>CREATE TABLE loans (id INT PRIMARY KEY, isbn VARCHAR(20), member_id INT, loan_date DATE, due_date DATE, FOREIGN KEY (isbn) REFERENCES books(isbn), FOREIGN KEY (member_id) REFERENCES members(id));</td><td>Create loans table with FKs</td></tr>
+                        <tr><td>5</td><td>CREATE VIEW overdue_loans AS SELECT l.id, b.title, m.name, l.due_date FROM loans l JOIN books b ON l.isbn = b.isbn JOIN members m ON l.member_id = m.id WHERE l.due_date < CURRENT_DATE;</td><td>Create overdue loans view</td></tr>
+                    </tbody>
+                </table>
             </li>
+            <li>ALTER TABLE loans ADD returned_date DATE;</li>
+            <li>The view would show all loans where the due date is in the past and the book has not been returned yet (returned_date IS NULL or not yet added).</li>
         </ol>
     </div>
 </details>

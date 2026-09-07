@@ -18,50 +18,53 @@
 
 <h2>Part 2: Acquire New Knowledge</h2>
 
-<h3>Definition</h3>
+<h3>What is a Database Design Project?</h3>
 <p>A <strong>database design project</strong> is a comprehensive exercise that applies all DBMS concepts — ER diagrams, relational design, normalization, DDL, transactions, and security — to build a complete, well-structured database from a set of requirements.</p>
 
 <h3>Analogy</h3>
 <p>Designing a database is like <strong>planning and building a house</strong>:</p>
-<ol>
-    <li><strong>Requirements = Client brief:</strong> What rooms do they need? How many bedrooms?</li>
-    <li><strong>ERD = Architectural blueprint:</strong> Rooms, sizes, and how they connect.</li>
-    <li><strong>Normalization = Efficient layout:</strong> No wasted space, every room has a clear purpose.</li>
-    <li><strong>DDL = Construction:</strong> Pouring foundations, building walls.</li>
-    <li><strong>Security = Locks and alarms:</strong> Protecting the finished home.</li>
-</ol>
-<p>You wouldn't start building without a blueprint. The same applies to databases.</p>
+<table>
+    <thead>
+        <tr><th>Step</th><th>House Analogy</th><th>Database Equivalent</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>1. Requirements</td><td>Client brief: What rooms needed?</td><td>What data to store?</td></tr>
+        <tr><td>2. ERD</td><td>Architectural blueprint</td><td>Entities, attributes, relationships</td></tr>
+        <tr><td>3. Normalization</td><td>Efficient layout</td><td>Remove redundancy</td></tr>
+        <tr><td>4. DDL</td><td>Construction</td><td>CREATE TABLE statements</td></tr>
+        <tr><td>5. Security</td><td>Locks and alarms</td><td>Users and permissions</td></tr>
+    </tbody>
+</table>
 
-<h3>How It Works: The Design Process</h3>
-
-<h4>Step 1: Identify Requirements</h4>
-<p>Understand what data needs to be stored and what operations the system must support.</p>
-
-<h4>Step 2: Identify Entities and Attributes</h4>
-<p>List all the "things" (entities) and their properties (attributes).</p>
-
-<h4>Step 3: Draw the ERD</h4>
-<p>Map entities, attributes, and relationships visually.</p>
-
-<h4>Step 4: Normalize</h4>
-<p>Apply 1NF, 2NF, 3NF to eliminate redundancy and anomalies.</p>
-
-<h4>Step 5: Write DDL</h4>
-<p>Translate the design into CREATE TABLE statements with keys and constraints.</p>
-
-<h4>Step 6: Add Security</h4>
-<p>Create users, assign privileges, and implement authentication.</p>
+<h3>The Design Process</h3>
+<table>
+    <thead>
+        <tr><th>Step</th><th>Action</th><th>Output</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>1</td><td>Identify Requirements</td><td>Requirements document</td></tr>
+        <tr><td>2</td><td>Identify Entities &amp; Attributes</td><td>Entity list with attributes</td></tr>
+        <tr><td>3</td><td>Draw the ERD</td><td>Visual diagram</td></tr>
+        <tr><td>4</td><td>Normalize (1NF → 3NF)</td><td>Normalized schema</td></tr>
+        <tr><td>5</td><td>Write DDL</td><td>CREATE TABLE statements</td></tr>
+        <tr><td>6</td><td>Add Security</td><td>Users and privileges</td></tr>
+    </tbody>
+</table>
 
 <h3>Example: School Management System</h3>
 
-<h4>Requirements</h4>
-<ul>
-    <li>Students can enroll in courses</li>
-    <li>Courses have teachers</li>
-    <li>Teachers belong to departments</li>
-    <li>Students receive grades</li>
-    <li>Track attendance</li>
-</ul>
+<h4>Step 1: Requirements</h4>
+<table>
+    <thead>
+        <tr><th>Requirement</th><th>Details</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Students enroll in courses</td><td>Each student can take multiple courses</td></tr>
+        <tr><td>Courses have teachers</td><td>Each course has one teacher</td></tr>
+        <tr><td>Teachers belong to departments</td><td>Each teacher is in one department</td></tr>
+        <tr><td>Students receive grades</td><td>Grade per course per student</td></tr>
+    </tbody>
+</table>
 
 <h4>Step 2: Entities</h4>
 <table>
@@ -79,138 +82,36 @@
 </table>
 
 <h4>Step 3: ERD</h4>
-<pre><code>  ┌────────────────┐                ┌────────────────┐
-   │   DEPARTMENT   │                │    STUDENT     │
-   ├────────────────┤                ├────────────────┤
-   │ *dept_id  (PK) │                │ *student_id(PK)│
-   │  name          │                │  first_name    │
-   │  building      │                │  last_name     │
-   │  budget        │                │  email         │
-   └───────┬────────┘                │  date_of_birth │
-           │                         └───────┬────────┘
-           │ 1:N                             │
-   ┌───────▼────────┐                ┌───────▼────────┐
-   │    TEACHER     │                │  ENROLLMENT    │
-   ├────────────────┤                ├────────────────┤
-   │ *teacher_id(PK)│                │ *student_id(FK)│
-   │  first_name    │                │ *course_id(FK) │
-   │  last_name     │                │  semester      │
-   │  email         │                │  enrollment_dt │
-   │  dept_id  (FK) │                └───────┬────────┘
-   └───────┬────────┘                        │
-           │                                 │
-           │ 1:N                             │ M:N
-   ┌───────▼────────┐                ┌───────▼────────┐
-   │    COURSE      │                │    GRADE       │
-   ├────────────────┤                ├────────────────┤
-   │ *course_id(PK) │                │ *grade_id (PK) │
-   │  title         │                │  student_id    │
-   │  code          │                │  course_id     │
-   │  credits       │                │  grade         │
-   │  teacher_id(FK)│                │  graded_date   │
-   └────────────────┘                └────────────────┘</code></pre>
+<pre><code>┌────────────────┐                ┌────────────────┐
+│   DEPARTMENT   │                │    STUDENT     │
+├────────────────┤                ├────────────────┤
+│ *dept_id  (PK) │                │ *student_id(PK)│
+│  name          │                │  first_name    │
+│  building      │                │  last_name     │
+└───────┬────────┘                │  email         │
+        │                         └───────┬────────┘
+        │ 1:N                             │
+┌───────▼────────┐                ┌───────▼────────┐
+│    TEACHER     │                │  ENROLLMENT    │
+├────────────────┤                ├────────────────┤
+│ *teacher_id(PK)│                │ *student_id(FK)│
+│  first_name    │                │ *course_id(FK) │
+│  last_name     │                │  semester      │
+│  dept_id  (FK) │                └───────┬────────┘
+└───────┬────────┘                        │
+        │                                 │
+        │ 1:N                             │ M:N
+┌───────▼────────┐                ┌───────▼────────┐
+│    COURSE      │                │    GRADE       │
+├────────────────┤                ├────────────────┤
+│ *course_id(PK) │                │ *grade_id (PK) │
+│  title         │                │  student_id    │
+│  code          │                │  course_id     │
+│  credits       │                │  grade         │
+│  teacher_id(FK)│                │  graded_date   │
+└────────────────┘                └────────────────┘</code></pre>
 
-<h4>Step 5: DDL</h4>
-
-<p><strong>Create database</strong></p>
-<pre><code class="language-sql">-- Create the school database
-CREATE DATABASE school_management;
-USE school_management;
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 1 row affected</pre>
-
-<p><strong>Create departments table</strong></p>
-<pre><code class="language-sql">-- Create departments table
-CREATE TABLE departments (
-    dept_id INT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL
-);
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<p><strong>Create teachers table</strong></p>
-<pre><code class="language-sql">-- Create teachers table
-CREATE TABLE teachers (
-    id INT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    dept_id INT,
-    FOREIGN KEY (dept_id) REFERENCES departments(dept_id)
-);
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<p><strong>Create students table</strong></p>
-<pre><code class="language-sql">-- Create students table
-CREATE TABLE students (
-    id INT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    email VARCHAR(50) UNIQUE
-);
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<p><strong>Create courses table</strong></p>
-<pre><code class="language-sql">-- Create courses table
-CREATE TABLE courses (
-    id INT PRIMARY KEY,
-    title VARCHAR(50) NOT NULL,
-    teacher_id INT,
-    FOREIGN KEY (teacher_id) REFERENCES teachers(id)
-);
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<p><strong>Create enrollments table</strong></p>
-<pre><code class="language-sql">-- Create enrollments (junction table)
-CREATE TABLE enrollments (
-    student_id INT,
-    course_id INT,
-    PRIMARY KEY (student_id, course_id),
-    FOREIGN KEY (student_id) REFERENCES students(id),
-    FOREIGN KEY (course_id) REFERENCES courses(id)
-);
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<p><strong>Create grades table</strong></p>
-<pre><code class="language-sql">-- Create grades table
-CREATE TABLE grades (
-    id INT PRIMARY KEY,
-    student_id INT,
-    course_id INT,
-    grade VARCHAR(2),
-    FOREIGN KEY (student_id) REFERENCES students(id),
-    FOREIGN KEY (course_id) REFERENCES courses(id)
-);
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<h4>Step 6: Security</h4>
-<pre><code class="language-sql">-- Create application user
-CREATE USER 'school_app'@'localhost'
-IDENTIFIED BY 'secure_password';
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<pre><code class="language-sql">-- Grant necessary permissions
-GRANT SELECT, INSERT, UPDATE
-ON school_management.students TO 'school_app'@'localhost';
-GRANT SELECT, INSERT, UPDATE
-ON school_management.enrollments TO 'school_app'@'localhost';
-GRANT SELECT ON school_management.courses TO 'school_app'@'localhost';
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<h3>Normalization Check</h3>
+<h4>Step 4: Normalization Check</h4>
 <table>
     <thead>
         <tr><th>Form</th><th>Check</th><th>Status</th></tr>
@@ -222,46 +123,72 @@ GRANT SELECT ON school_management.courses TO 'school_app'@'localhost';
     </tbody>
 </table>
 
-<h3>Useful Queries</h3>
-<pre><code class="language-sql">-- Get student grades
-SELECT s.name, c.title, g.grade
-FROM grades g
-JOIN students s ON g.student_id = s.id
-JOIN courses c ON g.course_id = c.id
-WHERE s.id = 1;
-</code></pre>
-<strong>Output:</strong>
-<pre>+-------+--------+-------+
-| name  | title  | grade |
-+-------+--------+-------+
-| Alice | Math   | A     |
-| Alice | Science| B     |
-+-------+--------+-------+</pre>
+<h4>Step 5: DDL Summary</h4>
+<table>
+    <thead>
+        <tr><th>Table</th><th>Primary Key</th><th>Foreign Keys</th><th>Constraints</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>departments</td><td>dept_id</td><td>—</td><td>name NOT NULL</td></tr>
+        <tr><td>teachers</td><td>id</td><td>dept_id → departments</td><td>name NOT NULL</td></tr>
+        <tr><td>students</td><td>id</td><td>—</td><td>name NOT NULL, email UNIQUE</td></tr>
+        <tr><td>courses</td><td>id</td><td>teacher_id → teachers</td><td>title NOT NULL</td></tr>
+        <tr><td>enrollments</td><td>(student_id, course_id)</td><td>student_id → students, course_id → courses</td><td>Composite PK</td></tr>
+        <tr><td>grades</td><td>id</td><td>student_id → students, course_id → courses</td><td>grade NOT NULL</td></tr>
+    </tbody>
+</table>
+
+<h4>Step 6: Security</h4>
+<table>
+    <thead>
+        <tr><th>Role</th><th>Permissions</th><th>Tables</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>Admin</strong></td><td>Full access</td><td>All tables</td></tr>
+        <tr><td><strong>Teacher</strong></td><td>SELECT, UPDATE</td><td>grades, students, courses</td></tr>
+        <tr><td><strong>Student</strong></td><td>SELECT</td><td>grades (own only)</td></tr>
+    </tbody>
+</table>
 
 <h2>Part 3: Apply New Knowledge</h2>
 
 <h3>Real-World Applications</h3>
-<ul>
-    <li><strong>Hospital Management:</strong> Design a complete system for patients, doctors, appointments, billing, and medical records.</li>
-    <li><strong>E-commerce Platform:</strong> Products, categories, customers, orders, payments, and shipping — a full database design challenge.</li>
-    <li><strong>Hotel Reservation System:</strong> Rooms, guests, bookings, staff, and billing with transaction support.</li>
-    <li><strong>Inventory Management:</strong> Products, suppliers, warehouses, stock movements, and purchase orders.</li>
-</ul>
+<table>
+    <thead>
+        <tr><th>Project</th><th>Key Entities</th><th>Design Challenge</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>Hospital Management</strong></td><td>Patients, Doctors, Appointments, Billing</td><td>Complex relationships, compliance requirements</td></tr>
+        <tr><td><strong>E-commerce Platform</strong></td><td>Products, Customers, Orders, Payments</td><td>High volume, inventory management</td></tr>
+        <tr><td><strong>Hotel Reservation</strong></td><td>Rooms, Guests, Bookings, Staff</td><td>Real-time availability, pricing rules</td></tr>
+        <tr><td><strong>Inventory Management</strong></td><td>Products, Suppliers, Warehouses</td><td>Multi-location tracking, reorder points</td></tr>
+    </tbody>
+</table>
 
 <h3>Tips for Success</h3>
-<ul>
-    <li><strong>Requirements first:</strong> Don't start designing until you fully understand what the system needs to do.</li>
-    <li><strong>ERD before SQL:</strong> Always draw the diagram before writing CREATE TABLE statements.</li>
-    <li><strong>Normalize, then check:</strong> Apply normalization step by step and verify at each level.</li>
-    <li><strong>Security from day one:</strong> Don't bolt on security at the end — design it into the system from the start.</li>
-</ul>
+<table>
+    <thead>
+        <tr><th>Tip</th><th>Why It Matters</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>Requirements first</strong></td><td>Don't start designing until you fully understand what the system needs</td></tr>
+        <tr><td><strong>ERD before SQL</strong></td><td>Always draw the diagram before writing CREATE TABLE</td></tr>
+        <tr><td><strong>Normalize, then check</strong></td><td>Apply normalization step by step and verify at each level</td></tr>
+        <tr><td><strong>Security from day one</strong></td><td>Don't bolt on security at the end — design it in from the start</td></tr>
+    </tbody>
+</table>
 
 <h3>Common Mistakes</h3>
-<ul>
-    <li><strong>Skip requirements and jump to coding:</strong> This leads to incomplete designs and frequent restructuring.</li>
-    <li><strong>Ignoring relationships:</strong> Tables without foreign keys create orphaned records and data inconsistency.</li>
-    <li><strong>Forgetting about scale:</strong> A design that works for 100 rows may fail with 1 million. Consider indexing and query performance.</li>
-</ul>
+<table>
+    <thead>
+        <tr><th>Mistake</th><th>Problem</th><th>Solution</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Skip requirements, jump to coding</td><td>Incomplete designs, frequent restructuring</td><td>Document requirements thoroughly first</td></tr>
+        <tr><td>Ignoring relationships</td><td>Orphaned records, data inconsistency</td><td>Always define foreign keys</td></tr>
+        <tr><td>Forgetting about scale</td><td>Design works for 100 rows, fails at 1 million</td><td>Consider indexing and query performance</td></tr>
+    </tbody>
+</table>
 
 <h2>Part 4: Assess Your Learning</h2>
 <div class="info-box note">
@@ -277,10 +204,9 @@ WHERE s.id = 1;
     <p><strong>Task:</strong></p>
     <ol>
         <li>Identify all entities and list at least 4 attributes for each.</li>
-        <li>Draw the ERD showing all entities, relationships, and cardinality.</li>
-        <li>Write the CREATE TABLE statements for your design with proper primary keys, foreign keys, and constraints.</li>
-        <li>Ensure your design is in at least 3NF. Explain why.</li>
-        <li>Write the GRANT statements for three user types: admin (full access), doctor (can view and update patient records), and receptionist (can only manage appointments and billing).</li>
+        <li>Describe all relationships and their cardinality (1:1, 1:N, M:N).</li>
+        <li>Explain your normalization check — why is this design in 3NF?</li>
+        <li>Create a table showing the privileges for three user types: admin, doctor, and receptionist.</li>
     </ol>
 </div>
 <details>
@@ -289,108 +215,40 @@ WHERE s.id = 1;
         <p><strong>Answers:</strong></p>
         <ol>
             <li>
-                <ul>
-                    <li><strong>Patient:</strong> patient_id (PK), first_name, last_name, email, phone, date_of_birth, insurance_id</li>
-                    <li><strong>Doctor:</strong> doctor_id (PK), first_name, last_name, email, specialty, dept_id (FK), hire_date</li>
-                    <li><strong>Appointment:</strong> appointment_id (PK), patient_id (FK), doctor_id (FK), date, time, reason, status</li>
-                    <li><strong>Department:</strong> dept_id (PK), name, location, budget</li>
-                    <li><strong>Billing:</strong> bill_id (PK), patient_id (FK), appointment_id (FK), service_description, amount, payment_status, payment_date</li>
-                </ul>
+                <table>
+                    <thead>
+                        <tr><th>Entity</th><th>Attributes</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Patient</strong></td><td>patient_id (PK), first_name, last_name, email, phone, date_of_birth, insurance_id</td></tr>
+                        <tr><td><strong>Doctor</strong></td><td>doctor_id (PK), first_name, last_name, email, specialty, dept_id (FK), hire_date</td></tr>
+                        <tr><td><strong>Appointment</strong></td><td>appointment_id (PK), patient_id (FK), doctor_id (FK), date, time, reason, status</td></tr>
+                        <tr><td><strong>Department</strong></td><td>dept_id (PK), name, location, budget</td></tr>
+                        <tr><td><strong>Billing</strong></td><td>bill_id (PK), patient_id (FK), appointment_id (FK), service_description, amount, payment_status, payment_date</td></tr>
+                    </tbody>
+                </table>
             </li>
-            <li>Expected ERD should show: Department → 1:N → Doctor, Patient → 1:N → Appointment, Doctor → 1:N → Appointment, Patient → 1:N → Billing, Appointment → 1:1 → Billing.</li>
             <li>
-                <pre><code class="language-sql">-- Create hospital database
-CREATE DATABASE hospital_management;
-USE hospital_management;
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 1 row affected</pre>
-
-<pre><code class="language-sql">-- Create departments table
-CREATE TABLE departments (
-    dept_id INT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL
-);
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<pre><code class="language-sql">-- Create doctors table
-CREATE TABLE doctors (
-    doctor_id INT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    specialty VARCHAR(50),
-    dept_id INT,
-    FOREIGN KEY (dept_id) REFERENCES departments(dept_id)
-);
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<pre><code class="language-sql">-- Create patients table
-CREATE TABLE patients (
-    patient_id INT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    phone VARCHAR(20)
-);
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<pre><code class="language-sql">-- Create appointments table
-CREATE TABLE appointments (
-    appointment_id INT PRIMARY KEY,
-    patient_id INT,
-    doctor_id INT,
-    appt_date DATE,
-    reason TEXT,
-    FOREIGN KEY (patient_id) REFERENCES patients(patient_id),
-    FOREIGN KEY (doctor_id) REFERENCES doctors(doctor_id)
-);
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<pre><code class="language-sql">-- Create billing table
-CREATE TABLE billing (
-    bill_id INT PRIMARY KEY,
-    patient_id INT,
-    service VARCHAR(50),
-    amount DECIMAL(10,2),
-    FOREIGN KEY (patient_id) REFERENCES patients(patient_id)
-);
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
+                <ul>
+                    <li>Department → Doctor: <strong>1:N</strong> (one department has many doctors)</li>
+                    <li>Patient → Appointment: <strong>1:N</strong> (one patient has many appointments)</li>
+                    <li>Doctor → Appointment: <strong>1:N</strong> (one doctor has many appointments)</li>
+                    <li>Patient → Billing: <strong>1:N</strong> (one patient has many bills)</li>
+                    <li>Appointment → Billing: <strong>1:1</strong> (each appointment generates one bill)</li>
+                </ul>
             </li>
             <li>The design is in 3NF: (1) All values are atomic (1NF). (2) No partial dependencies — all non-key columns depend on the full primary key (2NF). (3) No transitive dependencies — doctor specialty depends on doctor_id, not on appointment_id; department budget depends on dept_id, not on doctor_id (3NF).</li>
             <li>
-                <pre><code class="language-sql">-- Admin: full access
-GRANT ALL PRIVILEGES ON hospital_management.*
-TO 'admin_role'@'localhost';
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<pre><code class="language-sql">-- Doctor: view and update patient records
-GRANT SELECT ON hospital_management.patients
-TO 'doctor_role'@'localhost';
-GRANT SELECT, UPDATE ON hospital_management.appointments
-TO 'doctor_role'@'localhost';
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
-
-<pre><code class="language-sql">-- Receptionist: manage appointments and billing
-GRANT SELECT, INSERT, UPDATE
-ON hospital_management.appointments
-TO 'receptionist_role'@'localhost';
-GRANT SELECT, INSERT, UPDATE
-ON hospital_management.billing
-TO 'receptionist_role'@'localhost';
-</code></pre>
-<strong>Output:</strong>
-<pre>Query OK, 0 rows affected</pre>
+                <table>
+                    <thead>
+                        <tr><th>Role</th><th>SELECT</th><th>INSERT</th><th>UPDATE</th><th>DELETE</th><th>Tables</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Admin</strong></td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>All tables</td></tr>
+                        <tr><td><strong>Doctor</strong></td><td>✓</td><td>—</td><td>✓</td><td>—</td><td>patients, appointments</td></tr>
+                        <tr><td><strong>Receptionist</strong></td><td>✓</td><td>✓</td><td>✓</td><td>—</td><td>appointments, billing</td></tr>
+                    </tbody>
+                </table>
             </li>
         </ol>
     </div>

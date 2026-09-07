@@ -18,56 +18,39 @@
 
 <h2>Part 2: Acquire New Knowledge</h2>
 
-<h3>Definition</h3>
+<h3>What is an ERD?</h3>
 <p>An <strong>Entity-Relationship Diagram (ERD)</strong> is a visual representation of a database. It shows the <strong>entities</strong> (things), their <strong>attributes</strong> (properties), and the <strong>relationships</strong> between them. ERDs are the first step in database design — before writing any SQL.</p>
 
 <h3>Analogy</h3>
-<p>An ERD is like an <strong>architect's blueprint</strong> for a house. Before building, the architect draws the layout showing rooms (entities), room features like size and color (attributes), and how rooms connect like hallways and doors (relationships). The blueprint ensures everyone understands the design before construction begins.</p>
+<p>An ERD is like an <strong>architect's blueprint</strong> for a house. Before building, the architect draws the layout showing rooms (entities), room features like size and color (attributes), and how rooms connect like hallways and doors (relationships).</p>
 
-<h3>How It Works</h3>
-<p>An ERD uses three core components:</p>
-
-<h4>1. Entity</h4>
-<p>An entity is a <strong>thing or object</strong> in the real world that is being represented in the database. Shown as a rectangle.</p>
-<pre><code>  ┌─────────────┐
-   │   STUDENT   │      ← Entity (shown as a rectangle)
-   └─────────────┘</code></pre>
-<ul>
-    <li><strong>Strong Entity:</strong> Can exist independently (Student, Course)</li>
-    <li><strong>Weak Entity:</strong> Depends on another entity (Enrollment depends on Student and Course)</li>
-</ul>
-
-<h4>2. Attributes</h4>
-<p>Attributes are <strong>properties</strong> of an entity (the columns in a table).</p>
-<pre><code>         ┌─────────────────────┐
-          │      STUDENT        │
-          ├─────────────────────┤
-          │ * student_id (PK)   │   ← Primary Key (underlined)
-          │   first_name        │
-          │   last_name         │
-          │   email             │
-          │   date_of_birth     │
-          └─────────────────────┘</code></pre>
+<h3>Entity Types</h3>
 <table>
     <thead>
-        <tr><th>Attribute Type</th><th>Symbol</th><th>Example</th></tr>
+        <tr><th>Entity Type</th><th>Description</th><th>Example</th><th>Symbol</th></tr>
     </thead>
     <tbody>
-        <tr><td><strong>Simple</strong></td><td>Regular</td><td>first_name, age</td></tr>
-        <tr><td><strong>Composite</strong></td><td>Branches out</td><td>name → (first_name, last_name)</td></tr>
-        <tr><td><strong>Derived</strong></td><td>Dashed oval</td><td>age (derived from date_of_birth)</td></tr>
-        <tr><td><strong>Multi-valued</strong></td><td>Double oval</td><td>phone_numbers</td></tr>
+        <tr><td><strong>Strong Entity</strong></td><td>Can exist independently</td><td>Student, Course, Employee</td><td>Rectangle</td></tr>
+        <tr><td><strong>Weak Entity</strong></td><td>Depends on another entity for existence</td><td>Enrollment, Order Item</td><td>Double Rectangle</td></tr>
+        <tr><td><strong>Associative Entity</strong></td><td>Resolves M:N relationship into an entity</td><td>Student_Course (with its own attributes)</td><td>Rectangle + Diamond</td></tr>
     </tbody>
 </table>
 
-<h4>3. Relationships</h4>
-<p>Relationships describe how entities are <strong>connected</strong> to each other.</p>
-<pre><code>  ┌─────────┐                    ┌─────────┐
-   │ STUDENT │───── ENROLLS ─────▶│ COURSE  │
-   └─────────┘                    └─────────┘</code></pre>
+<h3>Attribute Types</h3>
+<table>
+    <thead>
+        <tr><th>Attribute Type</th><th>Description</th><th>Example</th><th>Symbol</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>Simple</strong></td><td>Cannot be divided further</td><td>age, gender</td><td>Oval</td></tr>
+        <tr><td><strong>Composite</strong></td><td>Can be divided into sub-parts</td><td>name → (first_name, last_name)</td><td>Oval with branches</td></tr>
+        <tr><td><strong>Derived</strong></td><td>Calculated from other attributes</td><td>age (from date_of_birth)</td><td>Dashed oval</td></tr>
+        <tr><td><strong>Multi-valued</strong></td><td>Can have multiple values</td><td>phone_numbers, skills</td><td>Double oval</td></tr>
+        <tr><td><strong>Key</strong></td><td>Uniquely identifies an entity</td><td>student_id, email</td><td>Underlined text</td></tr>
+    </tbody>
+</table>
 
-<h3>Cardinality</h3>
-<p>Cardinality defines how many instances of one entity can relate to another:</p>
+<h3>Relationship Types (Cardinality)</h3>
 <table>
     <thead>
         <tr><th>Type</th><th>Notation</th><th>Description</th><th>Example</th></tr>
@@ -79,65 +62,99 @@
     </tbody>
 </table>
 
+<h3>ERD Symbols Quick Reference</h3>
+<pre><code>┌──────────────┬──────────────────────────────────┐
+│   Symbol     │   Meaning                        │
+├──────────────┼──────────────────────────────────┤
+│ Rectangle    │ Entity                           │
+│ Double Rect  │ Weak Entity                      │
+│ Oval         │ Attribute                        │
+│ Double Oval  │ Multi-valued Attribute           │
+│ Dashed Oval  │ Derived Attribute                │
+│ Underlined   │ Key Attribute (Primary Key)      │
+│ Diamond      │ Relationship                     │
+│ Line         │ Connection                       │
+└──────────────┴──────────────────────────────────┘</code></pre>
+
 <h3>Example: University ERD</h3>
-<pre><code>  ┌────────────┐              ┌────────────┐
-   │  STUDENT   │              │  TEACHER   │
-   ├────────────┤              ├────────────┤
-   │ *id (PK)   │              │ *id (PK)   │
-   │ name       │              │ name       │
-   │ email      │              │ dept       │
-   │ phone      │              │ hire_date  │
-   └─────┬──────┘              └─────┬──────┘
-         │                           │
-         │         ┌────────────┐    │
-         ├────────▶│ ENROLLMENT │◀───┤
-         │         ├────────────┤    │
-         │         │ student_id │    │
-         │         │ course_id  │    │
-         │         │ grade      │    │
-         │         └─────┬──────┘    │
-         │               │           │
-         │         ┌─────▼──────┐    │
-         │         │  COURSE    │────┘
-         │         ├────────────┤
-         │         │ *id (PK)   │
-         │         │ title      │
-         │         │ credits    │
-         │         │ teacher_id │
-         │         └────────────┘</code></pre>
+<pre><code>┌────────────┐              ┌────────────┐
+│  STUDENT   │              │  TEACHER   │
+├────────────┤              ├────────────┤
+│ *id (PK)   │              │ *id (PK)   │
+│ name       │              │ name       │
+│ email      │              │ dept       │
+│ phone      │              │ hire_date  │
+└─────┬──────┘              └─────┬──────┘
+      │                           │
+      │         ┌────────────┐    │
+      ├────────▶│ ENROLLMENT │◀───┤
+      │         ├────────────┤    │
+      │         │ student_id │    │
+      │         │ course_id  │    │
+      │         │ grade      │    │
+      │         └─────┬──────┘    │
+      │               │           │
+      │         ┌─────▼──────┐    │
+      │         │  COURSE    │────┘
+      │         ├────────────┤
+      │         │ *id (PK)   │
+      │         │ title      │
+      │         │ credits    │
+      │         │ teacher_id │
+      │         └────────────┘</code></pre>
 
 <h3>Steps to Create an ERD</h3>
-<ol>
-    <li><strong>Identify entities</strong> — What things need to be stored? (Student, Course, Teacher)</li>
-    <li><strong>Identify attributes</strong> — What properties does each entity have?</li>
-    <li><strong>Identify relationships</strong> — How are entities connected?</li>
-    <li><strong>Determine cardinality</strong> — 1:1, 1:N, or M:N?</li>
-    <li><strong>Identify keys</strong> — Primary keys and foreign keys</li>
-    <li><strong>Draw the diagram</strong> — Use a tool or draw by hand</li>
-</ol>
+<table>
+    <thead>
+        <tr><th>Step</th><th>Action</th><th>Example (Library System)</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>1</td><td>Identify entities</td><td>Book, Member, Loan</td></tr>
+        <tr><td>2</td><td>Identify attributes</td><td>Book: title, author, ISBN</td></tr>
+        <tr><td>3</td><td>Identify relationships</td><td>Member borrows Book</td></tr>
+        <tr><td>4</td><td>Determine cardinality</td><td>1 Member → many Loans</td></tr>
+        <tr><td>5</td><td>Identify keys</td><td>ISBN (PK), member_id (PK)</td></tr>
+        <tr><td>6</td><td>Draw the diagram</td><td>Use rectangles, ovals, diamonds</td></tr>
+    </tbody>
+</table>
 
 <h2>Part 3: Apply New Knowledge</h2>
 
 <h3>Real-World Applications</h3>
-<ul>
-    <li><strong>Hospital Management:</strong> Patients, Doctors, Appointments, Departments — each entity has attributes and relationships that must be carefully mapped before building the database.</li>
-    <li><strong>E-commerce:</strong> Products, Customers, Orders, Payments — the ERD ensures that orders correctly link customers to products with proper cardinality.</li>
-    <li><strong>Social Media:</strong> Users, Posts, Comments, Likes — complex many-to-many relationships require junction tables in the ERD.</li>
-</ul>
+<table>
+    <thead>
+        <tr><th>Application</th><th>Entities</th><th>Key Relationships</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>Hospital</strong></td><td>Patient, Doctor, Appointment, Department</td><td>Doctor belongs to Department (1:N)</td></tr>
+        <tr><td><strong>E-commerce</strong></td><td>Product, Customer, Order, Payment</td><td>Customer places Order (1:N)</td></tr>
+        <tr><td><strong>Social Media</strong></td><td>User, Post, Comment, Like</td><td>User creates Post (1:N), Post has Comments (1:N)</td></tr>
+    </tbody>
+</table>
 
 <h3>Tips for Success</h3>
-<ul>
-    <li><strong>Start with nouns:</strong> Look at the requirements document and identify all nouns — these are likely your entities.</li>
-    <li><strong>Use Crow's Foot notation:</strong> It's the most widely used ERD notation and is supported by most design tools.</li>
-    <li><strong>Always resolve M:N relationships:</strong> Many-to-many relationships need a junction table in the physical design.</li>
-</ul>
+<table>
+    <thead>
+        <tr><th>Tip</th><th>Why It Matters</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>Start with nouns</strong></td><td>Nouns in requirements = entities, verbs = relationships</td></tr>
+        <tr><td><strong>Use Crow's Foot notation</strong></td><td>Most widely used ERD notation</td></tr>
+        <tr><td><strong>Always resolve M:N</strong></td><td>Many-to-many relationships need a junction table</td></tr>
+    </tbody>
+</table>
 
 <h3>Common Mistakes</h3>
-<ul>
-    <li><strong>Skip the ERD and jump to SQL:</strong> Without a design, you'll end up restructuring tables repeatedly. The ERD saves time.</li>
-    <li><strong>Forgetting cardinality:</strong> A relationship without cardinality (1:1, 1:N, M:N) is incomplete and leads to wrong table structures.</li>
-    <li><strong>Over-complicating the design:</strong> Start simple. You can always add more entities and attributes later.</li>
-</ul>
+<table>
+    <thead>
+        <tr><th>Mistake</th><th>Problem</th><th>Solution</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Skip the ERD, jump to SQL</td><td>Restructuring tables repeatedly</td><td>Draw ERD first, saves time</td></tr>
+        <tr><td>Forgetting cardinality</td><td>Incomplete relationships → wrong tables</td><td>Always specify 1:1, 1:N, or M:N</td></tr>
+        <tr><td>Over-complicating</td><td>Too many entities early on</td><td>Start simple, add complexity later</td></tr>
+    </tbody>
+</table>
 
 <h2>Part 4: Assess Your Learning</h2>
 <div class="info-box note">
