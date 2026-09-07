@@ -156,17 +156,16 @@ echo "Leaves: " . countLeaves($root) . "\n";    // 3</code></pre>
     </tbody>
 </table>
 
-<h3>Python Implementation</h3>
-<pre><code class="language-python">
-from collections import deque
-
+<h3>Python Example: Binary Tree Traversals</h3>
+<p>A tree is like a family tree — one parent can have multiple children.</p>
+<pre><code class="language-python"># TreeNode: holds data and points to left/right children
 class TreeNode:
     def __init__(self, data):
         self.data = data
-        self.left = None
-        self.right = None
+        self.left = None     # Left child
+        self.right = None    # Right child
 
-# Build sample tree:
+# Build this tree:
 #        1
 #       / \
 #      2   3
@@ -179,116 +178,105 @@ root.right = TreeNode(3)
 root.left.left = TreeNode(4)
 root.left.right = TreeNode(5)
 
+# In-order: Left -> Root -> Right
 def in_order(node):
-    if not node:
-        return []
-    return in_order(node.left) + [node.data] + in_order(node.right)
+    if node:
+        in_order(node.left)
+        print(node.data, end=" ")
+        in_order(node.right)
 
+# Pre-order: Root -> Left -> Right
 def pre_order(node):
-    if not node:
-        return []
-    return [node.data] + pre_order(node.left) + pre_order(node.right)
+    if node:
+        print(node.data, end=" ")
+        pre_order(node.left)
+        pre_order(node.right)
 
+# Post-order: Left -> Right -> Root
 def post_order(node):
-    if not node:
-        return []
-    return post_order(node.left) + post_order(node.right) + [node.data]
+    if node:
+        post_order(node.left)
+        post_order(node.right)
+        print(node.data, end=" ")
 
-def level_order(root):
-    if not root:
-        return []
-    result = []
-    queue = deque([root])
-    while queue:
-        node = queue.popleft()
-        result.append(node.data)
-        if node.left:
-            queue.append(node.left)
-        if node.right:
-            queue.append(node.right)
-    return result
-
-print(in_order(root))     # [4, 2, 5, 1, 3]
-print(pre_order(root))    # [1, 2, 4, 5, 3]
-print(post_order(root))   # [4, 5, 2, 3, 1]
-print(level_order(root))  # [1, 2, 3, 4, 5]
+in_order(root)    # 4 2 5 1 3
+print()
+pre_order(root)   # 1 2 4 5 3
+print()
+post_order(root)  # 4 5 2 3 1
 </code></pre>
+<strong>Output:</strong>
+<pre>4 2 5 1 3
+1 2 4 5 3
+4 5 2 3 1</pre>
 
-<h3>Java Implementation</h3>
-<pre><code class="language-java">
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.ArrayList;
-import java.util.List;
+<h3>Java Example: Binary Tree Traversals</h3>
+<p>A tree is like a family tree — one parent can have multiple children.</p>
+<pre><code class="language-java">public class Main {
+    // TreeNode: holds data and points to left/right children
+    static class TreeNode {
+        int data;
+        TreeNode left, right;
 
-class TreeNode {
-    int data;
-    TreeNode left;
-    TreeNode right;
-
-    TreeNode(int data) {
-        this.data = data;
-        this.left = null;
-        this.right = null;
-    }
-}
-
-public class BinaryTree {
-    public static List&lt;Integer&gt; inOrder(TreeNode node) {
-        List&lt;Integer&gt; result = new ArrayList&lt;&gt;();
-        if (node == null) return result;
-        result.addAll(inOrder(node.left));
-        result.add(node.data);
-        result.addAll(inOrder(node.right));
-        return result;
-    }
-
-    public static List&lt;Integer&gt; preOrder(TreeNode node) {
-        List&lt;Integer&gt; result = new ArrayList&lt;&gt;();
-        if (node == null) return result;
-        result.add(node.data);
-        result.addAll(preOrder(node.left));
-        result.addAll(preOrder(node.right));
-        return result;
-    }
-
-    public static List&lt;Integer&gt; postOrder(TreeNode node) {
-        List&lt;Integer&gt; result = new ArrayList&lt;&gt;();
-        if (node == null) return result;
-        result.addAll(postOrder(node.left));
-        result.addAll(postOrder(node.right));
-        result.add(node.data);
-        return result;
-    }
-
-    public static List&lt;Integer&gt; levelOrder(TreeNode root) {
-        List&lt;Integer&gt; result = new ArrayList&lt;&gt;();
-        if (root == null) return result;
-        Queue&lt;TreeNode&gt; queue = new LinkedList&lt;&gt;();
-        queue.add(root);
-        while (!queue.isEmpty()) {
-            TreeNode node = queue.poll();
-            result.add(node.data);
-            if (node.left != null) queue.add(node.left);
-            if (node.right != null) queue.add(node.right);
+        TreeNode(int data) {
+            this.data = data;
+            this.left = null;
+            this.right = null;
         }
-        return result;
+    }
+
+    // In-order: Left -> Root -> Right
+    static void inOrder(TreeNode node) {
+        if (node != null) {
+            inOrder(node.left);
+            System.out.print(node.data + " ");
+            inOrder(node.right);
+        }
+    }
+
+    // Pre-order: Root -> Left -> Right
+    static void preOrder(TreeNode node) {
+        if (node != null) {
+            System.out.print(node.data + " ");
+            preOrder(node.left);
+            preOrder(node.right);
+        }
+    }
+
+    // Post-order: Left -> Right -> Root
+    static void postOrder(TreeNode node) {
+        if (node != null) {
+            postOrder(node.left);
+            postOrder(node.right);
+            System.out.print(node.data + " ");
+        }
     }
 
     public static void main(String[] args) {
+        // Build this tree:
+        //        1
+        //       / \
+        //      2   3
+        //     / \
+        //    4   5
         TreeNode root = new TreeNode(1);
         root.left = new TreeNode(2);
         root.right = new TreeNode(3);
         root.left.left = new TreeNode(4);
         root.left.right = new TreeNode(5);
 
-        System.out.println(inOrder(root));     // [4, 2, 5, 1, 3]
-        System.out.println(preOrder(root));    // [1, 2, 4, 5, 3]
-        System.out.println(postOrder(root));   // [4, 5, 2, 3, 1]
-        System.out.println(levelOrder(root));  // [1, 2, 3, 4, 5]
+        inOrder(root);    // 4 2 5 1 3
+        System.out.println();
+        preOrder(root);   // 1 2 4 5 3
+        System.out.println();
+        postOrder(root);  // 4 5 2 3 1
     }
 }
 </code></pre>
+<strong>Output:</strong>
+<pre>4 2 5 1 3
+1 2 4 5 3
+4 5 2 3 1</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

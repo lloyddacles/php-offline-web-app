@@ -190,165 +190,63 @@ echo solveNQueens(8);  // 92 solutions for 8-queens</code></pre>
     <li><strong>Avoid unnecessary work</strong> — Skip redundant calculations</li>
 </ul>
 
-<h3>Python Implementation</h3>
-<pre><code class="language-python"># Memoization (Top-Down) Fibonacci
-def fib_memo(n, memo={}):
+<h3>Python Example: Dynamic Programming (Fibonacci)</h3>
+<p>DP is like memorizing answers — save time by not recalculating.</p>
+<pre><code class="language-python"># WITHOUT DP: Slow - recalculates same values
+# Time: O(2^n)
+def fib_slow(n):
     if n <= 1:
         return n
+    return fib_slow(n - 1) + fib_slow(n - 2)
+
+# WITH DP: Fast - stores and reuses answers
+# Time: O(n)
+def fib_fast(n, memo={}):
     if n in memo:
-        return memo[n]
-    memo[n] = fib_memo(n - 1, memo) + fib_memo(n - 2, memo)
+        return memo[n]          # Return saved answer
+    if n <= 1:
+        return n
+    memo[n] = fib_fast(n - 1, memo) + fib_fast(n - 2, memo)
     return memo[n]
 
-print(fib_memo(50))  # 12586269025
+print(fib_slow(10))  # 55 (slow)
+print(fib_fast(10))  # 55 (fast!)
+print(fib_fast(30))  # 832040 (instant)
+</code></pre>
+<strong>Output:</strong>
+<pre>55
+55
+832040</pre>
 
-# Knapsack Problem (0/1)
-def knapsack(weights, values, capacity):
-    n = len(weights)
-    dp = [[0] * (capacity + 1) for _ in range(n + 1)]
-
-    for i in range(1, n + 1):
-        for w in range(capacity + 1):
-            dp[i][w] = dp[i - 1][w]  # Don't take item
-            if weights[i - 1] <= w:
-                take = dp[i - 1][w - weights[i - 1]] + values[i - 1]
-                dp[i][w] = max(dp[i][w], take)
-    return dp[n][capacity]
-
-weights = [2, 3, 4, 5]
-values = [3, 4, 5, 6]
-print(knapsack(weights, values, 8))  # 10
-
-# Activity Selection (Greedy)
-def activity_selection(activities):
-    activities.sort(key=lambda x: x[1])  # Sort by finish time
-    selected = [activities[0]]
-    last_end = activities[0][1]
-
-    for i in range(1, len(activities)):
-        if activities[i][0] >= last_end:
-            selected.append(activities[i])
-            last_end = activities[i][1]
-    return selected
-
-activities = [
-    (1, 4), (3, 5), (0, 6), (5, 7),
-    (3, 9), (5, 9), (6, 10), (8, 11),
-]
-print(len(activity_selection(activities)))  # 4
-
-# N-Queens (Backtracking)
-def solve_n_queens(n):
-    solutions = []
-    board = [-1] * n
-
-    def is_safe(board, row, col):
-        for i in range(row):
-            if board[i] == col or abs(board[i] - col) == abs(i - row):
-                return False
-        return True
-
-    def solve(board, row):
-        if row == n:
-            solutions.append(board[:])
-            return
-        for col in range(n):
-            if is_safe(board, row, col):
-                board[row] = col
-                solve(board, row + 1)
-                board[row] = -1  # Backtrack
-
-    solve(board, 0)
-    return len(solutions)
-
-print(solve_n_queens(8))  # 92</code></pre>
-
-<h3>Java Implementation</h3>
-<pre><code class="language-java">import java.util.*;
-
-public class AlgorithmStrategies {
-
-    // Memoization (Top-Down) Fibonacci
-    static long fibMemo(int n, Map&lt;Integer, Long&gt; memo) {
-        if (n &lt;= 1) return n;
-        if (memo.containsKey(n)) return memo.get(n);
-        memo.put(n, fibMemo(n - 1, memo) + fibMemo(n - 2, memo));
-        return memo.get(n);
+<h3>Java Example: Dynamic Programming (Fibonacci)</h3>
+<p>DP is like memorizing answers — save time by not recalculating.</p>
+<pre><code class="language-java">public class Main {
+    // WITHOUT DP: Slow
+    static int fibSlow(int n) {
+        if (n <= 1) return n;
+        return fibSlow(n - 1) + fibSlow(n - 2);
     }
 
-    // Knapsack Problem (0/1)
-    static int knapsack(int[] weights, int[] values, int capacity) {
-        int n = weights.length;
-        int[][] dp = new int[n + 1][capacity + 1];
-
-        for (int i = 1; i &lt;= n; i++) {
-            for (int w = 0; w &lt;= capacity; w++) {
-                dp[i][w] = dp[i - 1][w];
-                if (weights[i - 1] &lt;= w) {
-                    int take = dp[i - 1][w - weights[i - 1]] + values[i - 1];
-                    dp[i][w] = Math.max(dp[i][w], take);
-                }
-            }
-        }
-        return dp[n][capacity];
-    }
-
-    // Activity Selection (Greedy)
-    static List&lt;int[]&gt; activitySelection(int[][] activities) {
-        Arrays.sort(activities, Comparator.comparingInt(a -&gt; a[1]));
-        List&lt;int[]&gt; selected = new ArrayList&lt;&gt;();
-        selected.add(activities[0]);
-        int lastEnd = activities[0][1];
-
-        for (int i = 1; i &lt; activities.length; i++) {
-            if (activities[i][0] &gt;= lastEnd) {
-                selected.add(activities[i]);
-                lastEnd = activities[i][1];
-            }
-        }
-        return selected;
-    }
-
-    // N-Queens (Backtracking)
-    static int solveNQueens(int n) {
-        List&lt;List&lt;Integer&gt;&gt; solutions = new ArrayList&lt;&gt;();
-        int[] board = new int[n];
-        Arrays.fill(board, -1);
-
-        class Backtrack {
-            boolean isSafe(int[] board, int row, int col) {
-                for (int i = 0; i &lt; row; i++) {
-                    if (board[i] == col || Math.abs(board[i] - col) == Math.abs(i - row))
-                        return false;
-                }
-                return true;
-            }
-
-            void solve(int[] board, int row, int n) {
-                if (row == n) {
-                    solutions.add(Arrays.stream(board).boxed().toList());
-                    return;
-                }
-                for (int col = 0; col &lt; n; col++) {
-                    if (isSafe(board, row, col)) {
-                        board[row] = col;
-                        solve(board, row + 1, n);
-                        board[row] = -1;
-                    }
-                }
-            }
-        }
-
-        new Backtrack().solve(board, 0, n);
-        return solutions.size();
+    // WITH DP: Fast - stores answers in array
+    static int[] memo = new int[100];
+    static int fibFast(int n) {
+        if (n <= 1) return n;
+        if (memo[n] != 0) return memo[n];  // Return saved answer
+        memo[n] = fibFast(n - 1) + fibFast(n - 2);
+        return memo[n];
     }
 
     public static void main(String[] args) {
-        System.out.println(fibMemo(50, new HashMap&lt;&gt;()));  // 12586269025
-        System.out.println(knapsack(new int[]{2,3,4,5}, new int[]{3,4,5,6}, 8));  // 10
-        System.out.println(solveNQueens(8));  // 92
+        System.out.println(fibSlow(10));  // 55 (slow)
+        System.out.println(fibFast(10));  // 55 (fast!)
+        System.out.println(fibFast(30));  // 832040 (instant)
     }
-}</code></pre>
+}
+</code></pre>
+<strong>Output:</strong>
+<pre>55
+55
+832040</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

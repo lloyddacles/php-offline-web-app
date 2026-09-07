@@ -138,102 +138,84 @@ for ($i = 0; $i < 1000; $i++) {
 echo memory_get_usage() . " bytes\n";
 // Grows automatically as needed</code></pre>
 
-<h3>Python Implementation</h3>
-<pre><code class="language-python">
-# Find the maximum element — O(n)
-def find_max(arr):
-    max_val = arr[0]
-    for num in arr[1:]:
-        if num > max_val:
-            max_val = num
-    return max_val
+<h3>Python Example: Array Operations</h3>
+<p>Python lists handle all array operations automatically.</p>
+<pre><code class="language-python"># Create a list of grades
+grades = [85, 90, 78, 92, 88]
 
-# Reverse an array — O(n)
-def reverse_array(arr):
-    left, right = 0, len(arr) - 1
-    while left < right:
-        arr[left], arr[right] = arr[right], arr[left]
-        left += 1
-        right -= 1
-    return arr
+# Access by index - O(1)
+print(grades[0])    # 85 (first grade)
+print(grades[2])    # 78 (third grade)
 
-# Rotate array right by k — O(n)
-def rotate_right(arr, k):
-    n = len(arr)
-    k = k % n
-    return arr[-k:] + arr[:-k]
+# Add a grade - O(1) amortized
+grades.append(95)
+print(grades)       # [85, 90, 78, 92, 88, 95]
 
-# Dynamic array operations
-def dynamic_array_demo():
-    arr = []
-    capacity = 2
-    size = 0
-    for i in range(1, 11):
-        if size >= capacity:
-            capacity *= 2
-            print(f"Resized to capacity: {capacity}")
-        arr.append(i)
-        size += 1
-    return arr
+# Search for a grade - O(n)
+if 92 in grades:
+    print("Found 92!")  # Found 92!
 
-print(find_max([3, 7, 2, 9, 1]))  # 9
-print(reverse_array([1, 2, 3]))  # [3, 2, 1]
-print(rotate_right([1,2,3,4,5], 2))  # [4, 5, 1, 2, 3]
-print(dynamic_array_demo())
+# Remove a grade - O(n)
+grades.remove(78)
+print(grades)       # [85, 90, 92, 88, 95]
+
+# Sort grades - O(n log n)
+grades.sort()
+print(grades)       # [85, 88, 90, 92, 95]
 </code></pre>
+<strong>Output:</strong>
+<pre>85
+78
+[85, 90, 78, 92, 88, 95]
+Found 92!
+[85, 90, 92, 88, 95]
+[85, 88, 90, 92, 95]</pre>
 
-<h3>Java Implementation</h3>
-<pre><code class="language-java">
-import java.util.ArrayList;
+<h3>Java Example: Array Operations</h3>
+<p>Java arrays are fixed-size, so we use ArrayList for dynamic operations.</p>
+<pre><code class="language-java">import java.util.ArrayList;
+import java.util.Collections;
 
-public class ArrayOperations {
-    // Find the maximum element — O(n)
-    public static int findMax(int[] arr) {
-        int max = arr[0];
-        for (int i = 1; i < arr.length; i++) {
-            if (arr[i] > max) max = arr[i];
-        }
-        return max;
-    }
-
-    // Reverse an array — O(n)
-    public static int[] reverseArray(int[] arr) {
-        int left = 0, right = arr.length - 1;
-        while (left < right) {
-            int temp = arr[left];
-            arr[left] = arr[right];
-            arr[right] = temp;
-            left++;
-            right--;
-        }
-        return arr;
-    }
-
-    // ArrayList operations (dynamic array)
-    public static void dynamicArrayDemo() {
-        ArrayList&lt;Integer&gt; arr = new ArrayList&lt;&gt;();
-        int capacity = 2;
-        for (int i = 1; i <= 10; i++) {
-            if (arr.size() >= capacity) {
-                capacity *= 2;
-                System.out.println("Resized to capacity: " + capacity);
-            }
-            arr.add(i);
-        }
-        System.out.println("Array: " + arr);
-    }
-
+public class Main {
     public static void main(String[] args) {
-        int[] nums = {3, 7, 2, 9, 1};
-        System.out.println("Max: " + findMax(nums));
+        // Create a list of grades
+        ArrayList&lt;Integer&gt; grades = new ArrayList&lt;&gt;();
+        grades.add(85);
+        grades.add(90);
+        grades.add(78);
+        grades.add(92);
+        grades.add(88);
 
-        int[] arr = {1, 2, 3};
-        System.out.println("Reversed: " + java.util.Arrays.toString(reverseArray(arr)));
+        // Access by index - O(1)
+        System.out.println(grades.get(0));  // 85
+        System.out.println(grades.get(2));  // 78
 
-        dynamicArrayDemo();
+        // Add a grade - O(1) amortized
+        grades.add(95);
+        System.out.println(grades);  // [85, 90, 78, 92, 88, 95]
+
+        // Search for a grade - O(n)
+        if (grades.contains(92)) {
+            System.out.println("Found 92!");  // Found 92!
+        }
+
+        // Remove a grade - O(n)
+        grades.remove(Integer.valueOf(78));
+        System.out.println(grades);  // [85, 90, 92, 88, 95]
+
+        // Sort grades - O(n log n)
+        Collections.sort(grades);
+        System.out.println(grades);  // [85, 88, 90, 92, 95]
     }
 }
 </code></pre>
+<strong>Output:</strong>
+<pre>85
+78
+[85, 90, 78, 92, 88, 95]
+Found 92!
+[85, 90, 92, 88, 95]
+[85, 88, 90, 92, 95]</pre>
 
 <!-- PART 3 -->
 <h2>Part 3: Apply New Knowledge</h2>

@@ -203,174 +203,85 @@ $printer->addJob('Photo.jpg');
 $printer->addJob('Report.docx');
 $printer->processNext();  // Printing: Document1.pdf</code></pre>
 
-<h3>Python Implementation</h3>
-<pre><code class="language-python">
-from collections import deque
+<h3>Python Example: Queue Operations</h3>
+<p>A queue is like a line at a store — first person in, first person out.</p>
+<pre><code class="language-python">from collections import deque
 
+# Queue: First In, First Out (FIFO)
 class Queue:
     def __init__(self):
         self.items = deque()
 
+    # Add to back - O(1)
     def enqueue(self, item):
         self.items.append(item)
 
+    # Remove from front - O(1)
     def dequeue(self):
-        if self.is_empty():
-            raise IndexError("Queue is empty")
-        return self.items.popleft()
+        if not self.is_empty():
+            return self.items.popleft()
+        return None
 
-    def peek(self):
-        if self.is_empty():
-            raise IndexError("Queue is empty")
-        return self.items[0]
+    # Look at front without removing - O(1)
+    def front(self):
+        if not self.is_empty():
+            return self.items[0]
+        return None
 
+    # Check if empty - O(1)
     def is_empty(self):
         return len(self.items) == 0
 
-    def size(self):
-        return len(self.items)
-
+# Test it
 queue = Queue()
-queue.enqueue('Alice')
-queue.enqueue('Bob')
-queue.enqueue('Charlie')
-print(queue.dequeue())  # Alice
-print(queue.peek())     # Bob
-
-class CircularQueue:
-    def __init__(self, size):
-        self.size = size
-        self.items = [None] * size
-        self.front = -1
-        self.rear = -1
-
-    def enqueue(self, item):
-        if self.is_full():
-            raise IndexError("Queue is full")
-        if self.front == -1:
-            self.front = 0
-        self.rear = (self.rear + 1) % self.size
-        self.items[self.rear] = item
-
-    def dequeue(self):
-        if self.is_empty():
-            raise IndexError("Queue is empty")
-        item = self.items[self.front]
-        if self.front == self.rear:
-            self.front = self.rear = -1
-        else:
-            self.front = (self.front + 1) % self.size
-        return item
-
-    def is_empty(self):
-        return self.front == -1
-
-    def is_full(self):
-        return (self.rear + 1) % self.size == self.front
-
-def bfs(graph, start):
-    visited = {start}
-    queue = Queue()
-    queue.enqueue(start)
-    order = []
-
-    while not queue.is_empty():
-        node = queue.dequeue()
-        order.append(node)
-        for neighbor in graph[node]:
-            if neighbor not in visited:
-                visited.add(neighbor)
-                queue.enqueue(neighbor)
-    return order
-
-graph = {
-    'A': ['B', 'C'],
-    'B': ['A', 'D'],
-    'C': ['A', 'D'],
-    'D': ['B', 'C']
-}
-print(bfs(graph, 'A'))  # ['A', 'B', 'C', 'D']
+queue.enqueue("Juan")
+queue.enqueue("Maria")
+queue.enqueue("Pedro")
+print(queue.dequeue())   # Juan (first in, first out)
+print(queue.front())     # Maria (now first in line)
+print(queue.dequeue())   # Maria
+print(queue.is_empty())  # False
 </code></pre>
+<strong>Output:</strong>
+<pre>Juan
+Maria
+Maria
+False</pre>
 
-<h3>Java Implementation</h3>
-<pre><code class="language-java">
-import java.util.LinkedList;
+<h3>Java Example: Queue Operations</h3>
+<p>A queue is like a line at a store — first person in, first person out.</p>
+<pre><code class="language-java">import java.util.LinkedList;
 import java.util.Queue;
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.List;
-
-class CircularQueue {
-    private Object[] items;
-    private int size;
-    private int front = -1;
-    private int rear = -1;
-
-    public CircularQueue(int size) {
-        this.size = size;
-        this.items = new Object[size];
-    }
-
-    public void enqueue(Object item) {
-        if (isFull()) throw new RuntimeException("Queue is full");
-        if (front == -1) front = 0;
-        rear = (rear + 1) % size;
-        items[rear] = item;
-    }
-
-    public Object dequeue() {
-        if (isEmpty()) throw new RuntimeException("Queue is empty");
-        Object item = items[front];
-        if (front == rear) {
-            front = rear = -1;
-        } else {
-            front = (front + 1) % size;
-        }
-        return item;
-    }
-
-    public boolean isEmpty() { return front == -1; }
-    public boolean isFull() { return (rear + 1) % size == front; }
-}
 
 public class Main {
-    public static List&lt;String&gt; bfs(HashMap&lt;String, List&lt;String&gt;&gt; graph, String start) {
-        List&lt;String&gt; order = new ArrayList&lt;&gt;();
-        java.util.Queue&lt;String&gt; queue = new LinkedList&lt;&gt;();
-        java.util.HashSet&lt;String&gt; visited = new java.util.HashSet&lt;&gt;();
-        queue.add(start);
-        visited.add(start);
-
-        while (!queue.isEmpty()) {
-            String node = queue.poll();
-            order.add(node);
-            for (String neighbor : graph.get(node)) {
-                if (!visited.contains(neighbor)) {
-                    visited.add(neighbor);
-                    queue.add(neighbor);
-                }
-            }
-        }
-        return order;
-    }
-
     public static void main(String[] args) {
+        // Java Queue using LinkedList
         Queue&lt;String&gt; queue = new LinkedList&lt;&gt;();
-        queue.add("Alice");
-        queue.add("Bob");
-        queue.add("Charlie");
-        System.out.println(queue.poll());  // Alice
-        System.out.println(queue.peek());  // Bob
 
-        HashMap&lt;String, List&lt;String&gt;&gt; graph = new HashMap&lt;&gt;();
-        graph.put("A", List.of("B", "C"));
-        graph.put("B", List.of("A", "D"));
-        graph.put("C", List.of("A", "D"));
-        graph.put("D", List.of("B", "C"));
-        System.out.println(bfs(graph, "A"));  // [A, B, C, D]
+        // Add to back - O(1)
+        queue.offer("Juan");
+        queue.offer("Maria");
+        queue.offer("Pedro");
+
+        // Remove from front - O(1)
+        System.out.println(queue.poll());   // Juan (first in, first out)
+
+        // Look at front without removing - O(1)
+        System.out.println(queue.peek());  // Maria (now first in line)
+
+        // Remove more
+        System.out.println(queue.poll());   // Maria
+
+        // Check if empty - O(1)
+        System.out.println(queue.isEmpty());  // false
     }
 }
 </code></pre>
+<strong>Output:</strong>
+<pre>Juan
+Maria
+Maria
+false</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

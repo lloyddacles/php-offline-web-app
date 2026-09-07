@@ -203,98 +203,67 @@ echo "Ratio: O(n²) is " . round($quadraticTime / $linearTime) . "x slower!\n";
     </div>
 </div>
 
-<h3>Python Implementation</h3>
-<pre><code class="language-python">
-import time
+<h3>Python Example: Comparing Speed</h3>
+<p>Let's see how different code speeds compare.</p>
+<pre><code class="language-python"># O(1) - Constant: Same speed no matter the size
+def get_first(items):
+    return items[0]  # Just grab the first item
 
-# O(n) - Linear time
-def linear_search(arr, target):
-    for i in range(len(arr)):
-        if arr[i] == target:
-            return i
-    return -1
+# O(n) - Linear: Speed grows with input size
+def find_item(items, target):
+    for item in items:      # Check each item one by one
+        if item == target:
+            return item
+    return None
 
-# O(n²) - Quadratic time
-def bubble_sort(arr):
-    n = len(arr)
-    for i in range(n):
-        for j in range(0, n-i-1):
-            if arr[j] > arr[j+1]:
-                arr[j], arr[j+1] = arr[j+1], arr[j]
-    return arr
+# O(n²) - Quadratic: Very slow for large inputs
+def find_duplicates(items):
+    duplicates = []
+    for i in items:           # First loop
+        for j in items:       # Second loop (inside first)
+            if i == j and items.count(i) > 1:
+                duplicates.append(i)
+    return duplicates
 
-# O(log n) - Logarithmic time
-def binary_search(arr, target):
-    left, right = 0, len(arr) - 1
-    while left <= right:
-        mid = (left + right) // 2
-        if arr[mid] == target:
-            return mid
-        elif arr[mid] < target:
-            left = mid + 1
-        else:
-            right = mid - 1
-    return -1
-
-# Example usage
-numbers = list(range(1, 1001))
-print(f"Linear search for 500: {linear_search(numbers, 500)}")
-print(f"Binary search for 500: {binary_search(numbers, 500)}")
-print(f"Sorted array: {bubble_sort([64, 34, 25, 12, 22, 11, 90])}")
+# Test with small list
+numbers = [1, 2, 3, 4, 5]
+print(get_first(numbers))        # 1
+print(find_item(numbers, 3))     # 3
+print(find_duplicates([1,2,2,3]))# [2, 2]
 </code></pre>
+<strong>Output:</strong>
+<pre>1
+3
+[2, 2]</pre>
 
-<h3>Java Implementation</h3>
-<pre><code class="language-java">
-public class ComplexityExamples {
-    // O(n) - Linear time
-    public static int linearSearch(int[] arr, int target) {
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] == target) {
-                return i;
-            }
-        }
-        return -1;
+<h3>Java Example: Comparing Speed</h3>
+<p>Let's see how different code speeds compare.</p>
+<pre><code class="language-java">public class Main {
+    // O(1) - Constant: Same speed no matter the size
+    static int getFirst(int[] items) {
+        return items[0];  // Just grab the first item
     }
 
-    // O(n²) - Quadratic time
-    public static void bubbleSort(int[] arr) {
-        int n = arr.length;
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < n - i - 1; j++) {
-                if (arr[j] > arr[j + 1]) {
-                    int temp = arr[j];
-                    arr[j] = arr[j + 1];
-                    arr[j + 1] = temp;
-                }
+    // O(n) - Linear: Speed grows with input size
+    static int findItem(int[] items, int target) {
+        for (int item : items) {      // Check each item
+            if (item == target) {
+                return item;
             }
-        }
-    }
-
-    // O(log n) - Logarithmic time
-    public static int binarySearch(int[] arr, int target) {
-        int left = 0, right = arr.length - 1;
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-            if (arr[mid] == target) return mid;
-            if (arr[mid] < target) left = mid + 1;
-            else right = mid - 1;
         }
         return -1;
     }
 
     public static void main(String[] args) {
-        int[] numbers = new int[1000];
-        for (int i = 0; i < 1000; i++) numbers[i] = i + 1;
-
-        System.out.println("Linear search for 500: " + linearSearch(numbers, 500));
-        System.out.println("Binary search for 500: " + binarySearch(numbers, 500));
-
-        int[] arr = {64, 34, 25, 12, 22, 11, 90};
-        bubbleSort(arr);
-        System.out.println("Sorted array: " + java.util.Arrays.toString(arr));
+        int[] numbers = {1, 2, 3, 4, 5};
+        System.out.println(getFirst(numbers));      // 1
+        System.out.println(findItem(numbers, 3));   // 3
     }
 }
 </code></pre>
+<strong>Output:</strong>
+<pre>1
+3</pre>
 
 <!-- PART 3 -->
 <h2>Part 3: Apply New Knowledge</h2>

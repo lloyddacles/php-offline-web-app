@@ -231,164 +231,90 @@ echo $dll->displayBackward();  // 30 ⇄ 20 ⇄ 10</code></pre>
 </table>
 <p style="font-size:0.85em; color:var(--text-muted);">* O(n) without tail pointer; O(1) with tail pointer</p>
 
-<h3>Python Implementation</h3>
-<pre><code class="language-python">
+<h3>Python Example: Singly Linked List</h3>
+<p>A linked list is like a train — each car points to the next one.</p>
+<pre><code class="language-python"># Node: holds data and points to next node
 class Node:
     def __init__(self, data):
-        self.data = data
-        self.next = None
+        self.data = data    # Store the data
+        self.next = None    # Point to nothing (end of list)
 
-class SinglyLinkedList:
+# Linked List: manages the nodes
+class LinkedList:
     def __init__(self):
-        self.head = None
-        self.size = 0
+        self.head = None    # Start with empty list
 
+    # Add to front - O(1)
     def prepend(self, data):
-        node = Node(data)
-        node.next = self.head
-        self.head = node
-        self.size += 1
+        new_node = Node(data)
+        new_node.next = self.head   # New node points to old head
+        self.head = new_node        # New node becomes head
 
-    def append(self, data):
-        node = Node(data)
-        if not self.head:
-            self.head = node
-        else:
-            current = self.head
-            while current.next:
-                current = current.next
-            current.next = node
-        self.size += 1
-
-    def delete(self, data):
-        if not self.head:
-            return
-        if self.head.data == data:
-            self.head = self.head.next
-            self.size -= 1
-            return
-        current = self.head
-        while current.next:
-            if current.next.data == data:
-                current.next = current.next.next
-                self.size -= 1
-                return
-            current = current.next
-
-    def search(self, data):
-        current = self.head
-        index = 0
-        while current:
-            if current.data == data:
-                return index
-            current = current.next
-            index += 1
-        return -1
-
+    # Print all items
     def display(self):
-        elements = []
         current = self.head
         while current:
-            elements.append(str(current.data))
+            print(current.data, end=" -> ")
             current = current.next
-        return ' → '.join(elements) + ' → NULL'
+        print("None")
 
-lst = SinglyLinkedList()
-lst.append(10)
-lst.append(20)
-lst.append(30)
-lst.prepend(5)
-print(lst.display())  # 5 → 10 → 20 → 30 → NULL
+# Test it
+ll = LinkedList()
+ll.prepend("Juan")
+ll.prepend("Maria")
+ll.prepend("Pedro")
+ll.display()  # Pedro -> Maria -> Juan -> None
 </code></pre>
+<strong>Output:</strong>
+<pre>Pedro -> Maria -> Juan -> None</pre>
 
-<h3>Java Implementation</h3>
-<pre><code class="language-java">
-class Node {
-    int data;
-    Node next;
+<h3>Java Example: Singly Linked List</h3>
+<p>A linked list is like a train — each car points to the next one.</p>
+<pre><code class="language-java">public class Main {
+    // Node: holds data and points to next node
+    static class Node {
+        String data;
+        Node next;
 
-    Node(int data) {
-        this.data = data;
-        this.next = null;
-    }
-}
-
-class SinglyLinkedList {
-    private Node head = null;
-    private int size = 0;
-
-    public void prepend(int data) {
-        Node node = new Node(data);
-        node.next = head;
-        head = node;
-        size++;
+        Node(String data) {
+            this.data = data;    // Store the data
+            this.next = null;    // Point to nothing
+        }
     }
 
-    public void append(int data) {
-        Node node = new Node(data);
-        if (head == null) {
-            head = node;
-        } else {
+    // Linked List: manages the nodes
+    static class LinkedList {
+        Node head = null;        // Start with empty list
+
+        // Add to front - O(1)
+        void prepend(String data) {
+            Node newNode = new Node(data);
+            newNode.next = this.head;   // New node points to old head
+            this.head = newNode;        // New node becomes head
+        }
+
+        // Print all items
+        void display() {
             Node current = head;
-            while (current.next != null) {
+            while (current != null) {
+                System.out.print(current.data + " -> ");
                 current = current.next;
             }
-            current.next = node;
+            System.out.println("None");
         }
-        size++;
-    }
-
-    public void delete(int data) {
-        if (head == null) return;
-        if (head.data == data) {
-            head = head.next;
-            size--;
-            return;
-        }
-        Node current = head;
-        while (current.next != null) {
-            if (current.next.data == data) {
-                current.next = current.next.next;
-                size--;
-                return;
-            }
-            current = current.next;
-        }
-    }
-
-    public int search(int data) {
-        Node current = head;
-        int index = 0;
-        while (current != null) {
-            if (current.data == data) return index;
-            current = current.next;
-            index++;
-        }
-        return -1;
-    }
-
-    public String display() {
-        StringBuilder sb = new StringBuilder();
-        Node current = head;
-        while (current != null) {
-            sb.append(current.data);
-            if (current.next != null) sb.append(" → ");
-            current = current.next;
-        }
-        sb.append(" → NULL");
-        return sb.toString();
     }
 
     public static void main(String[] args) {
-        SinglyLinkedList list = new SinglyLinkedList();
-        list.append(10);
-        list.append(20);
-        list.append(30);
-        list.prepend(5);
-        System.out.println(list.display()); // 5 → 10 → 20 → 30 → NULL
+        LinkedList ll = new LinkedList();
+        ll.prepend("Juan");
+        ll.prepend("Maria");
+        ll.prepend("Pedro");
+        ll.display();  // Pedro -> Maria -> Juan -> None
     }
 }
 </code></pre>
+<strong>Output:</strong>
+<pre>Pedro -> Maria -> Juan -> None</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

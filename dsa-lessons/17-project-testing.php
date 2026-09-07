@@ -169,163 +169,85 @@ echo "Peak:   " . round(memory_get_peak_usage() / 1024 / 1024, 2) . " MB\n";</co
     </tbody>
 </table>
 
-<h3>Python Implementation</h3>
-<pre><code class="language-python"># Unit Testing with assert
-def test_student_store():
-    store = StudentStore()
+<h3>Python Example: Unit Testing</h3>
+<p>Testing verifies your code works correctly.</p>
+<pre><code class="language-python"># Simple unit test for a hash map
+def test_hashmap():
+    store = {}
 
-    # Test empty state
-    assert store.count() == 0, "New store is empty"
+    # Test 1: Add and get
+    store["001"] = "Juan"
+    assert store["001"] == "Juan", "Test 1 Failed"
+    print("Test 1 PASSED: Add and get works")
 
-    # Test add and get
-    s = Student("001", "Juan", "BSIT")
-    store.add(s)
-    assert store.get_by_id("001").name == "Juan", "Get by ID"
-    assert store.count() == 1, "Count after add"
+    # Test 2: Get non-existent key
+    result = store.get("999")
+    assert result is None, "Test 2 Failed"
+    print("Test 2 PASSED: Not found returns None")
 
-    # Test search
-    results = store.search_by_name("uan")
-    assert len(results) == 1, "Search finds Juan"
+    # Test 3: Delete
+    del store["001"]
+    assert "001" not in store, "Test 3 Failed"
+    print("Test 3 PASSED: Delete works")
 
-    # Test not found
-    assert store.get_by_id("999") is None, "Not found returns None"
+    # Test 4: Count
+    store["002"] = "Maria"
+    assert len(store) == 1, "Test 4 Failed"
+    print("Test 4 PASSED: Count works")
 
-    print("All StudentStore tests passed!")
+test_hashmap()
+</code></pre>
+<strong>Output:</strong>
+<pre>Test 1 PASSED: Add and get works
+Test 2 PASSED: Not found returns None
+Test 3 PASSED: Delete works
+Test 4 PASSED: Count works</pre>
 
+<h3>Java Example: Unit Testing</h3>
+<p>Testing verifies your code works correctly.</p>
+<pre><code class="language-java">import java.util.HashMap;
 
-def test_sorting():
-    # Test merge sort
-    def merge_sort(arr):
-        if len(arr) &lt;= 1:
-            return arr
-        mid = len(arr) // 2
-        left = merge_sort(arr[:mid])
-        right = merge_sort(arr[mid:])
-        return merge(left, right)
-
-    def merge(l, r):
-        result = []
-        i = j = 0
-        while i &lt; len(l) and j &lt; len(r):
-            if l[i] &lt;= r[j]:
-                result.append(l[i])
-                i += 1
-            else:
-                result.append(r[j])
-                j += 1
-        result.extend(l[i:])
-        result.extend(r[j:])
-        return result
-
-    assert merge_sort([5, 3, 8, 1, 2]) == [1, 2, 3, 5, 8], "Merge sort works"
-    assert merge_sort([]) == [], "Sort empty array"
-    assert merge_sort([42]) == [42], "Sort single element"
-
-    print("All sorting tests passed!")
-
-
-def test_gpa_calculation():
-    s = Student("001", "Juan", "BSIT")
-    assert s.get_gpa() == 0.0, "Empty grades GPA"
-
-    s.add_grade("Math", 90)
-    s.add_grade("Programming", 95)
-    assert s.get_gpa() == 92.5, "GPA calculation"
-
-    print("All GPA tests passed!")
-
-
-# Run all tests
-test_student_store()
-test_sorting()
-test_gpa_calculation()
-print("\nAll tests passed!")</code></pre>
-
-<h3>Java Implementation</h3>
-<pre><code class="language-java">import java.util.*;
-
-public class DSATests {
-    private static int passed = 0;
-    private static int failed = 0;
+public class Main {
+    static int passed = 0, failed = 0;
 
     static void assertEqual(Object expected, Object actual, String test) {
-        if (Objects.equals(expected, actual)) {
+        if (expected == null ? actual == null : expected.equals(actual)) {
             passed++;
-            System.out.println("  PASS: " + test);
+            System.out.println("PASSED: " + test);
         } else {
             failed++;
-            System.out.println("  FAIL: " + test);
-            System.out.println("    Expected: " + expected);
-            System.out.println("    Actual:   " + actual);
+            System.out.println("FAILED: " + test);
         }
-    }
-
-    static void testStudentStore() {
-        System.out.println("\n=== StudentStore Tests ===");
-        StudentStore store = new StudentStore();
-
-        assertEqual(0, store.count(), "New store is empty");
-
-        Student s = new Student("001", "Juan", "BSIT");
-        store.add(s);
-        assertEqual("Juan", store.getById("001").getName(), "Get by ID");
-        assertEqual(1, store.count(), "Count after add");
-
-        List&lt;Student&gt; results = store.searchByName("uan");
-        assertEqual(1, results.size(), "Search finds Juan");
-
-        assertEqual(null, store.getById("999"), "Not found returns null");
-    }
-
-    static void testSorting() {
-        System.out.println("\n=== Sorting Tests ===");
-        int[] arr = {5, 3, 8, 1, 2};
-        mergeSort(arr, 0, arr.length - 1);
-        assertEqual("12358", Arrays.toString(arr).replaceAll("[\\[\\], ]", ""), "Merge sort works");
-    }
-
-    static void mergeSort(int[] arr, int left, int right) {
-        if (left &lt; right) {
-            int mid = (left + right) / 2;
-            mergeSort(arr, left, mid);
-            mergeSort(arr, mid + 1, right);
-            merge(arr, left, mid, right);
-        }
-    }
-
-    static void merge(int[] arr, int left, int mid, int right) {
-        int[] temp = new int[right - left + 1];
-        int i = left, j = mid + 1, k = 0;
-        while (i &lt;= mid &amp;&amp; j &lt;= right) {
-            if (arr[i] &lt;= arr[j]) temp[k++] = arr[i++];
-            else temp[k++] = arr[j++];
-        }
-        while (i &lt;= mid) temp[k++] = arr[i++];
-        while (j &lt;= right) temp[k++] = arr[j++];
-        System.arraycopy(temp, 0, arr, left, temp.length);
-    }
-
-    static void testGPACalculation() {
-        System.out.println("\n=== GPA Tests ===");
-        Student s = new Student("001", "Juan", "BSIT");
-        assertEqual(0.0, s.getGPA(), "Empty grades GPA");
-
-        s.addGrade("Math", 90);
-        s.addGrade("Programming", 95);
-        assertEqual(92.5, s.getGPA(), "GPA calculation");
-    }
-
-    static void summary() {
-        System.out.println("\n=== Results: " + passed + " passed, " + failed + " failed ===");
     }
 
     public static void main(String[] args) {
-        testStudentStore();
-        testSorting();
-        testGPACalculation();
-        summary();
+        HashMap&lt;String, String&gt; store = new HashMap&lt;&gt;();
+
+        // Test 1: Add and get
+        store.put("001", "Juan");
+        assertEqual("Juan", store.get("001"), "Add and get works");
+
+        // Test 2: Get non-existent key
+        assertEqual(null, store.get("999"), "Not found returns null");
+
+        // Test 3: Delete
+        store.remove("001");
+        assertEqual(true, !store.containsKey("001"), "Delete works");
+
+        // Test 4: Count
+        store.put("002", "Maria");
+        assertEqual(1, store.size(), "Count works");
+
+        System.out.println("\nResults: " + passed + " passed, " + failed + " failed");
     }
-}</code></pre>
+}
+</code></pre>
+<strong>Output:</strong>
+<pre>PASSED: Add and get works
+PASSED: Not found returns null
+PASSED: Delete works
+PASSED: Count works
+Results: 4 passed, 0 failed</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

@@ -173,182 +173,86 @@ class BrowserHistory {
     </tbody>
 </table>
 
-<h3>Python Implementation</h3>
-<pre><code class="language-python">
+<h3>Python Example: Stack Operations</h3>
+<p>A stack is like a pile of plates — you can only add or remove from the top.</p>
+<pre><code class="language-python"># Stack: Last In, First Out (LIFO)
 class Stack:
     def __init__(self):
         self.items = []
 
+    # Add to top - O(1)
     def push(self, item):
         self.items.append(item)
 
+    # Remove from top - O(1)
     def pop(self):
-        if self.is_empty():
-            raise IndexError("Stack underflow")
-        return self.items.pop()
+        if not self.is_empty():
+            return self.items.pop()
+        return None
 
+    # Look at top without removing - O(1)
     def peek(self):
-        if self.is_empty():
-            raise IndexError("Stack is empty")
-        return self.items[-1]
+        if not self.is_empty():
+            return self.items[-1]
+        return None
 
+    # Check if empty - O(1)
     def is_empty(self):
         return len(self.items) == 0
 
-    def size(self):
-        return len(self.items)
-
+# Test it
 stack = Stack()
-stack.push(10)
-stack.push(20)
-stack.push(30)
-print(stack.peek())   # 30
-print(stack.pop())    # 30
-print(stack.pop())    # 20
-print(stack.size())   # 1
-
-def is_balanced(s):
-    stack = Stack()
-    pairs = {')': '(', ']': '[', '}': '{'}
-    for char in s:
-        if char in '([{':
-            stack.push(char)
-        elif char in pairs:
-            if stack.is_empty() or stack.pop() != pairs[char]:
-                return False
-    return stack.is_empty()
-
-print(is_balanced('({[]})'))  # True
-print(is_balanced('({[}])'))  # False
-
-class BrowserHistory:
-    def __init__(self, url):
-        self.current = url
-        self.back_stack = []
-        self.forward_stack = []
-
-    def visit(self, url):
-        self.back_stack.append(self.current)
-        self.current = url
-        self.forward_stack = []
-
-    def back(self):
-        if not self.back_stack:
-            return
-        self.forward_stack.append(self.current)
-        self.current = self.back_stack.pop()
-
-    def forward(self):
-        if not self.forward_stack:
-            return
-        self.back_stack.append(self.current)
-        self.current = self.forward_stack.pop()
-
-    def get_current(self):
-        return self.current
-
-history = BrowserHistory('google.com')
-history.visit('youtube.com')
-history.visit('github.com')
-history.back()
-print(history.get_current())  # youtube.com
+stack.push("A")
+stack.push("B")
+stack.push("C")
+print(stack.pop())    # C (last in, first out)
+print(stack.peek())   # B (now B is on top)
+print(stack.pop())    # B
+print(stack.pop())    # A
+print(stack.is_empty())  # True
 </code></pre>
+<strong>Output:</strong>
+<pre>C
+B
+B
+A
+True</pre>
 
-<h3>Java Implementation</h3>
-<pre><code class="language-java">
-import java.util.ArrayList;
-import java.util.List;
-
-class Stack&lt;T&gt; {
-    private List&lt;T&gt; items = new ArrayList&lt;&gt;();
-
-    public void push(T item) {
-        items.add(item);
-    }
-
-    public T pop() {
-        if (isEmpty()) throw new RuntimeException("Stack underflow");
-        return items.remove(items.size() - 1);
-    }
-
-    public T peek() {
-        if (isEmpty()) throw new RuntimeException("Stack is empty");
-        return items.get(items.size() - 1);
-    }
-
-    public boolean isEmpty() {
-        return items.isEmpty();
-    }
-
-    public int size() {
-        return items.size();
-    }
-}
-
-class BrowserHistory {
-    private Stack&lt;String&gt; backStack = new Stack&lt;&gt;();
-    private Stack&lt;String&gt; forwardStack = new Stack&lt;&gt;();
-    private String current;
-
-    public BrowserHistory(String url) {
-        this.current = url;
-    }
-
-    public void visit(String url) {
-        backStack.push(current);
-        current = url;
-        forwardStack = new Stack&lt;&gt;();
-    }
-
-    public void back() {
-        if (backStack.isEmpty()) return;
-        forwardStack.push(current);
-        current = backStack.pop();
-    }
-
-    public void forward() {
-        if (forwardStack.isEmpty()) return;
-        backStack.push(current);
-        current = forwardStack.pop();
-    }
-
-    public String getCurrent() {
-        return current;
-    }
-}
+<h3>Java Example: Stack Operations</h3>
+<p>A stack is like a pile of plates — you can only add or remove from the top.</p>
+<pre><code class="language-java">import java.util.Stack;
 
 public class Main {
-    public static boolean isBalanced(String s) {
-        Stack&lt;Character&gt; stack = new Stack&lt;&gt;();
-        for (char c : s.toCharArray()) {
-            if (c == '(' || c == '[' || c == '{') {
-                stack.push(c);
-            } else if (c == ')' || c == ']' || c == '}') {
-                if (stack.isEmpty()) return false;
-                char top = stack.pop();
-                if ((c == ')' &amp;&amp; top != '(') ||
-                    (c == ']' &amp;&amp; top != '[') ||
-                    (c == '}' &amp;&amp; top != '{')) {
-                    return false;
-                }
-            }
-        }
-        return stack.isEmpty();
-    }
-
     public static void main(String[] args) {
-        Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
-        stack.push(10);
-        stack.push(20);
-        stack.push(30);
-        System.out.println(stack.peek());  // 30
-        System.out.println(stack.pop());   // 30
+        // Java has a built-in Stack class
+        Stack&lt;String&gt; stack = new Stack&lt;&gt;();
 
-        System.out.println(isBalanced("({[]})"));  // true
-        System.out.println(isBalanced("({[}])"));  // false
+        // Add to top - O(1)
+        stack.push("A");
+        stack.push("B");
+        stack.push("C");
+
+        // Remove from top - O(1)
+        System.out.println(stack.pop());   // C (last in, first out)
+
+        // Look at top without removing - O(1)
+        System.out.println(stack.peek());  // B (now B is on top)
+
+        // Remove more items
+        System.out.println(stack.pop());   // B
+        System.out.println(stack.pop());   // A
+
+        // Check if empty - O(1)
+        System.out.println(stack.isEmpty());  // true
     }
 }
 </code></pre>
+<strong>Output:</strong>
+<pre>C
+B
+B
+A
+true</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

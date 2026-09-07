@@ -143,68 +143,64 @@ echo "Reversed: " . implode(", ", $reversed) . "\n";
     </div>
 </div>
 
-<h3>Python Implementation</h3>
-<pre><code class="language-python">
-# Python lists (dynamic arrays)
-fruits = ["Apple", "Banana", "Cherry"]
-print("List:", fruits)
+<h3>Python Example: Working with Lists</h3>
+<p>Python lists are like dynamic arrays — they can grow and shrink automatically.</p>
+<pre><code class="language-python"># A list is a collection of items in order
+students = ["Juan", "Maria", "Pedro"]
 
-# Dictionary (associative array)
-person = {"name": "Alice", "age": 25, "city": "Manila"}
-print("Dictionary:", person)
+# Add a student to the end
+students.append("Ana")
+print(students)  # ['Juan', 'Maria', 'Pedro', 'Ana']
 
-# List of dictionaries (multidimensional)
-students = [
-    {"name": "Bob", "grade": "A"},
-    {"name": "Carol", "grade": "B+"}
-]
-print("Students:", students)
+# Find how many students
+print(len(students))  # 4
 
-# Basic operations
-numbers = [23, 45, 12, 67, 89, 34]
-print("Max:", max(numbers))
-print("Reversed:", numbers[::-1])
-print("Sorted:", sorted(numbers))
+# Access first student (index starts at 0)
+print(students[0])  # Juan
+
+# Remove a student
+students.remove("Maria")
+print(students)  # ['Juan', 'Pedro', 'Ana']
 </code></pre>
+<strong>Output:</strong>
+<pre>['Juan', 'Maria', 'Pedro', 'Ana']
+4
+Juan
+['Juan', 'Pedro', 'Ana']</pre>
 
-<h3>Java Implementation</h3>
-<pre><code class="language-java">
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Arrays;
-import java.util.Collections;
+<h3>Java Example: Working with ArrayList</h3>
+<p>Java ArrayList is like a dynamic array that can grow automatically.</p>
+<pre><code class="language-java">import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        // ArrayList (dynamic array)
-        ArrayList&lt;String&gt; fruits = new ArrayList&lt;&gt;();
-        fruits.add("Apple");
-        fruits.add("Banana");
-        fruits.add("Cherry");
-        System.out.println("ArrayList: " + fruits);
+        // Create an ArrayList of strings
+        ArrayList&lt;String&gt; students = new ArrayList&lt;&gt;();
 
-        // HashMap (associative array)
-        HashMap&lt;String, Object&gt; person = new HashMap&lt;&gt;();
-        person.put("name", "Alice");
-        person.put("age", 25);
-        person.put("city", "Manila");
-        System.out.println("HashMap: " + person);
+        // Add students
+        students.add("Juan");
+        students.add("Maria");
+        students.add("Pedro");
+        students.add("Ana");
+        System.out.println(students);  // [Juan, Maria, Pedro, Ana]
 
-        // ArrayList of HashMaps
-        ArrayList&lt;HashMap&lt;String, String&gt;&gt; students = new ArrayList&lt;&gt;();
-        HashMap&lt;String, String&gt; student1 = new HashMap&lt;&gt;();
-        student1.put("name", "Bob");
-        student1.put("grade", "A");
-        students.add(student1);
+        // Find how many students
+        System.out.println(students.size());  // 4
 
-        // Basic operations
-        ArrayList&lt;Integer&gt; numbers = new ArrayList&lt;&gt;(Arrays.asList(23, 45, 12, 67, 89, 34));
-        System.out.println("Max: " + Collections.max(numbers));
-        Collections.sort(numbers);
-        System.out.println("Sorted: " + numbers);
+        // Access first student (index starts at 0)
+        System.out.println(students.get(0));  // Juan
+
+        // Remove a student
+        students.remove("Maria");
+        System.out.println(students);  // [Juan, Pedro, Ana]
     }
 }
 </code></pre>
+<strong>Output:</strong>
+<pre>[Juan, Maria, Pedro, Ana]
+4
+Juan
+[Juan, Pedro, Ana]</pre>
 
 <!-- PART 3 -->
 <h2>Part 3: Apply New Knowledge</h2>

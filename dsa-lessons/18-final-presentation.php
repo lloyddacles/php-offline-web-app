@@ -161,94 +161,72 @@ Heap               N/A       O(n)      O(log n)  O(log n)  Priority queue
     </tbody>
 </table>
 
-<h3>Python Implementation</h3>
-<pre><code class="language-python">from student_store import StudentStore, Student
-from rank_service import RankService
-from course_graph import CourseGraph
+<h3>Python Example: Integration Demo</h3>
+<p>Putting it all together — a mini student management system.</p>
+<pre><code class="language-python"># Complete mini system for presentation
+class Student:
+    def __init__(self, sid, name, gpa):
+        self.sid, self.name, self.gpa = sid, name, gpa
 
-def main():
-    # Initialize
-    store = StudentStore()
-    graph = CourseGraph()
+# Create students
+students = [
+    Student("001", "Juan", 3.85),
+    Student("002", "Maria", 3.92),
+    Student("003", "Pedro", 3.60),
+]
 
-    # Add students
-    juan = Student("2024-001", "Juan Dela Cruz", "BSIT")
-    juan.add_grade("Math", 90)
-    juan.add_grade("Programming", 95)
-    juan.add_grade("English", 85)
-    store.add(juan)
+# Sort by GPA (descending) - O(n log n)
+ranked = sorted(students, key=lambda s: s.gpa, reverse=True)
 
-    maria = Student("2024-002", "Maria Santos", "BSCS")
-    maria.add_grade("Math", 92)
-    maria.add_grade("Programming", 88)
-    maria.add_grade("English", 91)
-    store.add(maria)
+# Display rankings
+print("=== Class Rankings ===")
+for i, s in enumerate(ranked, 1):
+    print(f"{i}. {s.name} - GPA: {s.gpa}")
+</code></pre>
+<strong>Output:</strong>
+<pre>=== Class Rankings ===
+1. Maria - GPA: 3.92
+2. Juan - GPA: 3.85
+3. Pedro - GPA: 3.6</pre>
 
-    # Demo: Search
-    results = store.search_by_name("Juan")
-    print(f"Search results: {len(results)}")
-
-    # Demo: Rankings
-    ranked = RankService.rank_by_gpa(store.get_all())
-    for entry in ranked[:3]:
-        print(f"Rank {entry['rank']}: {entry['student'].name} ({entry['student'].get_gpa()})")
-
-    # Demo: Course prerequisites
-    graph.add_edge("DSA", "Programming 1")
-    graph.add_edge("Database", "Programming 1")
-    print(f"Can take DSA: {graph.can_take('DSA', ['Programming 1'])}")
-
-    # Demo: Statistics
-    stats = RankService.get_statistics(store.get_all())
-    print(f"Mean GPA: {stats['mean']}, Highest: {stats['highest']}")
-
-if __name__ == "__main__":
-    main()</code></pre>
-
-<h3>Java Implementation</h3>
+<h3>Java Example: Integration Demo</h3>
+<p>Putting it all together — a mini student management system.</p>
 <pre><code class="language-java">import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
-        // Initialize
-        StudentStore store = new StudentStore();
-        CourseGraph graph = new CourseGraph();
-
-        // Add students
-        Student juan = new Student("2024-001", "Juan Dela Cruz", "BSIT");
-        juan.addGrade("Math", 90);
-        juan.addGrade("Programming", 95);
-        juan.addGrade("English", 85);
-        store.add(juan);
-
-        Student maria = new Student("2024-002", "Maria Santos", "BSCS");
-        maria.addGrade("Math", 92);
-        maria.addGrade("Programming", 88);
-        maria.addGrade("English", 91);
-        store.add(maria);
-
-        // Demo: Search
-        List&lt;Student&gt; results = store.searchByName("Juan");
-        System.out.println("Search results: " + results.size());
-
-        // Demo: Rankings
-        List&lt;Map&lt;String, Object&gt;&gt; ranked = RankService.rankByGPA(store.getAll());
-        for (int i = 0; i &lt; Math.min(3, ranked.size()); i++) {
-            Map&lt;String, Object&gt; entry = ranked.get(i);
-            System.out.println("Rank " + entry.get("rank") + ": " +
-                ((Student) entry.get("student")).getName());
+    static class Student {
+        String sid, name;
+        double gpa;
+        Student(String sid, String name, double gpa) {
+            this.sid = sid; this.name = name; this.gpa = gpa;
         }
-
-        // Demo: Course prerequisites
-        graph.addEdge("DSA", "Programming 1");
-        graph.addEdge("Database", "Programming 1");
-        System.out.println("Can take DSA: " + graph.canTake("DSA", List.of("Programming 1")));
-
-        // Demo: Statistics
-        Map&lt;String, Double&gt; stats = RankService.getStatistics(store.getAll());
-        System.out.println("Mean GPA: " + stats.get("mean") + ", Highest: " + stats.get("highest"));
     }
-}</code></pre>
+
+    public static void main(String[] args) {
+        // Create students
+        List&lt;Student&gt; students = Arrays.asList(
+            new Student("001", "Juan", 3.85),
+            new Student("002", "Maria", 3.92),
+            new Student("003", "Pedro", 3.60)
+        );
+
+        // Sort by GPA (descending)
+        students.sort((a, b) -> Double.compare(b.gpa, a.gpa));
+
+        // Display rankings
+        System.out.println("=== Class Rankings ===");
+        int rank = 1;
+        for (Student s : students) {
+            System.out.println(rank++ + ". " + s.name + " - GPA: " + s.gpa);
+        }
+    }
+}
+</code></pre>
+<strong>Output:</strong>
+<pre>=== Class Rankings ===
+1. Maria - GPA: 3.92
+2. Juan - GPA: 3.85
+3. Pedro - GPA: 3.6</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

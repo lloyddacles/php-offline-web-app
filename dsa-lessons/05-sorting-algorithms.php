@@ -221,28 +221,29 @@ print_r($arr);  // [1, 5, 7, 8, 9, 10]</code></pre>
     </tbody>
 </table>
 
-<h3>Python Implementation</h3>
-<pre><code class="language-python">
-# Bubble Sort - O(n²)
+<h3>Python Example: Bubble Sort and Merge Sort</h3>
+<pre><code class="language-python"># Bubble Sort - Simple but slow
+# Repeatedly swap adjacent elements if they're in wrong order
+# Time: O(n²)
 def bubble_sort(arr):
     n = len(arr)
-    for i in range(n - 1):
-        swapped = False
-        for j in range(n - i - 1):
+    for i in range(n):
+        for j in range(0, n - i - 1):
             if arr[j] > arr[j + 1]:
-                arr[j], arr[j + 1] = arr[j + 1], arr[j]
-                swapped = True
-        if not swapped:
-            break  # Already sorted
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]  # Swap
     return arr
 
-# Merge Sort - O(n log n)
+# Merge Sort - Fast but uses more memory
+# Split array in half, sort each half, merge them
+# Time: O(n log n)
 def merge_sort(arr):
     if len(arr) <= 1:
         return arr
+
     mid = len(arr) // 2
-    left = merge_sort(arr[:mid])
-    right = merge_sort(arr[mid:])
+    left = merge_sort(arr[:mid])     # Sort left half
+    right = merge_sort(arr[mid:])    # Sort right half
+
     return merge(left, right)
 
 def merge(left, right):
@@ -259,110 +260,77 @@ def merge(left, right):
     result.extend(right[j:])
     return result
 
-# Quick Sort - O(n log n) average
-def quick_sort(arr):
-    if len(arr) <= 1:
-        return arr
-    pivot = arr[len(arr) // 2]
-    left = [x for x in arr if x < pivot]
-    middle = [x for x in arr if x == pivot]
-    right = [x for x in arr if x > pivot]
-    return quick_sort(left) + middle + quick_sort(right)
-
-# Usage
-arr1 = [64, 34, 25, 12, 22, 11, 90]
-print(f"Bubble sort: {bubble_sort(arr1.copy())}")
-
-arr2 = [38, 27, 43, 3, 9, 82, 10]
-print(f"Merge sort: {merge_sort(arr2)}")
-
-arr3 = [10, 7, 8, 9, 1, 5]
-print(f"Quick sort: {quick_sort(arr3)}")
+# Test both sorts
+numbers = [64, 34, 25, 12, 22, 11, 90]
+print(bubble_sort(numbers.copy()))  # [11, 12, 22, 25, 34, 64, 90]
+print(merge_sort(numbers))          # [11, 12, 22, 25, 34, 64, 90]
 </code></pre>
+<strong>Output:</strong>
+<pre>[11, 12, 22, 25, 34, 64, 90]
+[11, 12, 22, 25, 34, 64, 90]</pre>
 
-<h3>Java Implementation</h3>
-<pre><code class="language-java">
-import java.util.Arrays;
+<h3>Java Example: Bubble Sort and Merge Sort</h3>
+<pre><code class="language-java">import java.util.Arrays;
 
-public class SortingAlgorithms {
-    // Bubble Sort - O(n²)
-    public static void bubbleSort(int[] arr) {
+public class Main {
+    // Bubble Sort - Simple but slow
+    static void bubbleSort(int[] arr) {
         int n = arr.length;
-        for (int i = 0; i < n - 1; i++) {
-            boolean swapped = false;
+        for (int i = 0; i < n; i++) {
             for (int j = 0; j < n - i - 1; j++) {
                 if (arr[j] > arr[j + 1]) {
+                    // Swap elements
                     int temp = arr[j];
                     arr[j] = arr[j + 1];
                     arr[j + 1] = temp;
-                    swapped = true;
                 }
             }
-            if (!swapped) break;  // Already sorted
         }
     }
 
-    // Merge Sort - O(n log n)
-    public static int[] mergeSort(int[] arr) {
+    // Merge Sort - Fast but uses more memory
+    static int[] mergeSort(int[] arr) {
         if (arr.length <= 1) return arr;
+
         int mid = arr.length / 2;
         int[] left = mergeSort(Arrays.copyOfRange(arr, 0, mid));
         int[] right = mergeSort(Arrays.copyOfRange(arr, mid, arr.length));
+
         return merge(left, right);
     }
 
-    private static int[] merge(int[] left, int[] right) {
+    static int[] merge(int[] left, int[] right) {
         int[] result = new int[left.length + right.length];
         int i = 0, j = 0, k = 0;
+
         while (i < left.length && j < right.length) {
-            if (left[i] <= right[j]) result[k++] = left[i++];
-            else result[k++] = right[j++];
+            if (left[i] <= right[j]) {
+                result[k++] = left[i++];
+            } else {
+                result[k++] = right[j++];
+            }
         }
         while (i < left.length) result[k++] = left[i++];
         while (j < right.length) result[k++] = right[j++];
+
         return result;
     }
 
-    // Quick Sort - O(n log n) average
-    public static void quickSort(int[] arr, int low, int high) {
-        if (low < high) {
-            int pi = partition(arr, low, high);
-            quickSort(arr, low, pi - 1);
-            quickSort(arr, pi + 1, high);
-        }
-    }
-
-    private static int partition(int[] arr, int low, int high) {
-        int pivot = arr[high];
-        int i = low - 1;
-        for (int j = low; j < high; j++) {
-            if (arr[j] < pivot) {
-                i++;
-                int temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
-            }
-        }
-        int temp = arr[i + 1];
-        arr[i + 1] = arr[high];
-        arr[high] = temp;
-        return i + 1;
-    }
-
     public static void main(String[] args) {
-        int[] arr1 = {64, 34, 25, 12, 22, 11, 90};
+        int[] numbers = {64, 34, 25, 12, 22, 11, 90};
+
+        int[] arr1 = numbers.clone();
         bubbleSort(arr1);
-        System.out.println("Bubble sort: " + Arrays.toString(arr1));
+        System.out.println(Arrays.toString(arr1));  // [11, 12, 22, 25, 34, 64, 90]
 
-        int[] arr2 = {38, 27, 43, 3, 9, 82, 10};
-        System.out.println("Merge sort: " + Arrays.toString(mergeSort(arr2)));
-
-        int[] arr3 = {10, 7, 8, 9, 1, 5};
-        quickSort(arr3, 0, arr3.length - 1);
-        System.out.println("Quick sort: " + Arrays.toString(arr3));
+        int[] arr2 = mergeSort(numbers);
+        System.out.println(Arrays.toString(arr2));  // [11, 12, 22, 25, 34, 64, 90]
     }
 }
 </code></pre>
+<strong>Output:</strong>
+<pre>[11, 12, 22, 25, 34, 64, 90]
+[11, 12, 22, 25, 34, 64, 90]</pre>
 
 <!-- PART 3 -->
 <h2>Part 3: Apply New Knowledge</h2>

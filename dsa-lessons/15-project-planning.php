@@ -144,79 +144,81 @@ Phase 4 (Week 4): Polish
   □ Error handling
   □ Documentation</pre>
 
-<h3>Python Implementation</h3>
-<pre><code class="language-python"># Planning Example: Student Class
+<h3>Python Example: Student Class</h3>
+<p>Planning starts with defining your data structures clearly.</p>
+<pre><code class="language-python"># Define a Student class for our project
 class Student:
     def __init__(self, student_id, name, course):
-        self.student_id = student_id
-        self.name = name
-        self.course = course
-        self.grades = {}  # subject => grade
+        self.student_id = student_id  # Unique identifier
+        self.name = name              # Student name
+        self.course = course          # Course enrolled
+        self.grades = []              # List of grades
 
-    def add_grade(self, subject, grade):
-        self.grades[subject] = grade
+    def add_grade(self, grade):
+        self.grades.append(grade)
 
-    def get_gpa(self):
+    def get_average(self):
         if not self.grades:
-            return 0.0
-        return round(sum(self.grades.values()) / len(self.grades), 2)
+            return 0
+        return sum(self.grades) / len(self.grades)
 
-    def to_dict(self):
-        return {
-            "id": self.student_id,
-            "name": self.name,
-            "course": self.course,
-            "grades": self.grades,
-            "gpa": self.get_gpa()
+    def __str__(self):
+        return f"{self.name} ({self.student_id}) - {self.course}"
+
+# Create students
+s1 = Student("001", "Juan", "BSIT")
+s1.add_grade(95)
+s1.add_grade(88)
+print(s1)                    # Juan (001) - BSIT
+print(f"Average: {s1.get_average()}")  # Average: 91.5
+</code></pre>
+<strong>Output:</strong>
+<pre>Juan (001) - BSIT
+Average: 91.5</pre>
+
+<h3>Java Example: Student Class</h3>
+<p>Planning starts with defining your data structures clearly.</p>
+<pre><code class="language-java">import java.util.ArrayList;
+
+public class Main {
+    static class Student {
+        String studentId, name, course;
+        ArrayList&lt;Integer&gt; grades = new ArrayList&lt;&gt;();
+
+        Student(String studentId, String name, String course) {
+            this.studentId = studentId;
+            this.name = name;
+            this.course = course;
         }
 
-# Usage
-s = Student("2024-001", "Juan Dela Cruz", "BSIT")
-s.add_grade("Math", 90)
-s.add_grade("Programming", 95)
-print(s.get_gpa())  # 92.5</code></pre>
+        void addGrade(int grade) {
+            grades.add(grade);
+        }
 
-<h3>Java Implementation</h3>
-<pre><code class="language-java">import java.util.HashMap;
-import java.util.Map;
+        double getAverage() {
+            if (grades.isEmpty()) return 0;
+            int sum = 0;
+            for (int g : grades) sum += g;
+            return (double) sum / grades.size();
+        }
 
-// Planning Example: Student Class
-public class Student {
-    private String studentId;
-    private String name;
-    private String course;
-    private Map&lt;String, Double&gt; grades;
-
-    public Student(String studentId, String name, String course) {
-        this.studentId = studentId;
-        this.name = name;
-        this.course = course;
-        this.grades = new HashMap&lt;&gt;();
+        public String toString() {
+            return name + " (" + studentId + ") - " + course;
+        }
     }
-
-    public void addGrade(String subject, double grade) {
-        grades.put(subject, grade);
-    }
-
-    public double getGPA() {
-        if (grades.isEmpty()) return 0.0;
-        double sum = grades.values().stream().mapToDouble(Double::doubleValue).sum();
-        return Math.round(sum / grades.size() * 100.0) / 100.0;
-    }
-
-    // Getters
-    public String getStudentId() { return studentId; }
-    public String getName() { return name; }
-    public String getCourse() { return course; }
-    public Map&lt;String, Double&gt; getGrades() { return grades; }
 
     public static void main(String[] args) {
-        Student s = new Student("2024-001", "Juan Dela Cruz", "BSIT");
-        s.addGrade("Math", 90);
-        s.addGrade("Programming", 95);
-        System.out.println(s.getGPA());  // 92.5
+        Student s1 = new Student("001", "Juan", "BSIT");
+        s1.addGrade(95);
+        s1.addGrade(88);
+        System.out.println(s1);                    // Juan (001) - BSIT
+        System.out.println("Average: " + s1.getAverage());  // Average: 91.5
     }
-}</code></pre>
+}
+</code></pre>
+<strong>Output:</strong>
+<pre>Juan (001) - BSIT
+Average: 91.5</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

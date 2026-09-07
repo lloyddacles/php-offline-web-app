@@ -181,187 +181,119 @@ function lowestCommonAncestor($root, $p, $q) {
     return $root->data;  // Split point = LCA
 }</code></pre>
 
-<h3>Python Implementation</h3>
-<pre><code class="language-python">
-class BSTNode:
+<h3>Python Example: BST Insert and Search</h3>
+<p>A BST is like a dictionary — smaller values go left, bigger values go right.</p>
+<pre><code class="language-python">class BSTNode:
     def __init__(self, data):
         self.data = data
-        self.left = None
-        self.right = None
+        self.left = None     # Smaller values
+        self.right = None    # Bigger values
 
-class BST:
-    def __init__(self):
-        self.root = None
+# Insert a value into BST
+def insert(node, data):
+    if node is None:
+        return BSTNode(data)
+    if data < node.data:
+        node.left = insert(node.left, data)    # Go left
+    else:
+        node.right = insert(node.right, data)  # Go right
+    return node
 
-    def insert(self, data):
-        self.root = self._insert_node(self.root, data)
-
-    def _insert_node(self, node, data):
-        if not node:
-            return BSTNode(data)
-        if data < node.data:
-            node.left = self._insert_node(node.left, data)
-        elif data > node.data:
-            node.right = self._insert_node(node.right, data)
+# Search for a value in BST
+def search(node, data):
+    if node is None or node.data == data:
         return node
+    if data < node.data:
+        return search(node.left, data)    # Search left
+    return search(node.right, data)       # Search right
 
-    def search(self, data):
-        return self._search_node(self.root, data)
+# In-order traversal (gives sorted order)
+def in_order(node):
+    if node:
+        in_order(node.left)
+        print(node.data, end=" ")
+        in_order(node.right)
 
-    def _search_node(self, node, data):
-        if not node:
-            return None
-        if data == node.data:
-            return node
-        if data < node.data:
-            return self._search_node(node.left, data)
-        return self._search_node(node.right, data)
+# Build BST with values: 50, 30, 70, 20, 40
+root = None
+for val in [50, 30, 70, 20, 40]:
+    root = insert(root, val)
 
-    def in_order(self):
-        result = []
-        self._in_order_traversal(self.root, result)
-        return result
-
-    def _in_order_traversal(self, node, result):
-        if not node:
-            return
-        self._in_order_traversal(node.left, result)
-        result.append(node.data)
-        self._in_order_traversal(node.right, result)
-
-    def delete(self, data):
-        self.root = self._delete_node(self.root, data)
-
-    def _delete_node(self, node, data):
-        if not node:
-            return None
-        if data < node.data:
-            node.left = self._delete_node(node.left, data)
-        elif data > node.data:
-            node.right = self._delete_node(node.right, data)
-        else:
-            if not node.left and not node.right:
-                return None
-            if not node.left:
-                return node.right
-            if not node.right:
-                return node.left
-            successor = self._find_min(node.right)
-            node.data = successor.data
-            node.right = self._delete_node(node.right, successor.data)
-        return node
-
-    def _find_min(self, node):
-        while node.left:
-            node = node.left
-        return node
-
-bst = BST()
-bst.insert(50)
-bst.insert(30)
-bst.insert(70)
-bst.insert(20)
-bst.insert(40)
-bst.insert(60)
-bst.insert(80)
-
-print(bst.in_order())  # [20, 30, 40, 50, 60, 70, 80]
-print("Found" if bst.search(40) else "Not found")  # Found
+in_order(root)          # 20 30 40 50 70 (sorted!)
+result = search(root, 40)
+print()
+print(result.data)      # 40 (found!)
+result = search(root, 99)
+print(result)           # None (not found)
 </code></pre>
+<strong>Output:</strong>
+<pre>20 30 40 50 70
+40
+None</pre>
 
-<h3>Java Implementation</h3>
-<pre><code class="language-java">
-class BSTNode {
-    int data;
-    BSTNode left, right;
+<h3>Java Example: BST Insert and Search</h3>
+<p>A BST is like a dictionary — smaller values go left, bigger values go right.</p>
+<pre><code class="language-java">public class Main {
+    static class BSTNode {
+        int data;
+        BSTNode left, right;
 
-    BSTNode(int data) {
-        this.data = data;
-        this.left = null;
-        this.right = null;
-    }
-}
-
-class BST {
-    private BSTNode root = null;
-
-    public void insert(int data) {
-        root = insertNode(root, data);
+        BSTNode(int data) {
+            this.data = data;
+            this.left = null;
+            this.right = null;
+        }
     }
 
-    private BSTNode insertNode(BSTNode node, int data) {
+    // Insert a value into BST
+    static BSTNode insert(BSTNode node, int data) {
         if (node == null) return new BSTNode(data);
-        if (data < node.data) node.left = insertNode(node.left, data);
-        else if (data > node.data) node.right = insertNode(node.right, data);
-        return node;
-    }
-
-    public BSTNode search(int data) {
-        return searchNode(root, data);
-    }
-
-    private BSTNode searchNode(BSTNode node, int data) {
-        if (node == null) return null;
-        if (data == node.data) return node;
-        if (data < node.data) return searchNode(node.left, data);
-        return searchNode(node.right, data);
-    }
-
-    public void inOrder() {
-        inOrderTraversal(root);
-    }
-
-    private void inOrderTraversal(BSTNode node) {
-        if (node == null) return;
-        inOrderTraversal(node.left);
-        System.out.print(node.data + " ");
-        inOrderTraversal(node.right);
-    }
-
-    public void delete(int data) {
-        root = deleteNode(root, data);
-    }
-
-    private BSTNode deleteNode(BSTNode node, int data) {
-        if (node == null) return null;
         if (data < node.data) {
-            node.left = deleteNode(node.left, data);
-        } else if (data > node.data) {
-            node.right = deleteNode(node.right, data);
+            node.left = insert(node.left, data);    // Go left
         } else {
-            if (node.left == null &amp;&amp; node.right == null) return null;
-            if (node.left == null) return node.right;
-            if (node.right == null) return node.left;
-            BSTNode successor = findMin(node.right);
-            node.data = successor.data;
-            node.right = deleteNode(node.right, successor.data);
+            node.right = insert(node.right, data);  // Go right
         }
         return node;
     }
 
-    private BSTNode findMin(BSTNode node) {
-        while (node.left != null) node = node.left;
-        return node;
+    // Search for a value in BST
+    static BSTNode search(BSTNode node, int data) {
+        if (node == null || node.data == data) return node;
+        if (data < node.data) return search(node.left, data);   // Search left
+        return search(node.right, data);                         // Search right
     }
-}
 
-public class Main {
+    // In-order traversal (gives sorted order)
+    static void inOrder(BSTNode node) {
+        if (node != null) {
+            inOrder(node.left);
+            System.out.print(node.data + " ");
+            inOrder(node.right);
+        }
+    }
+
     public static void main(String[] args) {
-        BST bst = new BST();
-        bst.insert(50);
-        bst.insert(30);
-        bst.insert(70);
-        bst.insert(20);
-        bst.insert(40);
-        bst.insert(60);
-        bst.insert(80);
+        BSTNode root = null;
+        int[] values = {50, 30, 70, 20, 40};
+        for (int val : values) {
+            root = insert(root, val);
+        }
 
-        bst.inOrder();  // 20 30 40 50 60 70 80
+        inOrder(root);  // 20 30 40 50 70 (sorted!)
         System.out.println();
-        System.out.println(bst.search(40) != null ? "Found" : "Not found"); // Found
+
+        BSTNode result = search(root, 40);
+        System.out.println(result.data);  // 40 (found!)
+
+        result = search(root, 99);
+        System.out.println(result);  // null (not found)
     }
 }
 </code></pre>
+<strong>Output:</strong>
+<pre>20 30 40 50 70
+40
+null</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

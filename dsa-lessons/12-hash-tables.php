@@ -201,148 +201,77 @@ function groupAnagrams($words) {
 print_r(groupAnagrams(['eat', 'tea', 'tan', 'ate', 'nat', 'bat']));
 // [['eat','tea','ate'], ['tan','nat'], ['bat']]</code></pre>
 
-<h3>Python Implementation</h3>
-<pre><code class="language-python">
-class HashTableChaining:
-    def __init__(self, size=16):
-        self.size = size
-        self.buckets = [[] for _ in range(size)]
+<h3>Python Example: Hash Table (Dictionary)</h3>
+<p>A hash table is like a librarian's filing system — use a key to find data instantly.</p>
+<pre><code class="language-python"># Python dictionaries ARE hash tables
+# Key -> Hash Function -> Index -> Value
 
-    def _hash(self, key):
-        hash_val = 0
-        for char in str(key):
-            hash_val = (hash_val * 31 + ord(char)) % self.size
-        return hash_val
+# Create a hash table (dictionary)
+grades = {}
+grades["Juan"] = 95       # Add key-value pair
+grades["Maria"] = 88
+grades["Pedro"] = 92
 
-    def set(self, key, value):
-        index = self._hash(key)
-        for i, (k, v) in enumerate(self.buckets[index]):
-            if k == key:
-                self.buckets[index][i] = (key, value)
-                return
-        self.buckets[index].append((key, value))
+# Access by key - O(1) average
+print(grades["Juan"])     # 95
 
-    def get(self, key):
-        index = self._hash(key)
-        for k, v in self.buckets[index]:
-            if k == key:
-                return v
-        return None
+# Check if key exists - O(1)
+print("Maria" in grades)  # True
+print("Ana" in grades)    # False
 
-    def remove(self, key):
-        index = self._hash(key)
-        for i, (k, v) in enumerate(self.buckets[index]):
-            if k == key:
-                del self.buckets[index][i]
-                return True
-        return False
-
-ht = HashTableChaining()
-ht.set('name', 'Juan')
-ht.set('age', 20)
-print(ht.get('name'))  # Juan
-
-def two_sum(nums, target):
-    seen = {}
-    for i, num in enumerate(nums):
-        diff = target - num
-        if diff in seen:
-            return [seen[diff], i]
-        seen[num] = i
-    return []
-
-print(two_sum([2, 7, 11, 15], 9))  # [0, 1]
-
-def char_frequency(s):
+# Count character frequency using hash table
+def count_chars(text):
     freq = {}
-    for char in s:
-        freq[char] = freq.get(char, 0) + 1
-    return dict(sorted(freq.items(), key=lambda x: x[1], reverse=True))
+    for char in text:
+        if char in freq:
+            freq[char] += 1    # Already seen, increment
+        else:
+            freq[char] = 1     # First time, set to 1
+    return freq
 
-print(char_frequency('hello'))  # {'l': 2, 'h': 1, 'e': 1, 'o': 1}
+result = count_chars("hello")
+print(result)  # {'h': 1, 'e': 1, 'l': 2, 'o': 1}
 </code></pre>
+<strong>Output:</strong>
+<pre>95
+True
+False
+{'h': 1, 'e': 1, 'l': 2, 'o': 1}</pre>
 
-<h3>Java Implementation</h3>
-<pre><code class="language-java">
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-class HashTableChaining&lt;K, V&gt; {
-    private static class Entry&lt;K, V&gt; {
-        K key;
-        V value;
-        Entry(K key, V value) {
-            this.key = key;
-            this.value = value;
-        }
-    }
-
-    private ArrayList&lt;Entry&lt;K, V&gt;&gt;[] buckets;
-    private int size;
-
-    @SuppressWarnings("unchecked")
-    public HashTableChaining(int size) {
-        this.size = size;
-        this.buckets = new ArrayList[size];
-        for (int i = 0; i &lt; size; i++) {
-            buckets[i] = new ArrayList&lt;&gt;();
-        }
-    }
-
-    private int hash(K key) {
-        int hash = 0;
-        for (char c : key.toString().toCharArray()) {
-            hash = (hash * 31 + c) % size;
-        }
-        return hash;
-    }
-
-    public void set(K key, V value) {
-        int index = hash(key);
-        for (Entry&lt;K, V&gt; entry : buckets[index]) {
-            if (entry.key.equals(key)) {
-                entry.value = value;
-                return;
-            }
-        }
-        buckets[index].add(new Entry&lt;&gt;(key, value));
-    }
-
-    public V get(K key) {
-        int index = hash(key);
-        for (Entry&lt;K, V&gt; entry : buckets[index]) {
-            if (entry.key.equals(key)) return entry.value;
-        }
-        return null;
-    }
-}
+<h3>Java Example: Hash Table (HashMap)</h3>
+<p>A hash table is like a librarian's filing system — use a key to find data instantly.</p>
+<pre><code class="language-java">import java.util.HashMap;
 
 public class Main {
-    public static int[] twoSum(int[] nums, int target) {
-        HashMap&lt;Integer, Integer&gt; seen = new HashMap&lt;&gt;();
-        for (int i = 0; i &lt; nums.length; i++) {
-            int diff = target - nums[i];
-            if (seen.containsKey(diff)) {
-                return new int[]{seen.get(diff), i};
-            }
-            seen.put(nums[i], i);
-        }
-        return new int[]{};
-    }
-
     public static void main(String[] args) {
-        HashTableChaining&lt;String, Object&gt; ht = new HashTableChaining&lt;&gt;(16);
-        ht.set("name", "Juan");
-        ht.set("age", 20);
-        System.out.println(ht.get("name"));  // Juan
+        // Create a HashMap (hash table)
+        HashMap&lt;String, Integer&gt; grades = new HashMap&lt;&gt;();
+        grades.put("Juan", 95);     // Add key-value pair
+        grades.put("Maria", 88);
+        grades.put("Pedro", 92);
 
-        int[] result = twoSum(new int[]{2, 7, 11, 15}, 9);
-        System.out.println("[" + result[0] + ", " + result[1] + "]");  // [0, 1]
+        // Access by key - O(1) average
+        System.out.println(grades.get("Juan"));  // 95
+
+        // Check if key exists - O(1)
+        System.out.println(grades.containsKey("Maria"));  // true
+        System.out.println(grades.containsKey("Ana"));    // false
+
+        // Count character frequency using HashMap
+        String text = "hello";
+        HashMap&lt;Character, Integer&gt; freq = new HashMap&lt;&gt;();
+        for (char c : text.toCharArray()) {
+            freq.put(c, freq.getOrDefault(c, 0) + 1);
+        }
+        System.out.println(freq);  // {e=1, h=1, l=2, o=1}
     }
 }
 </code></pre>
+<strong>Output:</strong>
+<pre>95
+true
+false
+{e=1, h=1, l=2, o=1}</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

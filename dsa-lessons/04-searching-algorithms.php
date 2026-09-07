@@ -180,99 +180,84 @@ echo findInsertPos($nums, 4);  // 2 (insert between 3 and 5)
 echo findInsertPos($nums, 0);  // 0 (insert at beginning)
 echo findInsertPos($nums, 9);  // 4 (insert at end)</code></pre>
 
-<h3>Python Implementation</h3>
-<pre><code class="language-python">
-# Linear Search - O(n)
+<h3>Python Example: Linear and Binary Search</h3>
+<pre><code class="language-python"># Linear Search - Check each item one by one
+# Time: O(n)
 def linear_search(arr, target):
     for i in range(len(arr)):
         if arr[i] == target:
-            return i  # Found at index i
+            return i  # Return position where found
     return -1  # Not found
 
-# Binary Search - O(log n) - array MUST be sorted
+# Binary Search - Divide and conquer (array must be sorted)
+# Time: O(log n)
 def binary_search(arr, target):
-    left, right = 0, len(arr) - 1
-    while left <= right:
-        mid = (left + right) // 2
+    low = 0
+    high = len(arr) - 1
+
+    while low <= high:
+        mid = (low + high) // 2
         if arr[mid] == target:
-            return mid  # Found
+            return mid      # Found it
         elif arr[mid] < target:
-            left = mid + 1  # Search right half
+            low = mid + 1   # Search right half
         else:
-            right = mid - 1  # Search left half
+            high = mid - 1  # Search left half
     return -1  # Not found
 
-# Recursive Binary Search
-def binary_search_recursive(arr, target, left, right):
-    if left > right:
-        return -1
-    mid = (left + right) // 2
-    if arr[mid] == target:
-        return mid
-    if arr[mid] < target:
-        return binary_search_recursive(arr, target, mid + 1, right)
-    else:
-        return binary_search_recursive(arr, target, left, mid - 1)
-
-# Usage
-numbers = [10, 23, 45, 70, 11, 15]
-print(f"Linear search for 70: {linear_search(numbers, 70)}")  # 3
-print(f"Linear search for 99: {linear_search(numbers, 99)}")  # -1
-
-sorted_arr = [2, 5, 8, 12, 16, 23, 38, 56, 72, 91]
-print(f"Binary search for 23: {binary_search(sorted_arr, 23)}")  # 5
-print(f"Binary search for 100: {binary_search(sorted_arr, 100)}")  # -1
-print(f"Recursive binary search for 23: {binary_search_recursive(sorted_arr, 23, 0, len(sorted_arr)-1)}")  # 5
+# Test both searches
+scores = [65, 72, 78, 82, 88, 92, 95]
+print(linear_search(scores, 82))  # 3 (found at index 3)
+print(binary_search(scores, 82))  # 3 (found at index 3)
+print(linear_search(scores, 100)) # -1 (not found)
 </code></pre>
+<strong>Output:</strong>
+<pre>3
+3
+-1</pre>
 
-<h3>Java Implementation</h3>
-<pre><code class="language-java">
-public class SearchingAlgorithms {
-    // Linear Search - O(n)
-    public static int linearSearch(int[] arr, int target) {
-        for (int i = 0; i < arr.length; i++) {
+<h3>Java Example: Linear and Binary Search</h3>
+<pre><code class="language-java">public class Main {
+    // Linear Search - Check each item one by one
+    static int linearSearch(int[] arr, int target) {
+        for (int i = 0; i &lt; arr.length; i++) {
             if (arr[i] == target) {
-                return i;  // Found at index i
+                return i;  // Return position where found
             }
         }
         return -1;  // Not found
     }
 
-    // Binary Search - O(log n) - array MUST be sorted
-    public static int binarySearch(int[] arr, int target) {
-        int left = 0, right = arr.length - 1;
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-            if (arr[mid] == target) return mid;  // Found
-            if (arr[mid] < target) left = mid + 1;  // Search right half
-            else right = mid - 1;  // Search left half
+    // Binary Search - Divide and conquer (array must be sorted)
+    static int binarySearch(int[] arr, int target) {
+        int low = 0;
+        int high = arr.length - 1;
+
+        while (low &lt;= high) {
+            int mid = (low + high) / 2;
+            if (arr[mid] == target) {
+                return mid;      // Found it
+            } else if (arr[mid] &lt; target) {
+                low = mid + 1;   // Search right half
+            } else {
+                high = mid - 1;  // Search left half
+            }
         }
         return -1;  // Not found
     }
 
-    // Recursive Binary Search
-    public static int binarySearchRecursive(int[] arr, int target, int left, int right) {
-        if (left > right) return -1;
-        int mid = left + (right - left) / 2;
-        if (arr[mid] == target) return mid;
-        if (arr[mid] < target)
-            return binarySearchRecursive(arr, target, mid + 1, right);
-        else
-            return binarySearchRecursive(arr, target, left, mid - 1);
-    }
-
     public static void main(String[] args) {
-        int[] numbers = {10, 23, 45, 70, 11, 15};
-        System.out.println("Linear search for 70: " + linearSearch(numbers, 70));  // 3
-        System.out.println("Linear search for 99: " + linearSearch(numbers, 99));  // -1
-
-        int[] sorted = {2, 5, 8, 12, 16, 23, 38, 56, 72, 91};
-        System.out.println("Binary search for 23: " + binarySearch(sorted, 23));  // 5
-        System.out.println("Binary search for 100: " + binarySearch(sorted, 100));  // -1
-        System.out.println("Recursive binary search for 23: " + binarySearchRecursive(sorted, 23, 0, sorted.length - 1));  // 5
+        int[] scores = {65, 72, 78, 82, 88, 92, 95};
+        System.out.println(linearSearch(scores, 82));  // 3
+        System.out.println(binarySearch(scores, 82));  // 3
+        System.out.println(linearSearch(scores, 100)); // -1
     }
 }
 </code></pre>
+<strong>Output:</strong>
+<pre>3
+3
+-1</pre>
 
 <!-- PART 3 -->
 <h2>Part 3: Apply New Knowledge</h2>

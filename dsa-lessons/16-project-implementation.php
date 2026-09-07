@@ -252,191 +252,82 @@ $graph->addEdge('Web Dev', 'HTML/CSS');
 
 $order = $graph->topologicalSort();</code></pre>
 
-<h3>Python Implementation</h3>
+<h3>Python Example: HashMap-Based Store</h3>
+<p>Using a hash map for O(1) student lookups.</p>
 <pre><code class="language-python">class Student:
-    def __init__(self, student_id, name, course):
-        self.student_id = student_id
+    def __init__(self, sid, name, course):
+        self.sid = sid
         self.name = name
         self.course = course
-        self.grades = {}
-
-    def add_grade(self, subject, grade):
-        self.grades[subject] = grade
-
-    def get_gpa(self):
-        if not self.grades:
-            return 0.0
-        return round(sum(self.grades.values()) / len(self.grades), 2)
-
-    def to_dict(self):
-        return {
-            "id": self.student_id,
-            "name": self.name,
-            "course": self.course,
-            "grades": self.grades,
-            "gpa": self.get_gpa()
-        }
-
+        self.gpa = 0.0
 
 class StudentStore:
     def __init__(self):
-        self.by_id = {}       # id => Student
-        self.by_name = {}     # name_lower => [id, id, ...]
-        self.by_course = {}   # course => [id, id, ...]
+        self.students = {}   # HashMap: sid -> Student
 
     def add(self, student):
-        self.by_id[student.student_id] = student
-        key = student.name.lower()
-        self.by_name.setdefault(key, []).append(student.student_id)
-        self.by_course.setdefault(student.course, []).append(student.student_id)
+        self.students[student.sid] = student  # O(1)
 
-    def get_by_id(self, student_id):
-        return self.by_id.get(student_id, None)
+    def get(self, sid):
+        return self.students.get(sid)         # O(1)
 
-    def search_by_name(self, query):
-        results = []
-        query_lower = query.lower()
-        for name, ids in self.by_name.items():
-            if query_lower in name:
-                for sid in ids:
-                    results.append(self.by_id[sid])
-        return results
+    def remove(self, sid):
+        if sid in self.students:
+            del self.students[sid]            # O(1)
+            return True
+        return False
 
-    def get_by_course(self, course):
-        ids = self.by_course.get(course, [])
-        return [self.by_id[sid] for sid in ids]
-
-    def get_all(self):
-        return list(self.by_id.values())
-
-    def count(self):
-        return len(self.by_id)
-
-    def delete(self, student_id):
-        if student_id not in self.by_id:
-            return False
-        student = self.by_id.pop(student_id)
-        name_key = student.name.lower()
-        self.by_name[name_key].remove(student_id)
-        self.by_course[student.course].remove(student_id)
-        return True
-
-
-# Usage
+# Test it
 store = StudentStore()
-juan = Student("2024-001", "Juan Dela Cruz", "BSIT")
-juan.add_grade("Math", 90)
-juan.add_grade("Programming", 95)
-store.add(juan)
+store.add(Student("001", "Juan", "BSIT"))
+store.add(Student("002", "Maria", "BSCS"))
 
-maria = Student("2024-002", "Maria Santos", "BSCS")
-maria.add_grade("Math", 92)
-maria.add_grade("Programming", 88)
-store.add(maria)
+print(store.get("001").name)  # Juan
+store.remove("002")
+print(store.get("002"))       # None
+</code></pre>
+<strong>Output:</strong>
+<pre>Juan
+None</pre>
 
-print(store.search_by_name("Juan"))  # [Student object]
-print(store.count())  # 2</code></pre>
+<h3>Java Example: HashMap-Based Store</h3>
+<p>Using a hash map for O(1) student lookups.</p>
+<pre><code class="language-java">import java.util.HashMap;
 
-<h3>Java Implementation</h3>
-<pre><code class="language-java">import java.util.*;
-import java.util.stream.Collectors;
+public class Main {
+    static class Student {
+        String sid, name, course;
+        double gpa = 0.0;
 
-public class Student {
-    private String studentId;
-    private String name;
-    private String course;
-    private Map&lt;String, Double&gt; grades;
-
-    public Student(String studentId, String name, String course) {
-        this.studentId = studentId;
-        this.name = name;
-        this.course = course;
-        this.grades = new HashMap&lt;&gt;();
-    }
-
-    public void addGrade(String subject, double grade) {
-        grades.put(subject, grade);
-    }
-
-    public double getGPA() {
-        if (grades.isEmpty()) return 0.0;
-        double sum = grades.values().stream().mapToDouble(Double::doubleValue).sum();
-        return Math.round(sum / grades.size() * 100.0) / 100.0;
-    }
-
-    public String getStudentId() { return studentId; }
-    public String getName() { return name; }
-    public String getCourse() { return course; }
-    public Map&lt;String, Double&gt; getGrades() { return grades; }
-}
-
-class StudentStore {
-    private Map&lt;String, Student&gt; byId = new HashMap&lt;&gt;();
-    private Map&lt;String, List&lt;String&gt;&gt; byName = new HashMap&lt;&gt;();
-    private Map&lt;String, List&lt;String&gt;&gt; byCourse = new HashMap&lt;&gt;();
-
-    public void add(Student student) {
-        byId.put(student.getStudentId(), student);
-        String key = student.getName().toLowerCase();
-        byName.computeIfAbsent(key, k -&gt; new ArrayList&lt;&gt;()).add(student.getStudentId());
-        byCourse.computeIfAbsent(student.getCourse(), k -&gt; new ArrayList&lt;&gt;()).add(student.getStudentId());
-    }
-
-    public Student getById(String id) {
-        return byId.getOrDefault(id, null);
-    }
-
-    public List&lt;Student&gt; searchByName(String query) {
-        List&lt;Student&gt; results = new ArrayList&lt;&gt;();
-        String queryLower = query.toLowerCase();
-        for (Map.Entry&lt;String, List&lt;String&gt;&gt; entry : byName.entrySet()) {
-            if (entry.getKey().contains(queryLower)) {
-                for (String sid : entry.getValue()) {
-                    results.add(byId.get(sid));
-                }
-            }
+        Student(String sid, String name, String course) {
+            this.sid = sid;
+            this.name = name;
+            this.course = course;
         }
-        return results;
     }
 
-    public List&lt;Student&gt; getByCourse(String course) {
-        List&lt;String&gt; ids = byCourse.getOrDefault(course, new ArrayList&lt;&gt;());
-        return ids.stream().map(byId::get).collect(Collectors.toList());
-    }
+    static class StudentStore {
+        HashMap&lt;String, Student&gt; students = new HashMap&lt;&gt;();
 
-    public List&lt;Student&gt; getAll() {
-        return new ArrayList&lt;&gt;(byId.values());
-    }
-
-    public int count() {
-        return byId.size();
-    }
-
-    public boolean delete(String id) {
-        if (!byId.containsKey(id)) return false;
-        Student student = byId.remove(id);
-        String nameKey = student.getName().toLowerCase();
-        byName.get(nameKey).remove(id);
-        byCourse.get(student.getCourse()).remove(id);
-        return true;
+        void add(Student s) { students.put(s.sid, s); }     // O(1)
+        Student get(String sid) { return students.get(sid); } // O(1)
+        boolean remove(String sid) { return students.remove(sid) != null; }
     }
 
     public static void main(String[] args) {
         StudentStore store = new StudentStore();
-        Student juan = new Student("2024-001", "Juan Dela Cruz", "BSIT");
-        juan.addGrade("Math", 90);
-        juan.addGrade("Programming", 95);
-        store.add(juan);
+        store.add(new Student("001", "Juan", "BSIT"));
+        store.add(new Student("002", "Maria", "BSCS"));
 
-        Student maria = new Student("2024-002", "Maria Santos", "BSCS");
-        maria.addGrade("Math", 92);
-        maria.addGrade("Programming", 88);
-        store.add(maria);
-
-        System.out.println(store.searchByName("Juan"));  // [Student object]
-        System.out.println(store.count());  // 2
+        System.out.println(store.get("001").name);  // Juan
+        store.remove("002");
+        System.out.println(store.get("002"));        // null
     }
-}</code></pre>
+}
+</code></pre>
+<strong>Output:</strong>
+<pre>Juan
+null</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

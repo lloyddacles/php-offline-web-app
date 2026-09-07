@@ -107,73 +107,65 @@ foreach ($result as $move) echo $move . "\n";
     </tbody>
 </table>
 
-<h3>Python Implementation</h3>
-<pre><code class="language-python">
-# Factorial - O(n)
+<h3>Python Example: Factorial and Fibonacci</h3>
+<pre><code class="language-python"># Factorial: n! = n × (n-1) × (n-2) × ... × 1
+# Example: 5! = 5 × 4 × 3 × 2 × 1 = 120
 def factorial(n):
-    if n <= 1:
-        return 1  # Base case
-    return n * factorial(n - 1)  # Recursive case
+    if n <= 1:          # Base case: stop when n is 1 or less
+        return 1
+    return n * factorial(n - 1)  # Recursive case: multiply and call again
 
-# Fibonacci - O(2^n) naive, O(n) with memoization
+print(factorial(5))   # 120
+print(factorial(3))   # 6
+
+# Fibonacci: 0, 1, 1, 2, 3, 5, 8, 13, ...
+# Each number is the sum of the two before it
 def fibonacci(n):
-    if n <= 0:
-        return 0  # Base case 1
-    if n == 1:
-        return 1  # Base case 2
-    return fibonacci(n - 1) + fibonacci(n - 2)
+    if n <= 0:          # Base case
+        return 0
+    if n == 1:          # Base case
+        return 1
+    return fibonacci(n - 1) + fibonacci(n - 2)  # Sum of two previous
 
-# Tower of Hanoi
-def tower_of_hanoi(n, source='A', auxiliary='B', destination='C'):
-    if n == 1:
-        print(f"Move disk 1 from {source} to {destination}")
-        return
-    tower_of_hanoi(n - 1, source, destination, auxiliary)
-    print(f"Move disk {n} from {source} to {destination}")
-    tower_of_hanoi(n - 1, auxiliary, source, destination)
-
-# Usage
-print(f"Factorial of 5: {factorial(5)}")  # 120
-print(f"Fibonacci of 10: {fibonacci(10)}")  # 55
-print("Tower of Hanoi with 3 disks:")
-tower_of_hanoi(3)
+print(fibonacci(6))   # 8
+print(fibonacci(8))   # 21
 </code></pre>
+<strong>Output:</strong>
+<pre>120
+6
+8
+21</pre>
 
-<h3>Java Implementation</h3>
-<pre><code class="language-java">
-public class RecursionExamples {
-    // Factorial - O(n)
-    public static int factorial(int n) {
-        if (n <= 1) return 1;  // Base case
+<h3>Java Example: Factorial and Fibonacci</h3>
+<pre><code class="language-java">public class Main {
+    // Factorial: n! = n × (n-1) × (n-2) × ... × 1
+    static int factorial(int n) {
+        if (n <= 1) {          // Base case: stop when n is 1 or less
+            return 1;
+        }
         return n * factorial(n - 1);  // Recursive case
     }
 
-    // Fibonacci - O(2^n) naive
-    public static int fibonacci(int n) {
-        if (n <= 0) return 0;  // Base case 1
-        if (n == 1) return 1;  // Base case 2
-        return fibonacci(n - 1) + fibonacci(n - 2);
-    }
-
-    // Tower of Hanoi
-    public static void towerOfHanoi(int n, char source, char auxiliary, char destination) {
-        if (n == 1) {
-            System.out.println("Move disk 1 from " + source + " to " + destination);
-            return;
-        }
-        towerOfHanoi(n - 1, source, destination, auxiliary);
-        System.out.println("Move disk " + n + " from " + source + " to " + destination);
-        towerOfHanoi(n - 1, auxiliary, source, destination);
+    // Fibonacci: 0, 1, 1, 2, 3, 5, 8, 13, ...
+    static int fibonacci(int n) {
+        if (n <= 0) return 0;   // Base case
+        if (n == 1) return 1;   // Base case
+        return fibonacci(n - 1) + fibonacci(n - 2);  // Sum of two previous
     }
 
     public static void main(String[] args) {
-        System.out.println("Factorial of 5: " + factorial(5));  // 120
-        System.out.println("Fibonacci of 10: " + fibonacci(10));  // 55
-        System.out.println("Tower of Hanoi with 3 disks:");
-        towerOfHanoi(3, 'A', 'B', 'C');
+        System.out.println(factorial(5));  // 120
+        System.out.println(factorial(3));  // 6
+        System.out.println(fibonacci(6));  // 8
+        System.out.println(fibonacci(8));  // 21
     }
 }
 </code></pre>
+<strong>Output:</strong>
+<pre>120
+6
+8
+21</pre>
 
 <!-- PART 3 -->
 <h2>Part 3: Apply New Knowledge</h2>
