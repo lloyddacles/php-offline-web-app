@@ -20,7 +20,7 @@ if ($currentDir && preg_match('#/(\d+)-#', $requestUri, $m)) {
 
 // All sections for sidebar
 $sections = [
-    ['id' => 'logic', 'title' => 'Programming Logic', 'dir' => 'programming-logic', 'prefix' => '/logic', 'icon' => '&#128161;'],
+    ['id' => 'logic', 'title' => 'Prog. Logic', 'dir' => 'programming-logic', 'prefix' => '/logic', 'icon' => '&#128161;'],
     ['id' => 'php',   'title' => 'PHP',               'dir' => 'lessons',             'prefix' => '/lesson', 'icon' => '&#128421;'],
     ['id' => 'python','title' => 'Python',             'dir' => 'python-lessons',      'prefix' => '/python', 'icon' => '&#128013;'],
     ['id' => 'java',  'title' => 'Java',               'dir' => 'java-lessons',        'prefix' => '/java',   'icon' => '&#9749;'],

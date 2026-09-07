@@ -1,158 +1,142 @@
 <?php
 require_once __DIR__ . '/../includes/functions.php';
-$lessons = getLessons();
-$pageTitle = 'Home';
+$pageTitle = 'Dashboard';
 require_once __DIR__ . '/../includes/header.php';
+
+$counts = [
+    'prog' => count(getLessons('programming-logic')),
+    'php' => count(getLessons()),
+    'python' => count(getLessons('python-lessons')),
+    'java' => count(getLessons('java-lessons')),
+    'dsa' => count(getLessons('dsa-lessons')),
+    'dbms' => count(getLessons('dbms-lessons')),
+    'mysql' => count(getLessons('mysql-lessons')),
+];
+$totalLessons = array_sum($counts);
 ?>
 
-<div class="lesson-header">
-    <h1>LD TechLab Programming Tutorials</h1>
-    <p class="lesson-desc">Interactive programming lessons with live code execution. Learn by doing — edit and run code directly in your browser.</p>
-    <div style="margin-top: 16px;">
-        <a href="/demo" class="btn btn-primary" style="font-size: 1em;">&#128640; Try Live Demo: Student Portal</a>
+<!-- Welcome Hero -->
+<div class="dashboard-hero">
+    <div class="dashboard-hero-inner">
+        <h1>Welcome to LD TechLab</h1>
+        <p class="dashboard-hero-sub">An instructor-led teaching and demonstration platform for programming fundamentals.</p>
+        <p class="dashboard-hero-desc">Use this tool to teach concepts, perform live coding demonstrations, and let students explore interactive examples across 7 core subjects — all running offline in a single portable app.</p>
+    <div style="margin-top:16px;">
+        <a href="/deploy" class="btn btn-outline" style="font-size:0.9em;">&#128295; Deployment Guide</a>
+    </div>
     </div>
 </div>
 
-<div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap:10px; margin: 32px 0;">
-    <?php
-    $quickLinks = [
-        ['title' => '&#128161; Programming Logic', 'url' => lessonUrl(1, 'what-is-programming-logic', 'programming-logic')],
-        ['title' => '&#128421; PHP', 'url' => lessonUrl(1, 'introduction', 'lessons')],
-        ['title' => '&#128013; Python', 'url' => lessonUrl(1, 'introduction', 'python-lessons')],
-        ['title' => '&#9749; Java', 'url' => lessonUrl(1, 'introduction', 'java-lessons')],
-        ['title' => '&#128208; DSA', 'url' => lessonUrl(1, 'introduction', 'dsa-lessons')],
-        ['title' => '&#128202; DBMS Theory', 'url' => lessonUrl(1, 'introduction', 'dbms-lessons')],
-        ['title' => '&#128451; MySQL', 'url' => lessonUrl(1, 'introduction', 'mysql-lessons')],
-    ];
-    foreach ($quickLinks as $i => $link): ?>
-        <a href="<?= $link['url'] ?>" class="btn <?= $i === 1 ? 'btn-primary' : 'btn-outline' ?>" style="justify-content:center;"><?= $link['title'] ?></a>
-    <?php endforeach; ?>
+<!-- Stats Bar -->
+<div class="dashboard-stats">
+    <div class="dashboard-stat">
+        <div class="dashboard-stat-num">7</div>
+        <div class="dashboard-stat-label">Subjects</div>
+    </div>
+    <div class="dashboard-stat">
+        <div class="dashboard-stat-num"><?= $totalLessons ?></div>
+        <div class="dashboard-stat-label">Lessons</div>
+    </div>
+    <div class="dashboard-stat">
+        <div class="dashboard-stat-num">7</div>
+        <div class="dashboard-stat-label">Interactive Demos</div>
+    </div>
+    <div class="dashboard-stat">
+        <div class="dashboard-stat-num">3</div>
+        <div class="dashboard-stat-label">Sandboxes</div>
+    </div>
 </div>
 
-<hr>
-
-<!-- Programming Logic -->
-<section style="margin-top:32px;">
-    <div class="section-title">
-        <h2>&#128161; Programming Logic</h2>
-        <p>Learn how to think like a programmer — logic, patterns, and problem-solving</p>
+<!-- Teaching Tools -->
+<section class="dashboard-section">
+    <h2 class="dashboard-section-title">Interactive Demos</h2>
+    <p class="dashboard-section-desc">Ready-made tools for in-class demonstrations and hands-on practice.</p>
+    <div class="dashboard-demos">
+        <a href="/demo" class="dashboard-demo-card" style="border-top-color: var(--accent);">
+            <span class="dashboard-demo-icon">&#128640;</span>
+            <h3>Student Portal</h3>
+            <p>Full PHP + SQLite web app with login, dashboard, grades, and enrollment.</p>
+            <span class="dashboard-demo-tag">PHP</span>
+        </a>
+        <a href="/demo/logic-trace" class="dashboard-demo-card" style="border-top-color: var(--accent-yellow);">
+            <span class="dashboard-demo-icon">&#128161;</span>
+            <h3>Algorithm Tracer</h3>
+            <p>Step through algorithms line-by-line. Watch variables change in real time.</p>
+            <span class="dashboard-demo-tag">Logic</span>
+        </a>
+        <a href="/demo/python-lab" class="dashboard-demo-card" style="border-top-color: var(--accent-green);">
+            <span class="dashboard-demo-icon">&#128013;</span>
+            <h3>Python Data Lab</h3>
+            <p>Analyze student data with charts, statistics, and correlation.</p>
+            <span class="dashboard-demo-tag">Python</span>
+        </a>
+        <a href="/demo/java-oop" class="dashboard-demo-card" style="border-top-color: var(--accent-peach);">
+            <span class="dashboard-demo-icon">&#9749;</span>
+            <h3>Java OOP Designer</h3>
+            <p>Design classes visually. See class diagrams and generated Java code.</p>
+            <span class="dashboard-demo-tag">Java</span>
+        </a>
+        <a href="/demo/dsa-sort" class="dashboard-demo-card" style="border-top-color: var(--accent-mauve);">
+            <span class="dashboard-demo-icon">&#128208;</span>
+            <h3>Sorting Visualizer</h3>
+            <p>Watch sorting algorithms animate. Compare speed, swaps, and comparisons.</p>
+            <span class="dashboard-demo-tag">DSA</span>
+        </a>
+        <a href="/demo/dbms-er" class="dashboard-demo-card" style="border-top-color: var(--accent-blue);">
+            <span class="dashboard-demo-icon">&#128202;</span>
+            <h3>ER Diagram Designer</h3>
+            <p>Build entities and relationships. Generate DDL SQL from your diagram.</p>
+            <span class="dashboard-demo-tag">DBMS</span>
+        </a>
+        <a href="/demo/mysql-lab" class="dashboard-demo-card" style="border-top-color: var(--accent-teal);">
+            <span class="dashboard-demo-icon">&#128451;</span>
+            <h3>SQL Playground</h3>
+            <p>Write SQL queries against a sample database. INSERT, UPDATE, DELETE, JOIN.</p>
+            <span class="dashboard-demo-tag">MySQL</span>
+        </a>
     </div>
-    <div class="lessons-grid">
-        <?php foreach (getLessons('programming-logic') as $lesson): ?>
-            <a href="<?= lessonUrl($lesson['num'], $lesson['slug'], 'programming-logic') ?>" class="lesson-card">
-                <span class="lesson-card-number"><?= str_pad($lesson['num'], 2, '0', STR_PAD_LEFT) ?></span>
-                <h3 class="lesson-card-title"><?= htmlspecialchars($lesson['title']) ?></h3>
-            </a>
+</section>
+
+<!-- Lessons by Subject -->
+<section class="dashboard-section">
+    <h2 class="dashboard-section-title">Lesson Library</h2>
+    <p class="dashboard-section-desc"><?= $totalLessons ?> structured lessons across 7 subjects. Click any subject to explore.</p>
+    <div class="dashboard-subjects">
+        <?php
+        $subjects = [
+            ['icon' => '&#128161;', 'name' => 'Prog. Logic', 'dir' => 'programming-logic', 'prefix' => '/logic', 'count' => $counts['prog'], 'color' => 'var(--accent-yellow)'],
+            ['icon' => '&#128421;', 'name' => 'PHP', 'dir' => 'lessons', 'prefix' => '/lesson', 'count' => $counts['php'], 'color' => 'var(--accent)'],
+            ['icon' => '&#128013;', 'name' => 'Python', 'dir' => 'python-lessons', 'prefix' => '/python', 'count' => $counts['python'], 'color' => 'var(--accent-green)'],
+            ['icon' => '&#9749;', 'name' => 'Java', 'dir' => 'java-lessons', 'prefix' => '/java', 'count' => $counts['java'], 'color' => 'var(--accent-peach)'],
+            ['icon' => '&#128208;', 'name' => 'DSA', 'dir' => 'dsa-lessons', 'prefix' => '/dsa', 'count' => $counts['dsa'], 'color' => 'var(--accent-mauve)'],
+            ['icon' => '&#128202;', 'name' => 'DBMS Theory', 'dir' => 'dbms-lessons', 'prefix' => '/dbms', 'count' => $counts['dbms'], 'color' => 'var(--accent-blue)'],
+            ['icon' => '&#128451;', 'name' => 'MySQL', 'dir' => 'mysql-lessons', 'prefix' => '/mysql', 'count' => $counts['mysql'], 'color' => 'var(--accent-teal)'],
+        ];
+        foreach ($subjects as $subj):
+            $lessons = getLessons($subj['dir']);
+        ?>
+        <div class="dashboard-subject-card">
+            <div class="dashboard-subject-header" style="border-left-color: <?= $subj['color'] ?>;">
+                <span class="dashboard-subject-icon"><?= $subj['icon'] ?></span>
+                <div>
+                    <h3><?= $subj['name'] ?></h3>
+                    <span class="dashboard-subject-count"><?= $subj['count'] ?> lessons</span>
+                </div>
+            </div>
+            <ul class="dashboard-subject-list">
+                <?php foreach ($lessons as $lesson): ?>
+                    <li><a href="<?= lessonUrl($lesson['num'], $lesson['slug'], $subj['dir']) ?>"><?= htmlspecialchars($lesson['title']) ?></a></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
         <?php endforeach; ?>
     </div>
 </section>
 
-<hr>
-
-<!-- PHP -->
-<section style="margin-top:32px;">
-    <div class="section-title">
-        <h2>&#128421; PHP</h2>
-        <p>Interactive PHP lessons with live code execution</p>
-    </div>
-    <div class="lessons-grid">
-        <?php foreach ($lessons as $lesson): ?>
-            <a href="<?= lessonUrl($lesson['num'], $lesson['slug'], 'lessons') ?>" class="lesson-card">
-                <span class="lesson-card-number"><?= str_pad($lesson['num'], 2, '0', STR_PAD_LEFT) ?></span>
-                <h3 class="lesson-card-title"><?= htmlspecialchars($lesson['title']) ?></h3>
-            </a>
-        <?php endforeach; ?>
-    </div>
-</section>
-
-<hr>
-
-<!-- Python -->
-<section style="margin-top:32px;">
-    <div class="section-title">
-        <h2>&#128013; Python</h2>
-        <p>Interactive Python lessons with live code execution</p>
-    </div>
-    <div class="lessons-grid">
-        <?php foreach (getLessons('python-lessons') as $lesson): ?>
-            <a href="<?= lessonUrl($lesson['num'], $lesson['slug'], 'python-lessons') ?>" class="lesson-card">
-                <span class="lesson-card-number"><?= str_pad($lesson['num'], 2, '0', STR_PAD_LEFT) ?></span>
-                <h3 class="lesson-card-title"><?= htmlspecialchars($lesson['title']) ?></h3>
-            </a>
-        <?php endforeach; ?>
-    </div>
-</section>
-
-<hr>
-
-<!-- Java -->
-<section style="margin-top:32px;">
-    <div class="section-title">
-        <h2>&#9749; Java</h2>
-        <p>Interactive Java lessons with compile-and-run sandbox</p>
-    </div>
-    <div class="lessons-grid">
-        <?php foreach (getLessons('java-lessons') as $lesson): ?>
-            <a href="<?= lessonUrl($lesson['num'], $lesson['slug'], 'java-lessons') ?>" class="lesson-card">
-                <span class="lesson-card-number"><?= str_pad($lesson['num'], 2, '0', STR_PAD_LEFT) ?></span>
-                <h3 class="lesson-card-title"><?= htmlspecialchars($lesson['title']) ?></h3>
-            </a>
-        <?php endforeach; ?>
-    </div>
-</section>
-
-<hr>
-
-<!-- DSA -->
-<section style="margin-top:32px;">
-    <div class="section-title">
-        <h2>&#128208; Data Structures &amp; Algorithms</h2>
-        <p>Master fundamental DSA with hands-on PHP implementations</p>
-    </div>
-    <div class="lessons-grid">
-        <?php foreach (getLessons('dsa-lessons') as $lesson): ?>
-            <a href="<?= lessonUrl($lesson['num'], $lesson['slug'], 'dsa-lessons') ?>" class="lesson-card">
-                <span class="lesson-card-number"><?= str_pad($lesson['num'], 2, '0', STR_PAD_LEFT) ?></span>
-                <h3 class="lesson-card-title"><?= htmlspecialchars($lesson['title']) ?></h3>
-            </a>
-        <?php endforeach; ?>
-    </div>
-</section>
-
-<hr>
-
-<!-- DBMS -->
-<section style="margin-top:32px;">
-    <div class="section-title">
-        <h2>&#128202; DBMS Theory</h2>
-        <p>Database design, normalization, ER diagrams, and security</p>
-    </div>
-    <div class="lessons-grid">
-        <?php foreach (getLessons('dbms-lessons') as $lesson): ?>
-            <a href="<?= lessonUrl($lesson['num'], $lesson['slug'], 'dbms-lessons') ?>" class="lesson-card">
-                <span class="lesson-card-number"><?= str_pad($lesson['num'], 2, '0', STR_PAD_LEFT) ?></span>
-                <h3 class="lesson-card-title"><?= htmlspecialchars($lesson['title']) ?></h3>
-            </a>
-        <?php endforeach; ?>
-    </div>
-</section>
-
-<hr>
-
-<!-- MySQL -->
-<section style="margin-top:32px;">
-    <div class="section-title">
-        <h2>&#128451; MySQL</h2>
-        <p>SQL from basics to PHP integration</p>
-    </div>
-    <div class="lessons-grid">
-        <?php foreach (getLessons('mysql-lessons') as $lesson): ?>
-            <a href="<?= lessonUrl($lesson['num'], $lesson['slug'], 'mysql-lessons') ?>" class="lesson-card">
-                <span class="lesson-card-number"><?= str_pad($lesson['num'], 2, '0', STR_PAD_LEFT) ?></span>
-                <h3 class="lesson-card-title"><?= htmlspecialchars($lesson['title']) ?></h3>
-            </a>
-        <?php endforeach; ?>
-    </div>
-</section>
+<!-- Footer note -->
+<div class="dashboard-footer">
+    <p>Created by <strong>Mr. Lloyd Christopher F. Dacles, MIS</strong> &mdash; LD TechLab Programming Tutorials</p>
+    <p>All lessons and demos run offline. No internet required.</p>
+</div>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

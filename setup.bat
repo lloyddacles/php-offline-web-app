@@ -1,148 +1,167 @@
 @echo off
-REM ============================================
-REM    LD TechLab - Auto Setup Script (Windows)
-REM    Downloads and installs PHP if missing
-REM ============================================
-
+title LD TechLab - Setup
 setlocal enabledelayedexpansion
 
 set SCRIPT_DIR=%~dp0
 set BIN_DIR=%SCRIPT_DIR%bin
 
 echo.
-echo =========================================
-echo    LD TechLab - Setup
-echo =========================================
+echo  ==========================================
+echo   LD TechLab - Windows Setup
+echo  ==========================================
 echo.
 
 REM ============================================
-REM Check / Install PHP
+REM Check PHP
 REM ============================================
-echo --- PHP ---
+echo  Checking PHP...
+echo.
 
-set PHP=
+set PHP_FOUND=0
 
-REM Check bundled
+REM 1. Check bundled php.exe in bin\
 if exist "%BIN_DIR%\php.exe" (
-    set PHP=%BIN_DIR%\php.exe
-    echo [OK] Bundled PHP found
-    goto :php_done
+    echo  [OK] Found bundled PHP: bin\php.exe
+    set PHP_FOUND=1
+    set PHP_PATH=%BIN_DIR%\php.exe
+    goto :php_checked
 )
 
-REM Check system PATH
+REM 2. Check system PATH
 where php >nul 2>&1
 if !ERRORLEVEL! EQU 0 (
-    set PHP=php
-    echo [OK] System PHP found
-    goto :php_done
+    echo  [OK] Found PHP in system PATH
+    set PHP_FOUND=1
+    for /f "tokens=*" %%p in ('where php') do set PHP_PATH=%%p
+    goto :php_checked
 )
 
-REM Check common locations
-if exist "C:\php\php.exe" (
-    set PHP=C:\php\php.exe
-    echo [OK] PHP found at C:\php
-    goto :php_done
+REM 3. Check common install locations
+for %%P in (
+    "C:\php\php.exe"
+    "C:\PHP\php.exe"
+    "%ProgramFiles%\php\php.exe"
+    "%LocalAppData%\Programs\PHP\php.exe"
+    "C:\tools\php\php.exe"
+) do (
+    if exist %%P (
+        echo  [OK] Found PHP at %%P
+        set PHP_FOUND=1
+        set PHP_PATH=%%~P
+        goto :php_checked
+    )
 )
 
-REM PHP not found - try to download
-echo [WARN] PHP not found. Downloading...
-mkdir "%BIN_DIR%" 2>nul
-
-REM Download PHP for Windows
-set PHP_VERSION=8.3.12
-set PHP_URL=https://windows.php.net/downloads/releases/php-%PHP_VERSION%-Win32-vs16-x64.zip
-set PHP_ZIP=%TEMP%\php-download.zip
-
-echo Downloading PHP %PHP_VERSION% for Windows...
-echo URL: %PHP_URL%
-
-powershell -Command "try { [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Invoke-WebRequest -Uri '%PHP_URL%' -OutFile '%PHP_ZIP%' -UseBasicParsing } catch { Write-Host 'Download failed'; exit 1 }"
-
-if !ERRORLEVEL! NEQ 0 (
-    echo [ERROR] Download failed.
+REM 4. Check winget
+where winget >nul 2>&1
+if !ERRORLEVEL! EQU 0 (
+    echo  [INFO] PHP not found. Attempting install via winget...
     echo.
-    echo Please install PHP manually:
-    echo   1. Download from: https://www.php.net/downloads
-    echo   2. Extract to C:\php
-    echo   3. Add C:\php to your PATH
+    winget install --id PHP.PHP --accept-package-agreements --accept-source-agreements
+    if !ERRORLEVEL! EQU 0 (
+        echo.
+        echo  [OK] PHP installed via winget
+        echo  Refreshing PATH...
+        set PATH=%PATH%;C:\php
+        where php >nul 2>&1
+        if !ERRORLEVEL! EQU 0 (
+            set PHP_FOUND=1
+            for /f "tokens=*" %%p in ('where php') do set PHP_PATH=%%p
+        )
+    )
+    goto :php_checked
+)
+
+:php_checked
+
+if !PHP_FOUND! EQU 0 (
     echo.
-    goto :php_done
-)
-
-echo Extracting...
-powershell -Command "Expand-Archive -Path '%PHP_ZIP%' -DestinationPath '%BIN_DIR%\php-temp' -Force"
-
-REM Move php.exe from nested directory
-for /d %%D in ("%BIN_DIR%\php-temp\php-*") do (
-    copy "%%D\php.exe" "%BIN_DIR%\php.exe" >nul 2>&1
-    copy "%%D\php.ini" "%BIN_DIR%\php.ini" >nul 2>&1
-)
-rmdir /s /q "%BIN_DIR%\php-temp" 2>nul
-del "%PHP_ZIP%" 2>nul
-
-if exist "%BIN_DIR%\php.exe" (
-    set PHP=%BIN_DIR%\php.exe
-    echo [OK] PHP installed to bin\php.exe
-) else (
-    echo [ERROR] PHP installation failed.
-)
-
-:php_done
-
-if defined PHP (
-    for /f "tokens=*" %%v in ('%PHP% -r "echo PHP_VERSION;"') do echo [OK] PHP %%v
-) else (
-    echo [ERROR] PHP is required to run this tutorial website.
+    echo  ==========================================
+    echo   PHP NOT FOUND - Manual Install Required
+    echo  ==========================================
     echo.
-    echo Options:
-    echo   1. Download PHP from: https://www.php.net/downloads
-    echo   2. Add PHP to your PATH environment variable
+    echo  PHP is required to run this tutorial website.
     echo.
+    echo  Option 1 (Recommended): Install via Winget
+    echo    winget install PHP.PHP
+    echo.
+    echo  Option 2: Manual Download
+    echo    1. Go to https://windows.php.net/download/
+    echo    2. Download "VS17 x64 Non Thread Safe" ZIP
+    echo    3. Extract the ZIP to C:\php
+    echo    4. Add C:\php to your system PATH:
+    echo       - Search "Environment Variables" in Start Menu
+    echo       - Edit PATH under System Variables
+    echo       - Add C:\php
+    echo    5. Run this setup again
+    echo.
+    echo  Option 3: Use Git Bash
+    echo    Run: ./setup.sh
+    echo.
+    goto :check_python
 )
+
+REM Verify PHP works
+for /f "tokens=*" %%v in ('!PHP_PATH! -v 2^>^&1') do (
+    echo  %%v
+    goto :php_version_done
+)
+:php_version_done
 
 echo.
 
 REM ============================================
-REM Check Python
+REM Check Python (optional)
 REM ============================================
-echo --- Python ---
+:check_python
+echo  Checking Python (optional for Python sandbox)...
+echo.
 where python >nul 2>&1
 if !ERRORLEVEL! EQU 0 (
-    for /f "tokens=*" %%v in ('python --version 2^>^&1') do echo [OK] %%v
+    for /f "tokens=*" %%v in ('python --version 2^>^&1') do echo  [OK] %%v
 ) else (
-    echo [SKIP] Python not found
-    echo   To enable Python sandbox: winget install Python.Python.3
+    where python3 >nul 2>&1
+    if !ERRORLEVEL! EQU 0 (
+        for /f "tokens=*" %%v in ('python3 --version 2^>^&1') do echo  [OK] %%v
+    ) else (
+        echo  [SKIP] Python not found - Python sandbox will not work
+        echo         Install: winget install Python.Python.3
+    )
 )
 echo.
 
 REM ============================================
-REM Check Java
+REM Check Java (optional)
 REM ============================================
-echo --- Java ---
+echo  Checking Java (optional for Java sandbox)...
+echo.
 where java >nul 2>&1
 if !ERRORLEVEL! EQU 0 (
-    java -version >nul 2>&1
-    if !ERRORLEVEL! EQU 0 (
-        echo [OK] Java found
-    ) else (
-        echo [SKIP] Java not found
+    for /f "tokens=*" %%v in ('java -version 2^>^&1') do (
+        echo  [OK] %%v
+        goto :java_done
     )
 ) else (
-    echo [SKIP] Java not found
-    echo   To enable Java sandbox: winget install EclipseAdoptium.Temurin.17.JDK
+    echo  [SKIP] Java not found - Java sandbox will not work
+    echo         Install: winget install EclipseAdoptium.Temurin.17.JDK
 )
+:java_done
 echo.
 
 REM ============================================
 REM Done
 REM ============================================
-echo =========================================
-echo Setup complete!
+echo  ==========================================
+echo   Setup Complete
+echo  ==========================================
 echo.
-echo To start the tutorial website:
-echo   start-server.bat
+echo  To start the tutorial website:
+echo    Double-click "start.bat"
 echo.
-echo Then open: http://localhost:8000
-echo =========================================
+echo  Then open in your browser:
+echo    http://localhost:8080
+echo.
+echo  To stop: Close the server window or press Ctrl+C
+echo  ==========================================
 echo.
 pause

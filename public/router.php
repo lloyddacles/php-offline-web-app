@@ -138,6 +138,12 @@ if ($uri === '/status' || $uri === '/status.php') {
     return true;
 }
 
+// Deployment guide
+if ($uri === '/deploy' || $uri === '/deploy.php') {
+    require __DIR__ . '/deploy.php';
+    return true;
+}
+
 // PHP Lesson listing
 if ($uri === '/lessons' || $uri === '/lessons/' || $uri === '/php' || $uri === '/php/') {
     require __DIR__ . '/../lessons/index.php';

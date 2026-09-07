@@ -186,6 +186,99 @@ echo "Ratio: O(n²) is " . round($quadraticTime / $linearTime) . "x slower!\n";
     <p class="mb-0">Look for loops. A single loop over n elements is O(n). Two nested loops is O(n&sup2;). Three nested loops is O(n&sup3;). If the loop count halves each time (binary search), it's O(log n).</p>
 </div>
 
+<h2>Python Implementation</h2>
+<pre><code class="language-python">
+import time
+
+# O(n) - Linear time
+def linear_search(arr, target):
+    for i in range(len(arr)):
+        if arr[i] == target:
+            return i
+    return -1
+
+# O(n²) - Quadratic time
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        for j in range(0, n-i-1):
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+    return arr
+
+# O(log n) - Logarithmic time
+def binary_search(arr, target):
+    left, right = 0, len(arr) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1
+
+# Example usage
+numbers = list(range(1, 1001))
+print(f"Linear search for 500: {linear_search(numbers, 500)}")
+print(f"Binary search for 500: {binary_search(numbers, 500)}")
+print(f"Sorted array: {bubble_sort([64, 34, 25, 12, 22, 11, 90])}")
+</code></pre>
+
+<h2>Java Implementation</h2>
+<pre><code class="language-java">
+public class ComplexityExamples {
+    // O(n) - Linear time
+    public static int linearSearch(int[] arr, int target) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == target) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    // O(n²) - Quadratic time
+    public static void bubbleSort(int[] arr) {
+        int n = arr.length;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+        }
+    }
+
+    // O(log n) - Logarithmic time
+    public static int binarySearch(int[] arr, int target) {
+        int left = 0, right = arr.length - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (arr[mid] == target) return mid;
+            if (arr[mid] < target) left = mid + 1;
+            else right = mid - 1;
+        }
+        return -1;
+    }
+
+    public static void main(String[] args) {
+        int[] numbers = new int[1000];
+        for (int i = 0; i < 1000; i++) numbers[i] = i + 1;
+
+        System.out.println("Linear search for 500: " + linearSearch(numbers, 500));
+        System.out.println("Binary search for 500: " + binarySearch(numbers, 500));
+
+        int[] arr = {64, 34, 25, 12, 22, 11, 90};
+        bubbleSort(arr);
+        System.out.println("Sorted array: " + java.util.Arrays.toString(arr));
+    }
+}
+</code></pre>
+
 <div class="lesson-nav">
     <?php if ($prevNext['prev']): ?>
         <a href="<?= lessonUrl($prevNext['prev']['num'], $prevNext['prev']['slug'], 'dsa-lessons') ?>" class="prev-link">&larr; Previous: <?= htmlspecialchars($prevNext['prev']['title']) ?></a>

@@ -1,6 +1,8 @@
-# Dependencies downloaded by setup.sh
+# PHP binaries (downloaded by setup.sh or bundled for distribution)
 bin/php
 bin/php.exe
+bin/php-*
+bin/*.tar.gz
 
 # Demo database (auto-created)
 public/demo/portal.db

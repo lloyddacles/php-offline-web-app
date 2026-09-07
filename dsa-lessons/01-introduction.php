@@ -138,6 +138,69 @@ echo "Reversed: " . implode(", ", $reversed) . "\n";
     </div>
 </div>
 
+<h2>Python Implementation</h2>
+<pre><code class="language-python">
+# Python lists (dynamic arrays)
+fruits = ["Apple", "Banana", "Cherry"]
+print("List:", fruits)
+
+# Dictionary (associative array)
+person = {"name": "Alice", "age": 25, "city": "Manila"}
+print("Dictionary:", person)
+
+# List of dictionaries (multidimensional)
+students = [
+    {"name": "Bob", "grade": "A"},
+    {"name": "Carol", "grade": "B+"}
+]
+print("Students:", students)
+
+# Basic operations
+numbers = [23, 45, 12, 67, 89, 34]
+print("Max:", max(numbers))
+print("Reversed:", numbers[::-1])
+print("Sorted:", sorted(numbers))
+</code></pre>
+
+<h2>Java Implementation</h2>
+<pre><code class="language-java">
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Arrays;
+import java.util.Collections;
+
+public class Main {
+    public static void main(String[] args) {
+        // ArrayList (dynamic array)
+        ArrayList&lt;String&gt; fruits = new ArrayList&lt;&gt;();
+        fruits.add("Apple");
+        fruits.add("Banana");
+        fruits.add("Cherry");
+        System.out.println("ArrayList: " + fruits);
+
+        // HashMap (associative array)
+        HashMap&lt;String, Object&gt; person = new HashMap&lt;&gt;();
+        person.put("name", "Alice");
+        person.put("age", 25);
+        person.put("city", "Manila");
+        System.out.println("HashMap: " + person);
+
+        // ArrayList of HashMaps
+        ArrayList&lt;HashMap&lt;String, String&gt;&gt; students = new ArrayList&lt;&gt;();
+        HashMap&lt;String, String&gt; student1 = new HashMap&lt;&gt;();
+        student1.put("name", "Bob");
+        student1.put("grade", "A");
+        students.add(student1);
+
+        // Basic operations
+        ArrayList&lt;Integer&gt; numbers = new ArrayList&lt;&gt;(Arrays.asList(23, 45, 12, 67, 89, 34));
+        System.out.println("Max: " + Collections.max(numbers));
+        Collections.sort(numbers);
+        System.out.println("Sorted: " + numbers);
+    }
+}
+</code></pre>
+
 <div class="lesson-nav">
     <?php if ($prevNext['prev']): ?>
         <a href="<?= lessonUrl($prevNext['prev']['num'], $prevNext['prev']['slug'], 'dsa-lessons') ?>" class="prev-link">&larr; Previous: <?= htmlspecialchars($prevNext['prev']['title']) ?></a>
