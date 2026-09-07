@@ -33,52 +33,38 @@
 </ul>
 
 <h3>Example</h3>
-<pre><code class="language-java">import java.util.Arrays;
+<pre><code class="language-java">import java.util.Arrays;                    // Import Arrays utility class
 
-public class ArraysStringsDemo {
-    public static void main(String[] args) {
-        // Array creation and access
-        int[] numbers = {10, 20, 30, 40, 50};
-        System.out.println("Array length: " + numbers.length);
-        System.out.println("First element: " + numbers[0]);
-        System.out.println("Last element: " + numbers[numbers.length - 1]);
+public class Main {                         // Main class
+    public static void main(String[] args) { // Entry point
 
-        // Arrays utility class
-        int[] arr = {5, 2, 8, 1, 9};
-        System.out.println("Original: " + Arrays.toString(arr));
-        Arrays.sort(arr);
-        System.out.println("Sorted:   " + Arrays.toString(arr));
+        // Array stores multiple values of same type
+        String[] names = {"Juan", "Maria", "Pedro"}; // Create array with values
+        System.out.println("First: " + names[0]);    // Access by index (starts at 0)
+        System.out.println("Length: " + names.length); // Get array size
 
-        // String methods (immutable — returns new string)
-        String text = "  Hello, Java!  ";
-        System.out.println("Original: \"" + text + "\"");
-        System.out.println("Trimmed:  \"" + text.trim() + "\"");
-        System.out.println("Upper:    \"" + text.trim().toUpperCase() + "\"");
-        System.out.println("Length:   " + text.trim().length());
-        System.out.println("charAt(0): " + text.trim().charAt(0));
-        System.out.println("indexOf(\"Java\"): " + text.trim().indexOf("Java"));
+        // Loop through array with for-each
+        System.out.println("\nAll names:");
+        for (String name : names) {          // Each element goes into name
+            System.out.println(name);        // Print current name
+        }
 
-        // StringBuilder (mutable — modifies in place)
-        StringBuilder sb = new StringBuilder("Hello");
-        sb.append(" World");
-        sb.insert(5, ",");
-        System.out.println("StringBuilder: " + sb.toString());
+        // Sort the array alphabetically
+        Arrays.sort(names);                  // Sort in ascending order
+        System.out.println("\nSorted: " + Arrays.toString(names)); // Print array
     }
 }
 </code></pre>
 <strong>Output:</strong>
-<pre>Array length: 5
-First element: 10
-Last element: 50
-Original: [5, 2, 8, 1, 9]
-Sorted:   [1, 2, 5, 8, 9]
-Original: "  Hello, Java!  "
-Trimmed:  "Hello, Java!"
-Upper:    "HELLO, JAVA!"
-Length:   12
-charAt(0): H
-indexOf("Java"): 7
-StringBuilder: Hello, World</pre>
+<pre>First: Juan
+Length: 3
+
+All names:
+Juan
+Maria
+Pedro
+
+Sorted: [Juan, Maria, Pedro]</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 
@@ -122,43 +108,30 @@ StringBuilder: Hello, World</pre>
     <summary>Teacher Answer Key (Click to reveal)</summary>
     <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
         <p><strong>Answers:</strong></p>
-        <pre><code class="language-java">import java.util.Arrays;
+        <pre><code class="language-java">import java.util.Arrays;                    // Import Arrays utility
 
-public class ContactBook {
-    public static void main(String[] args) {
-        // Array of contacts
-        String[] contacts = {"Charlie", "Alice", "Eve", "Bob", "Diana"};
-        System.out.println("Original: " + Arrays.toString(contacts));
+public class Main {                         // Main class
+    public static void main(String[] args) { // Entry point
+        String[] names = {"Charlie", "Alice", "Bob"}; // Create array
 
-        // Sort alphabetically
-        Arrays.sort(contacts);
-        System.out.println("Sorted:   " + Arrays.toString(contacts));
+        System.out.println("Original: " + Arrays.toString(names)); // Print original
+        Arrays.sort(names);                  // Sort alphabetically
+        System.out.println("Sorted: " + Arrays.toString(names));  // Print sorted
 
-        // Search for a contact
-        String searchName = "Eve";
-        boolean found = false;
-        for (String contact : contacts) {
-            if (contact.equals(searchName)) {
-                found = true;
-                break;
+        // Loop to find a name
+        String search = "Alice";             // Name to find
+        for (String name : names) {          // Check each name
+            if (name.equals(search)) {       // If found
+                System.out.println("Found: " + name); // Print it
             }
         }
-        System.out.println("Search '" + searchName + "': " + (found ? "Found" : "Not found"));
-
-        // Clean a phone number using String methods
-        String phone = "(091) 234-5678";
-        String cleaned = phone.replaceAll("[^0-9]", "");  // Remove non-digits
-        System.out.println("Original phone: " + phone);
-        System.out.println("Cleaned phone:  " + cleaned);
     }
 }
 </code></pre>
         <p><strong>Output:</strong></p>
-        <pre>Original: [Charlie, Alice, Eve, Bob, Diana]
-Sorted:   [Alice, Bob, Charlie, Diana, Eve]
-Search 'Eve': Found
-Original phone: (091) 234-5678
-Cleaned phone:  0912345678</pre>
+        <pre>Original: [Charlie, Alice, Bob]
+Sorted: [Alice, Bob, Charlie]
+Found: Alice</pre>
     </div>
 </details>
 

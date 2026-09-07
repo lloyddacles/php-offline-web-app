@@ -44,13 +44,12 @@ $_SESSION["logged_in"] = true;
 
 // Read session data
 echo "Welcome, " . $_SESSION["username"];
-echo "\n";
 
 // Check if logged in
+echo "\n";
 if ($_SESSION["logged_in"] ?? false) {
     echo "You are logged in!";
 }
-?&gt;
 </code></pre>
 <strong>Output:</strong>
 <pre>Welcome, Alice

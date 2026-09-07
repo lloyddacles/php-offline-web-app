@@ -35,19 +35,21 @@
 
 <h4>Insertion Anomaly</h4>
 <p>You can't add certain data without other unrelated data.</p>
-<pre><code>-- BAD: All in one table
+<pre><code class="language-sql">-- BAD: All in one table
 CREATE TABLE student_courses (
-    student_name VARCHAR(100),
-    student_email VARCHAR(100),
-    course_name VARCHAR(100),
-    course_credits INT,
-    teacher_name VARCHAR(100)
+    student_name VARCHAR(50),
+    course_name VARCHAR(50)
 );
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
--- PROBLEM: Can't add a new course without a student!
--- INSERT INTO student_courses (course_name, course_credits, teacher_name)
--- VALUES ('Physics', 4, 'Dr. Newton');
--- ERROR: student_name and student_email are NOT NULL</code></pre>
+<pre><code class="language-sql">-- PROBLEM: Cannot add a course without a student
+INSERT INTO student_courses (course_name)
+VALUES ('Physics');
+</code></pre>
+<strong>Output:</strong>
+<pre>ERROR 1364: Field 'student_name' doesn't have a default value</pre>
 
 <h4>Update Anomaly</h4>
 <p>Updating one piece of data requires updating multiple rows.</p>
@@ -64,71 +66,101 @@ CREATE TABLE student_courses (
 
 <h4>First Normal Form (1NF)</h4>
 <p><strong>Rule:</strong> Each cell must contain a single (atomic) value. No repeating groups.</p>
-<pre><code>-- BAD: Violates 1NF (multiple values in one cell)
+<pre><code class="language-sql">-- BAD: Violates 1NF (multiple values in one cell)
 CREATE TABLE students_bad (
     id INT PRIMARY KEY,
-    name VARCHAR(100),
-    courses TEXT  -- "Math, Science, English" ← NOT atomic!
+    name VARCHAR(50),
+    courses TEXT    -- "Math, Science" is NOT atomic!
 );
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
--- GOOD: Satisfies 1NF
-CREATE TABLE students_good (
+<pre><code class="language-sql">-- GOOD: Satisfies 1NF (each value in separate row)
+CREATE TABLE students (
     id INT PRIMARY KEY,
-    name VARCHAR(100)
+    name VARCHAR(50)
 );
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
+<pre><code class="language-sql">-- Separate table for courses (atomic values)
 CREATE TABLE enrollments (
     student_id INT,
-    course_name VARCHAR(100),  -- One value per row
+    course_name VARCHAR(50),
     PRIMARY KEY (student_id, course_name)
-);</code></pre>
+);
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
 <h4>Second Normal Form (2NF)</h4>
 <p><strong>Rule:</strong> Must be in 1NF + every non-key column must depend on the <strong>entire</strong> primary key (not just part of it).</p>
-<pre><code>-- BAD: Violates 2NF (course_name depends only on course_id, not student_id)
+<pre><code class="language-sql">-- BAD: Violates 2NF (course_name depends only on course_id)
 CREATE TABLE enrollments_bad (
     student_id INT,
     course_id INT,
-    course_name VARCHAR(100),  -- Depends on course_id ONLY
-    grade VARCHAR(2),          -- Depends on BOTH student_id AND course_id
+    course_name VARCHAR(50),   -- Depends on course_id ONLY
+    grade VARCHAR(2),          -- Depends on BOTH keys
     PRIMARY KEY (student_id, course_id)
 );
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
--- GOOD: Satisfies 2NF (split into two tables)
+<pre><code class="language-sql">-- GOOD: Split into two tables (satisfies 2NF)
 CREATE TABLE courses (
-    course_id INT PRIMARY KEY,
-    course_name VARCHAR(100)
+    id INT PRIMARY KEY,        -- Course identifier
+    name VARCHAR(50)           -- Course name
 );
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
-CREATE TABLE enrollments_good (
+<pre><code class="language-sql">-- Enrollment now only has key-dependent columns
+CREATE TABLE enrollments (
     student_id INT,
     course_id INT,
     grade VARCHAR(2),
     PRIMARY KEY (student_id, course_id)
-);</code></pre>
+);
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
 <h4>Third Normal Form (3NF)</h4>
 <p><strong>Rule:</strong> Must be in 2NF + no <strong>transitive dependencies</strong> (non-key columns shouldn't depend on other non-key columns).</p>
-<pre><code>-- BAD: Violates 3NF (department_name depends on department_id, not directly on id)
+<pre><code class="language-sql">-- BAD: Violates 3NF (department_name depends on department_id)
 CREATE TABLE employees_bad (
     id INT PRIMARY KEY,
-    name VARCHAR(100),
+    name VARCHAR(50),
     department_id INT,
-    department_name VARCHAR(100)  -- Transitive: id → department_id → department_name
+    department_name VARCHAR(50)  -- Transitive: id → dept_id → dept_name
 );
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
--- GOOD: Satisfies 3NF (separate department table)
+<pre><code class="language-sql">-- GOOD: Separate department table (satisfies 3NF)
 CREATE TABLE departments (
     id INT PRIMARY KEY,
-    name VARCHAR(100)
+    name VARCHAR(50)
 );
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
-CREATE TABLE employees_good (
+<pre><code class="language-sql">-- Employee references department by foreign key
+CREATE TABLE employees (
     id INT PRIMARY KEY,
-    name VARCHAR(100),
+    name VARCHAR(50),
     department_id INT,
     FOREIGN KEY (department_id) REFERENCES departments(id)
-);</code></pre>
+);
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
 <h3>Normalization Summary</h3>
 <table>
@@ -196,28 +228,37 @@ CREATE TABLE employees_good (
                 </ul>
             </li>
             <li>
-                <pre><code>CREATE TABLE patients (
-    patient_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL
+                <pre><code class="language-sql">-- Create patients table
+CREATE TABLE patients (
+    id INT PRIMARY KEY,
+    name VARCHAR(50)
 );
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
+<pre><code class="language-sql">-- Create doctors table
 CREATE TABLE doctors (
-    doctor_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    specialty VARCHAR(100) NOT NULL
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    specialty VARCHAR(50)
 );
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
+<pre><code class="language-sql">-- Create visits table (normalized to 3NF)
 CREATE TABLE visits (
-    visit_id INT AUTO_INCREMENT PRIMARY KEY,
-    patient_id INT NOT NULL,
-    doctor_id INT NOT NULL,
-    visit_date DATE NOT NULL,
-    diagnosis TEXT,
-    medication VARCHAR(200),
-    FOREIGN KEY (patient_id) REFERENCES patients(patient_id),
-    FOREIGN KEY (doctor_id) REFERENCES doctors(doctor_id)
-);</code></pre>
+    id INT PRIMARY KEY,
+    patient_id INT,
+    doctor_id INT,
+    visit_date DATE,
+    FOREIGN KEY (patient_id) REFERENCES patients(id),
+    FOREIGN KEY (doctor_id) REFERENCES doctors(id)
+);
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
             </li>
         </ol>
     </div>

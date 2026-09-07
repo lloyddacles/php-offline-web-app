@@ -34,67 +34,26 @@
 </ol>
 
 <h3>Example</h3>
-<pre><code class="language-php">&lt;?php
-// Database configuration
-$host = 'localhost';
-$dbname = 'school';
-$username = 'root';
-$password = 'your_password';
-
-try {
-    // Create a PDO connection
-    $pdo = new PDO(
-        "mysql:host=$host;dbname=$dbname;charset=utf8mb4",
-        $username,
-        $password,
-        [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        ]
-    );
-} catch (PDOException $e) {
-    die("Connection failed: " . $e->getMessage());
-}
-
-// CREATE - Insert with prepared statement (SAFE from SQL injection)
-$stmt = $pdo->prepare(
-    "INSERT INTO students (first_name, last_name, email, age)
-     VALUES (:first_name, :last_name, :email, :age)"
+<pre><code class="language-sql">-- Create a students table
+CREATE TABLE students (
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    grade INT
 );
-$stmt->execute([
-    ':first_name' => 'Alice',
-    ':last_name' => 'Smith',
-    ':email' => 'alice@example.com',
-    ':age' => 20
-]);
-echo "New student ID: " . $pdo->lastInsertId();
 
-// READ - Fetch all rows
-$stmt = $pdo->query("SELECT * FROM students");
-$students = $stmt->fetchAll();
-foreach ($students as $student) {
-    echo $student['first_name'] . ' ' . $student['last_name'];
-}
+-- Insert sample data
+INSERT INTO students VALUES (1, 'Juan', 95), (2, 'Maria', 88);
 
-// UPDATE - Modify data
-$stmt = $pdo->prepare(
-    "UPDATE students SET email = :email WHERE id = :id"
-);
-$stmt->execute([':email' => 'newemail@example.com', ':id' => 1]);
-echo "Rows updated: " . $stmt->rowCount();
-
-// DELETE - Remove data
-$stmt = $pdo->prepare("DELETE FROM students WHERE id = :id");
-$stmt->execute([':id' => 1]);
-echo "Rows deleted: " . $stmt->rowCount();
-?&gt;
+-- Find all students
+SELECT * FROM students;
 </code></pre>
 <strong>Output:</strong>
-<pre>New student ID: 1
-Alice Smith
-Bob Jones
-Rows updated: 1
-Rows deleted: 1</pre>
+<pre>+----+-------+-------+
+| id | name  | grade |
++----+-------+-------+
+|  1 | Juan  |    95 |
+|  2 | Maria |    88 |
++----+-------+-------+</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

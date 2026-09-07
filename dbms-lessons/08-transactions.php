@@ -41,21 +41,22 @@
 </table>
 
 <h3>Example</h3>
-<pre><code>-- Start a transaction
+<pre><code class="language-sql">-- Start a transaction
 BEGIN;
-
--- Transfer money from Alice to Bob
-UPDATE accounts SET balance = balance - 500 WHERE id = 1;
-UPDATE accounts SET balance = balance + 500 WHERE id = 2;
-
--- Check if everything looks right
-SELECT * FROM accounts WHERE id IN (1, 2);
-
--- If OK, save changes permanently
+</code></pre>
+<pre><code class="language-sql">-- Transfer money: deduct from Alice
+UPDATE accounts SET balance = balance - 500
+WHERE id = 1;
+</code></pre>
+<pre><code class="language-sql">-- Transfer money: add to Bob
+UPDATE accounts SET balance = balance + 500
+WHERE id = 2;
+</code></pre>
+<pre><code class="language-sql">-- Save changes permanently
 COMMIT;
-
--- If something went wrong, undo everything
--- ROLLBACK;</code></pre>
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
 <h3>ACID Properties</h3>
 <p>Transactions must satisfy four properties, known as <strong>ACID</strong>:</p>
@@ -92,23 +93,26 @@ COMMIT;
         <tr><td><code>SERIALIZABLE</code></td><td>No</td><td>No</td><td>No</td></tr>
     </tbody>
 </table>
-<pre><code>-- Set isolation level
-SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;
-
--- Higher isolation = more safety but slower performance
--- Lower isolation = faster but riskier</code></pre>
+<pre><code class="language-sql">-- Set isolation level
+SET SESSION TRANSACTION ISOLATION LEVEL
+READ COMMITTED;
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
 <h3>Transactions in PHP (PDO)</h3>
-<pre><code>&lt;?php
+<pre><code class="language-php">&lt;?php
+// Start transaction
 $pdo->beginTransaction();
 
 try {
+    // Transfer $500 from Alice to Bob
     $pdo->exec("UPDATE accounts SET balance = balance - 500 WHERE id = 1");
     $pdo->exec("UPDATE accounts SET balance = balance + 500 WHERE id = 2");
-    $pdo->commit();
+    $pdo->commit();  // Save changes
     echo "Transfer successful!";
 } catch (Exception $e) {
-    $pdo->rollBack();
+    $pdo->rollBack();  // Undo changes
     echo "Transfer failed: " . $e->getMessage();
 }
 ?&gt;</code></pre>
@@ -155,30 +159,30 @@ try {
         <ol>
             <li><strong>Atomicity</strong> ensures that all three steps (check stock, decrease inventory, create order) either all succeed or all fail. If step 2 fails, step 1's changes are rolled back.</li>
             <li>
-                <pre><code>&lt;?php
+                <pre><code class="language-php">&lt;?php
 $pdo->beginTransaction();
 
 try {
-    // Step 1: Check stock
+    // Check if product is in stock
     $stmt = $pdo->prepare("SELECT stock FROM inventory WHERE product_id = ?");
     $stmt->execute([42]);
     $product = $stmt->fetch();
 
-    if (!$product || $product['stock'] &lt; 2) {
-        throw new Exception("Insufficient stock");
+    if (!$product || $product['stock'] < 2) {
+        throw new Exception("Out of stock");
     }
 
-    // Step 2: Decrease inventory
+    // Decrease inventory
     $pdo->exec("UPDATE inventory SET stock = stock - 2 WHERE product_id = 42");
 
-    // Step 3: Create order
-    $pdo->exec("INSERT INTO orders (customer_id, product_id, quantity, order_date)
-                VALUES (10, 42, 2, NOW())");
+    // Create order
+    $pdo->exec("INSERT INTO orders (customer_id, product_id, quantity)
+                VALUES (10, 42, 2)");
 
-    $pdo->commit();
-    echo "Order placed successfully!";
+    $pdo->commit();  // Save all changes
+    echo "Order placed!";
 } catch (Exception $e) {
-    $pdo->rollBack();
+    $pdo->rollBack();  // Undo all changes
     echo "Order failed: " . $e->getMessage();
 }
 ?&gt;</code></pre>

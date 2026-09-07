@@ -35,37 +35,27 @@
 
 <h3>Example</h3>
 <pre><code class="language-php">&lt;?php
+// Store a score
 $score = 85;
 
-// if...elseif...else for grading
+// Check grade with if/elseif/else
 if ($score >= 90) {
     $grade = "A";
-    $remark = "Excellent!";
 } elseif ($score >= 80) {
     $grade = "B";
-    $remark = "Great job!";
 } elseif ($score >= 70) {
     $grade = "C";
-    $remark = "Good work!";
-} elseif ($score >= 60) {
-    $grade = "D";
-    $remark = "You passed.";
 } else {
     $grade = "F";
-    $remark = "You need to study more.";
 }
 
 echo "Score: $score";
 echo "\n";
 echo "Grade: $grade";
-echo "\n";
-echo "Remark: $remark";
-?&gt;
 </code></pre>
 <strong>Output:</strong>
 <pre>Score: 85
-Grade: B
-Remark: Great job!</pre>
+Grade: B</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

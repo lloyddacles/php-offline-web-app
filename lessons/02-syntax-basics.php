@@ -35,19 +35,19 @@
 
 <h3>Example</h3>
 <pre><code class="language-php">&lt;?php
-// PHP tags mark the start and end of PHP code
-echo "Hello World";  // Semicolon ends the statement
-echo "\n";  // New line character
+// Print text with echo
+echo "Hello World";
 
-// Variables are case-sensitive
-$name = "Alice";  // lowercase
-$Name = "Bob";    // uppercase - different variable!
-echo $name . " and " . $Name;  // Dot concatenates strings
-?&gt;
+// Add a new line
+echo "\n";
+
+// Concatenate strings with dot operator
+$name = "Alice";
+echo "My name is " . $name;
 </code></pre>
 <strong>Output:</strong>
 <pre>Hello World
-Alice and Bob</pre>
+My name is Alice</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

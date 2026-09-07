@@ -36,90 +36,70 @@
     <li><strong>Convert to code:</strong> Translate the pseudocode into actual PHP, Python, or Java.</li>
 </ol>
 
-<h3>Example</h3>
-<pre><code class="language-php">// PHP Example: Grade Calculator based on pseudocode
-// Pseudocode:
-//   START
-//   READ score
-//   IF score >= 90 THEN grade = "A"
-//   ELSE IF score >= 80 THEN grade = "B"
-//   ELSE IF score >= 70 THEN grade = "C"
-//   ELSE IF score >= 60 THEN grade = "D"
-//   ELSE grade = "F"
-//   PRINT grade
-//   END
-
+<h3>PHP Example</h3>
+<pre><code class="language-php">&lt;?php
+// Store a student's score
 $score = 85;
-
+// Check if score is 90 or above
 if ($score >= 90) {
+    // Grade is A
     $grade = "A";
 } elseif ($score >= 80) {
+    // Grade is B
     $grade = "B";
-} elseif ($score >= 70) {
-    $grade = "C";
-} elseif ($score >= 60) {
-    $grade = "D";
 } else {
-    $grade = "F";
+    // Grade is C or below
+    $grade = "C";
 }
-
-echo "Score: $score\n";
-echo "Grade: $grade\n";
+// Print the grade
+echo "Score: $score, Grade: $grade";
 </code></pre>
 <strong>Output:</strong>
-<pre>Score: 85
-Grade: B</pre>
+<pre>Score: 85, Grade: B</pre>
 
 <h3>Python Example</h3>
-<pre><code class="language-python"># Python Example: Grade Calculator based on pseudocode
-
+<pre><code class="language-python"># Store a student's score
 score = 85
-
+# Check if score is 90 or above
 if score >= 90:
+    # Grade is A
     grade = "A"
 elif score >= 80:
+    # Grade is B
     grade = "B"
-elif score >= 70:
-    grade = "C"
-elif score >= 60:
-    grade = "D"
 else:
-    grade = "F"
-
-print(f"Score: {score}")
-print(f"Grade: {grade}")
+    # Grade is C or below
+    grade = "C"
+# Print the grade
+print(f"Score: {score}, Grade: {grade}")
 </code></pre>
 <strong>Output:</strong>
-<pre>Score: 85
-Grade: B</pre>
+<pre>Score: 85, Grade: B</pre>
 
 <h3>Java Example</h3>
-<pre><code class="language-java">// Java Example: Grade Calculator based on pseudocode
-public class Main {
+<pre><code class="language-java">public class Main {
     public static void main(String[] args) {
+        // Store a student's score
         int score = 85;
-        char grade;
-
+        // Check if score is 90 or above
+        String grade;
         if (score >= 90) {
-            grade = 'A';
+            // Grade is A
+            grade = "A";
         } else if (score >= 80) {
-            grade = 'B';
-        } else if (score >= 70) {
-            grade = 'C';
-        } else if (score >= 60) {
-            grade = 'D';
+            // Grade is B
+            grade = "B";
         } else {
-            grade = 'F';
+            // Grade is C or below
+            grade = "C";
         }
-
-        System.out.println("Score: " + score);
-        System.out.println("Grade: " + grade);
+        // Print the grade
+        System.out.println("Score: " + score + ", Grade: " + grade);
     }
 }
 </code></pre>
 <strong>Output:</strong>
-<pre>Score: 85
-Grade: B</pre>
+<pre>Score: 85, Grade: B</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

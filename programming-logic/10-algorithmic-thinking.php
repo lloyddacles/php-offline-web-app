@@ -35,105 +35,65 @@
     <li><strong>Convert to code:</strong> Translate the algorithm into actual programming code.</li>
 </ol>
 
-<h3>Example</h3>
-<pre><code class="language-php">// PHP Example: Algorithm to find the tallest student
-
-// Algorithm steps:
-// 1. Start with the first student as the tallest
-// 2. Compare each student to the current tallest
-// 3. If a student is taller, they become the new tallest
-// 4. After checking all students, we have the answer
-
-$students = [
-    ["name" => "Alice", "height" => 165],
-    ["name" => "Bob", "height" => 180],
-    ["name" => "Charlie", "height" => 170],
-    ["name" => "Diana", "height" => 175],
-    ["name" => "Eve", "height" => 160]
-];
-
-$tallest = $students[0];
-echo "Students:\n";
-for ($i = 0; $i < count($students); $i++) {
-    $s = $students[$i];
-    echo "  {$s['name']}: {$s['height']}cm\n";
-    if ($s['height'] > $tallest['height']) {
-        $tallest = $s;
+<h3>PHP Example</h3>
+<pre><code class="language-php">&lt;?php
+// Store a list of numbers
+$numbers = [3, 7, 2, 9, 5];
+// Start with the first number as largest
+$largest = $numbers[0];
+// Loop through each number
+for ($i = 1; $i < count($numbers); $i++) {
+    // Check if current number is larger
+    if ($numbers[$i] > $largest) {
+        // Update largest
+        $largest = $numbers[$i];
     }
 }
-
-echo "\nTallest: {$tallest['name']} ({$tallest['height']}cm)\n";
+// Print the largest number
+echo "Largest: $largest";
 </code></pre>
 <strong>Output:</strong>
-<pre>Students:
-  Alice: 165cm
-  Bob: 180cm
-  Charlie: 170cm
-  Diana: 175cm
-  Eve: 160cm
-
-Tallest: Bob (180cm)</pre>
+<pre>Largest: 9</pre>
 
 <h3>Python Example</h3>
-<pre><code class="language-python"># Python Example: Algorithm to find the tallest student
-
-students = [
-    {"name": "Alice", "height": 165},
-    {"name": "Bob", "height": 180},
-    {"name": "Charlie", "height": 170},
-    {"name": "Diana", "height": 175},
-    {"name": "Eve", "height": 160}
-]
-
-tallest = students[0]
-print("Students:")
-for student in students:
-    print(f"  {student['name']}: {student['height']}cm")
-    if student['height'] > tallest['height']:
-        tallest = student
-
-print(f"\nTallest: {tallest['name']} ({tallest['height']}cm)")
+<pre><code class="language-python"># Store a list of numbers
+numbers = [3, 7, 2, 9, 5]
+# Start with the first number as largest
+largest = numbers[0]
+# Loop through each number
+for i in range(1, len(numbers)):
+    # Check if current number is larger
+    if numbers[i] > largest:
+        # Update largest
+        largest = numbers[i]
+# Print the largest number
+print(f"Largest: {largest}")
 </code></pre>
 <strong>Output:</strong>
-<pre>Students:
-  Alice: 165cm
-  Bob: 180cm
-  Charlie: 170cm
-  Diana: 175cm
-  Eve: 160cm
-
-Tallest: Bob (180cm)</pre>
+<pre>Largest: 9</pre>
 
 <h3>Java Example</h3>
-<pre><code class="language-java">// Java Example: Algorithm to find the tallest student
-public class Main {
+<pre><code class="language-java">public class Main {
     public static void main(String[] args) {
-        String[] names = {"Alice", "Bob", "Charlie", "Diana", "Eve"};
-        int[] heights = {165, 180, 170, 175, 160};
-
-        int tallestIndex = 0;
-        System.out.println("Students:");
-        for (int i = 0; i < names.length; i++) {
-            System.out.println("  " + names[i] + ": " + heights[i] + "cm");
-            if (heights[i] > heights[tallestIndex]) {
-                tallestIndex = i;
+        // Store a list of numbers
+        int[] numbers = {3, 7, 2, 9, 5};
+        // Start with the first number as largest
+        int largest = numbers[0];
+        // Loop through each number
+        for (int i = 1; i < numbers.length; i++) {
+            // Check if current number is larger
+            if (numbers[i] > largest) {
+                // Update largest
+                largest = numbers[i];
             }
         }
-
-        System.out.println("\nTallest: " + names[tallestIndex] + 
-                           " (" + heights[tallestIndex] + "cm)");
+        // Print the largest number
+        System.out.println("Largest: " + largest);
     }
 }
 </code></pre>
 <strong>Output:</strong>
-<pre>Students:
-  Alice: 165cm
-  Bob: 180cm
-  Charlie: 170cm
-  Diana: 175cm
-  Eve: 160cm
-
-Tallest: Bob (180cm)</pre>
+<pre>Largest: 9</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

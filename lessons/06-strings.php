@@ -35,31 +35,27 @@
 
 <h3>Example</h3>
 <pre><code class="language-php">&lt;?php
+// Store a name
 $name = "Alice";
-echo "Hello, $name!";  // Double quotes parse variables
-echo "\n";
+echo "Hello, $name!";
 
-// String length
-echo "Name length: " . strlen($name) . " characters";
+// Get string length
 echo "\n";
+echo "Length: " . strlen($name) . " characters";
 
-// Case conversion
+// Convert to uppercase
+echo "\n";
 echo "Upper: " . strtoupper($name);
+
+// Convert to lowercase
 echo "\n";
 echo "Lower: " . strtolower($name);
-echo "\n";
-
-// Find position of text
-$ sentence = "Hello World";
-echo "Position of 'World': " . strpos($sentence, "World");
-?&gt;
 </code></pre>
 <strong>Output:</strong>
 <pre>Hello, Alice!
-Name length: 5 characters
+Length: 5 characters
 Upper: ALICE
-Lower: alice
-Position of 'World': 6</pre>
+Lower: alice</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

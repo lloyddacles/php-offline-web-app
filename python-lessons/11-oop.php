@@ -28,51 +28,36 @@
 <p>Define a class with <code>class ClassName:</code>. The <code>__init__</code> method runs when you create an object with <code>ClassName()</code>. The <code>self</code> parameter refers to the current instance. Methods are functions inside a class. Child classes inherit from parents with <code>class Child(Parent):</code> and can override methods. Python uses naming conventions for access control: <code>_protected</code> and <code>__private</code>.</p>
 
 <h3>Example</h3>
-<pre><code class="language-python"># Define a class
-class Dog:
-    def __init__(self, name, breed):
-        """Initialize a new Dog."""
+<pre><code class="language-python"># Create a Student class
+class Student:
+    def __init__(self, name, grade):
         self.name = name
-        self.breed = breed
+        self.grade = grade
 
-    def bark(self):
-        return f"{self.name} says Woof!"
+    def is_passing(self):
+        return self.grade >= 75
 
-    def __str__(self):
-        return f"{self.name} ({self.breed})"
+# Create student objects
+juan = Student("Juan", 85)
+maria = Student("Maria", 72)
 
-# Creating objects
-dog1 = Dog("Rex", "German Shepherd")
-dog2 = Dog("Buddy", "Golden Retriever")
-print(dog1.bark())
-print(dog2)
+# Print student info
+print("Student:", juan.name)
+print("Grade:", juan.grade)
+print("Passing:", juan.is_passing())
 
-# Inheritance
-class Animal:
-    def __init__(self, name):
-        self.name = name
-
-    def speak(self):
-        return "..."
-
-class Cat(Animal):
-    def speak(self):
-        return f"{self.name} says Meow!"
-
-class Dog2(Animal):
-    def speak(self):
-        return f"{self.name} says Woof!"
-
-# Polymorphism
-animals = [Cat("Whiskers"), Dog2("Rex")]
-for animal in animals:
-    print(animal.speak())
+print("\nStudent:", maria.name)
+print("Grade:", maria.grade)
+print("Passing:", maria.is_passing())
 </code></pre>
 <strong>Output:</strong>
-<pre>Rex says Woof!
-Buddy (Golden Retriever)
-Whiskers says Meow!
-Rex says Woof!</pre>
+<pre>Student: Juan
+Grade: 85
+Passing: True
+
+Student: Maria
+Grade: 72
+Passing: False</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 <h3>Real-World Applications</h3>
@@ -116,64 +101,32 @@ Rex says Woof!</pre>
     <summary>Teacher Answer Key (Click to reveal)</summary>
     <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
         <p><strong>Answers:</strong> Students should create classes with proper __init__, methods, and object interaction.</p>
-        <pre><code>class Book:
+        <pre><code># Book class
+class Book:
     def __init__(self, title, author):
         self.title = title
         self.author = author
         self.is_checked_out = False
 
     def check_out(self):
-        if self.is_checked_out:
-            print(f"'{self.title}' is already checked out.")
-        else:
-            self.is_checked_out = True
-            print(f"'{self.title}' has been checked out.")
+        self.is_checked_out = True
+        print(self.title, "checked out")
 
     def return_book(self):
-        if not self.is_checked_out:
-            print(f"'{self.title}' wasn't checked out.")
-        else:
-            self.is_checked_out = False
-            print(f"'{self.title}' has been returned.")
+        self.is_checked_out = False
+        print(self.title, "returned")
 
-    def __str__(self):
-        status = "Checked Out" if self.is_checked_out else "Available"
-        return f"'{self.title}' by {self.author} [{status}]"
+# Test the book
+book = Book("Python 101", "John Smith")
+print("Title:", book.title)
+print("Checked out:", book.is_checked_out)
 
+book.check_out()
+print("After checkout:", book.is_checked_out)
 
-class Library:
-    def __init__(self, name):
-        self.name = name
-        self.books = []
-
-    def add_book(self, book):
-        self.books.append(book)
-
-    def available_books(self):
-        return [b for b in self.books if not b.is_checked_out]
-
-    def display_books(self):
-        print(f"\n===== {self.name} =====")
-        for book in self.books:
-            print(f"  {book}")
-        print(f"Available: {len(self.available_books())}")
-
-
-# Test the system
-library = Library("City Library")
-library.add_book(Book("1984", "George Orwell"))
-library.add_book(Book("Python Crash Course", "Eric Matthes"))
-library.add_book(Book("The Hobbit", "J.R.R. Tolkien"))
-
-library.display_books()
-
-library.books[0].check_out()
-library.books[1].check_out()
-
-library.display_books()
-
-library.books[0].return_book()
-library.display_books()</code></pre>
+book.return_book()
+print("After return:", book.is_checked_out)
+</code></pre>
     </div>
 </details>
 

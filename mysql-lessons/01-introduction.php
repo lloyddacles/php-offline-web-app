@@ -33,32 +33,26 @@
 </ol>
 
 <h3>Example</h3>
-<pre><code class="language-sql">-- Create a database
-CREATE DATABASE my_website;
-
--- Select it for use
-USE my_website;
-
--- Create a table
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+<pre><code class="language-sql">-- Create a students table
+CREATE TABLE students (
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    grade INT
 );
 
--- Insert data
-INSERT INTO users (name, email) VALUES ('Alice', 'alice@example.com');
+-- Insert sample data
+INSERT INTO students VALUES (1, 'Juan', 95);
+INSERT INTO students VALUES (2, 'Maria', 88);
 
--- Query data
-SELECT * FROM users;
+-- Find all students with grade above 90
+SELECT * FROM students WHERE grade > 90;
 </code></pre>
 <strong>Output:</strong>
-<pre>+----+-------+-------------------+---------------------+
-| id | name  | email             | created_at          |
-+----+-------+-------------------+---------------------+
-|  1 | Alice | alice@example.com | 2026-09-07 10:00:00 |
-+----+-------+-------------------+---------------------+</pre>
+<pre>+----+-------+-------+
+| id | name  | grade |
++----+-------+-------+
+|  1 | Juan  |    95 |
++----+-------+-------+</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

@@ -28,49 +28,25 @@
 <p>Dictionaries use curly braces <code>{}</code> with <code>key: value</code> pairs. Access values with <code>dict[key]</code> or <code>dict.get(key, default)</code>. Iterate with <code>.items()</code> for key-value pairs. Sets use <code>{}</code> or <code>set()</code> and support mathematical operations: union (<code>|</code>), intersection (<code>&</code>), difference (<code>-</code>).</p>
 
 <h3>Example</h3>
-<pre><code class="language-python"># Dictionaries
-person = {
-    "name": "Alice",
-    "age": 30,
-    "city": "New York"
+<pre><code class="language-python"># Create student record
+student = {
+    "name": "Juan",
+    "age": 20,
+    "grade": "A"
 }
 
-print(f"Name: {person['name']}")
-print(f"Email: {person.get('email', 'N/A')}")  # Safe access
+# Access values
+print("Name:", student["name"])
+print("Age:", student["age"])
 
-# Iterate over dictionary
-for key, value in person.items():
-    print(f"  {key}: {value}")
-
-# Dictionary comprehension
-prices = {"apple": 1.5, "banana": 0.5, "steak": 15.0}
-expensive = {k: v for k, v in prices.items() if v > 2.0}
-print(f"Expensive: {expensive}")
-
-# Sets
-set_a = {1, 2, 3, 4}
-set_b = {3, 4, 5, 6}
-
-print(f"Union: {set_a | set_b}")        # {1, 2, 3, 4, 5, 6}
-print(f"Intersection: {set_a & set_b}") # {3, 4}
-print(f"A - B: {set_a - set_b}")        # {1, 2}
-
-# Remove duplicates
-numbers = [1, 2, 2, 3, 3, 3]
-unique = set(numbers)
-print(f"Unique: {unique}")
+# Add new data
+student["course"] = "Python"
+print("Course:", student["course"])
 </code></pre>
 <strong>Output:</strong>
-<pre>Name: Alice
-Email: N/A
-  name: Alice
-  age: 30
-  city: New York
-Expensive: {'steak': 15.0}
-Union: {1, 2, 3, 4, 5, 6}
-Intersection: {3, 4}
-A - B: {1, 2}
-Unique: {1, 2, 3}</pre>
+<pre>Name: Juan
+Age: 20
+Course: Python</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 <h3>Real-World Applications</h3>
@@ -115,30 +91,22 @@ Unique: {1, 2, 3}</pre>
         <p><strong>Answers:</strong> Students should demonstrate dictionary creation, safe access, and set operations.</p>
         <pre><code># Contact book
 contacts = {
-    "Alice": {"phone": "555-0101", "email": "alice@email.com"},
-    "Bob": {"phone": "555-0102", "email": "bob@email.com"},
-    "Charlie": {"phone": "555-0103", "email": "charlie@email.com"},
-    "Diana": {"phone": "555-0104", "email": "diana@email.com"},
+    "Alice": "555-0101",
+    "Bob": "555-0102",
+    "Charlie": "555-0103"
 }
 
-# Safe retrieval
-def get_email(contacts, name):
-    return contacts.get(name, {}).get("email", "Not found")
+# Access contact
+print("Alice:", contacts["Alice"])
 
-print(f"Alice's email: {get_email(contacts, 'Alice')}")
-print(f"Eve's email: {get_email(contacts, 'Eve')}")
+# Add new contact
+contacts["Diana"] = "555-0104"
+print("Diana:", contacts["Diana"])
 
-# Group operations
-work_group = {"Alice", "Bob", "Charlie"}
-personal_group = {"Bob", "Diana", "Alice"}
-
-both = work_group & personal_group
-work_only = work_group - personal_group
-all_contacts = work_group | personal_group
-
-print(f"\nIn both groups: {both}")
-print(f"Work only: {work_only}")
-print(f"All contacts: {all_contacts}")</code></pre>
+# Print all contacts
+for name, phone in contacts.items():
+    print(name, "->", phone)
+</code></pre>
     </div>
 </details>
 

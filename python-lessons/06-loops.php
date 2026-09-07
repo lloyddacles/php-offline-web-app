@@ -28,44 +28,26 @@
 <p>The <code>for</code> loop uses <code>range()</code> to generate sequences of numbers. The <code>while</code> loop checks its condition before each iteration — always make sure the condition eventually becomes false to avoid infinite loops. <code>enumerate()</code> gives you both index and value when iterating over a list.</p>
 
 <h3>Example</h3>
-<pre><code class="language-python"># For loop with range
-print("Counting 1 to 5:")
+<pre><code class="language-python"># Print student names
+students = ["Juan", "Maria", "Pedro"]
+
+# Loop through each student
+for student in students:
+    print("Student:", student)
+
+# Count from 1 to 5
+print("\nCounting:")
 for i in range(1, 6):
     print(i, end=" ")
-print()  # newline
-
-# For loop with enumerate
-fruits = ["apple", "banana", "cherry"]
-for index, fruit in enumerate(fruits, 1):
-    print(f"{index}. {fruit}")
-
-# While loop
-count = 5
-print("\nCountdown:")
-while count > 0:
-    print(count, end=" ")
-    count -= 1
-print(" Liftoff!")
-
-# break and continue
-print("\nEven numbers 1-10:")
-for i in range(1, 11):
-    if i % 2 != 0:
-        continue  # Skip odd numbers
-    print(i, end=" ")
+print()
 </code></pre>
 <strong>Output:</strong>
-<pre>Counting 1 to 5:
-1 2 3 4 5
-1. apple
-2. banana
-3. cherry
+<pre>Student: Juan
+Student: Maria
+Student: Pedro
 
-Countdown:
-5 4 3 2 1 Liftoff!
-
-Even numbers 1-10:
-2 4 6 8 10</pre>
+Counting:
+1 2 3 4 5</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 <h3>Real-World Applications</h3>
@@ -111,23 +93,20 @@ Even numbers 1-10:
         <p><strong>Answers:</strong> Students should use a for loop with break and proper comparison logic.</p>
         <pre><code># Number guessing game
 secret = 37
-guesses = [20, 40, 35, 38, 37]
+guesses = [20, 40, 35, 37]
 
-print(f"Secret number: {secret}")
-print(f"Guesses: {guesses}\n")
-
-for attempt, guess in enumerate(guesses, 1):
-    print(f"Attempt {attempt}: Guessing {guess}")
+# Try each guess
+for guess in guesses:
+    print("Guessing:", guess)
 
     if guess == secret:
-        print(f"Correct! You got it in {attempt} attempts!")
+        print("Correct!")
         break
     elif guess < secret:
         print("Too low!")
     else:
         print("Too high!")
-else:
-    print(f"Out of attempts! The number was {secret}")</code></pre>
+</code></pre>
     </div>
 </details>
 

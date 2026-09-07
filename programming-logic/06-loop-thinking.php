@@ -34,157 +34,51 @@
     <li><strong>Loop control:</strong> Use <code>break</code> to exit a loop early, and <code>continue</code> to skip to the next iteration.</li>
 </ol>
 
-<h3>Example</h3>
-<pre><code class="language-php">// PHP Example: Three types of loops
-
-// FOR LOOP: Count from 1 to 5
-echo "For Loop:\n";
+<h3>PHP Example</h3>
+<pre><code class="language-php">&lt;?php
+// Count from 1 to 5
 for ($i = 1; $i <= 5; $i++) {
-    echo "  Count: $i\n";
+    // Print the current number
+    echo "Number: $i\n";
 }
-
-// WHILE LOOP: Keep halving until we reach 1
-echo "\nWhile Loop:\n";
-$number = 64;
-$steps = 0;
-while ($number > 1) {
-    $number = $number / 2;
-    $steps++;
-    echo "  Step $steps: $number\n";
-}
-
-// DO-WHILE: Menu input validation
-echo "\nDo-While Loop:\n";
-$input = 0;
-do {
-    $input++;
-    echo "  Attempt $input: Trying to find the right answer...\n";
-} while ($input < 3);
-echo "  Found it after $input attempts!\n";
 </code></pre>
 <strong>Output:</strong>
-<pre>For Loop:
-  Count: 1
-  Count: 2
-  Count: 3
-  Count: 4
-  Count: 5
-
-While Loop:
-  Step 1: 32
-  Step 2: 16
-  Step 3: 8
-  Step 4: 4
-  Step 5: 2
-  Step 6: 1
-
-Do-While Loop:
-  Attempt 1: Trying to find the right answer...
-  Attempt 2: Trying to find the right answer...
-  Attempt 3: Trying to find the right answer...
-  Found it after 3 attempts!</pre>
+<pre>Number: 1
+Number: 2
+Number: 3
+Number: 4
+Number: 5</pre>
 
 <h3>Python Example</h3>
-<pre><code class="language-python"># Python Example: Three types of loops
-
-# FOR LOOP: Count from 1 to 5
-print("For Loop:")
+<pre><code class="language-python"># Count from 1 to 5
 for i in range(1, 6):
-    print(f"  Count: {i}")
-
-# WHILE LOOP: Keep halving until we reach 1
-print("\nWhile Loop:")
-number = 64
-steps = 0
-while number > 1:
-    number = number / 2
-    steps += 1
-    print(f"  Step {steps}: {number}")
-
-# DO-WHILE: Python doesn't have do-while, but we can simulate it
-print("\nDo-While Simulation:")
-attempt = 0
-while True:
-    attempt += 1
-    print(f"  Attempt {attempt}: Trying to find the right answer...")
-    if attempt >= 3:
-        break
-print(f"  Found it after {attempt} attempts!")
+    # Print the current number
+    print(f"Number: {i}")
 </code></pre>
 <strong>Output:</strong>
-<pre>For Loop:
-  Count: 1
-  Count: 2
-  Count: 3
-  Count: 4
-  Count: 5
-
-While Loop:
-  Step 1: 32.0
-  Step 2: 16.0
-  Step 3: 8.0
-  Step 4: 4.0
-  Step 5: 2.0
-  Step 6: 1.0
-
-Do-While Simulation:
-  Attempt 1: Trying to find the right answer...
-  Attempt 2: Trying to find the right answer...
-  Attempt 3: Trying to find the right answer...
-  Found it after 3 attempts!</pre>
+<pre>Number: 1
+Number: 2
+Number: 3
+Number: 4
+Number: 5</pre>
 
 <h3>Java Example</h3>
-<pre><code class="language-java">// Java Example: Three types of loops
-public class Main {
+<pre><code class="language-java">public class Main {
     public static void main(String[] args) {
-        // FOR LOOP
-        System.out.println("For Loop:");
+        // Count from 1 to 5
         for (int i = 1; i <= 5; i++) {
-            System.out.println("  Count: " + i);
+            // Print the current number
+            System.out.println("Number: " + i);
         }
-
-        // WHILE LOOP
-        System.out.println("\nWhile Loop:");
-        int number = 64;
-        int steps = 0;
-        while (number > 1) {
-            number = number / 2;
-            steps++;
-            System.out.println("  Step " + steps + ": " + number);
-        }
-
-        // DO-WHILE
-        System.out.println("\nDo-While Loop:");
-        int input = 0;
-        do {
-            input++;
-            System.out.println("  Attempt " + input + ": Trying...");
-        } while (input < 3);
-        System.out.println("  Found it after " + input + " attempts!");
     }
 }
 </code></pre>
 <strong>Output:</strong>
-<pre>For Loop:
-  Count: 1
-  Count: 2
-  Count: 3
-  Count: 4
-  Count: 5
-
-While Loop:
-  Step 1: 32
-  Step 2: 16
-  Step 3: 8
-  Step 4: 4
-  Step 5: 2
-  Step 6: 1
-
-Do-While Loop:
-  Attempt 1: Trying...
-  Attempt 2: Trying...
-  Attempt 3: Trying...
-  Found it after 3 attempts!</pre>
+<pre>Number: 1
+Number: 2
+Number: 3
+Number: 4
+Number: 5</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

@@ -35,118 +35,61 @@
     <li><strong>Validate input:</strong> Always check that data is in the expected format before using it.</li>
 </ol>
 
-<h3>Example</h3>
-<pre><code class="language-php">// PHP Example: Modeling student data
-
-// Simple variables (scalars)
+<h3>PHP Example</h3>
+<pre><code class="language-php">&lt;?php
+// Store a student's name
 $name = "Alice";
+// Store the student's age
 $age = 20;
-$gpa = 3.8;
-$isActive = true;
-
-echo "Student: $name\n";
+// Store the student's grade
+$grade = "A";
+// Print the student info
+echo "Name: $name\n";
 echo "Age: $age\n";
-echo "GPA: $gpa\n";
-echo "Active: " . ($isActive ? "Yes" : "No") . "\n\n";
-
-// Indexed array (simple list)
-$grades = [85, 92, 78, 95];
-echo "Grades: " . implode(", ", $grades) . "\n";
-echo "Average: " . array_sum($grades) / count($grades) . "\n\n";
-
-// Associative array (one item with properties)
-$student = [
-    "name" => "Alice",
-    "id" => "S001",
-    "grades" => [85, 92, 78, 95],
-    "active" => true
-];
-
-echo "Student: {$student['name']}\n";
-echo "ID: {$student['id']}\n";
-echo "Grades: " . implode(", ", $student['grades']) . "\n";
+echo "Grade: $grade";
 </code></pre>
 <strong>Output:</strong>
-<pre>Student: Alice
+<pre>Name: Alice
 Age: 20
-GPA: 3.8
-Active: Yes
-
-Grades: 85, 92, 78, 95
-Average: 87.5
-
-Student: Alice
-ID: S001
-Grades: 85, 92, 78, 95</pre>
+Grade: A</pre>
 
 <h3>Python Example</h3>
-<pre><code class="language-python"># Python Example: Modeling student data
-
-# Simple variables
+<pre><code class="language-python"># Store a student's name
 name = "Alice"
+# Store the student's age
 age = 20
-gpa = 3.8
-is_active = True
-
-print(f"Student: {name}")
+# Store the student's grade
+grade = "A"
+# Print the student info
+print(f"Name: {name}")
 print(f"Age: {age}")
-print(f"GPA: {gpa}")
-print(f"Active: {'Yes' if is_active else 'No'}\n")
-
-# List (indexed array)
-grades = [85, 92, 78, 95]
-print(f"Grades: {grades}")
-print(f"Average: {sum(grades) / len(grades)}\n")
-
-# Dictionary (associative array)
-student = {
-    "name": "Alice",
-    "id": "S001",
-    "grades": [85, 92, 78, 95],
-    "active": True
-}
-
-print(f"Student: {student['name']}")
-print(f"ID: {student['id']}")
-print(f"Grades: {student['grades']}")
+print(f"Grade: {grade}")
 </code></pre>
 <strong>Output:</strong>
-<pre>Student: Alice
+<pre>Name: Alice
 Age: 20
-GPA: 3.8
-Active: Yes
-
-Grades: [85, 92, 78, 95]
-Average: 87.5
-
-Student: Alice
-ID: S001
-Grades: [85, 92, 78, 95]</pre>
+Grade: A</pre>
 
 <h3>Java Example</h3>
-<pre><code class="language-java">// Java Example: Modeling student data
-import java.util.ArrayList;
-
-public class Main {
+<pre><code class="language-java">public class Main {
     public static void main(String[] args) {
-        // Simple variables
+        // Store a student's name
         String name = "Alice";
+        // Store the student's age
         int age = 20;
-        double gpa = 3.8;
-        boolean isActive = true;
-
-        System.out.println("Student: " + name);
+        // Store the student's grade
+        String grade = "A";
+        // Print the student info
+        System.out.println("Name: " + name);
         System.out.println("Age: " + age);
-        System.out.println("GPA: " + gpa);
-        System.out.println("Active: " + (isActive ? "Yes" : "No"));
+        System.out.println("Grade: " + grade);
     }
 }
 </code></pre>
 <strong>Output:</strong>
-<pre>Student: Alice
+<pre>Name: Alice
 Age: 20
-GPA: 3.8
-Active: Yes</pre>
+Grade: A</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

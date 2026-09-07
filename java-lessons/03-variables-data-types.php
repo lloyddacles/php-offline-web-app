@@ -33,46 +33,28 @@
 </ul>
 
 <h3>Example</h3>
-<pre><code class="language-java">public class DataTypes {
-    public static void main(String[] args) {
-        // Primitive types
-        byte smallNum = 127;              // 1 byte: -128 to 127
-        short mediumNum = 32000;          // 2 bytes
-        int bigNum = 2000000000;          // 4 bytes (most common for whole numbers)
-        long hugeNum = 9000000000L;       // 8 bytes (note the L suffix)
+<pre><code class="language-java">public class Main {                         // Main class
+    public static void main(String[] args) { // Entry point
+        String name = "Ana";                 // String: text in double quotes
+        int age = 19;                        // int: whole numbers
+        double grade = 92.5;                 // double: numbers with decimals
+        char section = 'A';                 // char: single character in single quotes
+        boolean passed = true;               // boolean: true or false
 
-        float decimal1 = 3.14f;           // 4 bytes (note the f suffix)
-        double decimal2 = 3.14159265;     // 8 bytes (default for decimals)
-
-        char letter = 'J';               // 2 bytes (single character in single quotes)
-        boolean isJavaFun = true;         // true or false
-
-        // Reference type
-        String language = "Java";         // Objects use double quotes
-
-        // Print all values
-        System.out.println("byte:    " + smallNum);
-        System.out.println("short:   " + mediumNum);
-        System.out.println("int:     " + bigNum);
-        System.out.println("long:    " + hugeNum);
-        System.out.println("float:   " + decimal1);
-        System.out.println("double:  " + decimal2);
-        System.out.println("char:    " + letter);
-        System.out.println("boolean: " + isJavaFun);
-        System.out.println("String:  " + language);
+        System.out.println("Name: " + name);     // Print name
+        System.out.println("Age: " + age);        // Print age
+        System.out.println("Grade: " + grade);    // Print grade
+        System.out.println("Section: " + section); // Print section
+        System.out.println("Passed: " + passed);  // Print passed status
     }
 }
 </code></pre>
 <strong>Output:</strong>
-<pre>byte:    127
-short:   32000
-int:     2000000000
-long:    9000000000
-float:   3.14
-double:  3.14159265
-char:    J
-boolean: true
-String:  Java</pre>
+<pre>Name: Ana
+Age: 19
+Grade: 92.5
+Section: A
+Passed: true</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 
@@ -116,33 +98,25 @@ String:  Java</pre>
     <summary>Teacher Answer Key (Click to reveal)</summary>
     <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
         <p><strong>Answers:</strong></p>
-        <pre><code class="language-java">public class StudentRecord {
-    public static void main(String[] args) {
-        // Student information using appropriate data types
-        String name = "Maria Santos";      // String for text
-        int age = 20;                       // int for whole number
-        double gpa = 3.85;                  // double for decimal
-        boolean isEnrolled = true;          // boolean for true/false
+        <pre><code class="language-java">public class Main {                         // Main class
+    public static void main(String[] args) { // Entry point
+        String name = "Ana";                 // String for text
+        int age = 20;                        // int for whole numbers
+        double gpa = 3.85;                   // double for decimals
+        boolean enrolled = true;             // boolean for true/false
 
-        final double MAX_GPA = 4.0;        // final constant
-
-        // Display the record
-        System.out.println("=== Student Record ===");
-        System.out.println("Name: " + name);
-        System.out.println("Age: " + age);
-        System.out.println("GPA: " + gpa);
-        System.out.println("Enrolled: " + isEnrolled);
-        System.out.println("Maximum GPA: " + MAX_GPA);
+        System.out.println("Name: " + name);       // Print name
+        System.out.println("Age: " + age);          // Print age
+        System.out.println("GPA: " + gpa);          // Print GPA
+        System.out.println("Enrolled: " + enrolled); // Print status
     }
 }
 </code></pre>
         <p><strong>Output:</strong></p>
-        <pre>=== Student Record ===
-Name: Maria Santos
+        <pre>Name: Ana
 Age: 20
 GPA: 3.85
-Enrolled: true
-Maximum GPA: 4.0</pre>
+Enrolled: true</pre>
     </div>
 </details>
 

@@ -28,38 +28,22 @@
 <p>Every compound statement in Python (if, for, while, def, class) ends with a colon, followed by an indented block. The standard indentation is <strong>4 spaces</strong>. Python tracks indentation levels to know which code belongs to which block. Mixed tabs and spaces will cause errors.</p>
 
 <h3>Example</h3>
-<pre><code class="language-python"># Correct indentation - 4 spaces per level
+<pre><code class="language-python"># Store student information
+name = "Juan"
 age = 20
 
+# Check if student is adult
 if age >= 18:
-    print("You are an adult")
-    print("You can vote")
-else:
-    print("You are a minor")
+    print(name, "is an adult")
+    print("Can vote")
 
-# Case sensitivity
-name = "Alice"
-Name = "Bob"
-NAME = "Charlie"
-print(name, Name, NAME)  # Outputs: Alice Bob Charlie
-
-# Line continuation with parentheses
-total = (1 + 2 + 3 +
-         4 + 5 + 6)
-
-# Comments
-# This is a comment
-x = 5  # Inline comment
-
-"""
-This is a multi-line
-comment (docstring)
-"""
+# Print the result
+print("Done checking")
 </code></pre>
 <strong>Output:</strong>
-<pre>You are an adult
-You can vote
-Alice Bob Charlie</pre>
+<pre>Juan is an adult
+Can vote
+Done checking</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 <h3>Real-World Applications</h3>
@@ -102,22 +86,13 @@ Alice Bob Charlie</pre>
     <summary>Teacher Answer Key (Click to reveal)</summary>
     <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
         <p><strong>Answers:</strong> The broken code has multiple issues. Here is the corrected version:</p>
-        <pre><code># BEFORE (broken code):
-# if age >= 18
-# print("Adult")
-#   print("Can vote")
-
-# AFTER (fixed code):
+        <pre><code># Store age and check
 age = 22
 
-if age >= 18:  # Added colon
-    print("Adult")  # Fixed indentation
-    print("Can vote")  # Fixed indentation
-
-# Case sensitivity fix
-firstName = "John"
-firstname = "Jane"  # These are DIFFERENT variables
-print(firstName, firstname)</code></pre>
+if age >= 18:
+    print("Adult")
+    print("Can vote")
+</code></pre>
     </div>
 </details>
 

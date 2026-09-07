@@ -35,27 +35,27 @@
 
 <h3>Example</h3>
 <pre><code class="language-php">&lt;?php
-// Display server information
-echo "Server Software: " . $_SERVER["SERVER_SOFTWARE"];
-echo "\n";
+// Get PHP version
 echo "PHP Version: " . phpversion();
+
+// Get request method
+echo "\n";
+echo "Request: " . $_SERVER["REQUEST_METHOD"];
+
+// Get visitor IP
 echo "\n";
 echo "Your IP: " . $_SERVER["REMOTE_ADDR"];
-echo "\n";
-echo "Request Method: " . $_SERVER["REQUEST_METHOD"];
-echo "\n";
 
-// Access GET parameters (if URL is ?name=Alice)
+// Get URL parameter (if URL is ?name=Alice)
+echo "\n";
 $name = $_GET["name"] ?? "Guest";
 echo "Name: $name";
-?&gt;
 </code></pre>
 <strong>Output:</strong>
-<pre>Server Software: Apache/2.4.41
-PHP Version: 8.0.0
-Your IP: 192.168.1.1
-Request Method: GET
-Name: Alice</pre>
+<pre>PHP Version: 8.1.0
+Request: GET
+Your IP: 127.0.0.1
+Name: Guest</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

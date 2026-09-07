@@ -36,73 +36,37 @@
 </ul>
 
 <h3>Example</h3>
-<pre><code class="language-java">public class OOPDemo {
+<pre><code class="language-java">public class Main {                         // Main class
 
-    static class BankAccount {
-        private String owner;       // private = only accessible inside this class
-        private double balance;
+    // A class is a blueprint for objects
+    static class Student {                  // Student blueprint
+        String name;                        // Field: stores name
+        int age;                            // Field: stores age
 
-        // Constructor: called when creating a new object
-        BankAccount(String owner, double initialBalance) {
-            this.owner = owner;             // 'this' refers to the current object
-            this.balance = (initialBalance > 0) ? initialBalance : 0;
-        }
-
-        // Getter: provides read access
-        public String getOwner() {
-            return owner;
-        }
-
-        public double getBalance() {
-            return balance;
+        // Constructor: called when creating new object
+        Student(String name, int age) {     // Takes name and age
+            this.name = name;               // 'this' refers to this object
+            this.age = age;                 // Set the age field
         }
 
         // Method: defines behavior
-        public boolean deposit(double amount) {
-            if (amount <= 0) {
-                System.out.println("Invalid deposit.");
-                return false;
-            }
-            balance += amount;
-            System.out.println("Deposited $" + amount + ". Balance: $" + balance);
-            return true;
-        }
-
-        public boolean withdraw(double amount) {
-            if (amount <= 0 || amount > balance) {
-                System.out.println("Invalid withdrawal.");
-                return false;
-            }
-            balance -= amount;
-            System.out.println("Withdrew $" + amount + ". Balance: $" + balance);
-            return true;
-        }
-
-        public String toString() {
-            return owner + "'s account: $" + balance;
+        void introduce() {                  // No return value (void)
+            System.out.println("Hi, I'm " + name + ", age " + age);
         }
     }
 
-    public static void main(String[] args) {
-        // Create objects using the constructor
-        BankAccount account1 = new BankAccount("Alice", 1000);
-        BankAccount account2 = new BankAccount("Bob", 500);
+    public static void main(String[] args) { // Entry point
+        Student s1 = new Student("Juan", 20); // Create first student
+        Student s2 = new Student("Ana", 21);  // Create second student
 
-        System.out.println(account1);
-        account1.deposit(500);
-        account1.withdraw(200);
-
-        System.out.println(account2);
-        account2.withdraw(100);
+        s1.introduce();                     // Call introduce on s1
+        s2.introduce();                     // Call introduce on s2
     }
 }
 </code></pre>
 <strong>Output:</strong>
-<pre>Alice's account: $1000.0
-Deposited $500.0. Balance: $1500.0
-Withdrew $200.0. Balance: $1300.0
-Bob's account: $500.0
-Withdrew $100.0. Balance: $400.0</pre>
+<pre>Hi, I'm Juan, age 20
+Hi, I'm Ana, age 21</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 
@@ -147,72 +111,34 @@ Withdrew $100.0. Balance: $400.0</pre>
     <summary>Teacher Answer Key (Click to reveal)</summary>
     <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
         <p><strong>Answers:</strong></p>
-        <pre><code class="language-java">public class LibrarySystem {
+        <pre><code class="language-java">public class Main {                         // Main class
 
-    static class Book {
-        private String title;
-        private String author;
-        private boolean isAvailable;
+    static class Car {                      // Car blueprint
+        String brand;                       // Brand of car
+        int year;                           // Year of car
 
-        Book(String title, String author) {
-            this.title = title;
-            this.author = author;
-            this.isAvailable = true;  // New books are available
+        Car(String brand, int year) {       // Constructor
+            this.brand = brand;             // Set brand
+            this.year = year;               // Set year
         }
 
-        public boolean isAvailable() {
-            return isAvailable;
-        }
-
-        public void borrowBook() {
-            if (isAvailable) {
-                isAvailable = false;
-                System.out.println("\"" + title + "\" has been borrowed.");
-            } else {
-                System.out.println("\"" + title + "\" is not available.");
-            }
-        }
-
-        public void returnBook() {
-            isAvailable = true;
-            System.out.println("\"" + title + "\" has been returned.");
-        }
-
-        public String toString() {
-            return title + " by " + author + " [" + (isAvailable ? "Available" : "Borrowed") + "]";
+        void display() {                    // Display method
+            System.out.println(brand + " " + year); // Print car info
         }
     }
 
-    public static void main(String[] args) {
-        Book book1 = new Book("Java Programming", "James Gosling");
-        Book book2 = new Book("Clean Code", "Robert Martin");
+    public static void main(String[] args) { // Entry point
+        Car c1 = new Car("Toyota", 2020);   // Create first car
+        Car c2 = new Car("Honda", 2022);    // Create second car
 
-        System.out.println(book1);
-        System.out.println(book2);
-
-        book1.borrowBook();
-        book1.borrowBook();  // Already borrowed
-
-        book2.borrowBook();
-        book2.returnBook();
-
-        System.out.println("\nFinal Status:");
-        System.out.println(book1);
-        System.out.println(book2);
+        c1.display();                       // Display first car
+        c2.display();                       // Display second car
     }
 }
 </code></pre>
         <p><strong>Output:</strong></p>
-        <pre>Java Programming by James Gosling [Available]
-Clean Code by Robert Martin [Available]
-"Java Programming" has been borrowed.
-"Java Programming" is not available.
-"Clean Code" has been borrowed.
-"Clean Code" has been returned.
-
-Final Status:
-Java Programming by James Gosling [Borrowed]
-Clean Code by Robert Martin [Available]</pre>
+        <pre>Toyota 2020
+Honda 2022</pre>
     </div>
 </details>
 

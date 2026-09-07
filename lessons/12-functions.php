@@ -35,7 +35,7 @@
 
 <h3>Example</h3>
 <pre><code class="language-php">&lt;?php
-// Function with parameters and return value
+// Function that returns a value
 function add($a, $b) {
     return $a + $b;
 }
@@ -43,6 +43,7 @@ function add($a, $b) {
 // Call the function
 $sum = add(5, 3);
 echo "5 + 3 = $sum";
+
 echo "\n";
 
 // Function with default parameter
@@ -50,9 +51,8 @@ function greet($name, $greeting = "Hello") {
     echo "$greeting, $name!\n";
 }
 
-greet("Alice");                    // Uses default: "Hello, Alice!"
-greet("Bob", "Good morning");      // Custom: "Good morning, Bob!"
-?&gt;
+greet("Alice");
+greet("Bob", "Good morning");
 </code></pre>
 <strong>Output:</strong>
 <pre>5 + 3 = 8

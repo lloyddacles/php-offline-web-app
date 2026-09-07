@@ -36,84 +36,37 @@
 </ul>
 
 <h3>Example</h3>
-<pre><code class="language-java">public class LoopsDemo {
-    public static void main(String[] args) {
-        // for loop: count from 1 to 5
-        System.out.println("=== For Loop ===");
-        for (int i = 1; i <= 5; i++) {
-            System.out.println("Count: " + i);
+<pre><code class="language-java">public class Main {                         // Main class
+    public static void main(String[] args) { // Entry point
+
+        // for loop: repeat a known number of times
+        System.out.println("Counting 1 to 5:");
+        for (int i = 1; i <= 5; i++) {       // Start at 1, end at 5
+            System.out.println("Number: " + i); // Print current number
         }
 
-        // while loop: sum numbers 1 to 5
-        System.out.println("\n=== While Loop ===");
-        int sum = 0;
-        int j = 1;
-        while (j <= 5) {
-            sum += j;
-            j++;
+        // while loop: repeat while condition is true
+        System.out.println("\nSum of 1 to 5:");
+        int sum = 0;                         // Start with zero
+        int i = 1;                           // Counter starts at 1
+        while (i <= 5) {                     // Loop while i is 5 or less
+            sum = sum + i;                   // Add i to sum
+            i++;                             // Increment counter
         }
-        System.out.println("Sum: " + sum);
-
-        // do-while: executes at least once
-        System.out.println("\n=== Do-While Loop ===");
-        int num = 10;
-        do {
-            System.out.println("Number: " + num);
-            num++;
-        } while (num < 5);  // Condition is false, but it ran once!
-
-        // for-each: iterate over an array
-        System.out.println("\n=== For-Each Loop ===");
-        String[] fruits = {"Apple", "Banana", "Cherry"};
-        for (String fruit : fruits) {
-            System.out.println("Fruit: " + fruit);
-        }
-
-        // break and continue
-        System.out.println("\n=== Break at 3 ===");
-        for (int i = 1; i <= 10; i++) {
-            if (i == 4) break;       // Exit loop when i is 4
-            System.out.println(i);
-        }
-
-        System.out.println("\n=== Skip Even Numbers ===");
-        for (int i = 1; i <= 10; i++) {
-            if (i % 2 == 0) continue;  // Skip even numbers
-            System.out.println(i);
-        }
+        System.out.println("Total: " + sum); // Print the sum
     }
 }
 </code></pre>
 <strong>Output:</strong>
-<pre>=== For Loop ===
-Count: 1
-Count: 2
-Count: 3
-Count: 4
-Count: 5
+<pre>Counting 1 to 5:
+Number: 1
+Number: 2
+Number: 3
+Number: 4
+Number: 5
 
-=== While Loop ===
-Sum: 15
-
-=== Do-While Loop ===
-Number: 10
-
-=== For-Each Loop ===
-Fruit: Apple
-Fruit: Banana
-Fruit: Cherry
-
-=== Break at 3 ===
-1
-2
-3
-
-=== Skip Even Numbers ===
-1
-3
-5
-7
-9</pre>
+Sum of 1 to 5:
+Total: 15</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 
@@ -158,51 +111,31 @@ Fruit: Cherry
     <summary>Teacher Answer Key (Click to reveal)</summary>
     <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
         <p><strong>Answers:</strong></p>
-        <pre><code class="language-java">public class GuessingGame {
-    public static void main(String[] args) {
-        int secretNumber = 42;
-        int attempts = 0;
+        <pre><code class="language-java">public class Main {                         // Main class
+    public static void main(String[] args) { // Entry point
+        int[] scores = {85, 92, 78, 95, 88}; // Array of scores
+        int total = 0;                       // Sum of scores
 
-        System.out.println("Guess the number between 1 and 50!");
-
-        for (int guess = 1; guess <= 50; guess++) {
-            attempts++;
-
-            if (guess == secretNumber) {
-                System.out.println("Correct! " + guess + " is the secret number!");
-                System.out.println("Found in " + attempts + " attempts.");
-                break;  // Exit the loop
-            }
-
-            // Skip numbers that are more than 10 away
-            if (Math.abs(guess - secretNumber) > 10) {
-                continue;  // Skip to next iteration
-            }
-
-            // Give hints for close guesses
-            if (guess < secretNumber) {
-                System.out.println("Guess " + guess + ": Too low! (attempt " + attempts + ")");
-            } else {
-                System.out.println("Guess " + guess + ": Too high! (attempt " + attempts + ")");
-            }
+        // Loop through scores and add to total
+        for (int i = 0; i < scores.length; i++) { // Loop by index
+            total = total + scores[i];       // Add score to total
+            System.out.println("Score " + (i + 1) + ": " + scores[i]); // Print score
         }
+
+        double average = total / scores.length; // Calculate average
+        System.out.println("Total: " + total);  // Print total
+        System.out.println("Average: " + average); // Print average
     }
 }
 </code></pre>
         <p><strong>Output:</strong></p>
-        <pre>Guess the number between 1 and 50!
-Guess 32: Too low! (attempt 32)
-Guess 33: Too low! (attempt 33)
-Guess 34: Too low! (attempt 34)
-Guess 35: Too low! (attempt 35)
-Guess 36: Too low! (attempt 36)
-Guess 37: Too low! (attempt 37)
-Guess 38: Too low! (attempt 38)
-Guess 39: Too low! (attempt 39)
-Guess 40: Too low! (attempt 40)
-Guess 41: Too low! (attempt 41)
-Correct! 42 is the secret number!
-Found in 42 attempts.</pre>
+        <pre>Score 1: 85
+Score 2: 92
+Score 3: 78
+Score 4: 95
+Score 5: 88
+Total: 438
+Average: 87</pre>
     </div>
 </details>
 

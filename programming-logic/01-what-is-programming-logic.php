@@ -36,65 +36,37 @@
     <li><strong>Test and verify:</strong> Run through the steps to make sure they produce the right result.</li>
 </ol>
 
-<h3>Example</h3>
-<pre><code class="language-php">// PHP Example: Making a cup of coffee
-echo "Step 1: Get a mug\n";
-echo "Step 2: Add coffee powder\n";
-echo "Step 3: Boil water\n";
-echo "Step 4: Pour hot water into the mug\n";
-echo "Step 5: Stir\n";
-echo "\nThat's programming logic — a recipe for the computer!\n";
+<h3>PHP Example</h3>
+<pre><code class="language-php">&lt;?php
+// Store a student's name
+$name = "Juan";
+// Print a greeting
+echo "Hello, $name!";
 </code></pre>
 <strong>Output:</strong>
-<pre>Step 1: Get a mug
-Step 2: Add coffee powder
-Step 3: Boil water
-Step 4: Pour hot water into the mug
-Step 5: Stir
-
-That's programming logic — a recipe for the computer!</pre>
+<pre>Hello, Juan!</pre>
 
 <h3>Python Example</h3>
-<pre><code class="language-python"># Python Example: Making a cup of coffee
-print("Step 1: Get a mug")
-print("Step 2: Add coffee powder")
-print("Step 3: Boil water")
-print("Step 4: Pour hot water into the mug")
-print("Step 5: Stir")
-print()
-print("That's programming logic — a recipe for the computer!")
+<pre><code class="language-python"># Store a student's name
+name = "Juan"
+# Print a greeting
+print(f"Hello, {name}!")
 </code></pre>
 <strong>Output:</strong>
-<pre>Step 1: Get a mug
-Step 2: Add coffee powder
-Step 3: Boil water
-Step 4: Pour hot water into the mug
-Step 5: Stir
-
-That's programming logic — a recipe for the computer!</pre>
+<pre>Hello, Juan!</pre>
 
 <h3>Java Example</h3>
-<pre><code class="language-java">// Java Example: Making a cup of coffee
-public class Main {
+<pre><code class="language-java">public class Main {
     public static void main(String[] args) {
-        System.out.println("Step 1: Get a mug");
-        System.out.println("Step 2: Add coffee powder");
-        System.out.println("Step 3: Boil water");
-        System.out.println("Step 4: Pour hot water into the mug");
-        System.out.println("Step 5: Stir");
-        System.out.println();
-        System.out.println("That's programming logic — a recipe for the computer!");
+        // Store a student's name
+        String name = "Juan";
+        // Print a greeting
+        System.out.println("Hello, " + name + "!");
     }
 }
 </code></pre>
 <strong>Output:</strong>
-<pre>Step 1: Get a mug
-Step 2: Add coffee powder
-Step 3: Boil water
-Step 4: Pour hot water into the mug
-Step 5: Stir
-
-That's programming logic — a recipe for the computer!</pre>
+<pre>Hello, Juan!</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

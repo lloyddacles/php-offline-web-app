@@ -35,29 +35,23 @@
 
 <h3>Example</h3>
 <pre><code class="language-php">&lt;?php
-// Creating variables with the assignment operator
-$name = "Alice";     // String variable
-$age = 20;           // Integer variable
-$gpa = 3.85;         // Float variable
-$isStudent = true;   // Boolean variable
-
-// Output variables
+// Store a name in a variable
+$name = "Alice";
 echo "Name: " . $name;
-echo "\n";
-echo "Age: " . $age;
-echo "\n";
-echo "GPA: " . $gpa;
-echo "\n";
 
-// Changing a variable value
+// Store a number
+echo "\n";
+$age = 20;
+echo "Age: " . $age;
+
+// Change the variable value
+echo "\n";
 $age = 21;
 echo "Updated Age: " . $age;
-?&gt;
 </code></pre>
 <strong>Output:</strong>
 <pre>Name: Alice
 Age: 20
-GPA: 3.85
 Updated Age: 21</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>

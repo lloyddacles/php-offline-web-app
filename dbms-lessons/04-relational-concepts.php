@@ -56,51 +56,95 @@
 <h4>Referential Integrity</h4>
 <p>Foreign keys must reference valid primary keys, or be NULL. This prevents "orphaned" records.</p>
 
-<h3>Example</h3>
-<pre><code>-- Create a students table with a primary key
+<h3>Examples</h3>
+
+<p><strong>1. Primary Key</strong></p>
+<pre><code class="language-sql">-- Create students table with a primary key
 CREATE TABLE students (
-    id INT AUTO_INCREMENT PRIMARY KEY,   -- Primary Key: uniquely identifies each student
-    email VARCHAR(100) UNIQUE NOT NULL,  -- Candidate Key: also unique, could be PK
-    name VARCHAR(100) NOT NULL
+    id INT PRIMARY KEY,    -- Unique identifier for each row
+    name VARCHAR(50)       -- Student name
 );
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
--- Create a courses table
+<p><strong>2. Foreign Key</strong></p>
+<pre><code class="language-sql">-- Create courses table
 CREATE TABLE courses (
-    course_id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(100) NOT NULL,
-    credits INT NOT NULL CHECK (credits > 0)
+    id INT PRIMARY KEY,       -- Unique course ID
+    title VARCHAR(50)         -- Course title
 );
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
--- Create enrollments with composite PK and foreign keys
+<pre><code class="language-sql">-- Create enrollments linking students to courses
 CREATE TABLE enrollments (
-    student_id INT,
-    course_id INT,
-    grade VARCHAR(2),
-    PRIMARY KEY (student_id, course_id),  -- Composite PK: combination must be unique
-    FOREIGN KEY (student_id) REFERENCES students(id)
-        ON DELETE CASCADE,                 -- If student is deleted, delete enrollment
-    FOREIGN KEY (course_id) REFERENCES courses(course_id)
-        ON DELETE CASCADE
+    student_id INT,           -- References students table
+    course_id INT,            -- References courses table
+    grade VARCHAR(2),         -- Grade earned
+    PRIMARY KEY (student_id, course_id),
+    FOREIGN KEY (student_id) REFERENCES students(id),
+    FOREIGN KEY (course_id) REFERENCES courses(id)
 );
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
--- This violates entity integrity (duplicate PK):
--- INSERT INTO students (id, name) VALUES (1, 'Alice');
--- INSERT INTO students (id, name) VALUES (1, 'Bob');  -- ERROR!
+<p><strong>3. Composite Key</strong></p>
+<pre><code class="language-sql">-- Insert two students
+INSERT INTO students VALUES (1, 'Alice');
+INSERT INTO students VALUES (2, 'Bob');
+</code></pre>
+<pre>Query OK, 2 rows affected</pre>
 
--- This violates referential integrity (non-existent FK):
--- INSERT INTO enrollments (student_id, course_id, grade)
--- VALUES (99, 101, 'B');  -- ERROR: student 99 doesn't exist</code></pre>
+<pre><code class="language-sql">-- Insert courses
+INSERT INTO courses VALUES (101, 'Math');
+INSERT INTO courses VALUES (102, 'Science');
+</code></pre>
+<pre>Query OK, 2 rows affected</pre>
+
+<pre><code class="language-sql">-- Enroll students (composite key: student_id + course_id)
+INSERT INTO enrollments VALUES (1, 101, 'A');
+INSERT INTO enrollments VALUES (1, 102, 'B');
+INSERT INTO enrollments VALUES (2, 101, 'B');
+</code></pre>
+<strong>Output:</strong>
+<pre>+------------+-----------+-------+
+| student_id | course_id | grade |
++------------+-----------+-------+
+|          1 |       101 | A     |
+|          1 |       102 | B     |
+|          2 |       101 | B     |
++------------+-----------+-------+</pre>
+
+<p><strong>4. Entity Integrity (PK cannot be duplicate)</strong></p>
+<pre><code class="language-sql">-- This fails: duplicate primary key
+INSERT INTO students VALUES (1, 'Charlie');
+</code></pre>
+<strong>Output:</strong>
+<pre>ERROR 1062: Duplicate entry '1' for key 'PRIMARY'</pre>
+
+<p><strong>5. Referential Integrity (FK must exist)</strong></p>
+<pre><code class="language-sql">-- This fails: student 99 does not exist
+INSERT INTO enrollments VALUES (99, 101, 'A');
+</code></pre>
+<strong>Output:</strong>
+<pre>ERROR 1452: Cannot add or update a child row:
+a foreign key constraint fails</pre>
 
 <h3>Domain Constraints</h3>
 <p>Each column has a defined <strong>domain</strong> (set of allowed values):</p>
-<pre><code>CREATE TABLE employees (
-    id INT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,                  -- Must be a string, max 100 chars
-    salary DECIMAL(10,2) CHECK (salary >= 0),    -- Must be non-negative
-    email VARCHAR(100) UNIQUE NOT NULL,          -- Must be unique
-    hire_date DATE NOT NULL,                     -- Must be a valid date
-    department VARCHAR(50) DEFAULT 'Unassigned'  -- Default value if not specified
-);</code></pre>
+<pre><code class="language-sql">-- Create employees with domain constraints
+CREATE TABLE employees (
+    id INT PRIMARY KEY,              -- Must be an integer
+    name VARCHAR(50) NOT NULL,       -- Must be text, max 50 chars
+    salary DECIMAL(10,2) CHECK (salary >= 0),  -- Must be non-negative
+    email VARCHAR(50) UNIQUE         -- Must be unique
+);
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
 <h3>Relational Algebra (Theory)</h3>
 <p>The mathematical foundation of SQL operations:</p>
@@ -167,25 +211,36 @@ CREATE TABLE enrollments (
                 </ul>
             </li>
             <li>
-                <pre><code>CREATE TABLE authors (
-    author_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    bio TEXT
+                <pre><code class="language-sql">-- Create authors table
+CREATE TABLE authors (
+    id INT PRIMARY KEY,         -- Unique author ID
+    name VARCHAR(50)            -- Author name
 );
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
+<pre><code class="language-sql">-- Create books table
 CREATE TABLE books (
-    isbn VARCHAR(20) PRIMARY KEY,
-    title VARCHAR(200) NOT NULL,
-    price DECIMAL(10,2) NOT NULL CHECK (price >= 0)
+    isbn VARCHAR(20) PRIMARY KEY,   -- Unique book identifier
+    title VARCHAR(50),              -- Book title
+    price DECIMAL(10,2)             -- Book price
 );
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
+<pre><code class="language-sql">-- Junction table for book-author relationship
 CREATE TABLE book_authors (
     isbn VARCHAR(20),
     author_id INT,
     PRIMARY KEY (isbn, author_id),
-    FOREIGN KEY (isbn) REFERENCES books(isbn) ON DELETE CASCADE,
-    FOREIGN KEY (author_id) REFERENCES authors(author_id) ON DELETE CASCADE
-);</code></pre>
+    FOREIGN KEY (isbn) REFERENCES books(isbn),
+    FOREIGN KEY (author_id) REFERENCES authors(id)
+);
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
             </li>
             <li><strong>ON DELETE CASCADE</strong> means: if a referenced row is deleted, all rows referencing it are also deleted. For book_authors, this is appropriate — if a book is deleted, its author associations should also be removed. However, if an author is deleted, you might prefer ON DELETE RESTRICT to prevent accidentally removing author records that are tied to books.</li>
         </ol>

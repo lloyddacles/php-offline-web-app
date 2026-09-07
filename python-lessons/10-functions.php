@@ -28,42 +28,26 @@
 <p>Define a function with <code>def name(params):</code>, followed by an indented block. Use <code>return</code> to output a value. Variables inside functions are <strong>local</strong> — they don't affect variables outside. Use <code>global</code> sparingly. Lambda functions are one-line anonymous functions: <code>lambda x: x ** 2</code>. Recursion requires a base case to stop.</p>
 
 <h3>Example</h3>
-<pre><code class="language-python"># Basic function with default parameter
-def calculate_tax(price, tax_rate=0.1):
-    """Calculate price with tax."""
-    return price * (1 + tax_rate)
+<pre><code class="language-python"># Function to calculate average
+def get_average(scores):
+    total = sum(scores)
+    count = len(scores)
+    return total / count
 
-print(f"Tax on $100: ${calculate_tax(100):.2f}")
-print(f"Tax at 20%: ${calculate_tax(100, 0.2):.2f}")
+# Test with student scores
+math = [85, 90, 78]
+science = [92, 88, 95]
 
-# *args - variable positional arguments
-def find_max(*numbers):
-    return max(numbers)
+# Call the function
+math_avg = get_average(math)
+science_avg = get_average(science)
 
-print(f"Max: {find_max(3, 7, 2, 9, 1)}")
-
-# Lambda with map and filter
-nums = [1, 2, 3, 4, 5]
-doubled = list(map(lambda x: x * 2, nums))
-evens = list(filter(lambda x: x % 2 == 0, nums))
-print(f"Doubled: {doubled}")
-print(f"Evens: {evens}")
-
-# Recursion - factorial
-def factorial(n):
-    if n <= 1:  # Base case
-        return 1
-    return n * factorial(n - 1)  # Recursive case
-
-print(f"5! = {factorial(5)}")
+print("Math average:", math_avg)
+print("Science average:", science_avg)
 </code></pre>
 <strong>Output:</strong>
-<pre>Tax on $100: $110.00
-Tax at 20%: $120.00
-Max: 9
-Doubled: [2, 4, 6, 8, 10]
-Evens: [2, 4]
-5! = 120</pre>
+<pre>Math average: 84.33333333333333
+Science average: 91.66666666666667</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 <h3>Real-World Applications</h3>
@@ -107,46 +91,26 @@ Evens: [2, 4]
     <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
         <p><strong>Answers:</strong> Students should create functions with proper parameters, return values, and use lambda for sorting.</p>
         <pre><code># Grade book functions
-def calculate_average(scores):
-    """Calculate the average of a list of scores."""
+def get_average(scores):
     return sum(scores) / len(scores)
 
-def get_letter_grade(average):
-    """Convert numeric average to letter grade."""
-    if average >= 90:
+def get_grade(score):
+    if score >= 90:
         return "A"
-    elif average >= 80:
+    elif score >= 80:
         return "B"
-    elif average >= 70:
-        return "C"
-    elif average >= 60:
-        return "D"
     else:
-        return "F"
-
-def grade_summary(students):
-    """Generate sorted summary of student grades."""
-    summary = []
-    for name, scores in students.items():
-        avg = calculate_average(scores)
-        letter = get_letter_grade(avg)
-        summary.append((name, avg, letter))
-    # Sort by average descending using lambda
-    summary.sort(key=lambda x: x[1], reverse=True)
-    return summary
+        return "C"
 
 # Test the functions
-students = {
-    "Alice": [92, 88, 95],
-    "Bob": [78, 82, 80],
-    "Charlie": [95, 98, 92],
-    "Diana": [85, 90, 88],
-}
+math_scores = [85, 90, 78]
+avg = get_average(math_scores)
+grade = get_grade(avg)
 
-results = grade_summary(students)
-print("===== Grade Summary =====")
-for name, avg, letter in results:
-    print(f"{name:10} | Avg: {avg:5.1f} | Grade: {letter}")</code></pre>
+print("Scores:", math_scores)
+print("Average:", avg)
+print("Grade:", grade)
+</code></pre>
     </div>
 </details>
 

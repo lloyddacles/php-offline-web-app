@@ -28,49 +28,25 @@
 <p>Strings support indexing (<code>s[0]</code>), slicing (<code>s[1:4]</code>), and a rich set of methods. f-strings (formatted string literals) let you embed expressions inside <code>{}</code> within a string. Common methods include <code>.upper()</code>, <code>.lower()</code>, <code>.strip()</code>, <code>.split()</code>, <code>.replace()</code>, and <code>.find()</code>.</p>
 
 <h3>Example</h3>
-<pre><code class="language-python"># String methods
-message = "  Hello, Python World!  "
-print(f"Stripped: '{message.strip()}'")
-print(f"Upper: '{message.strip().upper()}'")
-print(f"Lower: '{message.strip().lower()}'")
+<pre><code class="language-python"># Store student name
+name = "  juan dela cruz  "
 
-# Splitting and joining
-words = "apple,banana,cherry".split(",")
-print(f"Words: {words}")
-joined = " - ".join(words)
-print(f"Joined: {joined}")
+# Clean up the name
+clean_name = name.strip()
+print("Clean:", clean_name)
 
-# f-string formatting
-name = "Alice"
-price = 49.99
-print(f"Customer: {name}")
-print(f"Price: ${price:.2f}")
-print(f"Right-aligned: {price:>10}")
+# Convert to uppercase
+upper_name = clean_name.upper()
+print("Upper:", upper_name)
 
-# String slicing
-text = "Hello, World!"
-print(f"First 5: {text[:5]}")
-print(f"Reversed: {text[::-1]}")
-
-# Replace and find
-original = "I love Java"
-fixed = original.replace("Java", "Python")
-print(f"Fixed: {fixed}")
-print(f"Find 'love': {original.find('love')}")
+# Get the length
+length = len(clean_name)
+print("Length:", length)
 </code></pre>
 <strong>Output:</strong>
-<pre>Stripped: 'Hello, Python World!'
-Upper: 'HELLO, PYTHON WORLD!'
-Lower: 'hello, python world!'
-Words: ['apple', 'banana', 'cherry']
-Joined: apple - banana - cherry
-Customer: Alice
-Price: $49.99
-Right-aligned:     49.99
-First 5: Hello
-Reversed: !dlroW ,olleH
-Fixed: I love Python
-Find 'love': 2</pre>
+<pre>Clean: juan dela cruz
+Upper: JUAN DELA CRUZ
+Length: 14</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 <h3>Real-World Applications</h3>
@@ -115,27 +91,18 @@ Find 'love': 2</pre>
     <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
         <p><strong>Answers:</strong> Students should demonstrate string cleaning and formatting methods.</p>
         <pre><code># Raw user input
-raw_name = "  john MICHAEL doe  "
-raw_email = "  John.Doe@Email.COM  "
-raw_bio = "I am a software developer who loves Python and building things."
+raw_name = "  john doe  "
+raw_email = "  John@Email.COM  "
 
 # Clean the data
 name = raw_name.strip().title()
 email = raw_email.strip().lower()
 
-# Validate email
-is_valid = "@" in email
-bio = raw_bio.strip()
-if len(bio) > 50:
-    bio = bio[:47] + "..."
-
-# Format profile
-print("===== User Profile =====")
-print(f"Name:  {name}")
-print(f"Email: {email}")
-print(f"Valid: {is_valid}")
-print(f"Bio:   {bio}")
-print("=========================")</code></pre>
+# Print clean profile
+print("Name:", name)
+print("Email:", email)
+print("Has @:", "@" in email)
+</code></pre>
     </div>
 </details>
 

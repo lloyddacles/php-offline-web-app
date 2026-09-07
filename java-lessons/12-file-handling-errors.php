@@ -36,63 +36,35 @@
 </ul>
 
 <h3>Example</h3>
-<pre><code class="language-java">import java.io.*;
+<pre><code class="language-java">public class Main {                         // Main class
+    public static void main(String[] args) { // Entry point
 
-public class FileHandlingDemo {
-    public static void main(String[] args) {
-        String filename = "demo.txt";
-
-        // Writing to a file using try-with-resources
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
-            writer.write("Line 1: Hello from Java!");
-            writer.newLine();
-            writer.write("Line 2: File handling is useful.");
-            writer.newLine();
-            writer.write("Line 3: Writing data to disk.");
-            System.out.println("Successfully wrote to " + filename);
-        } catch (IOException e) {
-            System.out.println("Error writing: " + e.getMessage());
+        // try-catch handles errors gracefully
+        try {                                // Try this code first
+            int a = 10;                      // First number
+            int b = 0;                       // Zero causes error
+            int result = a / b;              // Division by zero!
+            System.out.println("Result: " + result); // Never reached
+        } catch (ArithmeticException e) {    // Catch the error
+            System.out.println("Error: " + e.getMessage()); // Print error
+        } finally {                          // Always runs
+            System.out.println("Cleanup done!"); // Final message
         }
 
-        // Reading from a file
-        File file = new File(filename);
-        System.out.println("File exists: " + file.exists());
-        System.out.println("File size: " + file.length() + " bytes");
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-            String line;
-            int lineNum = 1;
-            while ((line = reader.readLine()) != null) {
-                System.out.println(lineNum + ": " + line);
-                lineNum++;
-            }
-        } catch (IOException e) {
-            System.out.println("Error reading: " + e.getMessage());
-        }
-
-        // Exception handling demo
-        System.out.println("\n--- Exception Handling ---");
-        try {
-            int result = 10 / 0;  // ArithmeticException
-        } catch (ArithmeticException e) {
-            System.out.println("Caught: " + e.getMessage());
-        } finally {
-            System.out.println("Finally block always runs!");
+        // Another example: array index error
+        try {                                // Try this code
+            int[] nums = {1, 2, 3};          // Array with 3 elements
+            System.out.println(nums[5]);     // Index 5 does not exist!
+        } catch (ArrayIndexOutOfBoundsException e) { // Catch index error
+            System.out.println("Error: " + e.getMessage());
         }
     }
 }
 </code></pre>
 <strong>Output:</strong>
-<pre>Successfully wrote to demo.txt
-File exists: true
-File size: 105 bytes
-1: Line 1: Hello from Java!
-2: Line 2: File handling is useful.
-3: Line 3: Writing data to disk.
-
---- Exception Handling ---
-Caught: / by zero
-Finally block always runs!</pre>
+<pre>Error: / by zero
+Cleanup done!
+Error: Index 5 out of bounds for length 3</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 
@@ -137,60 +109,35 @@ Finally block always runs!</pre>
     <summary>Teacher Answer Key (Click to reveal)</summary>
     <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
         <p><strong>Answers:</strong></p>
-        <pre><code class="language-java">import java.io.*;
+        <pre><code class="language-java">public class Main {                         // Main class
+    public static void main(String[] args) { // Entry point
 
-public class NoteApp {
-    public static void main(String[] args) {
-        String filename = "notes.txt";
-
-        // Write notes to file
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
-            writer.write("Note 1: Learn Java basics");
-            writer.newLine();
-            writer.write("Note 2: Practice exception handling");
-            writer.newLine();
-            writer.write("Note 3: Master file I/O operations");
-            writer.newLine();
-            System.out.println("Notes saved successfully!");
-        } catch (IOException e) {
-            System.out.println("Error saving notes: " + e.getMessage());
+        // Example 1: Division by zero
+        try {                                // Try risky code
+            int a = 10;                      // First number
+            int b = 0;                       // Zero will cause error
+            int result = a / b;              // This line fails!
+            System.out.println(result);      // Never reached
+        } catch (ArithmeticException e) {    // Catch the error
+            System.out.println("Error: " + e.getMessage());
         }
 
-        // Read notes from file
-        System.out.println("\n--- Your Notes ---");
-        File file = new File(filename);
-
-        if (!file.exists()) {
-            System.out.println("No notes file found. Create some notes first!");
-            return;
+        // Example 2: Null reference
+        try {                                // Try risky code
+            String text = null;              // No value assigned
+            System.out.println(text.length()); // This line fails!
+        } catch (NullPointerException e) {   // Catch null error
+            System.out.println("Error: " + e.getMessage());
         }
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-            String line;
-            int lineNum = 1;
-            while ((line = reader.readLine()) != null) {
-                System.out.println(lineNum + ". " + line);
-                lineNum++;
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found: " + e.getMessage());
-        } catch (IOException e) {
-            System.out.println("Error reading notes: " + e.getMessage());
-        } finally {
-            System.out.println("\n--- Session Complete ---");
-        }
+        System.out.println("Program continues!"); // Still runs
     }
 }
 </code></pre>
         <p><strong>Output:</strong></p>
-        <pre>Notes saved successfully!
-
---- Your Notes ---
-1. Note 1: Learn Java basics
-2. Note 2: Practice exception handling
-3. Note 3: Master file I/O operations
-
---- Session Complete ---</pre>
+        <pre>Error: / by zero
+Error: null
+Program continues!</pre>
     </div>
 </details>
 

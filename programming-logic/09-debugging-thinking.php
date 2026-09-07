@@ -35,98 +35,52 @@
     <li><strong>Test:</strong> Verify the fix works and doesn't break anything else.</li>
 </ol>
 
-<h3>Example</h3>
-<pre><code class="language-php">// PHP Example: Debugging a broken program
-
-// BUGGY CODE: This has several errors
-// $names = ["Ana" "Ben" "Cat"]  // Bug 1: Missing commas
-// for ($i = 0; $i < strlen($names); $i++) {  // Bug 2: strlen on array
-//     echo $names[$i] . "\n";
-// }
-
-// FIXED CODE:
-$names = ["Ana", "Ben", "Cat"];  // Fixed: added commas
-for ($i = 0; $i < count($names); $i++) {  // Fixed: use count()
-    echo $names[$i] . "\n";
-}
-
-echo "\n---\n";
-
-// Another debugging example: finding the largest number
-$numbers = [3, 7, 2, 9, 5];
-$largest = $numbers[0];  // Start with first element, not 0!
-
-for ($i = 1; $i < count($numbers); $i++) {
-    if ($numbers[$i] > $largest) {
-        $largest = $numbers[$i];
-    }
-}
-echo "Largest: $largest\n";
+<h3>PHP Example</h3>
+<pre><code class="language-php">&lt;?php
+// Store a student's name
+$name = "Juan";
+// Print a greeting
+echo "Hello, $name!\n";
+// Store a number
+$age = 15;
+// Print the age
+echo "Age: $age";
 </code></pre>
 <strong>Output:</strong>
-<pre>Ana
-Ben
-Cat
-
----
-Largest: 9</pre>
+<pre>Hello, Juan!
+Age: 15</pre>
 
 <h3>Python Example</h3>
-<pre><code class="language-python"># Python Example: Debugging techniques
-
-# Using print statements to trace
-def find_largest(numbers):
-    largest = numbers[0]  # Start with first, not 0!
-    print(f"Starting with: {largest}")
-    
-    for i in range(1, len(numbers)):
-        print(f"Checking {numbers[i]}...")
-        if numbers[i] > largest:
-            largest = numbers[i]
-            print(f"  New largest: {largest}")
-    
-    return largest
-
-numbers = [3, 7, 2, 9, 5]
-result = find_largest(numbers)
-print(f"\nFinal largest: {result}")
+<pre><code class="language-python"># Store a student's name
+name = "Juan"
+# Print a greeting
+print(f"Hello, {name}!")
+# Store a number
+age = 15
+# Print the age
+print(f"Age: {age}")
 </code></pre>
 <strong>Output:</strong>
-<pre>Starting with: 3
-Checking 7...
-  New largest: 7
-Checking 2...
-Checking 9...
-  New largest: 9
-Checking 5...
-
-Final largest: 9</pre>
+<pre>Hello, Juan!
+Age: 15</pre>
 
 <h3>Java Example</h3>
-<pre><code class="language-java">// Java Example: Debugging with comments
-
-public class Main {
+<pre><code class="language-java">public class Main {
     public static void main(String[] args) {
-        int[] numbers = {3, 7, 2, 9, 5};
-        
-        // Bug: Starting with 0 instead of first element
-        // int largest = 0;  // WRONG for negative numbers!
-        
-        // Fix: Start with first element
-        int largest = numbers[0];
-        
-        for (int i = 1; i < numbers.length; i++) {
-            if (numbers[i] > largest) {
-                largest = numbers[i];
-            }
-        }
-        
-        System.out.println("Largest: " + largest);
+        // Store a student's name
+        String name = "Juan";
+        // Print a greeting
+        System.out.println("Hello, " + name + "!");
+        // Store a number
+        int age = 15;
+        // Print the age
+        System.out.println("Age: " + age);
     }
 }
 </code></pre>
 <strong>Output:</strong>
-<pre>Largest: 9</pre>
+<pre>Hello, Juan!
+Age: 15</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

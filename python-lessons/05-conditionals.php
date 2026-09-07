@@ -28,40 +28,26 @@
 <p>Python evaluates conditions from top to bottom. When it finds a true condition, it executes that block and skips the rest. If no condition is true, it runs the <code>else</code> block (if present). The ternary expression <code>"yes" if condition else "no"</code> is a shorthand for simple if/else assignments.</p>
 
 <h3>Example</h3>
-<pre><code class="language-python"># Basic if/elif/else
-temperature = 72
-
-if temperature > 85:
-    print("It's hot outside!")
-elif temperature > 65:
-    print("It's nice outside!")  # This runs
-elif temperature > 40:
-    print("It's cool outside!")
-else:
-    print("It's cold outside!")
-
-# Ternary expression
-age = 20
-status = "adult" if age >= 18 else "minor"
-print(f"You are an {status}")
-
-# Nested conditionals
+<pre><code class="language-python"># Check student grade
 score = 85
-has_bonus = True
 
-if score >= 80:
-    if has_bonus:
-        grade = "A+"
-    else:
-        grade = "A"
-else:
+# Determine grade based on score
+if score >= 90:
+    grade = "A"
+elif score >= 80:
     grade = "B"
-print(f"Grade: {grade}")
+elif score >= 70:
+    grade = "C"
+else:
+    grade = "F"
+
+# Print the result
+print("Score:", score)
+print("Grade:", grade)
 </code></pre>
 <strong>Output:</strong>
-<pre>It's nice outside!
-You are an adult
-Grade: A+</pre>
+<pre>Score: 85
+Grade: B</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 <h3>Real-World Applications</h3>
@@ -110,19 +96,20 @@ is_weekend = True
 
 # Determine base price
 if age < 12:
-    base_price = 8
+    price = 8
 elif age < 65:
-    base_price = 12
+    price = 12
 else:
-    base_price = 9
+    price = 9
 
-# Apply weekend surcharge
-final_price = base_price + (2 if is_weekend else 0)
+# Add weekend surcharge
+if is_weekend:
+    price = price + 2
 
-print(f"Age: {age}")
-print(f"Weekend: {is_weekend}")
-print(f"Base price: ${base_price}")
-print(f"Final price: ${final_price}")</code></pre>
+print("Age:", age)
+print("Weekend:", is_weekend)
+print("Price:", price)
+</code></pre>
     </div>
 </details>
 

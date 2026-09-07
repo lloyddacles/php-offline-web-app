@@ -29,37 +29,30 @@
 <p>MySQL accepts the <code>INSERT INTO</code> command with a list of columns and their corresponding values. The values must match the data types and constraints defined in the table structure.</p>
 
 <h3>Example</h3>
-<pre><code class="language-sql">-- Create a table to work with
-CREATE TABLE employees (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    department VARCHAR(50),
-    salary DECIMAL(10,2),
-    hire_date DATE
+<pre><code class="language-sql">-- Create a students table
+CREATE TABLE students (
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    grade INT
 );
 
--- Insert a single row (specify columns)
-INSERT INTO employees (name, department, salary, hire_date)
-VALUES ('Alice Smith', 'Engineering', 75000.00, '2024-01-15');
+-- Insert one student
+INSERT INTO students VALUES (1, 'Juan', 95);
 
--- Insert multiple rows at once
-INSERT INTO employees (name, department, salary, hire_date) VALUES
-('Carol White', 'Engineering', 82000.00, '2023-06-10'),
-('David Brown', 'Sales', 58000.00, '2024-03-01'),
-('Eva Green', 'Marketing', 71000.00, '2023-11-22');
+-- Insert multiple students
+INSERT INTO students VALUES (2, 'Maria', 88), (3, 'Pedro', 92);
 
--- Verify your inserts
-SELECT * FROM employees;
+-- Verify inserts
+SELECT * FROM students;
 </code></pre>
 <strong>Output:</strong>
-<pre>+----+--------------+-------------+----------+------------+
-| id | name         | department  | salary   | hire_date  |
-+----+--------------+-------------+----------+------------+
-|  1 | Alice Smith  | Engineering | 75000.00 | 2024-01-15 |
-|  2 | Carol White  | Engineering | 82000.00 | 2023-06-10 |
-|  3 | David Brown  | Sales       | 58000.00 | 2024-03-01 |
-|  4 | Eva Green    | Marketing   | 71000.00 | 2023-11-22 |
-+----+--------------+-------------+----------+------------+</pre>
+<pre>+----+-------+-------+
+| id | name  | grade |
++----+-------+-------+
+|  1 | Juan  |    95 |
+|  2 | Maria |    88 |
+|  3 | Pedro |    92 |
++----+-------+-------+</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

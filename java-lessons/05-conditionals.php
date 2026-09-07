@@ -35,50 +35,30 @@
 </ul>
 
 <h3>Example</h3>
-<pre><code class="language-java">public class ConditionalsDemo {
-    public static void main(String[] args) {
-        // if-else if-else chain
-        int score = 85;
-        String grade;
+<pre><code class="language-java">public class Main {                         // Main class
+    public static void main(String[] args) { // Entry point
+        int score = 85;                      // Student score
+        String grade;                        // Will hold the letter grade
 
-        if (score >= 90) {
-            grade = "A";
-        } else if (score >= 80) {
-            grade = "B";
-        } else if (score >= 70) {
-            grade = "C";
-        } else if (score >= 60) {
-            grade = "D";
-        } else {
-            grade = "F";
+        // if-else if-else checks conditions in order
+        if (score >= 90) {                   // Check if 90 or above
+            grade = "A";                     // Grade is A
+        } else if (score >= 80) {            // Check if 80 or above
+            grade = "B";                     // Grade is B
+        } else if (score >= 70) {            // Check if 70 or above
+            grade = "C";                     // Grade is C
+        } else {                             // Otherwise
+            grade = "F";                     // Grade is F
         }
-        System.out.println("Score: " + score + " => Grade: " + grade);
 
-        // switch statement
-        int day = 3;
-        String dayName;
-
-        switch (day) {
-            case 1: dayName = "Monday"; break;
-            case 2: dayName = "Tuesday"; break;
-            case 3: dayName = "Wednesday"; break;
-            case 4: dayName = "Thursday"; break;
-            case 5: dayName = "Friday"; break;
-            default: dayName = "Weekend"; break;
-        }
-        System.out.println("Day " + day + " is " + dayName);
-
-        // Ternary operator
-        int age = 20;
-        String type = (age >= 18) ? "Adult" : "Minor";
-        System.out.println("Age " + age + " => " + type);
+        System.out.println("Score: " + score); // Print score
+        System.out.println("Grade: " + grade);  // Print grade
     }
 }
 </code></pre>
 <strong>Output:</strong>
-<pre>Score: 85 => Grade: B
-Day 3 is Wednesday
-Age 20 => Adult</pre>
+<pre>Score: 85
+Grade: B</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 
@@ -123,54 +103,30 @@ Age 20 => Adult</pre>
     <summary>Teacher Answer Key (Click to reveal)</summary>
     <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
         <p><strong>Answers:</strong></p>
-        <pre><code class="language-java">public class ATMSystem {
-    public static void main(String[] args) {
-        double balance = 5000.00;
-        double withdrawAmount = 2000.00;
-        String accountType = "savings";
+        <pre><code class="language-java">public class Main {                         // Main class
+    public static void main(String[] args) { // Entry point
+        int score = 85;                      // Student score
+        String grade;                        // Letter grade
 
-        // Check if balance is sufficient
-        if (withdrawAmount > balance) {
-            System.out.println("Insufficient funds!");
-            return;
+        // Check score and assign grade
+        if (score >= 90) {                   // 90 or above
+            grade = "A";                     // Grade A
+        } else if (score >= 80) {            // 80 or above
+            grade = "B";                     // Grade B
+        } else if (score >= 70) {            // 70 or above
+            grade = "C";                     // Grade C
+        } else {                             // Below 70
+            grade = "F";                     // Grade F
         }
 
-        // Determine withdrawal limit based on account type
-        double limit;
-        switch (accountType) {
-            case "savings":
-                limit = 10000.00;
-                break;
-            case "checking":
-                limit = 15000.00;
-                break;
-            case "premium":
-                limit = 50000.00;
-                break;
-            default:
-                limit = 5000.00;
-                break;
-        }
-
-        // Check if within limit
-        if (withdrawAmount > limit) {
-            System.out.println("Exceeds " + accountType + " limit of $" + limit);
-        } else {
-            balance -= withdrawAmount;
-            System.out.println("Withdrew $" + withdrawAmount);
-            System.out.println("Remaining balance: $" + balance);
-        }
-
-        // Ternary operator for status
-        String status = (balance > 1000) ? "Account in good standing" : "Low balance warning";
-        System.out.println("Status: " + status);
+        System.out.println("Score: " + score); // Print score
+        System.out.println("Grade: " + grade);  // Print grade
     }
 }
 </code></pre>
         <p><strong>Output:</strong></p>
-        <pre>Withdrew $2000.0
-Remaining balance: $3000.0
-Status: Account in good standing</pre>
+        <pre>Score: 85
+Grade: B</pre>
     </div>
 </details>
 

@@ -35,96 +35,69 @@
     <li><strong>Algorithmic Thinking:</strong> Create clear, step-by-step instructions to solve each sub-problem.</li>
 </ol>
 
-<h3>Example</h3>
-<pre><code class="language-php">// PHP Example: Finding the average of exam scores
-// Applying the 4 pillars to "Calculate class average"
-
-// DECOMPOSITION: Break into steps
-// Step 1: Store the scores
-// Step 2: Add them up
-// Step 3: Count them
-// Step 4: Divide
-
+<h3>PHP Example</h3>
+<pre><code class="language-php">&lt;?php
+// Store exam scores
 $scores = [85, 92, 78, 95, 88];
-
-// PATTERN RECOGNITION: We see a pattern — we need to loop through all scores
+// Add up all scores
 $sum = 0;
+// Loop through each score
 foreach ($scores as $score) {
+    // Add score to sum
     $sum += $score;
 }
-
-// ABSTRACTION: We don't need to know HOW array_sum works — just use it
+// Count the scores
 $count = count($scores);
-
-// ALGORITHMIC THINKING: Clear steps to get the answer
+// Calculate average
 $average = $sum / $count;
-
-echo "Scores: " . implode(", ", $scores) . "\n";
-echo "Sum: $sum\n";
-echo "Count: $count\n";
-echo "Average: $average\n";
+// Print the result
+echo "Average: $average";
 </code></pre>
 <strong>Output:</strong>
-<pre>Scores: 85, 92, 78, 95, 88
-Sum: 438
-Count: 5
-Average: 87.6</pre>
+<pre>Average: 87.6</pre>
 
 <h3>Python Example</h3>
-<pre><code class="language-python"># Python Example: Finding the average of exam scores
-
+<pre><code class="language-python"># Store exam scores
 scores = [85, 92, 78, 95, 88]
-
-# Pattern Recognition: loop through all scores
+# Add up all scores
 total = 0
+# Loop through each score
 for score in scores:
+    # Add score to total
     total += score
-
-# Abstraction: use len() without knowing how it works
+# Count the scores
 count = len(scores)
-
-# Algorithmic Thinking: clear steps
+# Calculate average
 average = total / count
-
-print(f"Scores: {scores}")
-print(f"Sum: {total}")
-print(f"Count: {count}")
+# Print the result
 print(f"Average: {average}")
 </code></pre>
 <strong>Output:</strong>
-<pre>Scores: [85, 92, 78, 95, 88]
-Sum: 438
-Count: 5
-Average: 87.6</pre>
+<pre>Average: 87.6</pre>
 
 <h3>Java Example</h3>
-<pre><code class="language-java">// Java Example: Finding the average of exam scores
-public class Main {
+<pre><code class="language-java">public class Main {
     public static void main(String[] args) {
+        // Store exam scores
         int[] scores = {85, 92, 78, 95, 88};
-
-        // Pattern Recognition: loop through all scores
+        // Add up all scores
         int sum = 0;
+        // Loop through each score
         for (int score : scores) {
+            // Add score to sum
             sum += score;
         }
-
-        // Abstraction: use .length without knowing how it works
+        // Count the scores
         int count = scores.length;
-
-        // Algorithmic Thinking: clear steps
+        // Calculate average
         double average = (double) sum / count;
-
-        System.out.println("Sum: " + sum);
-        System.out.println("Count: " + count);
+        // Print the result
         System.out.println("Average: " + average);
     }
 }
 </code></pre>
 <strong>Output:</strong>
-<pre>Sum: 438
-Count: 5
-Average: 87.6</pre>
+<pre>Average: 87.6</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

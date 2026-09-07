@@ -28,54 +28,33 @@
 <p>Open files with <code>open(filename, mode)</code>. Modes include <code>"r"</code> (read), <code>"w"</code> (write/overwrite), <code>"a"</code> (append), and <code>"x"</code> (create, fail if exists). Wrap risky code in <code>try:</code> blocks and handle specific exceptions with <code>except ExceptionType:</code>. Use <code>finally</code> for cleanup code that must always run. Use <code>raise</code> to create your own exceptions.</p>
 
 <h3>Example</h3>
-<pre><code class="language-python"># Writing to a file
-with open("notes.txt", "w") as file:
-    file.write("Hello, World!\n")
-    file.write("Second line\n")
+<pre><code class="language-python"># Write to a file
+with open("grades.txt", "w") as file:
+    file.write("Juan: 85\n")
+    file.write("Maria: 90\n")
 
-# Appending to a file
-with open("notes.txt", "a") as file:
-    file.write("Third line\n")
-
-# Reading entire file
-with open("notes.txt", "r") as file:
+# Read the file
+with open("grades.txt", "r") as file:
     content = file.read()
     print(content)
 
 # Safe division with error handling
-def safe_divide(a, b):
+def divide(a, b):
     try:
         return a / b
     except ZeroDivisionError:
-        return "Error: Cannot divide by zero!"
-    except TypeError:
-        return "Error: Both arguments must be numbers!"
+        return "Cannot divide by zero"
 
-print(f"10 / 3 = {safe_divide(10, 3):.2f}")
-print(f"10 / 0 = {safe_divide(10, 0)}")
-
-# Raising custom exceptions
-def validate_age(age):
-    if not isinstance(age, int):
-        raise TypeError("Age must be an integer")
-    if age < 0 or age > 150:
-        raise ValueError("Age must be between 0 and 150")
-    return "Valid age!"
-
-try:
-    print(validate_age(25))
-    print(validate_age(-5))
-except (TypeError, ValueError) as e:
-    print(f"Validation error: {e}")
+# Test the function
+print("10 / 2 =", divide(10, 2))
+print("10 / 0 =", divide(10, 0))
 </code></pre>
 <strong>Output:</strong>
-<pre>Hello, World!
-Second line
-Third line
-10 / 3 = 3.33
-10 / 0 = Error: Cannot divide by zero!
-Valid age!
-Validation error: Age must be between 0 and 150</pre>
+<pre>Juan: 85
+Maria: 90
+
+10 / 2 = 5.0
+10 / 0 = Cannot divide by zero</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 <h3>Real-World Applications</h3>
@@ -118,47 +97,29 @@ Validation error: Age must be between 0 and 150</pre>
     <summary>Teacher Answer Key (Click to reveal)</summary>
     <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
         <p><strong>Answers:</strong> Students should demonstrate file handling with proper error handling and data processing.</p>
-        <pre><code>def read_file(filename):
-    """Read a file and return its content."""
+        <pre><code># Read a file safely
+def read_file(filename):
     try:
         with open(filename, "r") as f:
             return f.read()
     except FileNotFoundError:
-        print(f"Error: '{filename}' not found.")
-        return None
-    except PermissionError:
-        print(f"Error: No permission to read '{filename}'.")
+        print("File not found:", filename)
         return None
 
+# Count words in text
 def count_words(text):
-    """Count word frequencies in a string."""
-    words = text.lower().split()
-    word_count = {}
-    for word in words:
-        word_count[word] = word_count.get(word, 0) + 1
-    return word_count
+    words = text.split()
+    return len(words)
 
-def write_report(filename, word_count, total_words):
-    """Write a word count report to a file."""
-    with open(filename, "w") as f:
-        f.write("===== Word Count Report =====\n")
-        f.write(f"Total words: {total_words}\n\n")
-        f.write("Word Frequency:\n")
-        for word, count in sorted(word_count.items(),
-                                   key=lambda x: x[1], reverse=True):
-            f.write(f"  {word:15} : {count}\n")
-    print(f"Report written to '{filename}'")
-
-# Main program
+# Test the functions
 content = read_file("sample.txt")
 
 if content is not None:
-    word_count = count_words(content)
-    total = sum(word_count.values())
-    print(f"Found {total} words in the file.")
-    write_report("report.txt", word_count, total)
+    total = count_words(content)
+    print("Word count:", total)
 else:
-    print("Could not generate report.")</code></pre>
+    print("Could not process file")
+</code></pre>
     </div>
 </details>
 

@@ -35,119 +35,52 @@
     <li><strong>Call the function:</strong> Use the function name followed by parentheses and any arguments.</li>
 </ol>
 
-<h3>Example</h3>
-<pre><code class="language-php">// PHP Example: Functions for a calculator
-
-// Function with no parameters, no return
-function sayHello() {
-    echo "Hello, World!\n";
-}
-sayHello();
-
-// Function with parameters
-function greet($name) {
-    echo "Hello, $name!\n";
-}
-greet("Alice");
-greet("Bob");
-
-// Function with return value
+<h3>PHP Example</h3>
+<pre><code class="language-php">&lt;?php
+// Define a function that adds two numbers
 function add($a, $b) {
+    // Return the sum
     return $a + $b;
 }
-$sum = add(5, 3);
-echo "5 + 3 = $sum\n";
-
-// Function returning boolean
-function isEven($n) {
-    return $n % 2 === 0;
-}
-echo "4 is even: " . (isEven(4) ? "yes" : "no") . "\n";
-echo "7 is even: " . (isEven(7) ? "yes" : "no") . "\n";
+// Call the function with 5 and 3
+$result = add(5, 3);
+// Print the result
+echo "5 + 3 = $result";
 </code></pre>
 <strong>Output:</strong>
-<pre>Hello, World!
-Hello, Alice!
-Hello, Bob!
-5 + 3 = 8
-4 is even: yes
-7 is even: no</pre>
+<pre>5 + 3 = 8</pre>
 
 <h3>Python Example</h3>
-<pre><code class="language-python"># Python Example: Functions for a calculator
-
-# Function with no parameters, no return
-def say_hello():
-    print("Hello, World!")
-say_hello()
-
-# Function with parameters
-def greet(name):
-    print(f"Hello, {name}!")
-greet("Alice")
-greet("Bob")
-
-# Function with return value
+<pre><code class="language-python"># Define a function that adds two numbers
 def add(a, b):
+    # Return the sum
     return a + b
-total = add(5, 3)
-print(f"5 + 3 = {total}")
-
-# Function returning boolean
-def is_even(n):
-    return n % 2 == 0
-print(f"4 is even: {'yes' if is_even(4) else 'no'}")
-print(f"7 is even: {'yes' if is_even(7) else 'no'}")
+# Call the function with 5 and 3
+result = add(5, 3)
+# Print the result
+print(f"5 + 3 = {result}")
 </code></pre>
 <strong>Output:</strong>
-<pre>Hello, World!
-Hello, Alice!
-Hello, Bob!
-5 + 3 = 8
-4 is even: yes
-7 is even: no</pre>
+<pre>5 + 3 = 8</pre>
 
 <h3>Java Example</h3>
-<pre><code class="language-java">// Java Example: Functions for a calculator
-public class Main {
-    // Function with no parameters, no return
-    static void sayHello() {
-        System.out.println("Hello, World!");
-    }
-
-    // Function with parameters
-    static void greet(String name) {
-        System.out.println("Hello, " + name + "!");
-    }
-
-    // Function with return value
+<pre><code class="language-java">public class Main {
+    // Define a function that adds two numbers
     static int add(int a, int b) {
+        // Return the sum
         return a + b;
     }
 
-    // Function returning boolean
-    static boolean isEven(int n) {
-        return n % 2 == 0;
-    }
-
     public static void main(String[] args) {
-        sayHello();
-        greet("Alice");
-        greet("Bob");
-        int sum = add(5, 3);
-        System.out.println("5 + 3 = " + sum);
-        System.out.println("4 is even: " + (isEven(4) ? "yes" : "no"));
-        System.out.println("7 is even: " + (isEven(7) ? "yes" : "no"));
+        // Call the function with 5 and 3
+        int result = add(5, 3);
+        // Print the result
+        System.out.println("5 + 3 = " + result);
     }
 }
 </code></pre>
 <strong>Output:</strong>
-<pre>Hello, World!
-Hello, Alice!
-Hello, Bob!
-5 + 3 = 8
-4 is even: yes
-7 is even: no</pre>
+<pre>5 + 3 = 8</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

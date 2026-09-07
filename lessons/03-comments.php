@@ -37,21 +37,20 @@
 <pre><code class="language-php">&lt;?php
 // This is a single-line comment
 echo "Hello World!";
+
+// Hash comments also work
 echo "\n";
 
-# Hash comments also work
-$price = 10;  // Comment at end of line
+# End-of-line comment
+$price = 10;
 
 /*
  * This is a multi-line comment.
  * Use it for longer explanations.
- * Author: Student
- * Date: 2024
  */
 
 $tax = $price * 0.1;  // Calculate 10% tax
 echo "Tax: " . $tax;
-?&gt;
 </code></pre>
 <strong>Output:</strong>
 <pre>Hello World!

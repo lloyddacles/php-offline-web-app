@@ -36,35 +36,30 @@
 
 <h3>Example</h3>
 <pre><code class="language-php">&lt;?php
-// Different data types
-$name = "Alice";          // String - text
-$age = 20;                // Integer - whole number
-$price = 19.99;           // Float - decimal number
-$isActive = true;         // Boolean - true/false
-$scores = [95, 87, 92];   // Array - collection
-$empty = null;            // NULL - no value
+// String - text in quotes
+$name = "Alice";
+echo "Name: " . $name;
 
-// Check types with gettype()
-echo "Name type: " . gettype($name);
+// Integer - whole number
 echo "\n";
-echo "Age type: " . gettype($age);
+$age = 20;
+echo "Age: " . $age;
+
+// Float - decimal number
 echo "\n";
-echo "Price type: " . gettype($price);
+$price = 19.99;
+echo "Price: " . $price;
+
+// Boolean - true or false
 echo "\n";
-echo "Active type: " . gettype($isActive);
-echo "\n";
-echo "Scores type: " . gettype($scores);
-echo "\n";
-echo "Empty type: " . gettype($empty);
-?&gt;
+$isStudent = true;
+echo "Student: " . ($isStudent ? "Yes" : "No");
 </code></pre>
 <strong>Output:</strong>
-<pre>Name type: string
-Age type: integer
-Price type: double
-Active type: boolean
-Scores type: array
-Empty type: NULL</pre>
+<pre>Name: Alice
+Age: 20
+Price: 19.99
+Student: Yes</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

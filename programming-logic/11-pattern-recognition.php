@@ -35,128 +35,57 @@
     <li><strong>Test and verify:</strong> Make sure the abstracted code produces the same results as the original.</li>
 </ol>
 
-<h3>Example</h3>
-<pre><code class="language-php">// PHP Example: Recognizing and abstracting patterns
-
-// BEFORE: Repeated pattern (3 separate functions)
-function greetAlice() {
-    echo "Hello, Alice!\n";
-    echo "Your score is: 95\n";
-    echo "Status: Excellent\n\n";
+<h3>PHP Example</h3>
+<pre><code class="language-php">&lt;?php
+// Store a list of numbers
+$numbers = [1, 2, 3, 4, 5];
+// Start with sum at 0
+$sum = 0;
+// Loop through each number
+foreach ($numbers as $num) {
+    // Add number to sum
+    $sum += $num;
 }
-
-function greetBob() {
-    echo "Hello, Bob!\n";
-    echo "Your score is: 82\n";
-    echo "Status: Good\n\n";
-}
-
-function greetCharlie() {
-    echo "Hello, Charlie!\n";
-    echo "Your score is: 71\n";
-    echo "Status: Average\n\n";
-}
-
-// AFTER: Abstracted into one reusable function
-function greet($name, $score) {
-    echo "Hello, $name!\n";
-    echo "Your score is: $score\n";
-    
-    if ($score >= 90) {
-        $status = "Excellent";
-    } elseif ($score >= 80) {
-        $status = "Good";
-    } else {
-        $status = "Average";
-    }
-    echo "Status: $status\n\n";
-}
-
-// Now we can call it with any data
-greet("Alice", 95);
-greet("Bob", 82);
-greet("Charlie", 71);
+// Print the sum
+echo "Sum: $sum";
 </code></pre>
 <strong>Output:</strong>
-<pre>Hello, Alice!
-Your score is: 95
-Status: Excellent
-
-Hello, Bob!
-Your score is: 82
-Status: Good
-
-Hello, Charlie!
-Your score is: 71
-Status: Average</pre>
+<pre>Sum: 15</pre>
 
 <h3>Python Example</h3>
-<pre><code class="language-python"># Python Example: Recognizing and abstracting patterns
-
-# The accumulator pattern: building a result step by step
+<pre><code class="language-python"># Store a list of numbers
 numbers = [1, 2, 3, 4, 5]
-
-# Sum accumulator
+# Start with sum at 0
 total = 0
+# Loop through each number
 for num in numbers:
+    # Add number to total
     total += num
+# Print the sum
 print(f"Sum: {total}")
-
-# String accumulator
-words = ["PHP", "is", "fun"]
-sentence = ""
-for word in words:
-    sentence += word + " "
-print(f"Sentence: {sentence}")
-
-# Array accumulator
-squares = []
-for num in numbers:
-    squares.append(num * num)
-print(f"Squares: {squares}")
 </code></pre>
 <strong>Output:</strong>
-<pre>Sum: 15
-Sentence: PHP is fun 
-Squares: [1, 4, 9, 16, 25]</pre>
+<pre>Sum: 15</pre>
 
 <h3>Java Example</h3>
-<pre><code class="language-java">// Java Example: Pattern recognition with arrays
-public class Main {
+<pre><code class="language-java">public class Main {
     public static void main(String[] args) {
+        // Store a list of numbers
         int[] numbers = {1, 2, 3, 4, 5};
-        
-        // Pattern: Sum all elements
+        // Start with sum at 0
         int sum = 0;
+        // Loop through each number
         for (int num : numbers) {
+            // Add number to sum
             sum += num;
         }
+        // Print the sum
         System.out.println("Sum: " + sum);
-        
-        // Pattern: Find maximum
-        int max = numbers[0];
-        for (int num : numbers) {
-            if (num > max) {
-                max = num;
-            }
-        }
-        System.out.println("Max: " + max);
-        
-        // Pattern: Count even numbers
-        int evenCount = 0;
-        for (int num : numbers) {
-            if (num % 2 == 0) {
-                evenCount++;
-            }
-        }
-        System.out.println("Even count: " + evenCount);
     }
 }
 </code></pre>
 <strong>Output:</strong>
-<pre>Sum: 15
-Max: 5
-Even count: 2</pre>
+<pre>Sum: 15</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

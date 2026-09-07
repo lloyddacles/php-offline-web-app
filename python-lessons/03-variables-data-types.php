@@ -28,26 +28,23 @@
 <p>When you write <code>x = 42</code>, Python creates an integer object in memory and makes <code>x</code> point to it. If you later write <code>x = "hello"</code>, Python makes <code>x</code> point to a string object instead — the integer is discarded. You can check a variable's type with <code>type()</code> and convert between types using <code>int()</code>, <code>str()</code>, <code>float()</code>, and <code>bool()</code>.</p>
 
 <h3>Example</h3>
-<pre><code class="language-python"># Variable assignment - no type declaration needed
-name = "Alice"        # str
-age = 25              # int
-height = 5.6          # float
-is_student = True     # bool
-nothing = None        # NoneType
+<pre><code class="language-python"># Store student data
+name = "Maria"
+age = 20
+grade = 95.5
+passed = True
 
-print(f"Name: {name} (type: {type(name).__name__})")
-print(f"Age: {age} (type: {type(age).__name__})")
-print(f"Height: {height} (type: {type(height).__name__})")
-
-# Type conversion
-age_str = str(age)           # int to str: "25"
-price = float("19.99")       # str to float: 19.99
-truncate = int(3.7)          # float to int: 3
+# Print each variable and its type
+print("Name:", name)
+print("Age:", age)
+print("Grade:", grade)
+print("Passed:", passed)
 </code></pre>
 <strong>Output:</strong>
-<pre>Name: Alice (type: str)
-Age: 25 (type: int)
-Height: 5.6 (type: float)</pre>
+<pre>Name: Maria
+Age: 20
+Grade: 95.5
+Passed: True</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 <h3>Real-World Applications</h3>
@@ -90,24 +87,20 @@ Height: 5.6 (type: float)</pre>
     <summary>Teacher Answer Key (Click to reveal)</summary>
     <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
         <p><strong>Answers:</strong> Students should demonstrate proper variable assignment and type conversion.</p>
-        <pre><code># User data
-name = "Maria Santos"
+        <pre><code># Student data
+name = "Maria"
 age = 28
 height = 5.4
 
-# Verify types
-print(f"Name: {name} -> {type(name).__name__}")
-print(f"Age: {age} -> {type(age).__name__}")
-print(f"Height: {height} -> {type(height).__name__}")
+# Print the data
+print("Name:", name)
+print("Age:", age)
+print("Height:", height)
 
-# Type conversion
-age_str = str(age)
-print(f"Next year you'll be {int(age_str) + 1}")
-
-# Convert string to int and do math
-num = int("42")
-result = num + 8
-print(f"42 + 8 = {result}")</code></pre>
+# Convert and calculate
+next_age = age + 1
+print("Next year:", next_age)
+</code></pre>
     </div>
 </details>
 

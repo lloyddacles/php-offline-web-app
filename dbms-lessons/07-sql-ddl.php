@@ -41,125 +41,113 @@
 <h3>Example</h3>
 
 <h4>CREATE DATABASE</h4>
-<pre><code>-- Create a new database
+<pre><code class="language-sql">-- Create a new database
 CREATE DATABASE university;
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 1 row affected</pre>
 
--- Create only if it doesn't exist
+<pre><code class="language-sql">-- Create only if it doesn't exist
 CREATE DATABASE IF NOT EXISTS university;
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 1 row affected, 1 warning</pre>
 
--- Specify character set and collation
-CREATE DATABASE university
-    CHARACTER SET utf8mb4
-    COLLATE utf8mb4_unicode_ci;
-
--- Select a database to use
+<pre><code class="language-sql">-- Select a database to use
 USE university;
+</code></pre>
+<strong>Output:</strong>
+<pre>Database changed</pre>
 
--- Show all databases
-SHOW DATABASES;</code></pre>
-
-<h4>CREATE TABLE (Full Syntax)</h4>
-<pre><code>CREATE TABLE students (
-    id INT AUTO_INCREMENT PRIMARY KEY,          -- Auto-incrementing unique ID
-    first_name VARCHAR(50) NOT NULL,            -- Required string, max 50 chars
-    last_name VARCHAR(50) NOT NULL,             -- Required string, max 50 chars
-    email VARCHAR(100) UNIQUE NOT NULL,         -- Must be unique across all rows
-    date_of_birth DATE,                         -- Optional date
-    enrollment_date DATE DEFAULT (CURRENT_DATE),-- Defaults to today if not provided
-    gpa DECIMAL(3,2) CHECK (gpa >= 0 AND gpa <= 4.00),  -- Must be between 0 and 4
-    is_active BOOLEAN DEFAULT TRUE,             -- Defaults to true
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,      -- Auto-set on insert
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP  -- Auto-update
-);</code></pre>
+<h4>CREATE TABLE</h4>
+<pre><code class="language-sql">-- Create a students table with constraints
+CREATE TABLE students (
+    id INT PRIMARY KEY,              -- Unique identifier
+    name VARCHAR(50) NOT NULL,       -- Required name
+    email VARCHAR(50) UNIQUE,        -- Must be unique
+    grade INT CHECK (grade >= 0)     -- Must be non-negative
+);
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
 <h4>ALTER TABLE</h4>
-<pre><code>-- Add a column
+<pre><code class="language-sql">-- Add a column
 ALTER TABLE students ADD phone VARCHAR(20);
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
--- Add multiple columns
-ALTER TABLE students
-    ADD address VARCHAR(200),
-    ADD city VARCHAR(50);
-
--- Modify column type
+<pre><code class="language-sql">-- Modify column type
 ALTER TABLE students MODIFY phone VARCHAR(30);
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
--- Rename a column
-ALTER TABLE students CHANGE phone phone_number VARCHAR(30);
-
--- Drop a column
-ALTER TABLE students DROP phone_number;
-
--- Add a constraint
-ALTER TABLE students ADD CONSTRAINT unique_email UNIQUE (email);
-
--- Drop a constraint
-ALTER TABLE students DROP CONSTRAINT unique_email;
-
--- Add a foreign key
-ALTER TABLE students ADD department_id INT;
-ALTER TABLE students
-    ADD CONSTRAINT fk_department
-    FOREIGN KEY (department_id) REFERENCES departments(id);
-
--- Rename a table
-ALTER TABLE students RENAME TO learners;</code></pre>
+<pre><code class="language-sql">-- Drop a column
+ALTER TABLE students DROP phone;
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
 <h4>DROP TABLE</h4>
-<pre><code>-- Delete a table permanently
+<pre><code class="language-sql">-- Delete a table permanently
 DROP TABLE students;
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
--- Delete only if it exists
+<pre><code class="language-sql">-- Delete only if it exists
 DROP TABLE IF EXISTS students;
-
--- Drop multiple tables
-DROP TABLE IF EXISTS students, courses, enrollments;
-
--- WARNING: This cannot be undone!</code></pre>
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected, 1 warning</pre>
 
 <h4>TRUNCATE TABLE</h4>
-<pre><code>-- Remove ALL rows, reset auto_increment
+<pre><code class="language-sql">-- Remove all rows, keep structure
 TRUNCATE TABLE students;
-
--- Equivalent to DELETE FROM students; but faster
--- and resets the auto_increment counter
-
--- Cannot be rolled back (in most databases)</code></pre>
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
 <h4>Views</h4>
-<pre><code>-- Create a view (stored query that acts as a virtual table)
+<pre><code class="language-sql">-- Create a view (virtual table)
 CREATE VIEW active_students AS
-SELECT id, first_name, last_name, email, gpa
+SELECT id, name, grade
 FROM students
-WHERE is_active = TRUE;
+WHERE grade >= 90;
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
--- Use the view like a table
-SELECT * FROM active_students WHERE gpa > 3.5;
+<pre><code class="language-sql">-- Use the view like a table
+SELECT * FROM active_students;
+</code></pre>
+<strong>Output:</strong>
+<pre>+----+-------+-------+
+| id | name  | grade |
++----+-------+-------+
+|  1 | Alice |    90 |
++----+-------+-------+</pre>
 
--- Modify a view
-CREATE OR REPLACE VIEW active_students AS
-SELECT id, first_name, last_name, email, gpa, enrollment_date
-FROM students
-WHERE is_active = TRUE;
-
--- Delete a view
-DROP VIEW IF EXISTS active_students;</code></pre>
+<pre><code class="language-sql">-- Delete a view
+DROP VIEW IF EXISTS active_students;
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
 <h4>Indexes</h4>
-<pre><code>-- Create an index (speeds up queries on this column)
-CREATE INDEX idx_name ON students(last_name);
+<pre><code class="language-sql">-- Create an index (speeds up queries)
+CREATE INDEX idx_name ON students(name);
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
--- Create a unique index
-CREATE UNIQUE INDEX idx_email ON students(email);
-
--- Create a composite index (multi-column)
-CREATE INDEX idx_name_gpa ON students(last_name, gpa);
-
--- Drop an index
+<pre><code class="language-sql">-- Drop an index
 DROP INDEX idx_name ON students;
-
--- Show indexes
-SHOW INDEX FROM students;</code></pre>
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
 <h3>DDL vs DML</h3>
 <table>
@@ -217,44 +205,63 @@ SHOW INDEX FROM students;</code></pre>
         <p><strong>Answers:</strong></p>
         <ol>
             <li>
-                <pre><code>CREATE DATABASE IF NOT EXISTS library;
-USE library;</code></pre>
-            </li>
-            <li>
-                <pre><code>CREATE TABLE books (
+                <pre><code class="language-sql">-- Create library database
+CREATE DATABASE IF NOT EXISTS library;
+USE library;
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 1 row affected</pre>
+
+<pre><code class="language-sql">-- Create books table
+CREATE TABLE books (
     isbn VARCHAR(20) PRIMARY KEY,
-    title VARCHAR(200) NOT NULL,
-    author VARCHAR(100) NOT NULL,
-    genre VARCHAR(50)
+    title VARCHAR(50) NOT NULL,
+    author VARCHAR(50) NOT NULL
 );
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
+<pre><code class="language-sql">-- Create members table
 CREATE TABLE members (
-    member_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    join_date DATE DEFAULT (CURRENT_DATE)
+    id INT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    email VARCHAR(50) UNIQUE
 );
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
+<pre><code class="language-sql">-- Create loans table
 CREATE TABLE loans (
-    loan_id INT AUTO_INCREMENT PRIMARY KEY,
-    isbn VARCHAR(20) NOT NULL,
-    member_id INT NOT NULL,
-    loan_date DATE DEFAULT (CURRENT_DATE),
-    due_date DATE NOT NULL,
-    FOREIGN KEY (isbn) REFERENCES books(isbn) ON DELETE RESTRICT,
-    FOREIGN KEY (member_id) REFERENCES members(member_id) ON DELETE RESTRICT
-);</code></pre>
-            </li>
-            <li>
-                <pre><code>ALTER TABLE loans ADD returned_date DATE;</code></pre>
-            </li>
-            <li>
-                <pre><code>CREATE VIEW overdue_loans AS
-SELECT l.loan_id, b.title, m.name, l.loan_date, l.due_date
+    id INT PRIMARY KEY,
+    isbn VARCHAR(20),
+    member_id INT,
+    loan_date DATE,
+    due_date DATE,
+    FOREIGN KEY (isbn) REFERENCES books(isbn),
+    FOREIGN KEY (member_id) REFERENCES members(id)
+);
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
+
+<pre><code class="language-sql">-- Add returned_date column
+ALTER TABLE loans ADD returned_date DATE;
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
+
+<pre><code class="language-sql">-- Create overdue_loans view
+CREATE VIEW overdue_loans AS
+SELECT l.id, b.title, m.name, l.due_date
 FROM loans l
 JOIN books b ON l.isbn = b.isbn
-JOIN members m ON l.member_id = m.member_id
-WHERE l.due_date &lt; CURRENT_DATE AND l.returned_date IS NULL;</code></pre>
+JOIN members m ON l.member_id = m.id
+WHERE l.due_date < CURRENT_DATE AND l.returned_date IS NULL;
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
             </li>
         </ol>
     </div>

@@ -91,24 +91,43 @@
     <li>Used in applications with complex data structures</li>
 </ul>
 
-<h3>Example</h3>
-<pre><code>-- Create a simple database and table
+<h3>Examples</h3>
+
+<p><strong>1. Create a database</strong></p>
+<pre><code class="language-sql">-- Create a new database called school
 CREATE DATABASE school;
-USE school;
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 1 row affected</pre>
 
+<p><strong>2. Create a students table</strong></p>
+<pre><code class="language-sql">-- Create a students table with primary key
 CREATE TABLE students (
-    id INT AUTO_INCREMENT PRIMARY KEY,  -- Unique identifier for each student
-    name VARCHAR(100) NOT NULL,          -- Student's full name
-    email VARCHAR(100) UNIQUE NOT NULL   -- Email must be unique
+    id INT PRIMARY KEY,     -- Unique identifier
+    name VARCHAR(50),       -- Student name
+    grade INT               -- Student grade
 );
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
--- Insert sample data
-INSERT INTO students (name, email) VALUES
-    ('Alice Santos', 'alice@school.edu'),
-    ('Bob Cruz', 'bob@school.edu');
+<p><strong>3. Insert a student record</strong></p>
+<pre><code class="language-sql">-- Insert one student into the table
+INSERT INTO students (id, name, grade)
+VALUES (1, 'Alice', 90);
+</code></pre>
+<pre>Query OK, 1 row affected</pre>
 
--- Query the data
-SELECT * FROM students;  -- Retrieve all student records</code></pre>
+<p><strong>4. Query all students</strong></p>
+<pre><code class="language-sql">-- Retrieve all student records
+SELECT * FROM students;
+</code></pre>
+<strong>Output:</strong>
+<pre>+----+-------+-------+
+| id | name  | grade |
++----+-------+-------+
+|  1 | Alice |    90 |
++----+-------+-------+</pre>
 
 <h3>Real-World Examples</h3>
 <ul>

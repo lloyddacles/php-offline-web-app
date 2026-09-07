@@ -41,20 +41,19 @@
 </ul>
 
 <h3>Example</h3>
-<pre><code class="language-java">// Your first Java program: Hello World
-// Every Java program needs a class and a main method
+<pre><code class="language-java">public class Main {                         // Class name must match filename
+    public static void main(String[] args) { // Entry point of the program
+        String name = "Juan";                 // Store a name in a variable
+        int age = 20;                         // Store age as a number
 
-public class HelloWorld {
-    // The main method is the entry point of every Java program
-    public static void main(String[] args) {
-        System.out.println("Hello, World!");      // Print a message
-        System.out.println("Welcome to Java!");   // Print another message
+        System.out.println("Name: " + name); // Print the name
+        System.out.println("Age: " + age);    // Print the age
     }
 }
 </code></pre>
 <strong>Output:</strong>
-<pre>Hello, World!
-Welcome to Java!</pre>
+<pre>Name: Juan
+Age: 20</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 
@@ -95,18 +94,22 @@ Welcome to Java!</pre>
     <summary>Teacher Answer Key (Click to reveal)</summary>
     <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
         <p><strong>Answers:</strong></p>
-        <pre><code class="language-java">public class WhyJava {
-    public static void main(String[] args) {
-        System.out.println("1. Platform Independent: Write Once, Run Anywhere");
-        System.out.println("2. High Job Demand: Java developers are sought after worldwide");
-        System.out.println("3. Rich Ecosystem: Thousands of libraries and frameworks available");
+        <pre><code class="language-java">public class Main {                         // Main class
+    public static void main(String[] args) { // Entry point
+        String reason1 = "Platform Independent"; // Can run anywhere
+        String reason2 = "High Job Demand";     // Many job opportunities
+        String reason3 = "Rich Ecosystem";      // Many libraries available
+
+        System.out.println("1. " + reason1);    // Print reason 1
+        System.out.println("2. " + reason2);    // Print reason 2
+        System.out.println("3. " + reason3);    // Print reason 3
     }
 }
 </code></pre>
         <p><strong>Output:</strong></p>
-        <pre>1. Platform Independent: Write Once, Run Anywhere
-2. High Job Demand: Java developers are sought after worldwide
-3. Rich Ecosystem: Thousands of libraries and frameworks available</pre>
+        <pre>1. Platform Independent
+2. High Job Demand
+3. Rich Ecosystem</pre>
     </div>
 </details>
 

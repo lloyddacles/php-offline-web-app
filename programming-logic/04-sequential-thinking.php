@@ -34,84 +34,61 @@
     <li><strong>Order matters:</strong> The same operations in a different order can produce completely different results.</li>
 </ol>
 
-<h3>Example</h3>
-<pre><code class="language-php">// PHP Example: Sequential execution and variable assignment
+<h3>PHP Example</h3>
+<pre><code class="language-php">&lt;?php
+// Store a number
 $x = 10;
-echo "Step 1: x = $x\n";
-
+// Print the value
+echo "x = $x\n";
+// Add 5 to x
 $y = $x + 5;
-echo "Step 2: y = $y\n";
-
-$x = $y - $x;
-echo "Step 3: x = $x\n";
-
-$y = $x * 2;
-echo "Step 4: y = $y\n";
-
-echo "\nFinal: x = $x, y = $y\n";
-echo "The values changed at each step!\n";
+// Print the new value
+echo "y = $y\n";
+// Print final values
+echo "Done!";
 </code></pre>
 <strong>Output:</strong>
-<pre>Step 1: x = 10
-Step 2: y = 15
-Step 3: x = 5
-Step 4: y = 10
-
-Final: x = 5, y = 10
-The values changed at each step!</pre>
+<pre>x = 10
+y = 15
+Done!</pre>
 
 <h3>Python Example</h3>
-<pre><code class="language-python"># Python Example: Sequential execution
-
+<pre><code class="language-python"># Store a number
 x = 10
-print(f"Step 1: x = {x}")
-
+# Print the value
+print(f"x = {x}")
+# Add 5 to x
 y = x + 5
-print(f"Step 2: y = {y}")
-
-x = y - x
-print(f"Step 3: x = {x}")
-
-y = x * 2
-print(f"Step 4: y = {y}")
-
-print(f"\nFinal: x = {x}, y = {y}")
+# Print the new value
+print(f"y = {y}")
+# Print final values
+print("Done!")
 </code></pre>
 <strong>Output:</strong>
-<pre>Step 1: x = 10
-Step 2: y = 15
-Step 3: x = 5
-Step 4: y = 10
-
-Final: x = 5, y = 10</pre>
+<pre>x = 10
+y = 15
+Done!</pre>
 
 <h3>Java Example</h3>
-<pre><code class="language-java">// Java Example: Sequential execution
-public class Main {
+<pre><code class="language-java">public class Main {
     public static void main(String[] args) {
+        // Store a number
         int x = 10;
-        System.out.println("Step 1: x = " + x);
-
+        // Print the value
+        System.out.println("x = " + x);
+        // Add 5 to x
         int y = x + 5;
-        System.out.println("Step 2: y = " + y);
-
-        x = y - x;
-        System.out.println("Step 3: x = " + x);
-
-        y = x * 2;
-        System.out.println("Step 4: y = " + y);
-
-        System.out.println("\nFinal: x = " + x + ", y = " + y);
+        // Print the new value
+        System.out.println("y = " + y);
+        // Print final values
+        System.out.println("Done!");
     }
 }
 </code></pre>
 <strong>Output:</strong>
-<pre>Step 1: x = 10
-Step 2: y = 15
-Step 3: x = 5
-Step 4: y = 10
-
-Final: x = 5, y = 10</pre>
+<pre>x = 10
+y = 15
+Done!</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

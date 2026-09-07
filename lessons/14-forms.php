@@ -34,30 +34,26 @@
 <p>5. Validate and sanitize the input before using it</p>
 
 <h3>Example</h3>
-<pre><code class="language-php">&lt;!-- HTML Form --&gt;
-&lt;form method="POST" action="process.php"&gt;
-    &lt;input type="text" name="username" placeholder="Username"&gt;
-    &lt;input type="email" name="email" placeholder="Email"&gt;
-    &lt;button type="submit"&gt;Register&lt;/button&gt;
-&lt;/form&gt;
-
-&lt;?php
-// process.php - Handle form submission
+<pre><code class="language-php">&lt;?php
+// Check if form was submitted
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $username = $_POST["username"] ?? "";
+    // Get form data with null coalescing
+    $name = $_POST["name"] ?? "";
     $email = $_POST["email"] ?? "";
-    
-    // Validate
-    if (empty($username) || empty($email)) {
+
+    // Validate fields are not empty
+    if (empty($name) || empty($email)) {
         echo "All fields are required!";
     } else {
-        echo "Hello, $username! We'll contact you at $email";
+        echo "Hello, $name!";
+        echo "\n";
+        echo "Email: $email";
     }
 }
-?&gt;
 </code></pre>
 <strong>Output:</strong>
-<pre>Hello, Alice! We'll contact you at alice@example.com</pre>
+<pre>Hello, Alice!
+Email: alice@example.com</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

@@ -29,36 +29,26 @@
 <p>When you create an index, MySQL builds a sorted structure (usually a B-tree). Queries using the indexed column can use binary search instead of scanning every row. This turns O(n) lookups into O(log n).</p>
 
 <h3>Example</h3>
-<pre><code class="language-sql">-- Without index: MySQL checks ALL rows
-SELECT * FROM employees WHERE name = 'Alice Smith';
--- On 1 million rows: checks all 1,000,000 rows
+<pre><code class="language-sql">-- Create a students table
+CREATE TABLE students (
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    grade INT
+);
 
--- Create an index on the name column
-CREATE INDEX idx_name ON employees(name);
+-- Create an index on name
+CREATE INDEX idx_name ON students(name);
 
--- Now the same query uses the index
-SELECT * FROM employees WHERE name = 'Alice Smith';
--- On 1 million rows: checks ~20 rows (binary search)
-
--- Create a UNIQUE index (no duplicate values allowed)
-CREATE UNIQUE INDEX idx_email ON employees(email);
-
--- Create a composite index (multi-column)
-CREATE INDEX idx_dept_salary ON employees(department, salary);
-
--- View all indexes on a table
-SHOW INDEX FROM employees;
-
--- Analyze a query with EXPLAIN
-EXPLAIN SELECT * FROM employees WHERE name = 'Alice Smith';
+-- View all indexes
+SHOW INDEX FROM students;
 </code></pre>
-<strong>Output (EXPLAIN):</strong>
-<pre>+----+-------------+-----------+------+---------------+---------+---------+-------+------+-------------+
-| id | select_type | table     | type | possible_keys | key     | key_len | ref   | rows | Extra       |
-+----+-------------+-----------+------+---------------+---------+---------+-------+------+-------------+
-|  1 | SIMPLE      | employees | ref  | idx_name      | idx_name| 102     | const |    1 | Using where |
-+----+-------------+-----------+------+---------------+---------+---------+-------+------+-------------+
--- "type: ref" and "rows: 1" = efficient query!</pre>
+<strong>Output:</strong>
+<pre>+------------+------------+----------+--------------+--------+-----------+----------+------+------+---------------+---------+--------+---------+
+| Table      | Non_unique | Key_name | Seq_in_index | Column | Collation | Cardinality| Null | Index_type | Comment | Index_comment |
++------------+------------+----------+--------------+--------+-----------+----------+------+------+---------------+---------+--------+---------+
+| students   |          0 | PRIMARY  |            1 | id     | A         |        0 |      | BTREE      |         |              |
+| students   |          1 | idx_name |            1 | name   | A         |        0 | YES  | BTREE      |         |              |
++------------+------------+----------+--------------+--------+-----------+----------+------+------+---------------+---------+--------+---------+</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

@@ -35,81 +35,45 @@
 </ul>
 
 <h3>Example</h3>
-<pre><code class="language-java">public class InheritanceDemo {
+<pre><code class="language-java">public class Main {                         // Main class
 
-    // Abstract parent class
-    static abstract class Shape {
-        String name;
-        Shape(String name) { this.name = name; }
+    // Parent class (superclass)
+    static class Animal {                   // Base class for all animals
+        String name;                        // Field: stores name
 
-        abstract double area();       // Each shape must implement this
-        abstract double perimeter();
+        Animal(String name) {               // Constructor
+            this.name = name;               // Set the name
+        }
 
-        void describe() {
-            System.out.println(name + " - Area: " + String.format("%.2f", area())
-                + ", Perimeter: " + String.format("%.2f", perimeter()));
+        void speak() {                      // Method to override
+            System.out.println(name + " makes a sound");
         }
     }
 
-    // Child classes override parent methods
-    static class Circle extends Shape {
-        double radius;
-        Circle(double radius) {
-            super("Circle");         // Call parent constructor
-            this.radius = radius;
+    // Child class (subclass) inherits from Animal
+    static class Dog extends Animal {       // Dog IS-A Animal
+        Dog(String name) {                  // Constructor
+            super(name);                    // Call parent constructor
         }
 
-        @Override
-        double area() { return Math.PI * radius * radius; }
-
-        @Override
-        double perimeter() { return 2 * Math.PI * radius; }
-    }
-
-    static class Rectangle extends Shape {
-        double width, height;
-        Rectangle(double w, double h) {
-            super("Rectangle");
-            this.width = w;
-            this.height = h;
-        }
-
-        @Override
-        double area() { return width * height; }
-
-        @Override
-        double perimeter() { return 2 * (width + height); }
-    }
-
-    // Interface
-    interface Drawable {
-        void draw();
-    }
-
-    static class Canvas implements Drawable {
-        public void draw() {
-            System.out.println("Drawing on canvas");
+        @Override                           // Override parent method
+        void speak() {                      // Dog speaks differently
+            System.out.println(name + " barks!");
         }
     }
 
-    public static void main(String[] args) {
-        // Polymorphism: parent type references child objects
-        Shape circle = new Circle(5);
-        Shape rectangle = new Rectangle(4, 6);
+    public static void main(String[] args) { // Entry point
+        Animal a = new Animal("Cat");       // Create parent object
+        Animal d = new Dog("Rex");          // Child stored in parent type
 
-        circle.describe();
-        rectangle.describe();
-
-        // Interface usage
-        Drawable d = new Canvas();
-        d.draw();
+        a.speak();                          // Calls Animal's speak
+        d.speak();                          // Calls Dog's speak (polymorphism)
     }
 }
 </code></pre>
 <strong>Output:</strong>
-<pre>Circle - Area: 78.54, Perimeter: 31.42
-Rectangle - Area: 24.00, Perimeter: 20.00
-Drawing on canvas</pre>
+<pre>Cat makes a sound
+Rex barks!</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 
@@ -153,74 +117,43 @@ Drawing on canvas</pre>
     <summary>Teacher Answer Key (Click to reveal)</summary>
     <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
         <p><strong>Answers:</strong></p>
-        <pre><code class="language-java">public class GameCharacters {
+        <pre><code class="language-java">public class Main {                         // Main class
 
-    static abstract class Character {
-        String name;
-        int health;
+    static class Animal {                   // Parent class
+        String name;                        // Animal name
 
-        Character(String name, int health) {
-            this.name = name;
-            this.health = health;
+        Animal(String name) {               // Constructor
+            this.name = name;               // Set name
         }
 
-        abstract void attack();
-
-        void display() {
-            System.out.println(name + " (HP: " + health + ")");
+        void speak() {                      // Method to override
+            System.out.println(name + " makes a sound");
         }
     }
 
-    static class Warrior extends Character {
-        Warrior(String name, int health) {
-            super(name, health);
+    static class Cat extends Animal {       // Cat inherits from Animal
+        Cat(String name) {                  // Constructor
+            super(name);                    // Call parent constructor
         }
 
-        @Override
-        void attack() {
-            System.out.println(name + " swings a mighty sword!");
-        }
-    }
-
-    static class Mage extends Character {
-        Mage(String name, int health) {
-            super(name, health);
-        }
-
-        @Override
-        void attack() {
-            System.out.println(name + " casts a fireball spell!");
+        @Override                           // Override parent method
+        void speak() {                      // Cat speaks differently
+            System.out.println(name + " meows!");
         }
     }
 
-    public static void main(String[] args) {
-        Character[] party = {
-            new Warrior("Conan", 100),
-            new Mage("Gandalf", 80),
-            new Warrior("Bjorn", 120),
-            new Mage("Merlin", 70)
-        };
+    public static void main(String[] args) { // Entry point
+        Animal a = new Animal("Dog");       // Parent object
+        Animal c = new Cat("Kitty");        // Child in parent type
 
-        for (Character c : party) {
-            c.display();
-            c.attack();   // Polymorphism: correct attack method called
-            System.out.println();
-        }
+        a.speak();                          // Calls Animal's speak
+        c.speak();                          // Calls Cat's speak (polymorphism)
     }
 }
 </code></pre>
         <p><strong>Output:</strong></p>
-        <pre>Conan (HP: 100)
-Conan swings a mighty sword!
-
-Gandalf (HP: 80)
-Gandalf casts a fireball spell!
-
-Bjorn (HP: 120)
-Bjorn swings a mighty sword!
-
-Merlin (HP: 70)
-Merlin casts a fireball spell!</pre>
+        <pre>Dog makes a sound
+Kitty meows!</pre>
     </div>
 </details>
 

@@ -35,95 +35,54 @@
     <li><strong>Combine conditions:</strong> Use AND (&&), OR (||), and NOT (!) to create complex decisions.</li>
 </ol>
 
-<h3>Example</h3>
-<pre><code class="language-php">// PHP Example: Login validation
-$username = "alice";
-$password = "secret123";
-
-if (strlen($username) < 3) {
-    echo "Error: Username must be at least 3 characters.\n";
-} elseif (strlen($password) < 8) {
-    echo "Error: Password must be at least 8 characters.\n";
-} else {
-    echo "Welcome, $username! You are logged in.\n";
-}
-
-// Using AND and OR operators
+<h3>PHP Example</h3>
+<pre><code class="language-php">&lt;?php
+// Store a student's age
 $age = 20;
-$hasID = true;
-
-if ($age >= 18 && $hasID) {
-    echo "Access granted: You may enter.\n";
-} elseif ($age >= 18 || $hasID) {
-    echo "Partial access: Please show ID.\n";
+// Check if age is 18 or older
+if ($age >= 18) {
+    // Student can vote
+    echo "You can vote!";
 } else {
-    echo "Access denied: You must be 18 or older.\n";
+    // Student cannot vote
+    echo "You are too young to vote.";
 }
 </code></pre>
 <strong>Output:</strong>
-<pre>Welcome, alice! You are logged in.
-Access granted: You may enter.</pre>
+<pre>You can vote!</pre>
 
 <h3>Python Example</h3>
-<pre><code class="language-python"># Python Example: Login validation
-
-username = "alice"
-password = "secret123"
-
-if len(username) < 3:
-    print("Error: Username must be at least 3 characters.")
-elif len(password) < 8:
-    print("Error: Password must be at least 8 characters.")
-else:
-    print(f"Welcome, {username}! You are logged in.")
-
-# Using and / or operators
+<pre><code class="language-python"># Store a student's age
 age = 20
-has_id = True
-
-if age >= 18 and has_id:
-    print("Access granted: You may enter.")
-elif age >= 18 or has_id:
-    print("Partial access: Please show ID.")
+# Check if age is 18 or older
+if age >= 18:
+    # Student can vote
+    print("You can vote!")
 else:
-    print("Access denied: You must be 18 or older.")
+    # Student cannot vote
+    print("You are too young to vote.")
 </code></pre>
 <strong>Output:</strong>
-<pre>Welcome, alice! You are logged in.
-Access granted: You may enter.</pre>
+<pre>You can vote!</pre>
 
 <h3>Java Example</h3>
-<pre><code class="language-java">// Java Example: Login validation
-public class Main {
+<pre><code class="language-java">public class Main {
     public static void main(String[] args) {
-        String username = "alice";
-        String password = "secret123";
-
-        if (username.length() < 3) {
-            System.out.println("Error: Username must be at least 3 characters.");
-        } else if (password.length() < 8) {
-            System.out.println("Error: Password must be at least 8 characters.");
-        } else {
-            System.out.println("Welcome, " + username + "! You are logged in.");
-        }
-
-        // Using && and || operators
+        // Store a student's age
         int age = 20;
-        boolean hasID = true;
-
-        if (age >= 18 && hasID) {
-            System.out.println("Access granted: You may enter.");
-        } else if (age >= 18 || hasID) {
-            System.out.println("Partial access: Please show ID.");
+        // Check if age is 18 or older
+        if (age >= 18) {
+            // Student can vote
+            System.out.println("You can vote!");
         } else {
-            System.out.println("Access denied: You must be 18 or older.");
+            // Student cannot vote
+            System.out.println("You are too young to vote.");
         }
     }
 }
 </code></pre>
 <strong>Output:</strong>
-<pre>Welcome, alice! You are logged in.
-Access granted: You may enter.</pre>
+<pre>You can vote!</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

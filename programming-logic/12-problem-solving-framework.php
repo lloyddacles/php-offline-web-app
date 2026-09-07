@@ -35,118 +35,71 @@
     <li><strong>Reflect:</strong> Ask "Can I make this better?" Look for repeated code, improve naming, and add error handling.</li>
 </ol>
 
-<h3>Example</h3>
-<pre><code class="language-php">// PHP Example: Using the framework to count vowels
-
-// STEP 1: UNDERSTAND
-// Input: a string
-// Output: number of vowels (a, e, i, o, u)
-// Edge cases: empty string, uppercase, no vowels
-
-// STEP 2: PLAN (Pseudocode)
-// 1. Convert string to lowercase
-// 2. Initialize counter to 0
-// 3. For each character in string:
-//    If character is a, e, i, o, or u, increment counter
-// 4. Return counter
-
-// STEP 3: CODE
-function countVowels($str) {
-    $str = strtolower($str);
-    $count = 0;
-    $vowels = ['a', 'e', 'i', 'o', 'u'];
-    
-    for ($i = 0; $i < strlen($str); $i++) {
-        if (in_array($str[$i], $vowels)) {
-            $count++;
-        }
+<h3>PHP Example</h3>
+<pre><code class="language-php">&lt;?php
+// Store a word
+$word = "Hello";
+// Store vowels to check
+$vowels = "aeiou";
+// Set count to 0
+$count = 0;
+// Loop through each letter
+for ($i = 0; $i < strlen($word); $i++) {
+    // Check if letter is a vowel
+    if (strpos($vowels, $word[$i]) !== false) {
+        // Add 1 to count
+        $count++;
     }
-    return $count;
 }
-
-// STEP 4: TEST
-echo "Testing countVowels:\n";
-echo "'Hello' → " . countVowels("Hello") . " (expected: 2)\n";
-echo "'Programming' → " . countVowels("Programming") . " (expected: 3)\n";
-echo "'' → " . countVowels("") . " (expected: 0)\n";
-echo "'AEIOU' → " . countVowels("AEIOU") . " (expected: 5)\n";
-echo "'rhythm' → " . countVowels("rhythm") . " (expected: 0)\n";
-
-// STEP 5: REFLECT
-// Could improve by handling special characters
-// Could make vowel list a constant for reuse
+// Print the count
+echo "Vowels in '$word': $count";
 </code></pre>
 <strong>Output:</strong>
-<pre>Testing countVowels:
-'Hello' → 2 (expected: 2)
-'Programming' → 3 (expected: 3)
-'' → 0 (expected: 0)
-'AEIOU' → 5 (expected: 5)
-'rhythm' → 0 (expected: 0)</pre>
+<pre>Vowels in 'Hello': 2</pre>
 
 <h3>Python Example</h3>
-<pre><code class="language-python"># Python Example: Using the framework
-
-def count_vowels(s):
-    """Count vowels in a string."""
-    s = s.lower()
-    count = 0
-    vowels = ['a', 'e', 'i', 'o', 'u']
-    
-    for char in s:
-        if char in vowels:
-            count += 1
-    return count
-
-# Test
-print("Testing count_vowels:")
-print(f"'Hello' → {count_vowels('Hello')} (expected: 2)")
-print(f"'Programming' → {count_vowels('Programming')} (expected: 3)")
-print(f"'' → {count_vowels('')} (expected: 0)")
-print(f"'AEIOU' → {count_vowels('AEIOU')} (expected: 5)")
-print(f"'rhythm' → {count_vowels('rhythm')} (expected: 0)")
+<pre><code class="language-python"># Store a word
+word = "Hello"
+# Store vowels to check
+vowels = "aeiou"
+# Set count to 0
+count = 0
+# Loop through each letter
+for letter in word:
+    # Check if letter is a vowel
+    if letter in vowels:
+        # Add 1 to count
+        count += 1
+# Print the count
+print(f"Vowels in '{word}': {count}")
 </code></pre>
 <strong>Output:</strong>
-<pre>Testing count_vowels:
-'Hello' → 2 (expected: 2)
-'Programming' → 3 (expected: 3)
-'' → 0 (expected: 0)
-'AEIOU' → 5 (expected: 5)
-'rhythm' → 0 (expected: 0)</pre>
+<pre>Vowels in 'Hello': 2</pre>
 
 <h3>Java Example</h3>
-<pre><code class="language-java">// Java Example: Using the framework
-public class Main {
-    static int countVowels(String str) {
-        str = str.toLowerCase();
-        int count = 0;
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        // Store a word
+        String word = "Hello";
+        // Store vowels to check
         String vowels = "aeiou";
-        
-        for (int i = 0; i < str.length(); i++) {
-            if (vowels.indexOf(str.charAt(i)) != -1) {
+        // Set count to 0
+        int count = 0;
+        // Loop through each letter
+        for (int i = 0; i < word.length(); i++) {
+            // Check if letter is a vowel
+            if (vowels.indexOf(word.charAt(i)) != -1) {
+                // Add 1 to count
                 count++;
             }
         }
-        return count;
-    }
-
-    public static void main(String[] args) {
-        System.out.println("Testing countVowels:");
-        System.out.println("'Hello' → " + countVowels("Hello") + " (expected: 2)");
-        System.out.println("'Programming' → " + countVowels("Programming") + " (expected: 3)");
-        System.out.println("'' → " + countVowels("") + " (expected: 0)");
-        System.out.println("'AEIOU' → " + countVowels("AEIOU") + " (expected: 5)");
-        System.out.println("'rhythm' → " + countVowels("rhythm") + " (expected: 0)");
+        // Print the count
+        System.out.println("Vowels in '" + word + "': " + count);
     }
 }
 </code></pre>
 <strong>Output:</strong>
-<pre>Testing countVowels:
-'Hello' → 2 (expected: 2)
-'Programming' → 3 (expected: 3)
-'' → 0 (expected: 0)
-'AEIOU' → 5 (expected: 5)
-'rhythm' → 0 (expected: 0)</pre>
+<pre>Vowels in 'Hello': 2</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

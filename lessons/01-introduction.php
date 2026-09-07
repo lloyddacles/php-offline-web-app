@@ -35,14 +35,15 @@
 
 <h3>Example</h3>
 <pre><code class="language-php">&lt;?php
-// This is my first PHP program!
-echo "Hello, World!";  // Output text to the browser
-echo "\n";  // Add a new line
-echo "Welcome to PHP!";  // Output another line
-?&gt;
+// Print a welcome message
+echo "Hello, World!";
+
+// Print another line
+echo "\n";
+echo "Welcome to PHP!";
 </code></pre>
 <strong>Output:</strong>
-<pre>Hello World
+<pre>Hello, World!
 Welcome to PHP!</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>

@@ -111,85 +111,104 @@
    └────────────────┘                └────────────────┘</code></pre>
 
 <h4>Step 5: DDL</h4>
-<pre><code>CREATE DATABASE school_management;
+
+<p><strong>Create database</strong></p>
+<pre><code class="language-sql">-- Create the school database
+CREATE DATABASE school_management;
 USE school_management;
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 1 row affected</pre>
 
+<p><strong>Create departments table</strong></p>
+<pre><code class="language-sql">-- Create departments table
 CREATE TABLE departments (
-    dept_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    building VARCHAR(50),
-    budget DECIMAL(12,2) DEFAULT 0
+    dept_id INT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL
 );
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
+<p><strong>Create teachers table</strong></p>
+<pre><code class="language-sql">-- Create teachers table
 CREATE TABLE teachers (
-    teacher_id INT AUTO_INCREMENT PRIMARY KEY,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    hire_date DATE NOT NULL,
+    id INT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
     dept_id INT,
     FOREIGN KEY (dept_id) REFERENCES departments(dept_id)
-        ON DELETE SET NULL
 );
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
+<p><strong>Create students table</strong></p>
+<pre><code class="language-sql">-- Create students table
 CREATE TABLE students (
-    student_id INT AUTO_INCREMENT PRIMARY KEY,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    date_of_birth DATE,
-    enrollment_date DATE DEFAULT (CURRENT_DATE),
-    is_active BOOLEAN DEFAULT TRUE
+    id INT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    email VARCHAR(50) UNIQUE
 );
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
+<p><strong>Create courses table</strong></p>
+<pre><code class="language-sql">-- Create courses table
 CREATE TABLE courses (
-    course_id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(100) NOT NULL,
-    code VARCHAR(10) UNIQUE NOT NULL,
-    credits INT NOT NULL CHECK (credits > 0),
+    id INT PRIMARY KEY,
+    title VARCHAR(50) NOT NULL,
     teacher_id INT,
-    FOREIGN KEY (teacher_id) REFERENCES teachers(teacher_id)
-        ON DELETE SET NULL
+    FOREIGN KEY (teacher_id) REFERENCES teachers(id)
 );
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
+<p><strong>Create enrollments table</strong></p>
+<pre><code class="language-sql">-- Create enrollments (junction table)
 CREATE TABLE enrollments (
     student_id INT,
     course_id INT,
-    semester VARCHAR(20) NOT NULL,
-    enrollment_date DATE DEFAULT (CURRENT_DATE),
-    PRIMARY KEY (student_id, course_id, semester),
-    FOREIGN KEY (student_id) REFERENCES students(student_id)
-        ON DELETE CASCADE,
-    FOREIGN KEY (course_id) REFERENCES courses(course_id)
-        ON DELETE CASCADE
+    PRIMARY KEY (student_id, course_id),
+    FOREIGN KEY (student_id) REFERENCES students(id),
+    FOREIGN KEY (course_id) REFERENCES courses(id)
 );
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
+<p><strong>Create grades table</strong></p>
+<pre><code class="language-sql">-- Create grades table
 CREATE TABLE grades (
-    grade_id INT AUTO_INCREMENT PRIMARY KEY,
-    student_id INT NOT NULL,
-    course_id INT NOT NULL,
-    semester VARCHAR(20) NOT NULL,
-    grade VARCHAR(2) CHECK (grade IN ('A','B','C','D','F','I')),
-    graded_date DATE DEFAULT (CURRENT_DATE),
-    comments TEXT,
-    FOREIGN KEY (student_id, course_id, semester)
-        REFERENCES enrollments(student_id, course_id, semester)
-        ON DELETE CASCADE
-);</code></pre>
+    id INT PRIMARY KEY,
+    student_id INT,
+    course_id INT,
+    grade VARCHAR(2),
+    FOREIGN KEY (student_id) REFERENCES students(id),
+    FOREIGN KEY (course_id) REFERENCES courses(id)
+);
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
 <h4>Step 6: Security</h4>
-<pre><code>-- Create application user with limited privileges
-CREATE USER 'school_app'@'localhost' IDENTIFIED BY 'secure_password_123';
+<pre><code class="language-sql">-- Create application user
+CREATE USER 'school_app'@'localhost'
+IDENTIFIED BY 'secure_password';
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
--- Grant only necessary permissions
-GRANT SELECT, INSERT, UPDATE ON school_management.students TO 'school_app'@'localhost';
-GRANT SELECT, INSERT, UPDATE ON school_management.enrollments TO 'school_app'@'localhost';
-GRANT SELECT, INSERT, UPDATE ON school_management.grades TO 'school_app'@'localhost';
+<pre><code class="language-sql">-- Grant necessary permissions
+GRANT SELECT, INSERT, UPDATE
+ON school_management.students TO 'school_app'@'localhost';
+GRANT SELECT, INSERT, UPDATE
+ON school_management.enrollments TO 'school_app'@'localhost';
 GRANT SELECT ON school_management.courses TO 'school_app'@'localhost';
-GRANT SELECT ON school_management.teachers TO 'school_app'@'localhost';
-
--- Revoke dangerous permissions
-REVOKE DELETE, DROP, ALTER ON school_management.* FROM 'school_app'@'localhost';</code></pre>
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
 <h3>Normalization Check</h3>
 <table>
@@ -204,32 +223,20 @@ REVOKE DELETE, DROP, ALTER ON school_management.* FROM 'school_app'@'localhost';
 </table>
 
 <h3>Useful Queries</h3>
-<pre><code>-- Student transcript
-SELECT
-    s.first_name, s.last_name,
-    c.title AS course,
-    g.grade,
-    g.graded_date
+<pre><code class="language-sql">-- Get student grades
+SELECT s.name, c.title, g.grade
 FROM grades g
-JOIN students s ON g.student_id = s.student_id
-JOIN courses c ON g.course_id = c.course_id
-WHERE s.student_id = 1
-ORDER BY g.graded_date DESC;
-
--- GPA calculation
-SELECT
-    s.first_name, s.last_name,
-    AVG(CASE g.grade
-        WHEN 'A' THEN 4.0
-        WHEN 'B' THEN 3.0
-        WHEN 'C' THEN 2.0
-        WHEN 'D' THEN 1.0
-        WHEN 'F' THEN 0.0
-    END) AS gpa
-FROM students s
-JOIN grades g ON s.student_id = g.student_id
-GROUP BY s.student_id
-ORDER BY gpa DESC;</code></pre>
+JOIN students s ON g.student_id = s.id
+JOIN courses c ON g.course_id = c.id
+WHERE s.id = 1;
+</code></pre>
+<strong>Output:</strong>
+<pre>+-------+--------+-------+
+| name  | title  | grade |
++-------+--------+-------+
+| Alice | Math   | A     |
+| Alice | Science| B     |
++-------+--------+-------+</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 
@@ -292,76 +299,98 @@ ORDER BY gpa DESC;</code></pre>
             </li>
             <li>Expected ERD should show: Department → 1:N → Doctor, Patient → 1:N → Appointment, Doctor → 1:N → Appointment, Patient → 1:N → Billing, Appointment → 1:1 → Billing.</li>
             <li>
-                <pre><code>CREATE DATABASE hospital_management;
+                <pre><code class="language-sql">-- Create hospital database
+CREATE DATABASE hospital_management;
 USE hospital_management;
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 1 row affected</pre>
 
+<pre><code class="language-sql">-- Create departments table
 CREATE TABLE departments (
-    dept_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    location VARCHAR(100),
-    budget DECIMAL(12,2) DEFAULT 0
+    dept_id INT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL
 );
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
+<pre><code class="language-sql">-- Create doctors table
 CREATE TABLE doctors (
-    doctor_id INT AUTO_INCREMENT PRIMARY KEY,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    specialty VARCHAR(100) NOT NULL,
+    doctor_id INT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    specialty VARCHAR(50),
     dept_id INT,
-    hire_date DATE NOT NULL,
-    FOREIGN KEY (dept_id) REFERENCES departments(dept_id) ON DELETE SET NULL
+    FOREIGN KEY (dept_id) REFERENCES departments(dept_id)
 );
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
+<pre><code class="language-sql">-- Create patients table
 CREATE TABLE patients (
-    patient_id INT AUTO_INCREMENT PRIMARY KEY,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    email VARCHAR(100),
-    phone VARCHAR(20),
-    date_of_birth DATE,
-    insurance_id VARCHAR(50)
+    patient_id INT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    phone VARCHAR(20)
 );
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
+<pre><code class="language-sql">-- Create appointments table
 CREATE TABLE appointments (
-    appointment_id INT AUTO_INCREMENT PRIMARY KEY,
-    patient_id INT NOT NULL,
-    doctor_id INT NOT NULL,
-    appt_date DATE NOT NULL,
-    appt_time TIME NOT NULL,
+    appointment_id INT PRIMARY KEY,
+    patient_id INT,
+    doctor_id INT,
+    appt_date DATE,
     reason TEXT,
-    status VARCHAR(20) DEFAULT 'scheduled' CHECK (status IN ('scheduled','completed','cancelled')),
-    FOREIGN KEY (patient_id) REFERENCES patients(patient_id) ON DELETE CASCADE,
-    FOREIGN KEY (doctor_id) REFERENCES doctors(doctor_id) ON DELETE RESTRICT
-);
-
-CREATE TABLE billing (
-    bill_id INT AUTO_INCREMENT PRIMARY KEY,
-    patient_id INT NOT NULL,
-    appointment_id INT UNIQUE,
-    service_description VARCHAR(200) NOT NULL,
-    amount DECIMAL(10,2) NOT NULL CHECK (amount >= 0),
-    payment_status VARCHAR(20) DEFAULT 'pending'
-        CHECK (payment_status IN ('pending','paid','overdue')),
-    payment_date DATE,
     FOREIGN KEY (patient_id) REFERENCES patients(patient_id),
-    FOREIGN KEY (appointment_id) REFERENCES appointments(appointment_id)
-);</code></pre>
+    FOREIGN KEY (doctor_id) REFERENCES doctors(doctor_id)
+);
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
+
+<pre><code class="language-sql">-- Create billing table
+CREATE TABLE billing (
+    bill_id INT PRIMARY KEY,
+    patient_id INT,
+    service VARCHAR(50),
+    amount DECIMAL(10,2),
+    FOREIGN KEY (patient_id) REFERENCES patients(patient_id)
+);
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
             </li>
             <li>The design is in 3NF: (1) All values are atomic (1NF). (2) No partial dependencies — all non-key columns depend on the full primary key (2NF). (3) No transitive dependencies — doctor specialty depends on doctor_id, not on appointment_id; department budget depends on dept_id, not on doctor_id (3NF).</li>
             <li>
-                <pre><code>-- Admin: full access
-GRANT ALL PRIVILEGES ON hospital_management.* TO 'admin_role'@'localhost';
+                <pre><code class="language-sql">-- Admin: full access
+GRANT ALL PRIVILEGES ON hospital_management.*
+TO 'admin_role'@'localhost';
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
--- Doctor: can view and update patient records
-GRANT SELECT ON hospital_management.patients TO 'doctor_role'@'localhost';
-GRANT SELECT, UPDATE ON hospital_management.appointments TO 'doctor_role'@'localhost';
-GRANT SELECT ON hospital_management.medical_records TO 'doctor_role'@'localhost';
+<pre><code class="language-sql">-- Doctor: view and update patient records
+GRANT SELECT ON hospital_management.patients
+TO 'doctor_role'@'localhost';
+GRANT SELECT, UPDATE ON hospital_management.appointments
+TO 'doctor_role'@'localhost';
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
--- Receptionist: can only manage appointments and billing
-GRANT SELECT, INSERT, UPDATE ON hospital_management.appointments TO 'receptionist_role'@'localhost';
-GRANT SELECT, INSERT, UPDATE ON hospital_management.billing TO 'receptionist_role'@'localhost';
-GRANT SELECT ON hospital_management.patients TO 'receptionist_role'@'localhost';</code></pre>
+<pre><code class="language-sql">-- Receptionist: manage appointments and billing
+GRANT SELECT, INSERT, UPDATE
+ON hospital_management.appointments
+TO 'receptionist_role'@'localhost';
+GRANT SELECT, INSERT, UPDATE
+ON hospital_management.billing
+TO 'receptionist_role'@'localhost';
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
             </li>
         </ol>
     </div>

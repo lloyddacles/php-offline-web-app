@@ -35,33 +35,21 @@
 </ul>
 
 <h3>Example</h3>
-<pre><code class="language-java">public class OperatorsDemo {
-    public static void main(String[] args) {
-        int a = 10;
-        int b = 3;
+<pre><code class="language-java">public class Main {                         // Main class
+    public static void main(String[] args) { // Entry point
+        int a = 10;                          // First number
+        int b = 3;                           // Second number
 
-        // Arithmetic operators
-        System.out.println("a + b = " + (a + b));   // 13
-        System.out.println("a - b = " + (a - b));   // 7
-        System.out.println("a * b = " + (a * b));   // 30
-        System.out.println("a / b = " + (a / b));   // 3 (integer division!)
-        System.out.println("a % b = " + (a % b));   // 1 (remainder)
+        // Arithmetic operators do math
+        System.out.println("a + b = " + (a + b));  // Addition: 13
+        System.out.println("a - b = " + (a - b));  // Subtraction: 7
+        System.out.println("a * b = " + (a * b));  // Multiplication: 30
+        System.out.println("a / b = " + (a / b));  // Division: 3
+        System.out.println("a % b = " + (a % b));  // Modulus (remainder): 1
 
-        // Comparison operators
-        System.out.println("a == b: " + (a == b));  // false
-        System.out.println("a != b: " + (a != b));  // true
-        System.out.println("a > b:  " + (a > b));   // true
-
-        // Logical operators
-        boolean x = true;
-        boolean y = false;
-        System.out.println("x && y: " + (x && y));  // false (both must be true)
-        System.out.println("x || y: " + (x || y));  // true  (at least one true)
-        System.out.println("!x:     " + (!x));       // false (inverts)
-
-        // Ternary operator: condition ? valueIfTrue : valueIfFalse
-        String result = (a > b) ? "a is bigger" : "b is bigger";
-        System.out.println(result);  // a is bigger
+        // Comparison operators return true or false
+        System.out.println("a > b: " + (a > b));   // Greater than: true
+        System.out.println("a == b: " + (a == b)); // Equal: false
     }
 }
 </code></pre>
@@ -71,13 +59,8 @@ a - b = 7
 a * b = 30
 a / b = 3
 a % b = 1
-a == b: false
-a != b: true
-a > b:  true
-x && y: false
-x || y: true
-!x:     false
-a is bigger</pre>
+a > b: true
+a == b: false</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 
@@ -119,36 +102,29 @@ a is bigger</pre>
     <summary>Teacher Answer Key (Click to reveal)</summary>
     <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
         <p><strong>Answers:</strong></p>
-        <pre><code class="language-java">public class Calculator {
-    public static void main(String[] args) {
-        int quantity = 3;
-        double price = 15.50;
-        double discountRate = 0.10;
+        <pre><code class="language-java">public class Main {                         // Main class
+    public static void main(String[] args) { // Entry point
+        int price = 15;                      // Price per item
+        int quantity = 3;                    // Number of items
 
-        // Calculate totals
-        double subtotal = quantity * price;          // 46.50
-        double discount = subtotal * discountRate;   // 4.65
-        double finalPrice = subtotal - discount;     // 41.85
+        int total = price * quantity;        // Calculate total
+        double discount = total * 0.10;     // 10% discount
+        double finalPrice = total - discount; // Final price
 
-        // Check free shipping (orders over $40)
-        boolean freeShipping = finalPrice > 40;
-
-        // Print results
-        System.out.println("Subtotal: $" + subtotal);
-        System.out.println("Discount: $" + discount);
-        System.out.println("Final Price: $" + finalPrice);
-
-        // Ternary operator for shipping
-        String shipping = freeShipping ? "Free Shipping" : "Standard Shipping";
-        System.out.println("Shipping: " + shipping);
+        System.out.println("Price: $" + price);         // Print price
+        System.out.println("Quantity: " + quantity);     // Print quantity
+        System.out.println("Total: $" + total);         // Print total
+        System.out.println("Discount: $" + discount);   // Print discount
+        System.out.println("Final: $" + finalPrice);    // Print final price
     }
 }
 </code></pre>
         <p><strong>Output:</strong></p>
-        <pre>Subtotal: $46.5
-Discount: $4.65
-Final Price: $41.85
-Shipping: Free Shipping</pre>
+        <pre>Price: $15
+Quantity: 3
+Total: $45
+Discount: $4.5
+Final: $40.5</pre>
     </div>
 </details>
 

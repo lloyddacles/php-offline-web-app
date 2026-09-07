@@ -35,19 +35,18 @@
 
 <h3>Example</h3>
 <pre><code class="language-php">&lt;?php
-// for loop - count from 1 to 5
+// Count from 1 to 5 with for loop
 for ($i = 1; $i <= 5; $i++) {
     echo "Count: $i\n";
 }
 
 echo "\n";
 
-// foreach loop - iterate through array
+// Loop through an array with foreach
 $colors = ["Red", "Green", "Blue"];
 foreach ($colors as $color) {
     echo "Color: $color\n";
 }
-?&gt;
 </code></pre>
 <strong>Output:</strong>
 <pre>Count: 1

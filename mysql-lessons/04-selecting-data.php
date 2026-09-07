@@ -29,37 +29,26 @@
 <p>MySQL processes SELECT statements in this order: FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT. The WHERE clause filters rows before they are returned.</p>
 
 <h3>Example</h3>
-<pre><code class="language-sql">-- Select all columns
-SELECT * FROM employees;
+<pre><code class="language-sql">-- Create a students table
+CREATE TABLE students (
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    grade INT
+);
 
--- Select specific columns with aliases
-SELECT name AS Employee, salary AS Annual_Salary
-FROM employees;
+-- Insert sample data
+INSERT INTO students VALUES (1, 'Juan', 95), (2, 'Maria', 88), (3, 'Pedro', 92);
 
--- Filter with WHERE
-SELECT name, salary FROM employees
-WHERE department = 'Engineering' AND salary > 80000;
-
--- Sort results
-SELECT name, salary FROM employees
-ORDER BY salary DESC;
-
--- Limit results (top 3 highest salaries)
-SELECT name, salary FROM employees
-ORDER BY salary DESC
-LIMIT 3;
-
--- Pattern matching with LIKE
-SELECT * FROM employees WHERE name LIKE 'A%';
+-- Find students with grade above 90
+SELECT * FROM students WHERE grade > 90;
 </code></pre>
-<strong>Output (LIMIT 3):</strong>
-<pre>+--------------+----------+
-| name         | salary   |
-+--------------+----------+
-| Frank Lee    | 90000.00 |
-| Carol White  | 82000.00 |
-| Alice Smith  | 75000.00 |
-+--------------+----------+</pre>
+<strong>Output:</strong>
+<pre>+----+-------+-------+
+| id | name  | grade |
++----+-------+-------+
+|  1 | Juan  |    95 |
+|  3 | Pedro |    92 |
++----+-------+-------+</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

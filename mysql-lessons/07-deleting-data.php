@@ -29,34 +29,28 @@
 <p>DELETE finds rows matching the WHERE condition and removes them one by one. Without WHERE, all rows are deleted. TRUNCATE is faster because it deallocates data pages directly without scanning rows.</p>
 
 <h3>Example</h3>
-<pre><code class="language-sql">-- Delete a specific row
-DELETE FROM employees WHERE name = 'Henry Wu';
+<pre><code class="language-sql">-- Create a students table
+CREATE TABLE students (
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    grade INT
+);
 
--- Delete multiple rows
-DELETE FROM employees WHERE department = 'Sales';
+-- Insert sample data
+INSERT INTO students VALUES (1, 'Juan', 95), (2, 'Maria', 88);
 
--- Preview before deleting (ALWAYS do this first!)
-SELECT * FROM employees WHERE salary < 55000;
-SELECT COUNT(*) FROM employees WHERE salary < 55000;
+-- Delete one student
+DELETE FROM students WHERE id = 2;
 
--- Delete with confidence after preview
-DELETE FROM employees WHERE salary < 55000;
-
--- TRUNCATE: remove all rows (faster, resets AUTO_INCREMENT)
-TRUNCATE TABLE employees;
-
--- DROP: delete the table entirely
-DROP TABLE IF EXISTS employees;
+-- Verify deletion
+SELECT * FROM students;
 </code></pre>
-<strong>Output (DELETE comparison):</strong>
-<pre>-- DELETE vs TRUNCATE vs DROP:
--- +----------+------------------+----------------+----------------+
--- | Command  | Rows Removed     | Resets Auto_ID | Structure Kept |
--- +----------+------------------+----------------+----------------+
--- | DELETE   | Specific/All     | No             | Yes            |
--- | TRUNCATE | All (fast)       | Yes            | Yes            |
--- | DROP     | All + Structure  | N/A            | No             |
--- +----------+------------------+----------------+----------------+</pre>
+<strong>Output:</strong>
+<pre>+----+------+-------+
+| id | name | grade |
++----+------+-------+
+|  1 | Juan |    95 |
++----+------+-------+</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

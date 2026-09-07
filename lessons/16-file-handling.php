@@ -35,24 +35,25 @@
 
 <h3>Example</h3>
 <pre><code class="language-php">&lt;?php
-// Write to a file
+// Write text to a file
 file_put_contents("notes.txt", "Hello World!\n");
+
+// Add more text to the file
 file_put_contents("notes.txt", "This is my note.\n", FILE_APPEND);
 
-// Read from a file
+// Read the file contents
 $content = file_get_contents("notes.txt");
 echo $content;
 
 // Check if file exists
 if (file_exists("notes.txt")) {
-    echo "File exists! Size: " . filesize("notes.txt") . " bytes";
+    echo "File exists!";
 }
-?&gt;
 </code></pre>
 <strong>Output:</strong>
 <pre>Hello World!
 This is my note.
-File exists! Size: 28 bytes</pre>
+File exists!</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

@@ -28,40 +28,22 @@
 <p>Arithmetic operators (+, -, *, /, //, %, **) return numbers. Comparison operators (==, !=, >, <, >=, <=) return <code>True</code> or <code>False</code>. Logical operators (and, or, not) combine boolean expressions. Python also has <strong>identity</strong> (<code>is</code>) and <strong>membership</strong> (<code>in</code>) operators.</p>
 
 <h3>Example</h3>
-<pre><code class="language-python"># Arithmetic operators
-print(f"10 + 3 = {10 + 3}")      # Addition: 13
-print(f"10 - 3 = {10 - 3}")      # Subtraction: 7
-print(f"10 * 3 = {10 * 3}")      # Multiplication: 30
-print(f"10 / 3 = {10 / 3}")      # Division: 3.333...
-print(f"10 // 3 = {10 // 3}")    # Floor Division: 3
-print(f"10 % 3 = {10 % 3}")      # Modulus: 1
-print(f"10 ** 3 = {10 ** 3}")    # Exponent: 1000
+<pre><code class="language-python"># Calculate student average
+score1 = 85
+score2 = 90
+score3 = 78
 
-# Comparison operators
-print(f"5 == 5: {5 == 5}")       # True
-print(f"5 != 3: {5 != 3}")       # True
-print(f"5 > 3: {5 > 3}")         # True
+# Add scores and divide by count
+average = (score1 + score2 + score3) / 3
+print("Average:", average)
 
-# Logical operators
-x = 15
-print(f"x > 10 and x < 20: {x > 10 and x < 20}")  # True
-print(f"x > 20 or x < 10: {x > 20 or x < 10}")    # False
-print(f"not (x > 20): {not (x > 20)}")             # True
+# Check if passing
+passed = average >= 75
+print("Passed:", passed)
 </code></pre>
 <strong>Output:</strong>
-<pre>10 + 3 = 13
-10 - 3 = 7
-10 * 3 = 30
-10 / 3 = 3.3333333333333335
-10 // 3 = 3
-10 % 3 = 1
-10 ** 3 = 1000
-5 == 5: True
-5 != 3: True
-5 > 3: True
-x > 10 and x < 20: True
-x > 20 or x < 10: False
-not (x > 20): True</pre>
+<pre>Average: 84.33333333333333
+Passed: True</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 <h3>Real-World Applications</h3>
@@ -107,23 +89,19 @@ not (x > 20): True</pre>
         <pre><code># Shopping cart calculations
 price = 29.99
 quantity = 2
-discount = 10  # percent
-tax_rate = 0.08
+discount = 10
 
+# Calculate total
 subtotal = price * quantity
-discount_amount = subtotal * (discount / 100)
-after_discount = subtotal - discount_amount
-tax = after_discount * tax_rate
-total = after_discount + tax
+savings = subtotal * (discount / 100)
+total = subtotal - savings
 
-print(f"Item: ${price} x {quantity}")
-print(f"Subtotal: ${subtotal:.2f}")
-print(f"Discount ({discount}%): -${discount_amount:.2f}")
-print(f"Tax ({tax_rate*100}%): +${tax:.2f}")
-print(f"Total: ${total:.2f}")
-
-free_shipping = total > 50
-print(f"Free shipping: {free_shipping}")</code></pre>
+print("Price:", price)
+print("Quantity:", quantity)
+print("Subtotal:", subtotal)
+print("Discount:", savings)
+print("Total:", total)
+</code></pre>
     </div>
 </details>
 

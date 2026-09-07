@@ -29,45 +29,33 @@
 <p>MySQL compares rows from both tables using the ON condition. When a match is found, the rows are combined. The type of JOIN determines which non-matching rows are included.</p>
 
 <h3>Example</h3>
-<pre><code class="language-sql">-- Sample tables
-CREATE TABLE departments (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    building VARCHAR(50)
+<pre><code class="language-sql">-- Create students and grades tables
+CREATE TABLE students (
+    id INT PRIMARY KEY,
+    name VARCHAR(50)
+);
+CREATE TABLE grades (
+    student_id INT,
+    subject VARCHAR(50),
+    score INT
 );
 
-INSERT INTO departments (name, building) VALUES
-('Engineering', 'Building A'),
-('Marketing', 'Building B'),
-('Sales', 'Building C'),
-('HR', 'Building D');
+-- Insert sample data
+INSERT INTO students VALUES (1, 'Juan'), (2, 'Maria');
+INSERT INTO grades VALUES (1, 'Math', 95), (1, 'English', 88);
 
--- INNER JOIN: only employees with a matching department
-SELECT e.name, e.salary, d.name AS department, d.building
-FROM employees e
-INNER JOIN departments d ON e.department_id = d.id;
-
--- LEFT JOIN: all employees, even those without a department
-SELECT e.name, d.name AS department
-FROM employees e
-LEFT JOIN departments d ON e.department_id = d.id;
-
--- RIGHT JOIN: all departments, even those with no employees
-SELECT d.name AS department, e.name AS employee
-FROM employees e
-RIGHT JOIN departments d ON e.department_id = d.id;
+-- INNER JOIN: only students with grades
+SELECT s.name, g.subject, g.score
+FROM students s
+INNER JOIN grades g ON s.id = g.student_id;
 </code></pre>
-<strong>Output (RIGHT JOIN):</strong>
-<pre>+-------------+--------------+
-| department  | employee     |
-+-------------+--------------+
-| Engineering | Alice Smith  |
-| Engineering | Carol White  |
-| Marketing   | Bob Jones    |
-| Sales       | David Brown  |
-| Sales       | Grace Kim    |
-| HR          | NULL         |
-+-------------+--------------+</pre>
+<strong>Output:</strong>
+<pre>+-------+---------+-------+
+| name  | subject | score |
++-------+---------+-------+
+| Juan  | Math    |    95 |
+| Juan  | English |    88 |
++-------+---------+-------+</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

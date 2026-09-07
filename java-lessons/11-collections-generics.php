@@ -34,62 +34,43 @@
 </ul>
 
 <h3>Example</h3>
-<pre><code class="language-java">import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+<pre><code class="language-java">import java.util.ArrayList;                 // Import ArrayList class
 
-public class CollectionsDemo {
-    public static void main(String[] args) {
-        // ArrayList: dynamic, ordered list
-        ArrayList&lt;String&gt; fruits = new ArrayList&lt;&gt;();
-        fruits.add("Apple");
-        fruits.add("Banana");
-        fruits.add("Cherry");
-        System.out.println("Fruits: " + fruits);
-        fruits.remove("Banana");
-        System.out.println("After remove: " + fruits);
-        System.out.println("Size: " + fruits.size());
+public class Main {                         // Main class
+    public static void main(String[] args) { // Entry point
 
-        // HashMap: key-value pairs
-        HashMap&lt;String, Integer&gt; ages = new HashMap&lt;&gt;();
-        ages.put("Alice", 25);
-        ages.put("Bob", 30);
-        ages.put("Carol", 22);
-        System.out.println("\nAges: " + ages);
-        System.out.println("Alice: " + ages.get("Alice"));
-        System.out.println("Contains Bob: " + ages.containsKey("Bob"));
+        // ArrayList: resizable list (unlike fixed-size arrays)
+        ArrayList&lt;String&gt; names = new ArrayList&lt;&gt;(); // Create empty list
+        names.add("Juan");                   // Add first name
+        names.add("Maria");                  // Add second name
+        names.add("Pedro");                  // Add third name
+        System.out.println("Names: " + names); // Print entire list
+        System.out.println("Size: " + names.size()); // Get list size
 
-        // HashSet: unique elements only
-        HashSet&lt;String&gt; colors = new HashSet&lt;&gt;();
-        colors.add("Red");
-        colors.add("Green");
-        colors.add("Blue");
-        colors.add("Red");  // Duplicate ignored!
-        System.out.println("\nColors: " + colors);
-        System.out.println("Contains Red: " + colors.contains("Red"));
+        // Access element by index
+        System.out.println("First: " + names.get(0)); // Index starts at 0
 
-        // Iteration patterns
-        System.out.print("\nFruits list: ");
-        for (String fruit : fruits) {
-            System.out.print(fruit + " ");
+        // Remove an element
+        names.remove("Maria");               // Remove by value
+        System.out.println("After remove: " + names); // Print updated list
+
+        // Loop through the list
+        System.out.println("\nAll names:");
+        for (String name : names) {          // For-each loop
+            System.out.println(name);        // Print current name
         }
-        System.out.println();
     }
 }
 </code></pre>
 <strong>Output:</strong>
-<pre>Fruits: [Apple, Banana, Cherry]
-After remove: [Apple, Cherry]
-Size: 2
+<pre>Names: [Juan, Maria, Pedro]
+Size: 3
+First: Juan
+After remove: [Juan, Pedro]
 
-Ages: {Alice=25, Bob=30, Carol=22}
-Alice: 25
-Contains Bob: true
-
-Colors: [Red, Green, Blue]
-Contains Red: true
-
-Fruits list: Apple Cherry </pre>
+All names:
+Juan
+Pedro</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 
@@ -133,63 +114,30 @@ Fruits list: Apple Cherry </pre>
     <summary>Teacher Answer Key (Click to reveal)</summary>
     <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
         <p><strong>Answers:</strong></p>
-        <pre><code class="language-java">import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+        <pre><code class="language-java">import java.util.ArrayList;                 // Import ArrayList class
 
-public class StudentManagement {
-    public static void main(String[] args) {
-        // ArrayList of student names
-        ArrayList&lt;String&gt; students = new ArrayList&lt;&gt;();
-        students.add("Alice");
-        students.add("Bob");
-        students.add("Carol");
-        students.add("David");
-        students.add("Eve");
-        System.out.println("Students: " + students);
+public class Main {                         // Main class
+    public static void main(String[] args) { // Entry point
+        ArrayList&lt;String&gt; students = new ArrayList&lt;&gt;(); // Empty list
+        students.add("Alice");               // Add student 1
+        students.add("Bob");                 // Add student 2
+        students.add("Carol");               // Add student 3
 
-        // HashMap: student name to score
-        HashMap&lt;String, Integer&gt; scores = new HashMap&lt;&gt;();
-        scores.put("Alice", 95);
-        scores.put("Bob", 87);
-        scores.put("Carol", 92);
-        scores.put("David", 78);
-        scores.put("Eve", 88);
-        System.out.println("Scores: " + scores);
+        System.out.println("Students: " + students); // Print list
 
-        // HashSet of unique courses
-        HashSet&lt;String&gt; courses = new HashSet&lt;&gt;();
-        courses.add("Math");
-        courses.add("Science");
-        courses.add("English");
-        courses.add("Math");      // Duplicate ignored
-        courses.add("Science");   // Duplicate ignored
-        System.out.println("Courses: " + courses);
+        students.remove("Bob");              // Remove Bob
+        System.out.println("After remove: " + students); // Print updated
 
-        // Display all students with their scores
-        System.out.println("\n=== Student Report ===");
-        for (String name : students) {
-            int score = scores.get(name);
-            String grade = (score >= 90) ? "A" : (score >= 80) ? "B" : "C";
-            System.out.println(name + ": " + score + " (" + grade + ")");
-        }
-
-        System.out.println("Enrolled courses: " + courses.size());
+        System.out.println("Size: " + students.size()); // Print size
+        System.out.println("First: " + students.get(0)); // Get first
     }
 }
 </code></pre>
         <p><strong>Output:</strong></p>
-        <pre>Students: [Alice, Bob, Carol, David, Eve]
-Scores: {Alice=95, Bob=87, Carol=92, David=78, Eve=88}
-Courses: [Math, Science, English]
-
-=== Student Report ===
-Alice: 95 (A)
-Bob: 87 (B)
-Carol: 92 (A)
-David: 78 (C)
-Eve: 88 (B)
-Enrolled courses: 3</pre>
+        <pre>Students: [Alice, Bob, Carol]
+After remove: [Alice, Carol]
+Size: 2
+First: Alice</pre>
     </div>
 </details>
 

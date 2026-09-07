@@ -35,53 +35,31 @@
 </ul>
 
 <h3>Example</h3>
-<pre><code class="language-java">public class MethodsDemo {
+<pre><code class="language-java">public class Main {                         // Main class
 
-    // Method with return value
-    static int add(int a, int b) {
-        return a + b;
+    // Method that returns a value
+    static int add(int a, int b) {          // Takes two integers
+        return a + b;                        // Returns the sum
     }
 
     // Method with no return value (void)
-    static void greet(String name) {
-        System.out.println("Hello, " + name + "!");
+    static void greet(String name) {        // Takes a name
+        System.out.println("Hello, " + name + "!"); // Prints greeting
     }
 
-    // Method overloading: same name, different parameters
-    static int max(int a, int b) {
-        return (a > b) ? a : b;
-    }
+    public static void main(String[] args) { // Entry point
+        int sum = add(10, 20);               // Call add method
+        System.out.println("10 + 20 = " + sum); // Print result
 
-    static double max(double a, double b) {
-        return (a > b) ? a : b;
-    }
-
-    static int max(int a, int b, int c) {
-        return max(max(a, b), c);
-    }
-
-    public static void main(String[] args) {
-        // Call methods
-        int sum = add(15, 25);
-        System.out.println("15 + 25 = " + sum);
-
-        greet("Alice");
-        greet("Bob");
-
-        // Method overloading in action
-        System.out.println("max(10, 20): " + max(10, 20));
-        System.out.println("max(3.5, 2.1): " + max(3.5, 2.1));
-        System.out.println("max(5, 15, 8): " + max(5, 15, 8));
+        greet("Ana");                        // Call greet method
+        greet("Bob");                        // Call greet again
     }
 }
 </code></pre>
 <strong>Output:</strong>
-<pre>15 + 25 = 40
-Hello, Alice!
-Hello, Bob!
-max(10, 20): 20
-max(3.5, 2.1): 3.5
-max(5, 15, 8): 15</pre>
+<pre>10 + 20 = 30
+Hello, Ana!
+Hello, Bob!</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 
@@ -125,56 +103,33 @@ max(5, 15, 8): 15</pre>
     <summary>Teacher Answer Key (Click to reveal)</summary>
     <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
         <p><strong>Answers:</strong></p>
-        <pre><code class="language-java">public class MathUtils {
+        <pre><code class="language-java">public class Main {                         // Main class
 
-    // Calculate area of a circle
-    static double circleArea(double radius) {
-        return Math.PI * radius * radius;
+    // Method to calculate area of a rectangle
+    static int area(int length, int width) { // Takes length and width
+        return length * width;                // Returns area
     }
 
-    // Check if a number is prime
-    static boolean isPrime(int number) {
-        if (number < 2) return false;
-        for (int i = 2; i <= Math.sqrt(number); i++) {
-            if (number % i == 0) return false;
-        }
-        return true;
+    // Method to check if number is even
+    static boolean isEven(int number) {      // Takes a number
+        return number % 2 == 0;              // Returns true if even
     }
 
-    // Format number as currency
-    static String formatCurrency(double amount) {
-        return "$" + String.format("%.2f", amount);
-    }
+    public static void main(String[] args) { // Entry point
+        int l = 5;                           // Length
+        int w = 3;                           // Width
+        int result = area(l, w);             // Call area method
+        System.out.println("Area of " + l + " x " + w + " = " + result); // Print
 
-    public static void main(String[] args) {
-        // Test circleArea
-        double radius = 5.0;
-        System.out.println("Circle area (r=" + radius + "): " + circleArea(radius));
-
-        // Test isPrime
-        int[] testNumbers = {2, 7, 10, 13, 1};
-        for (int num : testNumbers) {
-            System.out.println(num + " is prime: " + isPrime(num));
-        }
-
-        // Test formatCurrency
-        double[] prices = {19.99, 150.5, 0.99};
-        for (double price : prices) {
-            System.out.println("Price: " + formatCurrency(price));
-        }
+        int num = 7;                         // Number to check
+        boolean even = isEven(num);          // Call isEven method
+        System.out.println(num + " is even: " + even); // Print result
     }
 }
 </code></pre>
         <p><strong>Output:</strong></p>
-        <pre>Circle area (r=5.0): 78.53981633974483
-2 is prime: true
-7 is prime: true
-10 is prime: false
-13 is prime: true
-1 is prime: false
-Price: $19.99
-Price: $150.50
-Price: $0.99</pre>
+        <pre>Area of 5 x 3 = 15
+7 is even: false</pre>
     </div>
 </details>
 

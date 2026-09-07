@@ -29,38 +29,25 @@
 <p>Aggregate functions scan through rows and combine them into a single result. When used with <code>GROUP BY</code>, they calculate separately for each group. The <code>HAVING</code> clause then filters those groups.</p>
 
 <h3>Example</h3>
-<pre><code class="language-sql">-- Aggregate functions
-SELECT COUNT(*) AS total_employees FROM employees;
-SELECT SUM(salary) AS total_salaries FROM employees;
-SELECT AVG(salary) AS average_salary FROM employees;
-SELECT MIN(salary) AS lowest, MAX(salary) AS highest FROM employees;
+<pre><code class="language-sql">-- Create a students table
+CREATE TABLE students (
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    grade INT
+);
 
--- GROUP BY: aggregate per department
-SELECT
-    department,
-    COUNT(*) AS employee_count,
-    AVG(salary) AS avg_salary
-FROM employees
-GROUP BY department;
+-- Insert sample data
+INSERT INTO students VALUES (1, 'Juan', 95), (2, 'Maria', 88), (3, 'Pedro', 92);
 
--- HAVING: filter groups
-SELECT department, AVG(salary) AS avg_salary
-FROM employees
-GROUP BY department
-HAVING avg_salary > 70000;
-
--- String functions
-SELECT UPPER(name) AS uppercase_name FROM employees;
-SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM students;
+-- Count all students
+SELECT COUNT(*) AS total FROM students;
 </code></pre>
-<strong>Output (GROUP BY):</strong>
-<pre>+-------------+----------------+-------------+
-| department  | employee_count | avg_salary  |
-+-------------+----------------+-------------+
-| Engineering |              3 | 82333.33    |
-| Marketing   |              2 | 68000.00    |
-| Sales       |              2 | 56500.00    |
-+-------------+----------------+-------------+</pre>
+<strong>Output:</strong>
+<pre>+-------+
+| total |
++-------+
+|     3 |
++-------+</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

@@ -29,38 +29,24 @@
 <p>MySQL requires you to define the structure of your data before storing it. You create a database, then create tables inside it with specific columns and data types. This ensures data consistency and integrity.</p>
 
 <h3>Example</h3>
-<pre><code class="language-sql">-- Create a database
-CREATE DATABASE IF NOT EXISTS school;
-
--- Select it for use
-USE school;
-
--- Create a students table with various data types
+<pre><code class="language-sql">-- Create a students table
 CREATE TABLE students (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
-    age INT,
-    enrollment_date DATE DEFAULT (CURRENT_DATE),
-    is_active BOOLEAN DEFAULT TRUE
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    grade INT
 );
 
 -- View the table structure
 DESCRIBE students;
 </code></pre>
 <strong>Output:</strong>
-<pre>+------------------+--------------+------+-----+---------------------+-------+
-| Field            | Type         | Null | Key | Default             | Extra |
-+------------------+--------------+------+-----+---------------------+-------+
-| id               | int          | NO   | PRI | NULL                | auto  |
-| first_name       | varchar(50)  | NO   |     | NULL                |       |
-| last_name        | varchar(50)  | NO   |     | NULL                |       |
-| email            | varchar(100) | NO   | UNI | NULL                |       |
-| age              | int          | YES  |     | NULL                |       |
-| enrollment_date  | date         | YES  |     | CURRENT_DATE        |       |
-| is_active        | tinyint(1)   | YES  |     | 1                   |       |
-+------------------+--------------+------+-----+---------------------+-------+</pre>
+<pre>+-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int         | NO   | PRI | NULL    |       |
+| name  | varchar(50) | YES  |     | NULL    |       |
+| grade | int         | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

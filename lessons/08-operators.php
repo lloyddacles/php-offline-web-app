@@ -38,29 +38,22 @@
 // Arithmetic operators
 $a = 10;
 $b = 3;
-echo "Add: " . ($a + $b);   // 13
+echo "Add: " . ($a + $b);
 echo "\n";
-echo "Mod: " . ($a % $b);   // 1 (remainder)
+echo "Subtract: " . ($a - $b);
 echo "\n";
-
-// Comparison operators
-echo "10 == '10': " . var_export(10 == '10', true);   // true (loose)
+echo "Multiply: " . ($a * $b);
 echo "\n";
-echo "10 === '10': " . var_export(10 === '10', true);  // false (strict)
+echo "Divide: " . ($a / $b);
 echo "\n";
-
-// Logical operators
-$age = 25;
-$hasID = true;
-echo "Adult with ID: " . var_export($age >= 18 && $hasID, true);  // true
-?&gt;
+echo "Remainder: " . ($a % $b);
 </code></pre>
 <strong>Output:</strong>
 <pre>Add: 13
-Mod: 1
-10 == '10': true
-10 === '10': false
-Adult with ID: true</pre>
+Subtract: 7
+Multiply: 30
+Divide: 3.3333333333333
+Remainder: 1</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

@@ -35,31 +35,33 @@
 
 <h3>Example</h3>
 <pre><code class="language-php">&lt;?php
-// Indexed array
+// Indexed array - access by number
 $fruits = ["Apple", "Banana", "Cherry"];
-echo "First fruit: " . $fruits[0];
-echo "\n";
-
-// Associative array
-$person = [
-    "name" => "Alice",
-    "age" => 25,
-    "email" => "alice@example.com"
-];
-echo "Name: " . $person["name"];
+echo "First: " . $fruits[0];
 echo "\n";
 
 // Loop through array
-echo "All fruits: ";
 foreach ($fruits as $fruit) {
     echo "$fruit ";
 }
-?&gt;
+
+echo "\n\n";
+
+// Associative array - access by name
+$person = [
+    "name" => "Alice",
+    "age" => 25
+];
+echo "Name: " . $person["name"];
+echo "\n";
+echo "Age: " . $person["age"];
 </code></pre>
 <strong>Output:</strong>
-<pre>First fruit: Apple
+<pre>First: Apple
+Apple Banana Cherry
+
 Name: Alice
-All fruits: Apple Banana Cherry</pre>
+Age: 25</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

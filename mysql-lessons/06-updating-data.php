@@ -29,32 +29,29 @@
 <p>MySQL finds all rows matching the WHERE condition, then applies the new values from the SET clause. If no WHERE is specified, ALL rows are updated.</p>
 
 <h3>Example</h3>
-<pre><code class="language-sql">-- Update a single row
-UPDATE employees
-SET salary = 80000
-WHERE name = 'Alice Smith';
+<pre><code class="language-sql">-- Create a students table
+CREATE TABLE students (
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    grade INT
+);
 
--- Update multiple columns
-UPDATE employees
-SET salary = 72000, department = 'Senior Marketing'
-WHERE name = 'Bob Jones';
+-- Insert sample data
+INSERT INTO students VALUES (1, 'Juan', 95), (2, 'Maria', 88);
 
--- Update with expressions (5% raise for Engineering)
-UPDATE employees
-SET salary = salary * 1.05
-WHERE department = 'Engineering';
+-- Update one student's grade
+UPDATE students SET grade = 90 WHERE id = 2;
 
--- Preview before updating (ALWAYS do this first!)
-SELECT * FROM employees WHERE department = 'Sales';
--- Check the results, then run the UPDATE with the same WHERE
+-- Verify the update
+SELECT * FROM students;
 </code></pre>
-<strong>Output (preview):</strong>
-<pre>+----+-------------+----------+----------+------------+
-| id | name        | department | salary | hire_date  |
-+----+-------------+----------+----------+------------+
-|  4 | David Brown | Sales    | 58000.00 | 2024-03-01 |
-|  7 | Grace Kim   | Sales    | 55000.00 | NULL       |
-+----+-------------+----------+----------+------------+</pre>
+<strong>Output:</strong>
+<pre>+----+-------+-------+
+| id | name  | grade |
++----+-------+-------+
+|  1 | Juan  |    95 |
+|  2 | Maria |    90 |
++----+-------+-------+</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

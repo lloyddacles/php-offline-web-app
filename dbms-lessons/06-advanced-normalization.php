@@ -34,66 +34,68 @@
 
 <h4>Boyce-Codd Normal Form (BCNF)</h4>
 <p>A stronger version of 3NF. A table is in BCNF if for every functional dependency <strong>X → Y</strong>, X is a <strong>superkey</strong>.</p>
-<pre><code>-- Example: Teacher assigns course
+<pre><code class="language-sql">-- BAD: Violates BCNF
 CREATE TABLE teacher_course (
     teacher VARCHAR(50),
     course VARCHAR(50),
     student VARCHAR(50),
     PRIMARY KEY (teacher, course, student)
 );
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
--- Functional dependencies:
--- teacher, course → student  (teacher and course determine which students)
--- student → course           (each student takes one course per enrollment)
-
--- This violates BCNF because:
--- "student → course" has "student" as determinant,
--- but "student" is NOT a superkey!
-
--- SOLUTION: Split into two tables
-CREATE TABLE course_allocation (
+<pre><code class="language-sql">-- GOOD: Split to satisfy BCNF
+CREATE TABLE enrollments (
     teacher VARCHAR(50),
     course VARCHAR(50),
     student VARCHAR(50),
     PRIMARY KEY (teacher, course, student)
 );
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
+<pre><code class="language-sql">-- Student-course mapping (separate table)
 CREATE TABLE student_course (
     student VARCHAR(50) PRIMARY KEY,
     course VARCHAR(50)
-);</code></pre>
+);
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
 <h4>Fourth Normal Form (4NF)</h4>
 <p><strong>Rule:</strong> Must be in BCNF + no <strong>multi-valued dependencies</strong>.</p>
-<pre><code>-- BAD: Violates 4NF (two independent multi-valued facts)
-CREATE TABLE employee_skills (
+<pre><code class="language-sql">-- BAD: Violates 4NF (two independent multi-valued facts)
+CREATE TABLE employee_info (
     emp_name VARCHAR(50),
     skill VARCHAR(50),
     language VARCHAR(50)
 );
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
--- Alice knows Java AND Python (skills)
--- Alice speaks English AND Filipino (languages)
--- These are INDEPENDENT facts, but stored together
-
--- This forces us to store:
--- (Alice, Java, English)
--- (Alice, Java, Filipino)     ← Redundant skill info
--- (Alice, Python, English)    ← Redundant language info
--- (Alice, Python, Filipino)   ← Redundant both!
-
--- SOLUTION: Split into independent tables
+<pre><code class="language-sql">-- GOOD: Split into independent tables (satisfies 4NF)
 CREATE TABLE employee_skills (
     emp_name VARCHAR(50),
     skill VARCHAR(50),
     PRIMARY KEY (emp_name, skill)
 );
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
+<pre><code class="language-sql">-- Languages stored separately
 CREATE TABLE employee_languages (
     emp_name VARCHAR(50),
     language VARCHAR(50),
     PRIMARY KEY (emp_name, language)
-);</code></pre>
+);
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
 <h4>Fifth Normal Form (5NF)</h4>
 <p><strong>Rule:</strong> Must be in 4NF + no <strong>join dependencies</strong>. A table can be decomposed into smaller tables and reconstructed without losing data.</p>
@@ -173,36 +175,37 @@ CREATE TABLE employee_languages (
         <ol>
             <li>This violates <strong>Fourth Normal Form (4NF)</strong>. Skills and certifications are independent multi-valued facts. Storing them in the same table creates a Cartesian product: for Alice with 2 skills and 2 certifications, 4 rows are needed (2×2), with redundant data.</li>
             <li>
-                <pre><code>CREATE TABLE employee_skills (
+                <pre><code class="language-sql">-- Create skills table
+CREATE TABLE employee_skills (
     emp_name VARCHAR(50),
     skill VARCHAR(50),
     PRIMARY KEY (emp_name, skill)
 );
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
+<pre><code class="language-sql">-- Create certifications table
 CREATE TABLE employee_certifications (
     emp_name VARCHAR(50),
     certification VARCHAR(50),
     PRIMARY KEY (emp_name, certification)
 );
-
--- Alice's data:
--- employee_skills: (Alice, Java), (Alice, Python)
--- employee_certifications: (Alice, AWS), (Alice, GCP)
--- Only 4 rows total instead of 4 in a single table (and scales better)</code></pre>
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
             </li>
             <li>Create a <strong>denormalized view or summary table</strong> specifically for reporting:
-                <pre><code>CREATE VIEW employee_report AS
+                <pre><code class="language-sql">-- Create a view for reporting (denormalized)
+CREATE VIEW employee_report AS
 SELECT
     s.emp_name,
-    GROUP_CONCAT(DISTINCT s.skill) AS skills,
-    GROUP_CONCAT(DISTINCT c.certification) AS certifications
+    GROUP_CONCAT(DISTINCT s.skill) AS skills
 FROM employee_skills s
-LEFT JOIN employee_certifications c ON s.emp_name = c.emp_name
 GROUP BY s.emp_name;
-
--- This view pre-joins the data for fast reads
--- For even faster performance, create a materialized/summary table
--- and refresh it periodically</code></pre>
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
             </li>
         </ol>
     </div>

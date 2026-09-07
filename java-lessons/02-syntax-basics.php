@@ -35,28 +35,24 @@
 </ul>
 
 <h3>Example</h3>
-<pre><code class="language-java">// This is a single-line comment
-public class SyntaxDemo {
-    public static void main(String[] args) {
+<pre><code class="language-java">public class Main {                         // Class is a container for code
+    public static void main(String[] args) { // Main method is the entry point
         // Print text to the console
-        System.out.println("Line 1: Java syntax is straightforward!");
-        System.out.print("Line 2: ");       // print without newline
-        System.out.println("Same line continued.");
+        System.out.println("Hello!");        // println adds a new line
+        System.out.print("World");           // print stays on same line
+        System.out.println("!");             // This continues on same line
 
-        /* This is a multi-line comment.
-           It spans multiple lines. */
-        String course = "Java Basics";
-        int lessonNumber = 2;
-        System.out.println("Course: " + course);
-        System.out.println("Lesson: " + lessonNumber);
+        // Variables store data
+        String name = "Maria";               // String holds text
+        int age = 21;                        // int holds whole numbers
+        System.out.println(name + " is " + age); // Combine text with +
     }
 }
 </code></pre>
 <strong>Output:</strong>
-<pre>Line 1: Java syntax is straightforward!
-Line 2: Same line continued.
-Course: Java Basics
-Lesson: 2</pre>
+<pre>Hello!
+World!
+Maria is 21</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 
@@ -99,27 +95,24 @@ Lesson: 2</pre>
     <summary>Teacher Answer Key (Click to reveal)</summary>
     <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
         <p><strong>Answers:</strong></p>
-        <pre><code class="language-java">public class ProfileCard {
-    public static void main(String[] args) {
-        // Store profile information in variables
-        String name = "Alice Johnson";
-        int age = 25;
-        String city = "Manila";
+        <pre><code class="language-java">public class Main {                         // Main class
+    public static void main(String[] args) { // Entry point
+        String name = "Ana";                 // Store name
+        int age = 20;                        // Store age
+        String city = "Manila";              // Store city
 
-        /* Display the profile card
-           Each piece of info is printed on its own line */
-        System.out.println("=== Profile Card ===");
-        System.out.println("Name: " + name);
-        System.out.println("Age: " + age);
-        System.out.println("City: " + city);
-        System.out.println("====================");
+        System.out.println("=== Profile Card ==="); // Print header
+        System.out.println("Name: " + name);        // Print name
+        System.out.println("Age: " + age);           // Print age
+        System.out.println("City: " + city);         // Print city
+        System.out.println("===================="); // Print footer
     }
 }
 </code></pre>
         <p><strong>Output:</strong></p>
         <pre>=== Profile Card ===
-Name: Alice Johnson
-Age: 25
+Name: Ana
+Age: 20
 City: Manila
 ====================</pre>
     </div>

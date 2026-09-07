@@ -35,33 +35,32 @@
 
 <h3>Example</h3>
 <pre><code class="language-php">&lt;?php
+// Store a price
 $price = 29.99;
-$taxRate = 0.08;
-$tax = $price * $taxRate;
+echo "Price: " . $price;
+
+// Calculate 8% tax
+echo "\n";
+$tax = $price * 0.08;
+echo "Tax: " . round($tax, 2);
+
+// Calculate total
+echo "\n";
 $total = $price + $tax;
+echo "Total: " . round($total, 2);
 
-echo "Price: $" . number_format($price, 2);
+// Round numbers
 echo "\n";
-echo "Tax (8%): $" . number_format($tax, 2);
+echo "Round 3.7: " . round(3.7);
 echo "\n";
-echo "Total: $" . number_format($total, 2);
-echo "\n";
-
-// Rounding
-echo "Round: " . round(3.7);  // 4
-echo "\n";
-echo "Ceil: " . ceil(4.1);    // 5 (round up)
-echo "\n";
-echo "Floor: " . floor(4.9);  // 4 (round down)
-?&gt;
+echo "Round 3.2: " . round(3.2);
 </code></pre>
 <strong>Output:</strong>
-<pre>Price: $29.99
-Tax (8%): $2.40
-Total: $32.39
-Round: 4
-Ceil: 5
-Floor: 4</pre>
+<pre>Price: 29.99
+Tax: 2.4
+Total: 32.39
+Round 3.7: 4
+Round 3.2: 3</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 

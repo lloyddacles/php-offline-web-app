@@ -28,43 +28,25 @@
 <p>Lists use square brackets <code>[]</code> and support methods like <code>append()</code>, <code>remove()</code>, <code>sort()</code>, and <code>pop()</code>. Tuples use parentheses <code>()</code> and support indexing and unpacking but no modification methods. Both support slicing with <code>list[start:stop:step]</code>. List comprehensions provide a concise way to create filtered or transformed lists.</p>
 
 <h3>Example</h3>
-<pre><code class="language-python"># Lists - mutable
-fruits = ["apple", "banana", "cherry"]
-fruits.append("date")
-fruits.insert(1, "blueberry")
-print(f"Fruits: {fruits}")
+<pre><code class="language-python"># Create a list of grades
+grades = [85, 90, 78, 92, 88]
 
-# Slicing
-numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-print(f"First 3: {numbers[:3]}")
-print(f"Every 2nd: {numbers[::2]}")
-print(f"Reversed: {numbers[::-1]}")
+# Print each grade
+print("Grades:", grades)
 
-# List comprehension
-squares = [x ** 2 for x in range(1, 6)]
-evens = [x for x in range(20) if x % 2 == 0]
-print(f"Squares: {squares}")
-print(f"Evens: {evens}")
+# Add a new grade
+grades.append(95)
+print("After add:", grades)
 
-# Tuples - immutable
-point = (3, 4)
-x, y = point
-print(f"Point: x={x}, y={y}")
-
-# Tuple swapping
-a, b = 1, 2
-a, b = b, a
-print(f"Swapped: a={a}, b={b}")
+# Get the first and last grade
+print("First:", grades[0])
+print("Last:", grades[-1])
 </code></pre>
 <strong>Output:</strong>
-<pre>Fruits: ['apple', 'blueberry', 'banana', 'cherry', 'date']
-First 3: [0, 1, 2]
-Every 2nd: [0, 2, 4, 6, 8]
-Reversed: [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-Squares: [1, 4, 9, 16, 25]
-Evens: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
-Point: x=3, y=4
-Swapped: a=2, b=1</pre>
+<pre>Grades: [85, 90, 78, 92, 88]
+After add: [85, 90, 78, 92, 88, 95]
+First: 85
+Last: 95</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 <h3>Real-World Applications</h3>
@@ -108,22 +90,17 @@ Swapped: a=2, b=1</pre>
     <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
         <p><strong>Answers:</strong> Students should use list comprehensions and built-in functions.</p>
         <pre><code># Student grade analysis
-students = [("Alice", 92), ("Bob", 85), ("Charlie", 95),
-            ("Diana", 88), ("Eve", 91)]
+students = [("Alice", 92), ("Bob", 85), ("Charlie", 95)]
 
-# Extract scores using list comprehension
-scores = [score for name, score in students]
-print(f"Scores: {scores}")
+# Print each student
+for name, score in students:
+    print(name, "scored", score)
 
-# Find highest and average
+# Find highest score
+scores = [92, 85, 95]
 highest = max(scores)
-average = sum(scores) / len(scores)
-print(f"Highest: {highest}")
-print(f"Average: {average:.1f}")
-
-# Filter students above 90
-top_students = [name for name, score in students if score > 90]
-print(f"Students above 90: {top_students}")</code></pre>
+print("Highest:", highest)
+</code></pre>
     </div>
 </details>
 

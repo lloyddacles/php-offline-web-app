@@ -28,23 +28,20 @@
 <p>Python runs in two main modes: <strong>Interactive Mode (REPL)</strong> where you type commands and see results immediately, and <strong>Script Mode</strong> where you save code in <code>.py</code> files and run them. Python reads your code line by line, converting it to bytecode, and executes it — no separate compilation step needed.</p>
 
 <h3>Example</h3>
-<pre><code class="language-python"># Your first Python program
-print("Hello, World!")
-print("Welcome to Python!")
+<pre><code class="language-python"># Store student information
+name = "Juan"
+age = 20
+grade = "A"
 
-# Python variables (no type declaration needed)
-language = "Python"
-version = 3.11
-is_easy = True
-
-print(f"I'm learning {language} version {version}")
-print(f"Is it easy? {is_easy}")
+# Print the student report
+print("Student Name:", name)
+print("Age:", age)
+print("Grade:", grade)
 </code></pre>
 <strong>Output:</strong>
-<pre>Hello, World!
-Welcome to Python!
-I'm learning Python version 3.11
-Is it easy? True</pre>
+<pre>Student Name: Juan
+Age: 20
+Grade: A</pre>
 
 <h2>Part 3: Apply New Knowledge</h2>
 <h3>Real-World Applications</h3>
@@ -87,15 +84,13 @@ Is it easy? True</pre>
     <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
         <p><strong>Answers:</strong> Students should create variables and use print statements.</p>
         <pre><code># Company report script
-company_name = "TechNova Solutions"
+company = "TechNova"
 employees = 45
-is_hiring = True
+hiring = True
 
-print("===== Company Report =====")
-print(f"Company: {company_name}")
-print(f"Employees: {employees}")
-print(f"Currently Hiring: {is_hiring}")
-print("==========================")</code></pre>
+print("Company:", company)
+print("Employees:", employees)
+print("Hiring:", hiring)</code></pre>
     </div>
 </details>
 

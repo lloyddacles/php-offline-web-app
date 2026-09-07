@@ -33,27 +33,25 @@
 <h3>How It Works</h3>
 
 <h4>SQL Injection (Most Common Attack)</h4>
-<pre><code>-- VULNERABLE: User input goes directly into SQL
-&lt;?php
+<pre><code class="language-php">&lt;?php
+// VULNERABLE: User input goes directly into SQL
 $username = $_POST['username'];
 $password = $_POST['password'];
 
-$query = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
+$query = "SELECT * FROM users
+          WHERE username = '$username'
+          AND password = '$password'";
 $result = $pdo->query($query);
-?&gt;
-
--- Attack: User enters this as username:
--- ' OR '1'='1' --
-
--- Query becomes:
--- SELECT * FROM users WHERE username = '' OR '1'='1' --' AND password = ''
--- This returns ALL users! Attacker gets full access.</code></pre>
+?&gt;</code></pre>
+<p><strong>Attack:</strong> User enters <code>' OR '1'='1' --</code> as username. The query returns ALL users!</p>
 
 <h4>Prevention: Prepared Statements</h4>
-<pre><code>&lt;?php
+<pre><code class="language-php">&lt;?php
 // SAFE: Prepared statements separate data from SQL
 $stmt = $pdo->prepare(
-    "SELECT * FROM users WHERE username = :username AND password = :password"
+    "SELECT * FROM users
+     WHERE username = :username
+     AND password = :password"
 );
 
 $stmt->execute([
@@ -62,18 +60,14 @@ $stmt->execute([
 ]);
 
 $user = $stmt->fetch();
-// Even malicious input is treated as literal data, not SQL code
 ?&gt;</code></pre>
 
 <h3>Example</h3>
 
 <h4>Authentication &amp; Passwords</h4>
-<pre><code>&lt;?php
-// NEVER store plain text passwords!
-
+<pre><code class="language-php">&lt;?php
 // Hash a password (when creating user)
 $hash = password_hash('user_password', PASSWORD_DEFAULT);
-// Stored: $2y$10$N9qo8uLOickgx2ZMRZoMye... (one-way hash)
 
 // Verify a password (when logging in)
 if (password_verify($input_password, $stored_hash)) {
@@ -81,38 +75,52 @@ if (password_verify($input_password, $stored_hash)) {
 } else {
     echo "Wrong password.";
 }
-
-// ALWAYS use password_hash() and password_verify()
-// They use bcrypt by default (secure, salted, slow to brute force)
 ?&gt;</code></pre>
 
 <h4>Access Control</h4>
-<pre><code>-- Create a user with limited privileges
-CREATE USER 'app_user'@'localhost' IDENTIFIED BY 'secure_password';
+<pre><code class="language-sql">-- Create a user with limited privileges
+CREATE USER 'app_user'@'localhost'
+IDENTIFIED BY 'secure_password';
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
--- Grant specific permissions only
-GRANT SELECT, INSERT, UPDATE ON school.* TO 'app_user'@'localhost';
+<pre><code class="language-sql">-- Grant specific permissions only
+GRANT SELECT, INSERT, UPDATE
+ON school.* TO 'app_user'@'localhost';
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
--- Revoke dangerous permissions
-REVOKE DELETE, DROP, ALTER ON school.* FROM 'app_user'@'localhost';
-
--- View grants
+<pre><code class="language-sql">-- View grants
 SHOW GRANTS FOR 'app_user'@'localhost';
-
--- Drop a user
-DROP USER 'app_user'@'localhost';</code></pre>
+</code></pre>
+<strong>Output:</strong>
+<pre>+----------------------------------------------------+
+| Grants for app_user@localhost                       |
++----------------------------------------------------+
+| GRANT SELECT, INSERT, UPDATE ON school.* TO ...    |
++----------------------------------------------------+</pre>
 
 <h4>Data Encryption</h4>
-<pre><code>-- Encrypt sensitive data in the database
--- Column-level encryption (application level)
+<pre><code class="language-sql">-- Encrypt sensitive data
 INSERT INTO users (name, ssn_encrypted)
 VALUES ('Alice', AES_ENCRYPT('123-45-6789', 'secret_key'));
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 1 row affected</pre>
 
--- Decrypt when reading
-SELECT name, AES_DECRYPT(ssn_encrypted, 'secret_key') AS ssn
+<pre><code class="language-sql">-- Decrypt when reading
+SELECT name,
+       AES_DECRYPT(ssn_encrypted, 'secret_key') AS ssn
 FROM users;
-
--- Note: Key management is critical — never hardcode keys!</code></pre>
+</code></pre>
+<strong>Output:</strong>
+<pre>+-------+-------------+
+| name  | ssn         |
++-------+-------------+
+| Alice | 123-45-6789 |
++-------+-------------+</pre>
 
 <h3>Principle of Least Privilege</h3>
 <table>
@@ -126,31 +134,34 @@ FROM users;
         <tr><td><strong>Backup Service</strong></td><td>SELECT (to read data for backup)</td></tr>
     </tbody>
 </table>
-<pre><code>-- Give minimum required permissions
--- BAD: Giving all privileges to web app
+<pre><code class="language-sql">-- BAD: Giving all privileges
 GRANT ALL PRIVILEGES ON *.* TO 'app_user'@'localhost';
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
--- GOOD: Give only what's needed
-GRANT SELECT, INSERT, UPDATE ON school.students TO 'app_user'@'localhost';
-GRANT SELECT ON school.courses TO 'app_user'@'localhost';</code></pre>
+<pre><code class="language-sql">-- GOOD: Give only what's needed
+GRANT SELECT, INSERT, UPDATE
+ON school.students TO 'app_user'@'localhost';
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
 <h3>Error Handling (Don't Leak Info)</h3>
-<pre><code>&lt;?php
+<pre><code class="language-php">&lt;?php
 // BAD: Show raw database errors to users
 try {
     $pdo->query("SELECT * FROM nonexistent");
 } catch (PDOException $e) {
-    echo $e->getMessage();
-    // Exposes: "Table 'school.nonexistent' doesn't exist"
+    echo $e->getMessage();  // Exposes table name!
 }
 
 // GOOD: Log errors, show generic message
 try {
     $pdo->query("SELECT * FROM nonexistent");
 } catch (PDOException $e) {
-    error_log("Database error: " . $e->getMessage());
-    echo "An error occurred. Please try again later.";
-    // User sees nothing useful to an attacker
+    error_log("DB error: " . $e->getMessage());
+    echo "An error occurred. Please try again.";
 }
 ?&gt;</code></pre>
 
@@ -203,38 +214,44 @@ try {
                 </ul>
             </li>
             <li>
-                <pre><code>&lt;?php
+                <pre><code class="language-php">&lt;?php
+// Safe login with prepared statements
 $stmt = $pdo->prepare(
-    "SELECT user_id, password_hash, role
-     FROM users
-     WHERE username = :username"
+    "SELECT id, password_hash, role
+     FROM users WHERE username = :username"
 );
 
 $stmt->execute([':username' => $_POST['username']]);
 $user = $stmt->fetch();
 
 if ($user && password_verify($_POST['password'], $user['password_hash'])) {
-    // Login successful — set session variables
-    $_SESSION['user_id'] = $user['user_id'];
+    $_SESSION['user_id'] = $user['id'];
     $_SESSION['role'] = $user['role'];
     echo "Welcome!";
 } else {
-    // Invalid credentials — show generic error
     echo "Invalid username or password.";
 }
 ?&gt;</code></pre>
             </li>
             <li>
-                <pre><code>-- Admin: full access
-GRANT ALL PRIVILEGES ON student_portal.* TO 'admin_role'@'localhost';
+                <pre><code class="language-sql">-- Admin: full access
+GRANT ALL PRIVILEGES ON portal.* TO 'admin_role'@'localhost';
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
--- Instructor: can view students and update grades
-GRANT SELECT ON student_portal.students TO 'instructor_role'@'localhost';
-GRANT SELECT, UPDATE ON student_portal.grades TO 'instructor_role'@'localhost';
+<pre><code class="language-sql">-- Instructor: can view and update grades
+GRANT SELECT ON portal.students TO 'instructor_role'@'localhost';
+GRANT SELECT, UPDATE ON portal.grades TO 'instructor_role'@'localhost';
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
 
--- Student: can only view own data (enforced at app level)
-GRANT SELECT ON student_portal.grades TO 'student_role'@'localhost';
--- Application code must filter: WHERE student_id = :current_user_id</code></pre>
+<pre><code class="language-sql">-- Student: can only view own grades
+GRANT SELECT ON portal.grades TO 'student_role'@'localhost';
+</code></pre>
+<strong>Output:</strong>
+<pre>Query OK, 0 rows affected</pre>
             </li>
         </ol>
     </div>
