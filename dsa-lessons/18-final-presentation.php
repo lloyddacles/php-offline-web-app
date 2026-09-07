@@ -1,15 +1,35 @@
-<?php $pageTitle = 'Final Project Presentation, Demonstration, and Technical Defense'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
+<?php $pageTitle = 'DSA Final Presentation'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
 <?php $num = 18; $prevNext = getPrevNextLesson($num, 'dsa-lessons'); ?>
 
 <div class="lesson-header">
     <span class="lesson-number">Lesson <?= $num ?></span>
-    <h1>Final Project Presentation, Demonstration, and Technical Defense</h1>
+    <h1>DSA Final Presentation</h1>
     <p class="lesson-desc">Prepare and deliver a professional project presentation. Demonstrate your working system and defend your technical decisions.</p>
 </div>
 
-<h2>Presentation Structure</h2>
-<p>A strong technical presentation follows this flow:</p>
+<h2>Part 1: Activate Prior Knowledge</h2>
+<p>Presenting technical work is a skill that combines communication with deep understanding. Think about your past experiences and consider these review questions:</p>
+<div class="info-box note">
+    <div class="box-title">Review Questions</div>
+    <ol>
+        <li>Have you ever had to explain a technical concept to someone who didn't know programming? What was challenging about it?</li>
+        <li>What is the difference between saying "I used a hash map" and "I used a hash map because it gives O(1) lookup, which is critical for searching 2,000 students"?</li>
+        <li>Why should you explain your data structure choices during a presentation, not just show that the code works?</li>
+        <li>What makes a live demo fail? How can you prepare for technical difficulties?</li>
+    </ol>
+</div>
 
+<h2>Part 2: Acquire New Knowledge</h2>
+
+<h3>Definition</h3>
+<p>A DSA final presentation is a structured demonstration of your project that shows: what problem you solved, how your data structures and algorithms work, why you made specific design choices, and proof that your system performs correctly.</p>
+
+<h3>Analogy</h3>
+<p>Think of a chef presenting a dish. They don't just put food on a plate — they explain the ingredients (data structures), the cooking technique (algorithms), why they chose those flavors (design decisions), and let you taste the result (live demo). A great presentation convinces the audience the dish was crafted with skill, not luck.</p>
+
+<h3>How It Works (Step by Step)</h3>
+
+<h4>Presentation Structure</h4>
 <pre>
 1. Opening (2 min)
    → Problem statement and motivation
@@ -24,7 +44,7 @@
    → Algorithm complexity analysis
    → Code architecture overview
 
-4. Results & Testing (2 min)
+4. Results and Testing (2 min)
    → Test results
    → Performance benchmarks
 
@@ -36,18 +56,18 @@
    → Answer technical questions
 </pre>
 
-<h2>Opening: Problem Statement</h2>
+<h4>Opening Statement Template</h4>
 <div class="info-box note">
     <div class="box-title">Template</div>
     <p>"Our project solves [PROBLEM] for [USERS]. Without this system, [CURRENT PAIN POINT]. Our solution uses [APPROACH] to achieve [RESULT] with [COMPLEXITY] performance."</p>
 </div>
 
-<h3>Example Opening</h3>
+<h4>Example Opening</h4>
 <blockquote style="border-left:3px solid var(--accent); padding:12px 16px; background:var(--bg-surface); border-radius:var(--radius); margin:16px 0;">
 "Our Student Performance Tracker solves the problem of manual grade computation for 500+ students. Without it, instructors spend 3+ hours per grading period. Our solution uses hash maps for O(1) lookups and merge sort for ranking, computing class rankings in under 50ms."
 </blockquote>
 
-<h2>Live Demo Script</h2>
+<h4>Live Demo Script</h4>
 <pre><code class="language-php">&lt;?php
 // Demo flow — show these features in order:
 $demoSteps = [
@@ -83,10 +103,10 @@ $demoSteps = [
     ]
 ];</code></pre>
 
-<h2>Technical Defense: Common Questions</h2>
+<h4>Technical Defense: Common Questions</h4>
 
 <table>
-    <thead><tr><th>Question</th><strong>Good Answer</th></tr></thead>
+    <thead><tr><th>Question</th><th>Good Answer</th></tr></thead>
     <tbody>
         <tr>
             <td><strong>Why hash map instead of array?</strong></td>
@@ -115,7 +135,7 @@ $demoSteps = [
     </tbody>
 </table>
 
-<h2>Complexity Cheat Sheet</h2>
+<h4>Complexity Cheat Sheet</h4>
 <pre>
 Data Structure     Access    Search    Insert    Delete    Use Case
 ─────────────────────────────────────────────────────────────────────
@@ -128,17 +148,7 @@ Graph (adj list)   O(1)      O(V+E)    O(1)      O(V+E)   Relationships
 Heap               N/A       O(n)      O(log n)  O(log n)  Priority queue
 </pre>
 
-<h2>Presentation Tips</h2>
-<ul>
-    <li><strong>Practice timing</strong> — Aim for 15 minutes total</li>
-    <li><strong>Show, don't tell</strong> — Live demo beats slides</li>
-    <li><strong>Know your numbers</strong> — Recite complexity from memory</li>
-    <li><strong>Be honest</strong> — Acknowledge limitations and improvements</li>
-    <li><strong>Prepare for questions</strong> — Think "why did you choose X?" for every decision</li>
-    <li><strong>Have a backup</strong> — Screenshot or video in case live demo fails</li>
-</ul>
-
-<h2>Grading Rubric</h2>
+<h4>Grading Rubric</h4>
 <table>
     <thead><tr><th>Criteria</th><th>Weight</th><th>What's Evaluated</th></tr></thead>
     <tbody>
@@ -151,24 +161,7 @@ Heap               N/A       O(n)      O(log n)  O(log n)  Priority queue
     </tbody>
 </table>
 
-<h2>Final Checklist</h2>
-<ul>
-    <li>□ All features working and tested</li>
-    <li>□ README with project overview and complexity table</li>
-    <li>□ Test results showing all cases pass</li>
-    <li>□ Performance benchmarks for key operations</li>
-    <li>□ Presentation slides or demo script ready</li>
-    <li>□ Practiced full presentation (under 15 min)</li>
-    <li>□ Prepared answers for common technical questions</li>
-    <li>□ Backup screenshots in case demo fails</li>
-</ul>
-
-<div class="info-box tip">
-    <div class="box-title">Congratulations!</div>
-    <p>You've completed the entire DSA course. You now understand the fundamental data structures, algorithm design strategies, and how to apply them to real projects. These skills form the foundation of efficient software development.</p>
-</div>
-
-<h2>Python Implementation</h2>
+<h3>Python Implementation</h3>
 <pre><code class="language-python">from student_store import StudentStore, Student
 from rank_service import RankService
 from course_graph import CourseGraph
@@ -212,7 +205,7 @@ def main():
 if __name__ == "__main__":
     main()</code></pre>
 
-<h2>Java Implementation</h2>
+<h3>Java Implementation</h3>
 <pre><code class="language-java">import java.util.*;
 
 public class Main {
@@ -256,6 +249,85 @@ public class Main {
         System.out.println("Mean GPA: " + stats.get("mean") + ", Highest: " + stats.get("highest"));
     }
 }</code></pre>
+
+<h2>Part 3: Apply New Knowledge</h2>
+
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>Job Interviews:</strong> Technical interviews require explaining your approach before coding</li>
+    <li><strong>Client Presentations:</strong> Demonstrating value to non-technical stakeholders</li>
+    <li><strong>Team Standups:</strong> Communicating progress and technical decisions clearly</li>
+    <li><strong>Open Source:</strong> Writing READMEs and demos that help others adopt your project</li>
+</ul>
+
+<h3>Tips for Success</h3>
+<ul>
+    <li><strong>Practice timing</strong> — Aim for 15 minutes total; rehearse at least 3 times</li>
+    <li><strong>Show, don't tell</strong> — Live demo beats slides every time</li>
+    <li><strong>Know your numbers</strong> — Recite complexity from memory; don't read from notes</li>
+    <li><strong>Be honest</strong> — Acknowledge limitations and what you'd improve</li>
+    <li><strong>Prepare for questions</strong> — Think "why did you choose X?" for every decision</li>
+    <li><strong>Have a backup</strong> — Screenshots or video in case the live demo fails</li>
+</ul>
+
+<h3>When to Use This</h3>
+<table>
+    <thead><tr><th>Presentation Type</th><th>Focus</th><th>Duration</th></tr></thead>
+    <tbody>
+        <tr><td>Class project demo</td><td>Working code + technical choices</td><td>10-15 min</td></tr>
+        <tr><td>Capstone defense</td><td>Architecture + complexity + results</td><td>15-20 min</td></tr>
+        <tr><td>Interview walkthrough</td><td>Problem-solving process + tradeoffs</td><td>5-10 min</td></tr>
+        <tr><td>Client pitch</td><td>Business value + demo + scalability</td><td>20-30 min</td></tr>
+    </tbody>
+</table>
+
+<h2>Part 4: Assess Your Learning</h2>
+
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You have completed the Student Performance Tracking System. Your instructor has asked you to prepare a 5-minute presentation covering your project.</p>
+    <p><strong>Task:</strong> Prepare the following:</p>
+    <ol>
+        <li><strong>Opening statement:</strong> Write a 3-sentence opening that explains the problem, your solution, and the key performance metric.</li>
+        <li><strong>Demo flow:</strong> List 4 features you will demonstrate in order, with the command you will run and the expected output for each.</li>
+        <li><strong>Technical defense:</strong> Prepare answers for these 3 questions:
+            <ul>
+                <li>"Why did you use a hash map instead of an array for student storage?"</li>
+                <li>"What is the time complexity of ranking students, and can it be improved?"</li>
+                <li>"What would happen if you needed to add 100,000 students? What would you change?"</li>
+            </ul>
+        </li>
+    </ol>
+</div>
+
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answer 1: Opening Statement</strong></p>
+        <blockquote style="border-left:3px solid var(--accent); padding:12px 16px; background:var(--bg-surface); border-radius:var(--radius); margin:16px 0;">
+        "The Student Performance Tracking System solves the problem of manually managing grades and rankings for 2,000 students. Our solution uses hash maps for instant student lookups and merge sort for class ranking, reducing a process that takes hours to under 100 milliseconds. The system also uses a directed acyclic graph to verify course prerequisites, ensuring students only enroll in courses they are qualified for."
+        </blockquote>
+
+        <p><strong>Answer 2: Demo Flow</strong></p>
+        <ol>
+            <li><strong>Add student:</strong> <code>$store->add(new Student("2024-010", "Ana Garcia", "BSCS"));</code> → Output: "Student added successfully"</li>
+            <li><strong>Search by name:</strong> <code>$store->searchByName("Garcia");</code> → Output: "[Student: Ana Garcia, BSCS]"</li>
+            <li><strong>Show rankings:</strong> <code>RankService::rankByGPA($store->getAll());</code> → Output: "1. Juan (3.85) 2. Maria (3.80) 3. Pedro (3.60)"</li>
+            <li><strong>Check prerequisites:</strong> <code>$graph->canTake("DSA", ["Programming 1"]);</code> → Output: "true"</li>
+        </ol>
+
+        <p><strong>Answer 3: Technical Defense</strong></p>
+
+        <p><em>Q: "Why hash map instead of array?"</em></p>
+        <p>"A hash map provides O(1) average-case lookup by student ID, compared to O(n) for an array. With 2,000 students, searching an array requires checking up to 2,000 elements, while a hash map finds the student in constant time. The tradeoff is slightly more memory usage, but the performance gain for our read-heavy workload is significant."</p>
+
+        <p><em>Q: "What is the time complexity of ranking, and can it be improved?"</em></p>
+        <p>"Ranking uses merge sort, which is O(n log n). This is theoretically optimal for comparison-based sorting. We could improve practical performance by using a partial sort (quickselect) if we only need the top-K students, reducing it to O(n). For the full ranking, O(n log n) is the best we can achieve."</p>
+
+        <p><em>Q: "What if you needed 100,000 students?"</em></p>
+        <p>"The hash map would still work well — O(1) lookup scales linearly. However, the O(n log n) ranking would take about 1.7 million operations for 100,000 students, which is still under a second. I would add: (1) database persistence instead of in-memory storage, (2) pagination for ranking results, and (3) caching frequently accessed rankings to avoid recomputation."</p>
+    </div>
+</details>
 
 <?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

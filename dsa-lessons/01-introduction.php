@@ -4,26 +4,42 @@
 <div class="lesson-header">
     <span class="lesson-number">Lesson <?= $num ?></span>
     <h1>Introduction to Data Structures & Algorithms</h1>
-    <p class="lesson-desc">Learn what data structures and algorithms are, why they matter, and how PHP arrays serve as a powerful foundation.</p>
+    <p class="lesson-desc">Learn what data structures and algorithms are, why they matter, and how they power the software we use every day.</p>
 </div>
 
-<h2>What Are Data Structures?</h2>
-<p>A <strong>data structure</strong> is a way of organizing and storing data so that it can be accessed and modified efficiently. Think of it as a container that holds data in a specific layout.</p>
-
+<!-- PART 1 -->
+<h2>Part 1: Activate Prior Knowledge</h2>
+<p>Before we dive into data structures and algorithms, let's make sure you have the foundational concepts down. Think about how you use lists, dictionaries, and step-by-step instructions in everyday life.</p>
 <div class="info-box note">
-    <div class="box-title">Real-World Analogy</div>
-    <p>A <strong>library</strong> organizes books by category, author, and title. Without this system, finding a specific book would be chaotic. Data structures do the same thing for information in programs.</p>
+    <div class="box-title">Review Questions</div>
+    <ol>
+        <li>What is a program, and what role does data play in making a program useful?</li>
+        <li>Imagine you have a pile of unsorted exam papers. Describe the steps you would take to arrange them by student name. What does this process have in common with a computer algorithm?</li>
+        <li>Why might storing 100 student records in a notebook be different from storing them in a spreadsheet? What advantages does structured storage offer?</li>
+    </ol>
 </div>
 
-<h2>Why Learn DSA?</h2>
-<ul>
-    <li><strong>Efficiency:</strong> Choose the right structure to make programs faster</li>
-    <li><strong>Problem Solving:</strong> Break complex problems into manageable pieces</li>
-    <li><strong>Interviews:</strong> DSA questions are common in technical interviews</li>
-    <li><strong>Scalability:</strong> Handle larger datasets without performance issues</li>
-</ul>
+<!-- PART 2 -->
+<h2>Part 2: Acquire New Knowledge</h2>
 
-<h2>Types of Data Structures</h2>
+<h3>Definition</h3>
+<p>A <strong>data structure</strong> is a way of organizing and storing data so that it can be accessed and modified efficiently. An <strong>algorithm</strong> is a step-by-step procedure for solving a problem or performing a computation. Together, DSA (Data Structures & Algorithms) forms the backbone of efficient software.</p>
+
+<h3>Analogy</h3>
+<p>Think of a <strong>library</strong>. Books are organized by category, author, and title. Without this system, finding a specific book would be chaotic. Data structures do the same thing for information in programs &mdash; they provide organized containers. Algorithms are like the <strong>library's checkout process</strong>: a clear set of steps to find, retrieve, and return a book efficiently.</p>
+
+<h3>How It Works (Step by Step)</h3>
+<p>Every program handles data. Here's how DSA connects:</p>
+<ol>
+    <li><strong>Data</strong> is raw facts &mdash; numbers, names, records (e.g., a student's name and grade).</li>
+    <li><strong>Information</strong> is data that has been processed and organized to be meaningful.</li>
+    <li>A <strong>data structure</strong> decides how that data is stored in memory.</li>
+    <li>An <strong>algorithm</strong> decides how to process that data &mdash; searching, sorting, or transforming it.</li>
+    <li>Choosing the right structure and algorithm determines whether your program is fast or slow, efficient or wasteful.</li>
+</ol>
+
+<h3>Types of Data Structures</h3>
+<p>Data structures are broadly classified into two categories:</p>
 
 <table>
     <thead>
@@ -47,7 +63,15 @@
     </tbody>
 </table>
 
-<h2>PHP Arrays: The Swiss Army Knife</h2>
+<h3>Why DSA Matters</h3>
+<ul>
+    <li><strong>Efficiency:</strong> Choose the right structure to make programs faster</li>
+    <li><strong>Problem Solving:</strong> Break complex problems into manageable pieces</li>
+    <li><strong>Interviews:</strong> DSA questions are common in technical interviews</li>
+    <li><strong>Scalability:</strong> Handle larger datasets without performance issues</li>
+</ul>
+
+<h3>PHP Implementation</h3>
 <p>PHP arrays are incredibly versatile. They can function as indexed arrays, associative arrays, and even multidimensional structures&mdash;all built into one data type.</p>
 
 <div class="sandbox">
@@ -83,28 +107,9 @@ print_r($students);
     </div>
 </div>
 
-<h2>What Is an Algorithm?</h2>
-<p>An <strong>algorithm</strong> is a step-by-step procedure for solving a problem or performing a computation. It's like a recipe&mdash;follow the instructions, and you get a result.</p>
-
-<div class="info-box tip">
-    <div class="box-title">Key Insight</div>
-    <p class="mb-0">The same problem can be solved with different algorithms. The goal is to find one that balances <strong>speed</strong>, <strong>memory usage</strong>, and <strong>readability</strong>.</p>
-</div>
-
-<h2>Course Overview</h2>
-<p>In this lesson series, we will cover:</p>
-<ol>
-    <li><strong>Big O Notation</strong> &mdash; Measuring algorithm efficiency</li>
-    <li><strong>Arrays & Strings</strong> &mdash; Fundamental building blocks</li>
-    <li><strong>Linked Lists</strong> &mdash; Dynamic sequential data</li>
-    <li><strong>Stacks & Queues</strong> &mdash; LIFO and FIFO structures</li>
-    <li><strong>Trees & Graphs</strong> &mdash; Hierarchical data</li>
-    <li><strong>Sorting & Searching</strong> &mdash; Essential algorithms</li>
-</ol>
-
 <div class="sandbox">
     <div class="sandbox-header">
-        <span class="label">Try It Yourself</span>
+        <span class="label">Try It Yourself &mdash; Simple Algorithm</span>
     </div>
     <textarea class="sandbox-code" data-example="<?= base64_encode('<?php
 // Simple algorithm: Finding the maximum value
@@ -138,7 +143,7 @@ echo "Reversed: " . implode(", ", $reversed) . "\n";
     </div>
 </div>
 
-<h2>Python Implementation</h2>
+<h3>Python Implementation</h3>
 <pre><code class="language-python">
 # Python lists (dynamic arrays)
 fruits = ["Apple", "Banana", "Cherry"]
@@ -162,7 +167,7 @@ print("Reversed:", numbers[::-1])
 print("Sorted:", sorted(numbers))
 </code></pre>
 
-<h2>Java Implementation</h2>
+<h3>Java Implementation</h3>
 <pre><code class="language-java">
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -201,13 +206,61 @@ public class Main {
 }
 </code></pre>
 
-<div class="lesson-nav">
-    <?php if ($prevNext['prev']): ?>
-        <a href="<?= lessonUrl($prevNext['prev']['num'], $prevNext['prev']['slug'], 'dsa-lessons') ?>" class="prev-link">&larr; Previous: <?= htmlspecialchars($prevNext['prev']['title']) ?></a>
-    <?php endif; ?>
-    <?php if ($prevNext['next']): ?>
-        <a href="<?= lessonUrl($prevNext['next']['num'], $prevNext['next']['slug'], 'dsa-lessons') ?>" class="next-link">Next: <?= htmlspecialchars($prevNext['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
+<!-- PART 3 -->
+<h2>Part 3: Apply New Knowledge</h2>
+
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>Social Media Feeds:</strong> Posts are stored in arrays or lists and sorted by time or relevance. Algorithms decide which posts appear first in your feed.</li>
+    <li><strong>GPS Navigation:</strong> Maps are represented as graphs. Shortest-path algorithms (like Dijkstra's) find the fastest route from point A to B.</li>
+    <li><strong>Search Engines:</strong> Web pages are indexed using hash tables and trees. Search algorithms retrieve relevant results in milliseconds.</li>
+</ul>
+
+<h3>Tips for Success</h3>
+<ul>
+    <li>Always ask: "What data am I working with, and what do I need to do with it?" This helps you choose the right data structure.</li>
+    <li>Start simple. Arrays and loops are powerful enough for many problems.</li>
+    <li>Practice translating real-world processes (like sorting mail) into step-by-step instructions.</li>
+</ul>
+
+<h3>When to Use This</h3>
+<table>
+    <thead><tr><th>Use When...</th><th>Avoid When...</th></tr></thead>
+    <tbody>
+        <tr><td>You need to organize or retrieve data efficiently</td><td>The problem is trivial and doesn't involve data processing</td></tr>
+        <tr><td>Your program handles large datasets</td><td>Hard-coding a solution is simpler and faster to write</td></tr>
+        <tr><td>Performance and scalability matter</td><td>The data size is small and fixed (e.g., a 5-item list)</td></tr>
+    </tbody>
+</table>
+
+<!-- PART 4 -->
+<h2>Part 4: Assess Your Learning</h2>
+
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You are building a student grade book system for a school with 500 students. The system needs to store each student's name, ID number, and grades across 5 subjects. Teachers need to look up a student by ID, add new students, remove graduated students, and generate a class ranking sorted by GPA.</p>
+    <p><strong>Task:</strong> Identify what data needs to be stored and what operations are needed. Answer the following:</p>
+    <ol>
+        <li>List all the pieces of data (fields) that need to be stored for each student. Which data structure from this lesson would you use to store a single student's record? Why?</li>
+        <li>List all the operations the system must perform. For each operation, describe it in plain English as a step-by-step procedure (an algorithm).</li>
+        <li>Which operation do you think would be the slowest if the school grows to 10,000 students? How might choosing a different data structure help?</li>
+    </ol>
 </div>
 
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answer 1:</strong> Fields: name (string), ID number (integer), grades for 5 subjects (array of numbers). A <strong>PHP associative array</strong> (or Python dictionary / Java HashMap) works well for a single student because it maps field names to values: <code>['name' => 'Juan', 'id' => 1001, 'grades' => [90, 85, 92, 88, 95]]</code>.</p>
+        <p><strong>Answer 2:</strong></p>
+        <ul>
+            <li><em>Look up by ID:</em> Loop through all students, compare each ID to the target. Return the matching student. (Linear search, O(n))</li>
+            <li><em>Add student:</em> Create a new student record and append it to the list of students. (Append to array, O(1))</li>
+            <li><em>Remove student:</em> Find the student by ID, then remove that entry from the list. (Search + delete, O(n))</li>
+            <li><em>Rank by GPA:</em> Calculate GPA for each student, then sort the list by GPA in descending order. (Sorting, O(n log n))</li>
+        </ul>
+        <p><strong>Answer 3:</strong> The <strong>rank/sort operation</strong> would be slowest with a simple array at 10,000 students (O(n log n)). The <strong>lookup by ID</strong> is also slow at O(n). A <strong>hash table</strong> (associative array) could make lookups O(1) by using student ID as the key. A <strong>tree-based structure</strong> could maintain sorted order more efficiently.</p>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

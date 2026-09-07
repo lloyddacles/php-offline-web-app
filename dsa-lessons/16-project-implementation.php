@@ -1,15 +1,35 @@
-<?php $pageTitle = 'Course Project Implementation and Integration'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
+<?php $pageTitle = 'DSA Project Implementation'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
 <?php $num = 16; $prevNext = getPrevNextLesson($num, 'dsa-lessons'); ?>
 
 <div class="lesson-header">
     <span class="lesson-number">Lesson <?= $num ?></span>
-    <h1>Course Project Implementation and Integration</h1>
-    <p class="lesson-desc">Build your DSA project step by step — modular design, PHP implementation patterns, and integrating multiple data structures.</p>
+    <h1>DSA Project Implementation</h1>
+    <p class="lesson-desc">Build your DSA project step by step — modular design, implementation patterns, and integrating multiple data structures.</p>
 </div>
 
-<h2>Modular Design Principle</h2>
-<p>Build each data structure as a <strong>separate class</strong>, then combine them in your main application.</p>
+<h2>Part 1: Activate Prior Knowledge</h2>
+<p>Now that you've planned your project, it's time to implement. Consider what you already know about writing organized code:</p>
+<div class="info-box note">
+    <div class="box-title">Review Questions</div>
+    <ol>
+        <li>What is a class? How does it differ from a function? Why do we use classes for complex data?</li>
+        <li>What is encapsulation? How does hiding internal details make code easier to maintain?</li>
+        <li>Why do we separate code into different files or modules? What problems does this solve?</li>
+        <li>If you have a HashMap and need to add a new feature, what is the advantage of modifying one class vs rewriting all your code?</li>
+    </ol>
+</div>
 
+<h2>Part 2: Acquire New Knowledge</h2>
+
+<h3>Definition</h3>
+<p>Modular design means building each data structure and service as a <strong>separate class</strong>, with clear interfaces, then combining them in your main application. Each module handles one responsibility.</p>
+
+<h3>Analogy</h3>
+<p>Think of a car factory. The engine team builds engines, the transmission team builds transmissions, and the assembly line connects them. Each team works independently with a clear interface (bolt patterns, shaft sizes). If the engine design changes, the transmission team isn't affected.</p>
+
+<h3>How It Works (Step by Step)</h3>
+
+<h4>Project Structure</h4>
 <pre><code class="language-php">&lt;?php
 // Project structure:
 // project/
@@ -27,9 +47,7 @@
 //   │   └── SearchService.php
 //   └── index.php (main app)</code></pre>
 
-<h2>Core Classes</h2>
-
-<h3>Student Model</h3>
+<h4>Student Class</h4>
 <pre><code class="language-php">&lt;?php
 class Student {
     public string $id;
@@ -63,7 +81,7 @@ class Student {
     }
 }</code></pre>
 
-<h3>HashMap for Fast Lookups</h3>
+<h4>StudentStore (HashMap)</h4>
 <pre><code class="language-php">&lt;?php
 class StudentStore {
     private array $byId = [];      // id => Student
@@ -105,9 +123,19 @@ class StudentStore {
     public function count(): int {
         return count($this->byId);
     }
+
+    public function delete(string $id): bool {
+        if (!isset($this->byId[$id])) return false;
+        $student = $this->byId[$id];
+        unset($this->byId[$id]);
+        $nameKey = strtolower($student->name);
+        $this->byName[$nameKey] = array_diff($this->byName[$nameKey], [$id]);
+        $this->byCourse[$student->course] = array_diff($this->byCourse[$student->course], [$id]);
+        return true;
+    }
 }</code></pre>
 
-<h3>Ranking Service with Sorting</h3>
+<h4>RankService (Sorting)</h4>
 <pre><code class="language-php">&lt;?php
 class RankService {
     public static function rankByGPA(array $students): array {
@@ -144,7 +172,7 @@ class RankService {
     }
 }</code></pre>
 
-<h3>Graph for Course Prerequisites</h3>
+<h4>CourseGraph (Graph)</h4>
 <pre><code class="language-php">&lt;?php
 class CourseGraph {
     private array $adjList = [];  // course => [prerequisites]
@@ -189,7 +217,7 @@ class CourseGraph {
     }
 }</code></pre>
 
-<h2>Integration: Main Application</h2>
+<h4>Integration: Main Application</h4>
 <pre><code class="language-php">&lt;?php
 // Main app — brings everything together
 $store = new StudentStore();
@@ -224,22 +252,7 @@ $graph->addEdge('Web Dev', 'HTML/CSS');
 
 $order = $graph->topologicalSort();</code></pre>
 
-<h2>Implementation Checklist</h2>
-<table>
-    <thead><tr><th>Phase</th><th>Task</th><th>Status</th></tr></thead>
-    <tbody>
-        <tr><td>1</td><td>Create Student/Course classes</td><td>□</td></tr>
-        <tr><td>2</td><td>Implement HashMap storage</td><td>□</td></tr>
-        <tr><td>3</td><td>Add sorting and ranking</td><td>□</td></tr>
-        <tr><td>4</td><td>Build search functionality</td><td>□</td></tr>
-        <tr><td>5</td><td>Create course prerequisite graph</td><td>□</td></tr>
-        <tr><td>6</td><td>Integrate all modules</td><td>□</td></tr>
-        <tr><td>7</td><td>Add error handling</td><td>□</td></tr>
-        <tr><td>8</td><td>Test edge cases</td><td>□</td></tr>
-    </tbody>
-</table>
-
-<h2>Python Implementation</h2>
+<h3>Python Implementation</h3>
 <pre><code class="language-python">class Student:
     def __init__(self, student_id, name, course):
         self.student_id = student_id
@@ -299,6 +312,15 @@ class StudentStore:
     def count(self):
         return len(self.by_id)
 
+    def delete(self, student_id):
+        if student_id not in self.by_id:
+            return False
+        student = self.by_id.pop(student_id)
+        name_key = student.name.lower()
+        self.by_name[name_key].remove(student_id)
+        self.by_course[student.course].remove(student_id)
+        return True
+
 
 # Usage
 store = StudentStore()
@@ -315,7 +337,7 @@ store.add(maria)
 print(store.search_by_name("Juan"))  # [Student object]
 print(store.count())  # 2</code></pre>
 
-<h2>Java Implementation</h2>
+<h3>Java Implementation</h3>
 <pre><code class="language-java">import java.util.*;
 import java.util.stream.Collectors;
 
@@ -390,6 +412,15 @@ class StudentStore {
         return byId.size();
     }
 
+    public boolean delete(String id) {
+        if (!byId.containsKey(id)) return false;
+        Student student = byId.remove(id);
+        String nameKey = student.getName().toLowerCase();
+        byName.get(nameKey).remove(id);
+        byCourse.get(student.getCourse()).remove(id);
+        return true;
+    }
+
     public static void main(String[] args) {
         StudentStore store = new StudentStore();
         Student juan = new Student("2024-001", "Juan Dela Cruz", "BSIT");
@@ -406,6 +437,273 @@ class StudentStore {
         System.out.println(store.count());  // 2
     }
 }</code></pre>
+
+<h2>Part 3: Apply New Knowledge</h2>
+
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>Web Applications:</strong> Separating data models, business logic, and presentation layers</li>
+    <li><strong>Mobile Apps:</strong> Repository pattern for data access, service layer for business logic</li>
+    <li><strong>API Development:</strong> Controllers, services, and models as separate modules</li>
+    <li><strong>Large Teams:</strong> Different developers can work on different modules simultaneously</li>
+</ul>
+
+<h3>Tips for Success</h3>
+<ul>
+    <li><strong>One class, one responsibility</strong> — if a class does too many things, split it</li>
+    <li><strong>Test each module independently</strong> — before integrating, make sure each piece works alone</li>
+    <li><strong>Use clear method names</strong> — <code>getById()</code> is better than <code>get()</code></li>
+    <li><strong>Handle edge cases early</strong> — what happens with null, empty, or duplicate inputs?</li>
+</ul>
+
+<h3>When to Use This</h3>
+<table>
+    <thead><tr><th>Scenario</th><th>Approach</th><th>Why</th></tr></thead>
+    <tbody>
+        <tr><td>Quick prototype</td><td>All-in-one script</td><td>Speed of development</td></tr>
+        <tr><td>Small project</td><td>2-3 classes</td><td>Organized but not over-engineered</td></tr>
+        <tr><td>Medium project</td><td>Full modular design</td><td>Maintainability and testability</td></tr>
+        <tr><td>Team project</td><td>Interface-based modules</td><td>Parallel development</td></tr>
+    </tbody>
+</table>
+
+<h2>Part 4: Assess Your Learning</h2>
+
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You are building the Student Performance Tracking System from Lesson 15. Your plan calls for a Student class and a StudentStore class using a HashMap for O(1) lookups.</p>
+    <p><strong>Task:</strong> Implement the following:</p>
+    <ol>
+        <li>A <strong>Student</strong> class with properties: id, name, course, grades (associative array). Include methods: <code>addGrade(subject, grade)</code>, <code>getGPA()</code>, and <code>toArray()</code>.</li>
+        <li>A <strong>StudentStore</strong> class that stores students in a HashMap by ID. Implement: <code>add(student)</code>, <code>getById(id)</code>, <code>searchByName(query)</code> (partial match), <code>delete(id)</code>, and <code>count()</code>.</li>
+        <li>Write test code that adds 3 students, searches for one by partial name, retrieves one by ID, deletes one, and confirms the count is correct.</li>
+    </ol>
+    <p>Write your solution in PHP, Python, and Java.</p>
+</div>
+
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answer: PHP Implementation</strong></p>
+        <pre><code>&lt;?php
+class Student {
+    public string $id;
+    public string $name;
+    public string $course;
+    public array $grades = [];
+
+    public function __construct(string $id, string $name, string $course) {
+        $this->id = $id;
+        $this->name = $name;
+        $this->course = $course;
+    }
+
+    public function addGrade(string $subject, float $grade): void {
+        $this->grades[$subject] = $grade;
+    }
+
+    public function getGPA(): float {
+        if (empty($this->grades)) return 0.0;
+        return round(array_sum($this->grades) / count($this->grades), 2);
+    }
+
+    public function toArray(): array {
+        return [
+            'id' => $this->id, 'name' => $this->name,
+            'course' => $this->course, 'grades' => $this->grades,
+            'gpa' => $this->getGPA()
+        ];
+    }
+}
+
+class StudentStore {
+    private array $byId = [];
+    private array $byName = [];
+
+    public function add(Student $student): void {
+        $this->byId[$student->id] = $student;
+        $key = strtolower($student->name);
+        $this->byName[$key][] = $student->id;
+    }
+
+    public function getById(string $id): ?Student {
+        return $this->byId[$id] ?? null;
+    }
+
+    public function searchByName(string $query): array {
+        $results = [];
+        foreach ($this->byName as $name => $ids) {
+            if (str_contains($name, strtolower($query))) {
+                foreach ($ids as $id) $results[] = $this->byId[$id];
+            }
+        }
+        return $results;
+    }
+
+    public function delete(string $id): bool {
+        if (!isset($this->byId[$id])) return false;
+        $student = $this->byId[$id];
+        unset($this->byId[$id]);
+        $key = strtolower($student->name);
+        $this->byName[$key] = array_diff($this->byName[$key], [$id]);
+        return true;
+    }
+
+    public function count(): int { return count($this->byId); }
+}
+
+// Test
+$store = new StudentStore();
+$store->add(new Student('001', 'Juan Dela Cruz', 'BSIT'));
+$store->add(new Student('002', 'Maria Santos', 'BSCS'));
+$store->add(new Student('003', 'Pedro Reyes', 'BSIT'));
+
+$results = $store->searchByName('an');
+echo "Search 'an': " . count($results) . " results\n";  // 2 (Juan, Maria)
+
+$juan = $store->getById('001');
+echo "Found: " . $juan->name . "\n";  // Juan Dela Cruz
+
+$store->delete('002');
+echo "Count after delete: " . $store->count() . "\n";  // 2</code></pre>
+
+        <p><strong>Answer: Python Implementation</strong></p>
+        <pre><code>class Student:
+    def __init__(self, student_id, name, course):
+        self.student_id = student_id
+        self.name = name
+        self.course = course
+        self.grades = {}
+
+    def add_grade(self, subject, grade):
+        self.grades[subject] = grade
+
+    def get_gpa(self):
+        if not self.grades:
+            return 0.0
+        return round(sum(self.grades.values()) / len(self.grades), 2)
+
+
+class StudentStore:
+    def __init__(self):
+        self.by_id = {}
+        self.by_name = {}
+
+    def add(self, student):
+        self.by_id[student.student_id] = student
+        key = student.name.lower()
+        self.by_name.setdefault(key, []).append(student.student_id)
+
+    def get_by_id(self, student_id):
+        return self.by_id.get(student_id)
+
+    def search_by_name(self, query):
+        results = []
+        for name, ids in self.by_name.items():
+            if query.lower() in name:
+                for sid in ids:
+                    results.append(self.by_id[sid])
+        return results
+
+    def delete(self, student_id):
+        if student_id not in self.by_id:
+            return False
+        student = self.by_id.pop(student_id)
+        key = student.name.lower()
+        self.by_name[key].remove(student_id)
+        return True
+
+    def count(self):
+        return len(self.by_id)
+
+
+# Test
+store = StudentStore()
+store.add(Student("001", "Juan Dela Cruz", "BSIT"))
+store.add(Student("002", "Maria Santos", "BSCS"))
+store.add(Student("003", "Pedro Reyes", "BSIT"))
+
+results = store.search_by_name("an")
+print(f"Search 'an': {len(results)} results")  # 2
+
+juan = store.get_by_id("001")
+print(f"Found: {juan.name}")  # Juan Dela Cruz
+
+store.delete("002")
+print(f"Count after delete: {store.count()}")  # 2</code></pre>
+
+        <p><strong>Answer: Java Implementation</strong></p>
+        <pre><code>import java.util.*;
+
+class Student {
+    private String id, name, course;
+    private Map&lt;String, Double&gt; grades = new HashMap&lt;&gt;();
+
+    public Student(String id, String name, String course) {
+        this.id = id; this.name = name; this.course = course;
+    }
+
+    public void addGrade(String subject, double grade) {
+        grades.put(subject, grade);
+    }
+
+    public double getGPA() {
+        if (grades.isEmpty()) return 0.0;
+        return grades.values().stream().mapToDouble(d -> d).average().orElse(0.0);
+    }
+
+    public String getId() { return id; }
+    public String getName() { return name; }
+}
+
+class StudentStore {
+    private Map&lt;String, Student&gt; byId = new HashMap&lt;&gt;();
+    private Map&lt;String, List&lt;String&gt;&gt; byName = new HashMap&lt;&gt;();
+
+    public void add(Student s) {
+        byId.put(s.getId(), s);
+        byName.computeIfAbsent(s.getName().toLowerCase(), k -> new ArrayList&lt;&gt;()).add(s.getId());
+    }
+
+    public Student getById(String id) { return byId.get(id); }
+
+    public List&lt;Student&gt; searchByName(String query) {
+        List&lt;Student&gt; results = new ArrayList&lt;&gt;();
+        String q = query.toLowerCase();
+        for (var e : byName.entrySet()) {
+            if (e.getKey().contains(q))
+                e.getValue().forEach(id -> results.add(byId.get(id)));
+        }
+        return results;
+    }
+
+    public boolean delete(String id) {
+        Student s = byId.remove(id);
+        if (s == null) return false;
+        byName.get(s.getName().toLowerCase()).remove(id);
+        return true;
+    }
+
+    public int count() { return byId.size(); }
+
+    public static void main(String[] args) {
+        StudentStore store = new StudentStore();
+        store.add(new Student("001", "Juan Dela Cruz", "BSIT"));
+        store.add(new Student("002", "Maria Santos", "BSCS"));
+        store.add(new Student("003", "Pedro Reyes", "BSIT"));
+
+        List&lt;Student&gt; results = store.searchByName("an");
+        System.out.println("Search 'an': " + results.size() + " results");  // 2
+
+        Student juan = store.getById("001");
+        System.out.println("Found: " + juan.getName());  // Juan Dela Cruz
+
+        store.delete("002");
+        System.out.println("Count after delete: " + store.count());  // 2
+    }
+}</code></pre>
+    </div>
+</details>
 
 <?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

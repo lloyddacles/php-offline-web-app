@@ -1,15 +1,35 @@
-<?php $pageTitle = 'Project Testing, Optimization, and Documentation'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
+<?php $pageTitle = 'DSA Project Testing'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
 <?php $num = 17; $prevNext = getPrevNextLesson($num, 'dsa-lessons'); ?>
 
 <div class="lesson-header">
     <span class="lesson-number">Lesson <?= $num ?></span>
-    <h1>Project Testing, Optimization, and Documentation</h1>
+    <h1>DSA Project Testing</h1>
     <p class="lesson-desc">Write test cases, optimize performance, profile your code, and create clear documentation for your DSA project.</p>
 </div>
 
-<h2>Testing Your Project</h2>
+<h2>Part 1: Activate Prior Knowledge</h2>
+<p>Testing is a critical part of software development. Think about your past experiences and consider these review questions:</p>
+<div class="info-box note">
+    <div class="box-title">Review Questions</div>
+    <ol>
+        <li>Have you ever written code that "worked" on your test cases but failed for a user? What happened?</li>
+        <li>What is the difference between testing with an empty array vs testing with a single-element array?</li>
+        <li>If your function has O(n²) time complexity, how long will it take for n=1000 vs n=10,000?</li>
+        <li>What is a "boundary condition"? Why are edge cases often where bugs hide?</li>
+    </ol>
+</div>
 
-<h3>Unit Testing</h3>
+<h2>Part 2: Acquire New Knowledge</h2>
+
+<h3>Definition</h3>
+<p>Testing means verifying that your code produces correct results for a variety of inputs, including normal cases, edge cases, and large datasets. Unit testing checks individual functions; performance testing measures speed and memory.</p>
+
+<h3>Analogy</h3>
+<p>Like a car factory quality check: you test each engine component individually (unit test), then test the whole car on a highway (integration test), and measure fuel efficiency (performance test). A car that passes the factory test but breaks on the road is a failure.</p>
+
+<h3>How It Works (Step by Step)</h3>
+
+<h4>Unit Testing</h4>
 <pre><code class="language-php">&lt;?php
 // Test your data structures systematically
 class DSATests {
@@ -89,7 +109,7 @@ $tests->testSorting();
 $tests->testBST();
 $tests->summary();</code></pre>
 
-<h3>Test Cases to Cover</h3>
+<h4>Test Cases to Cover</h4>
 <table>
     <thead><tr><th>Category</th><th>Test Cases</th></tr></thead>
     <tbody>
@@ -102,7 +122,7 @@ $tests->summary();</code></pre>
     </tbody>
 </table>
 
-<h2>Performance Profiling</h2>
+<h4>Performance Profiling</h4>
 <pre><code class="language-php">&lt;?php
 // Profile your code execution time
 function benchmark(callable $fn, int $iterations = 100): array {
@@ -137,60 +157,19 @@ foreach ([100, 1000, 10000] as $n) {
 echo "Memory: " . round(memory_get_usage() / 1024 / 1024, 2) . " MB\n";
 echo "Peak:   " . round(memory_get_peak_usage() / 1024 / 1024, 2) . " MB\n";</code></pre>
 
-<h2>Optimization Techniques</h2>
-
+<h4>Optimization Techniques</h4>
 <table>
     <thead><tr><th>Technique</th><th>Before</th><th>After</th><th>How</th></tr></thead>
     <tbody>
-        <tr><td>Memoization</td><td>O(2ⁿ)</td><td>O(n)</td><td>Cache recursive results</td></tr>
+        <tr><td>Memoization</td><td>O(2^n)</td><td>O(n)</td><td>Cache recursive results</td></tr>
         <tr><td>Early termination</td><td>O(n)</td><td>O(1) best</td><td>Exit when answer found</td></tr>
-        <tr><td>Right data structure</td><td>O(n)</td><td>O(1)</td><td>Array → Hash Map</td></tr>
-        <tr><td>Sort first</td><td>O(n²)</td><td>O(n log n)</td><td>Then binary search</td></tr>
+        <tr><td>Right data structure</td><td>O(n)</td><td>O(1)</td><td>Array to Hash Map</td></tr>
+        <tr><td>Sort first</td><td>O(n^2)</td><td>O(n log n)</td><td>Then binary search</td></tr>
         <tr><td>In-place algorithm</td><td>O(n) space</td><td>O(1) space</td><td>No extra arrays</td></tr>
     </tbody>
 </table>
 
-<h2>Documentation</h2>
-
-<h3>README Structure</h3>
-<pre>
-# Project Name
-
-## Overview
-What the project does and why.
-
-## Data Structures Used
-- HashMap: for O(1) student lookups
-- BST: for sorted grade rankings
-- Graph: for course prerequisites
-
-## How to Run
-php index.php
-
-## Complexity Analysis
-| Operation | Time | Space |
-|-----------|------|-------|
-| Add       | O(1) | O(1)  |
-| Search    | O(1) | O(1)  |
-| Rank      | O(n log n) | O(n) |
-
-## Test Results
-All 25 test cases passing.
-
-## Author
-Your Name — Course Section
-</pre>
-
-<h2>Common Pitfalls to Avoid</h2>
-<ul>
-    <li><strong>Not testing edge cases</strong> — empty input, single element</li>
-    <li><strong>Ignoring error handling</strong> — what if the data is malformed?</li>
-    <li><strong>Over-optimizing</strong> — profile first, optimize what's slow</li>
-    <li><strong>No documentation</strong> — future you won't remember what you did</li>
-    <li><strong>Hardcoding values</strong> — use constants and configuration</li>
-</ul>
-
-<h2>Python Implementation</h2>
+<h3>Python Implementation</h3>
 <pre><code class="language-python"># Unit Testing with assert
 def test_student_store():
     store = StudentStore()
@@ -262,7 +241,7 @@ test_sorting()
 test_gpa_calculation()
 print("\nAll tests passed!")</code></pre>
 
-<h2>Java Implementation</h2>
+<h3>Java Implementation</h3>
 <pre><code class="language-java">import java.util.*;
 
 public class DSATests {
@@ -347,6 +326,257 @@ public class DSATests {
         summary();
     }
 }</code></pre>
+
+<h2>Part 3: Apply New Knowledge</h2>
+
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>Continuous Integration:</strong> Automated tests run on every code change to catch regressions</li>
+    <li><strong>Performance Tuning:</strong> Profiling identifies bottlenecks before they affect users</li>
+    <li><strong>Quality Assurance:</strong> Test coverage metrics ensure critical paths are verified</li>
+    <li><strong>Documentation:</strong> Tests serve as executable documentation showing expected behavior</li>
+</ul>
+
+<h3>Tips for Success</h3>
+<ul>
+    <li><strong>Test early, test often</strong> — don't wait until the project is "done"</li>
+    <li><strong>Test edge cases first</strong> — empty inputs, single elements, and boundaries find the most bugs</li>
+    <li><strong>Profile before optimizing</strong> — measure, don't guess what's slow</li>
+    <li><strong>Write testable code</strong> — small functions with clear inputs/outputs are easy to test</li>
+</ul>
+
+<h3>When to Use This</h3>
+<table>
+    <thead><tr><th>Activity</th><th>When</th><th>Tools/Methods</th></tr></thead>
+    <tbody>
+        <tr><td>Unit testing</td><td>During implementation</td><td>assert statements, test frameworks</td></tr>
+        <tr><td>Integration testing</td><td>After combining modules</td><td>End-to-end test scripts</td></tr>
+        <tr><td>Performance profiling</td><td>When code feels slow</td><td>benchmark functions, timers</td></tr>
+        <tr><td>Stress testing</td><td>Before submission</td><td>Large datasets, timing</td></tr>
+        <tr><td>Documentation</td><td>Throughout development</td><td>README, inline comments</td></tr>
+    </tbody>
+</table>
+
+<h2>Part 4: Assess Your Learning</h2>
+
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You have implemented a HashMap-based StudentStore for your Student Performance Tracking System. Before submitting your project, you need to verify that all operations work correctly.</p>
+    <p><strong>Task:</strong> Write unit tests for the HashMap implementation covering these scenarios:</p>
+    <ol>
+        <li><strong>Empty state:</strong> A new store should have count 0 and return null for any ID lookup.</li>
+        <li><strong>Add and retrieve:</strong> Add a student, then retrieve by ID. Verify all fields match.</li>
+        <li><strong>Search by name:</strong> Add 3 students, search by a partial name that matches 2 of them. Verify correct students are returned.</li>
+        <li><strong>Delete:</strong> Add a student, delete them, verify count decreases and getById returns null.</li>
+        <li><strong>Duplicate ID:</strong> Try adding two students with the same ID. The second should overwrite the first.</li>
+    </ol>
+    <p>Write test code in PHP, Python, and Java.</p>
+</div>
+
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answer: PHP Tests</strong></p>
+        <pre><code>&lt;?php
+function testEmptyState() {
+    $store = new StudentStore();
+    assert($store->count() === 0, 'Empty store count');
+    assert($store->getById('001') === null, 'Empty store returns null');
+    echo "PASS: Empty state tests\n";
+}
+
+function testAddAndRetrieve() {
+    $store = new StudentStore();
+    $s = new Student('001', 'Juan Dela Cruz', 'BSIT');
+    $s->addGrade('Math', 90);
+    $store->add($s);
+
+    $found = $store->getById('001');
+    assert($found !== null, 'Student found');
+    assert($found->name === 'Juan Dela Cruz', 'Name matches');
+    assert($found->getGPA() === 90.0, 'GPA matches');
+    echo "PASS: Add and retrieve tests\n";
+}
+
+function testSearchByName() {
+    $store = new StudentStore();
+    $store->add(new Student('001', 'Juan Dela Cruz', 'BSIT'));
+    $store->add(new Student('002', 'Juan Santos', 'BSCS'));
+    $store->add(new Student('003', 'Maria Reyes', 'BSIT'));
+
+    $results = $store->searchByName('uan');
+    assert(count($results) === 2, 'Search finds 2 Juans');
+
+    $results = $store->searchByName('aria');
+    assert(count($results) === 1, 'Search finds Maria');
+    echo "PASS: Search tests\n";
+}
+
+function testDelete() {
+    $store = new StudentStore();
+    $store->add(new Student('001', 'Juan', 'BSIT'));
+    $store->add(new Student('002', 'Maria', 'BSCS'));
+
+    $deleted = $store->delete('001');
+    assert($deleted === true, 'Delete returns true');
+    assert($store->count() === 1, 'Count after delete');
+    assert($store->getById('001') === null, 'Deleted student not found');
+
+    $deleted = $store->delete('999');
+    assert($deleted === false, 'Delete non-existent returns false');
+    echo "PASS: Delete tests\n";
+}
+
+function testDuplicateId() {
+    $store = new StudentStore();
+    $store->add(new Student('001', 'Juan', 'BSIT'));
+    $store->add(new Student('001', 'Pedro', 'BSCS'));
+
+    assert($store->count() === 1, 'Duplicate ID overwrites');
+    assert($store->getById('001')->name === 'Pedro', 'Second student kept');
+    echo "PASS: Duplicate ID tests\n";
+}
+
+testEmptyState();
+testAddAndRetrieve();
+testSearchByName();
+testDelete();
+testDuplicateId();
+echo "\nAll HashMap tests passed!\n";</code></pre>
+
+        <p><strong>Answer: Python Tests</strong></p>
+        <pre><code>def test_empty_state():
+    store = StudentStore()
+    assert store.count() == 0
+    assert store.get_by_id('001') is None
+    print("PASS: Empty state tests")
+
+def test_add_and_retrieve():
+    store = StudentStore()
+    s = Student('001', 'Juan Dela Cruz', 'BSIT')
+    s.add_grade('Math', 90)
+    store.add(s)
+
+    found = store.get_by_id('001')
+    assert found is not None
+    assert found.name == 'Juan Dela Cruz'
+    assert found.get_gpa() == 90.0
+    print("PASS: Add and retrieve tests")
+
+def test_search_by_name():
+    store = StudentStore()
+    store.add(Student('001', 'Juan Dela Cruz', 'BSIT'))
+    store.add(Student('002', 'Juan Santos', 'BSCS'))
+    store.add(Student('003', 'Maria Reyes', 'BSIT'))
+
+    results = store.search_by_name('uan')
+    assert len(results) == 2
+
+    results = store.search_by_name('aria')
+    assert len(results) == 1
+    print("PASS: Search tests")
+
+def test_delete():
+    store = StudentStore()
+    store.add(Student('001', 'Juan', 'BSIT'))
+    store.add(Student('002', 'Maria', 'BSCS'))
+
+    assert store.delete('001') == True
+    assert store.count() == 1
+    assert store.get_by_id('001') is None
+    assert store.delete('999') == False
+    print("PASS: Delete tests")
+
+def test_duplicate_id():
+    store = StudentStore()
+    store.add(Student('001', 'Juan', 'BSIT'))
+    store.add(Student('001', 'Pedro', 'BSCS'))
+
+    assert store.count() == 1
+    assert store.get_by_id('001').name == 'Pedro'
+    print("PASS: Duplicate ID tests")
+
+test_empty_state()
+test_add_and_retrieve()
+test_search_by_name()
+test_delete()
+test_duplicate_id()
+print("\nAll HashMap tests passed!")</code></pre>
+
+        <p><strong>Answer: Java Tests</strong></p>
+        <pre><code>import java.util.*;
+
+public class HashMapTests {
+    static int passed = 0, failed = 0;
+
+    static void assertEquals(Object expected, Object actual, String test) {
+        if (Objects.equals(expected, actual)) {
+            passed++;
+            System.out.println("  PASS: " + test);
+        } else {
+            failed++;
+            System.out.println("  FAIL: " + test + " (expected: " + expected + ", got: " + actual + ")");
+        }
+    }
+
+    static void testEmptyState() {
+        StudentStore store = new StudentStore();
+        assertEquals(0, store.count(), "Empty store count");
+        assertEquals(null, store.getById("001"), "Empty store returns null");
+    }
+
+    static void testAddAndRetrieve() {
+        StudentStore store = new StudentStore();
+        Student s = new Student("001", "Juan Dela Cruz", "BSIT");
+        s.addGrade("Math", 90);
+        store.add(s);
+
+        Student found = store.getById("001");
+        assertEquals("Juan Dela Cruz", found.getName(), "Name matches");
+        assertEquals(90.0, found.getGPA(), "GPA matches");
+    }
+
+    static void testSearchByName() {
+        StudentStore store = new StudentStore();
+        store.add(new Student("001", "Juan Dela Cruz", "BSIT"));
+        store.add(new Student("002", "Juan Santos", "BSCS"));
+        store.add(new Student("003", "Maria Reyes", "BSIT"));
+
+        List&lt;Student&gt; results = store.searchByName("uan");
+        assertEquals(2, results.size(), "Search finds 2 Juans");
+    }
+
+    static void testDelete() {
+        StudentStore store = new StudentStore();
+        store.add(new Student("001", "Juan", "BSIT"));
+        store.add(new Student("002", "Maria", "BSCS"));
+
+        assertEquals(true, store.delete("001"), "Delete returns true");
+        assertEquals(1, store.count(), "Count after delete");
+        assertEquals(null, store.getById("001"), "Deleted student not found");
+        assertEquals(false, store.delete("999"), "Delete non-existent returns false");
+    }
+
+    static void testDuplicateId() {
+        StudentStore store = new StudentStore();
+        store.add(new Student("001", "Juan", "BSIT"));
+        store.add(new Student("001", "Pedro", "BSCS"));
+
+        assertEquals(1, store.count(), "Duplicate ID overwrites");
+        assertEquals("Pedro", store.getById("001").getName(), "Second student kept");
+    }
+
+    public static void main(String[] args) {
+        testEmptyState();
+        testAddAndRetrieve();
+        testSearchByName();
+        testDelete();
+        testDuplicateId();
+        System.out.println("\nResults: " + passed + " passed, " + failed + " failed");
+    }
+}</code></pre>
+    </div>
+</details>
 
 <?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

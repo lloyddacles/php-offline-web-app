@@ -7,16 +7,28 @@
     <p class="lesson-desc">Learn how to measure algorithm efficiency and understand time and space complexity.</p>
 </div>
 
-<h2>What Is Big O Notation?</h2>
-<p><strong>Big O notation</strong> describes how an algorithm's performance scales with input size. It answers the question: <em>"How does the runtime grow as the data grows?"</em></p>
-
+<!-- PART 1 -->
+<h2>Part 1: Activate Prior Knowledge</h2>
+<p>Before learning Big O Notation, you should understand the basics of loops, functions, and how code execution takes time.</p>
 <div class="info-box note">
-    <div class="box-title">Why It Matters</div>
-    <p class="mb-0">An algorithm that works fine for 100 items might crash with 1 million items. Big O helps us predict performance before deploying code.</p>
+    <div class="box-title">Review Questions</div>
+    <ol>
+        <li>If you have a loop that runs from 0 to n-1, how many iterations does it perform? What happens to the number of iterations if n doubles?</li>
+        <li>Consider two functions: one that prints every element in a list, and another that prints every pair of elements. Which one does more work? How does the work grow as the list gets bigger?</li>
+        <li>Why might two programs that produce the same result be considered "different" in terms of quality?</li>
+    </ol>
 </div>
 
-<h2>Time vs Space Complexity</h2>
+<!-- PART 2 -->
+<h2>Part 2: Acquire New Knowledge</h2>
 
+<h3>Definition</h3>
+<p><strong>Big O notation</strong> describes how an algorithm's performance scales with input size. It answers the question: <em>"How does the runtime grow as the data grows?"</em> It focuses on the <strong>worst-case</strong> scenario and ignores constants to give a high-level picture of efficiency.</p>
+
+<h3>Analogy</h3>
+<p>Imagine you're looking for a name in a phone book. <strong>O(1)</strong> is like someone telling you the exact page. <strong>O(log n)</strong> is opening to the middle and eliminating half each time. <strong>O(n)</strong> is reading every page from the start. <strong>O(n&sup2;)</strong> is checking every name against every other name. Big O tells you <em>which strategy scales</em> when the phone book has 100 entries vs. 100 million entries.</p>
+
+<h3>Time vs Space Complexity</h3>
 <table>
     <thead>
         <tr>
@@ -39,8 +51,18 @@
     </tbody>
 </table>
 
-<h2>Common Complexities</h2>
+<h3>How It Works (Step by Step)</h3>
+<p>Big O measures the number of operations relative to input size <code>n</code>:</p>
+<ol>
+    <li><strong>O(1) &mdash; Constant:</strong> Same time regardless of input size (e.g., accessing an array index).</li>
+    <li><strong>O(log n) &mdash; Logarithmic:</strong> Work halves each step (e.g., binary search).</li>
+    <li><strong>O(n) &mdash; Linear:</strong> One pass through the data (e.g., a single loop).</li>
+    <li><strong>O(n log n) &mdash; Linearithmic:</strong> Divide and conquer (e.g., merge sort).</li>
+    <li><strong>O(n&sup2;) &mdash; Quadratic:</strong> Nested loops over the data (e.g., comparing every pair).</li>
+    <li><strong>O(2&sup;n;) &mdash; Exponential:</strong> Doubles with each added element (e.g., recursive Fibonacci).</li>
+</ol>
 
+<h3>Common Complexities</h3>
 <table>
     <thead>
         <tr>
@@ -48,7 +70,7 @@
             <th>Name</th>
             <th>Example</th>
             <th>10 items</th>
-            <th>1000 items</th>
+            <th>1,000 items</th>
         </tr>
     </thead>
     <tbody>
@@ -97,7 +119,7 @@
     </tbody>
 </table>
 
-<h2>Practical Examples</h2>
+<h3>PHP Implementation</h3>
 
 <div class="sandbox">
     <div class="sandbox-header">
@@ -181,12 +203,7 @@ echo "Ratio: O(n²) is " . round($quadraticTime / $linearTime) . "x slower!\n";
     </div>
 </div>
 
-<div class="info-box tip">
-    <div class="box-title">How to Analyze Code</div>
-    <p class="mb-0">Look for loops. A single loop over n elements is O(n). Two nested loops is O(n&sup2;). Three nested loops is O(n&sup3;). If the loop count halves each time (binary search), it's O(log n).</p>
-</div>
-
-<h2>Python Implementation</h2>
+<h3>Python Implementation</h3>
 <pre><code class="language-python">
 import time
 
@@ -226,7 +243,7 @@ print(f"Binary search for 500: {binary_search(numbers, 500)}")
 print(f"Sorted array: {bubble_sort([64, 34, 25, 12, 22, 11, 90])}")
 </code></pre>
 
-<h2>Java Implementation</h2>
+<h3>Java Implementation</h3>
 <pre><code class="language-java">
 public class ComplexityExamples {
     // O(n) - Linear time
@@ -279,13 +296,93 @@ public class ComplexityExamples {
 }
 </code></pre>
 
-<div class="lesson-nav">
-    <?php if ($prevNext['prev']): ?>
-        <a href="<?= lessonUrl($prevNext['prev']['num'], $prevNext['prev']['slug'], 'dsa-lessons') ?>" class="prev-link">&larr; Previous: <?= htmlspecialchars($prevNext['prev']['title']) ?></a>
-    <?php endif; ?>
-    <?php if ($prevNext['next']): ?>
-        <a href="<?= lessonUrl($prevNext['next']['num'], $prevNext['next']['slug'], 'dsa-lessons') ?>" class="next-link">Next: <?= htmlspecialchars($prevNext['next']['title']) ?> &rarr;</a>
-    <?php endif; ?>
+<!-- PART 3 -->
+<h2>Part 3: Apply New Knowledge</h2>
+
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>Database Query Optimization:</strong> A query that scans every row is O(n). Adding an index makes it O(log n) &mdash; turning a 10-second query into a millisecond one.</li>
+    <li><strong>E-commerce Search:</strong> Filtering millions of products by price or category needs efficient algorithms to return results instantly.</li>
+    <li><strong>Social Media Feeds:</strong> Sorting posts by relevance across millions of users requires O(n log n) or better algorithms.</li>
+</ul>
+
+<h3>Tips for Success</h3>
+<ul>
+    <li><strong>Look for loops.</strong> A single loop over n elements is O(n). Two nested loops is O(n&sup2;). Three nested loops is O(n&sup3;).</li>
+    <li><strong>Halving = logarithmic.</strong> If the loop count halves each time (like binary search), it's O(log n).</li>
+    <li><strong>Ignore constants.</strong> O(2n) is still O(n). Big O describes the <em>growth rate</em>, not the exact time.</li>
+    <li><strong>Optimize the worst case.</strong> Focus on reducing the highest complexity in your code, not micro-optimizing already-fast operations.</li>
+</ul>
+
+<h3>When to Use This</h3>
+<table>
+    <thead><tr><th>Use When...</th><th>Avoid When...</th></tr></thead>
+    <tbody>
+        <tr><td>Comparing two algorithm approaches for the same problem</td><td>Micro-optimizing code that already runs fast enough</td></tr>
+        <tr><td>Working with large datasets where performance matters</td><td>The data size is tiny and fixed</td></tr>
+        <tr><td>Preparing for technical interviews</td><td>Prototyping &mdash; correctness comes first, optimization later</td></tr>
+    </tbody>
+</table>
+
+<!-- PART 4 -->
+<h2>Part 4: Assess Your Learning</h2>
+
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> A developer is building a contact list app. They have written three functions and need to determine which approach is best for a list of 10,000 contacts.</p>
+    <p><strong>Task:</strong> Analyze the time complexity of each code snippet below. Determine the Big O for each, explain your reasoning, and calculate the approximate number of operations for n = 10,000.</p>
+    <ol>
+        <li><strong>Snippet A:</strong> A function that loops through the contact list once to check if a specific phone number exists.
+<pre><code class="language-php">&lt;?php
+function findContact($contacts, $phone) {
+    for ($i = 0; $i < count($contacts); $i++) {
+        if ($contacts[$i]['phone'] === $phone) {
+            return $contacts[$i];
+        }
+    }
+    return null;
+}</code></pre>
+        </li>
+        <li><strong>Snippet B:</strong> A function that compares every contact with every other contact to find duplicates by phone number.
+<pre><code class="language-php">&lt;?php
+function findDuplicates($contacts) {
+    $duplicates = [];
+    for ($i = 0; $i < count($contacts); $i++) {
+        for ($j = $i + 1; $j < count($contacts); $j++) {
+            if ($contacts[$i]['phone'] === $contacts[$j]['phone']) {
+                $duplicates[] = $contacts[$i];
+            }
+        }
+    }
+    return $duplicates;
+}</code></pre>
+        </li>
+        <li><strong>Snippet C:</strong> A function that repeatedly halves a sorted list of contacts to find a name (binary search).
+<pre><code class="language-php">&lt;?php
+function findByName($sortedContacts, $name) {
+    $left = 0;
+    $right = count($sortedContacts) - 1;
+    while ($left <= $right) {
+        $mid = intdiv($left + $right, 2);
+        if ($sortedContacts[$mid]['name'] === $name) return $sortedContacts[$mid];
+        if ($sortedContacts[$mid]['name'] < $name) $left = $mid + 1;
+        else $right = $mid - 1;
+    }
+    return null;
+}</code></pre>
+        </li>
+    </ol>
 </div>
 
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Answer 1 (Snippet A):</strong> <strong>O(n)</strong> &mdash; Linear time. The function loops through the list once. For 10,000 contacts, it performs up to 10,000 comparisons in the worst case.</p>
+        <p><strong>Answer 2 (Snippet B):</strong> <strong>O(n&sup2;)</strong> &mdash; Quadratic time. Two nested loops compare every pair. For 10,000 contacts, that's approximately 50,000,000 (n&times;(n-1)/2) comparisons.</p>
+        <p><strong>Answer 3 (Snippet C):</strong> <strong>O(log n)</strong> &mdash; Logarithmic time. Binary search halves the search space each step. For 10,000 contacts, it performs at most ~14 comparisons (log<sub>2</sub> 10,000 &asymp; 13.3).</p>
+        <p><strong>Key Insight:</strong> Snippet C is overwhelmingly the fastest. If the app needs to perform frequent lookups, maintaining a sorted list and using binary search is far superior to linear search, and exponentially better than the nested-loop approach.</p>
+    </div>
+</details>
+
+<?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

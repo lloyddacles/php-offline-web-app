@@ -7,19 +7,36 @@
     <p class="lesson-desc">Learn the LIFO (Last In, First Out) data structure — push, pop, peek, and real-world applications.</p>
 </div>
 
-<h2>What Is a Stack?</h2>
-<p>A <strong>stack</strong> is a linear data structure that follows the <strong>LIFO (Last In, First Out)</strong> principle. Think of a stack of plates — you add to the top and remove from the top.</p>
-
+<h2>Part 1: Activate Prior Knowledge</h2>
+<p>Before we learn about stacks, let's think about everyday experiences and prior knowledge. Ask yourself these review questions:</p>
 <div class="info-box note">
-    <div class="box-title">Core Operations</div>
-    <p><strong>push(item)</strong> — Add to top<br>
-    <strong>pop()</strong> — Remove from top<br>
-    <strong>peek()/top()</strong> — View top without removing<br>
-    <strong>isEmpty()</strong> — Check if empty<br>
-    <strong>size()</strong> — Number of elements</p>
+    <div class="box-title">Review Questions</div>
+    <ol>
+        <li>What is a stack of plates? When you take a plate, which one do you grab — the top or the bottom?</li>
+        <li>In a linked list, how do you access the last element added? What would happen if you always removed from the end?</li>
+        <li>What does "LIFO" stand for, and can you think of a real-life example besides plates?</li>
+    </ol>
 </div>
 
-<h2>Implementation Using Arrays</h2>
+<h2>Part 2: Acquire New Knowledge</h2>
+
+<h3>Definition</h3>
+<p>A <strong>stack</strong> is a linear data structure that follows the <strong>LIFO (Last In, First Out)</strong> principle. The last element added is the first one removed. You can only access the <strong>top</strong> of the stack.</p>
+
+<h3>Analogy</h3>
+<p>Imagine a stack of plates in a cafeteria. You always add a plate to the <strong>top</strong> and remove from the <strong>top</strong>. You can't pull a plate from the middle or bottom without disrupting the whole stack. The same rule applies to data in a stack — operations happen at one end only.</p>
+
+<h3>How It Works (Step by Step)</h3>
+<p>A stack supports four core operations:</p>
+<ul>
+    <li><strong>push(item)</strong> — Add an element to the top.</li>
+    <li><strong>pop()</strong> — Remove and return the top element.</li>
+    <li><strong>peek()/top()</strong> — View the top element without removing it.</li>
+    <li><strong>isEmpty()</strong> — Check if the stack has no elements.</li>
+    <li><strong>size()</strong> — Return the number of elements.</li>
+</ul>
+
+<h3>Stack Implementation</h3>
 <pre><code class="language-php">&lt;?php
 class Stack {
     private $items = [];
@@ -56,41 +73,8 @@ echo $stack->pop();    // 30
 echo $stack->pop();    // 20
 echo $stack->size();   // 1</code></pre>
 
-<h2>Real-World Applications</h2>
-
-<h3>1. Undo/Redo</h3>
-<pre><code class="language-php">&lt;?php
-class UndoRedo {
-    private $undoStack = [];
-    private $redoStack = [];
-
-    public function performAction($action) {
-        $this->undoStack[] = $action;
-        $this->redoStack = [];  // Clear redo on new action
-    }
-
-    public function undo() {
-        if (empty($this->undoStack)) return null;
-        $action = array_pop($this->undoStack);
-        $this->redoStack[] = $action;
-        return "Undid: $action";
-    }
-
-    public function redo() {
-        if (empty($this->redoStack)) return null;
-        $action = array_pop($this->redoStack);
-        $this->undoStack[] = $action;
-        return "Redid: $action";
-    }
-}
-
-$editor = new UndoRedo();
-$editor->performAction('Type "Hello"');
-$editor->performAction('Bold text');
-$editor->performAction('Change color');
-echo $editor->undo();  // Undid: Change color</code></pre>
-
-<h3>2. Balanced Parentheses</h3>
+<h3>Balanced Parentheses</h3>
+<p>A classic stack problem: given a string of parentheses, check if they are balanced (every opening bracket has a matching closing bracket in the correct order).</p>
 <pre><code class="language-php">&lt;?php
 function isBalanced($str) {
     $stack = new Stack();
@@ -113,7 +97,7 @@ echo isBalanced('({[]})') . "\n";  // true
 echo isBalanced('({[}])') . "\n";  // false
 echo isBalanced('((()') . "\n";    // false</code></pre>
 
-<h3>3. Infix to Postfix Conversion</h3>
+<h3>Infix to Postfix Conversion</h3>
 <pre><code class="language-php">&lt;?php
 function infixToPostfix($expression) {
     $output = '';
@@ -147,7 +131,7 @@ function infixToPostfix($expression) {
 echo infixToPostfix('3 + 4 * 2');      // 3 4 2 * +
 echo infixToPostfix('( 3 + 4 ) * 2');  // 3 4 + 2 *</code></pre>
 
-<h3>4. Browser History</h3>
+<h3>Browser Back Button</h3>
 <pre><code class="language-php">&lt;?php
 class BrowserHistory {
     private $backStack = [];
@@ -177,7 +161,7 @@ class BrowserHistory {
     public function current() { return $this->current; }
 }</code></pre>
 
-<h2>Stack Complexity</h2>
+<h3>Stack Complexity</h3>
 
 <table>
     <thead><tr><th>Operation</th><th>Time</th><th>Space</th></tr></thead>
@@ -189,7 +173,7 @@ class BrowserHistory {
     </tbody>
 </table>
 
-<h2>Python Implementation</h2>
+<h3>Python Implementation</h3>
 <pre><code class="language-python">
 class Stack:
     def __init__(self):
@@ -270,7 +254,7 @@ history.back()
 print(history.get_current())  # youtube.com
 </code></pre>
 
-<h2>Java Implementation</h2>
+<h3>Java Implementation</h3>
 <pre><code class="language-java">
 import java.util.ArrayList;
 import java.util.List;
@@ -365,6 +349,247 @@ public class Main {
     }
 }
 </code></pre>
+
+<h2>Part 3: Apply New Knowledge</h2>
+
+<h3>Real-World Applications</h3>
+<ul>
+    <li><strong>Undo/Redo in Text Editors</strong> — Every action is pushed onto an undo stack. Undo pops from the undo stack and pushes to redo.</li>
+    <li><strong>Expression Evaluation</strong> — Compilers use stacks to evaluate postfix expressions and convert infix to postfix.</li>
+    <li><strong>Function Call Stack</strong> — Each function call is pushed onto the call stack; when it returns, it's popped.</li>
+    <li><strong>Browser Navigation</strong> — Back and forward buttons use two stacks to track visited pages.</li>
+    <li><strong>Syntax Parsing</strong> — Compilers check balanced brackets, matching tags, and nested structures using stacks.</li>
+</ul>
+
+<h3>Tips for Success</h3>
+<ul>
+    <li>Never pop from an empty stack — always check <code>isEmpty()</code> first.</li>
+    <li>Use stacks whenever you need to process things in <strong>reverse order</strong> of how they arrived.</li>
+    <li>For balanced parentheses, push opening brackets and match with closing brackets on pop.</li>
+    <li>Stacks are often used <strong>recursively</strong> — recursion implicitly uses the call stack.</li>
+</ul>
+
+<h3>When to Use This</h3>
+<table>
+    <thead><tr><th>Use Stack When...</th><th>Use Array/List When...</th></tr></thead>
+    <tbody>
+        <tr><td>You need LIFO ordering</td><td>You need random access by index</td></tr>
+        <tr><td>Undo/redo functionality</td><td>You need FIFO ordering (use queue)</td></tr>
+        <tr><td>Validating nested structures</td><td>You need to search or sort</td></tr>
+        <tr><td>Backtracking algorithms (maze solving)</td><td>You need to iterate in both directions</td></tr>
+    </tbody>
+</table>
+
+<h2>Part 4: Assess Your Learning</h2>
+<div class="info-box note">
+    <div class="box-title">Scenario-Based Activity</div>
+    <p><strong>Scenario:</strong> You are building a simple text editor with undo/redo functionality. The editor supports three operations: typing text, bolding text, and changing text color. Each action can be undone or redone.</p>
+    <p><strong>Task:</strong> Trace through the following sequence of operations and show the state of both stacks at each step:</p>
+    <ol>
+        <li>Type "Hello"</li>
+        <li>Bold text</li>
+        <li>Change color to red</li>
+        <li>Undo (twice)</li>
+        <li>Redo (once)</li>
+        <li>Type "World"</li>
+    </ol>
+    <p>Show the undo stack, redo stack, and current state after each step.</p>
+</div>
+<details>
+    <summary>Teacher Answer Key (Click to reveal)</summary>
+    <div style="padding:16px; background:var(--bg-surface); border-radius:var(--radius); margin-top:12px;">
+        <p><strong>Step-by-step trace:</strong></p>
+        <pre><code>Step 1: Type "Hello"
+  Undo Stack: ["Type \"Hello\""]
+  Redo Stack: []
+  Current: "Hello"
+
+Step 2: Bold text
+  Undo Stack: ["Type \"Hello\"", "Bold text"]
+  Redo Stack: []
+  Current: "Hello" (bold)
+
+Step 3: Change color
+  Undo Stack: ["Type \"Hello\"", "Bold text", "Change color"]
+  Redo Stack: []
+  Current: "Hello" (bold, red)
+
+Step 4: Undo (once)
+  Undo Stack: ["Type \"Hello\"", "Bold text"]
+  Redo Stack: ["Change color"]
+  Current: "Hello" (bold)
+
+Step 5: Undo (twice)
+  Undo Stack: ["Type \"Hello\""]
+  Redo Stack: ["Change color", "Bold text"]
+  Current: "Hello" (plain)
+
+Step 6: Redo (once)
+  Undo Stack: ["Type \"Hello\"", "Bold text"]
+  Redo Stack: ["Change color"]
+  Current: "Hello" (bold)
+
+Step 7: Type "World"
+  Undo Stack: ["Type \"Hello\"", "Bold text", "Type \"World\""]
+  Redo Stack: []  ← cleared because new action was performed
+  Current: "Hello World" (bold)</code></pre>
+
+        <p><strong>PHP Implementation</strong></p>
+        <pre><code>&lt;?php
+class TextEditor {
+    private $undoStack = [];
+    private $redoStack = [];
+    private $content = "";
+
+    public function performAction($action, $value = null) {
+        $this->undoStack[] = ['action' => $action, 'value' => $value];
+        $this->redoStack = [];
+
+        if ($action === 'type') {
+            $this->content .= $value;
+        }
+        echo "  Performed: $action" . ($value ? " \"$value\"" : "") . "\n";
+        $this->printState();
+    }
+
+    public function undo() {
+        if (empty($this->undoStack)) { echo "  Nothing to undo\n"; return; }
+        $entry = array_pop($this->undoStack);
+        $this->redoStack[] = $entry;
+        echo "  Undid: {$entry['action']}\n";
+        $this->printState();
+    }
+
+    public function redo() {
+        if (empty($this->redoStack)) { echo "  Nothing to redo\n"; return; }
+        $entry = array_pop($this->redoStack);
+        $this->undoStack[] = $entry;
+        echo "  Redid: {$entry['action']}\n";
+        $this->printState();
+    }
+
+    public function printState() {
+        echo "  Undo: [" . implode(', ', array_column($this->undoStack, 'action')) . "]\n";
+        echo "  Redo: [" . implode(', ', array_column($this->redoStack, 'action')) . "]\n\n";
+    }
+}
+
+$editor = new TextEditor();
+$editor->performAction('type', 'Hello');
+$editor->performAction('bold');
+$editor->performAction('color', 'red');
+$editor->undo();
+$editor->undo();
+$editor->redo();
+$editor->performAction('type', 'World');</code></pre>
+
+        <p><strong>Python Implementation</strong></p>
+        <pre><code>class TextEditor:
+    def __init__(self):
+        self.undo_stack = []
+        self.redo_stack = []
+        self.content = ""
+
+    def perform_action(self, action, value=None):
+        self.undo_stack.append({'action': action, 'value': value})
+        self.redo_stack = []
+        if action == 'type':
+            self.content += value
+        print(f"  Performed: {action}" + (f' "{value}"' if value else ""))
+        self.print_state()
+
+    def undo(self):
+        if not self.undo_stack:
+            print("  Nothing to undo")
+            return
+        entry = self.undo_stack.pop()
+        self.redo_stack.append(entry)
+        print(f"  Undid: {entry['action']}")
+        self.print_state()
+
+    def redo(self):
+        if not self.redo_stack:
+            print("  Nothing to redo")
+            return
+        entry = self.redo_stack.pop()
+        self.undo_stack.append(entry)
+        print(f"  Redid: {entry['action']}")
+        self.print_state()
+
+    def print_state(self):
+        undo_actions = [e['action'] for e in self.undo_stack]
+        redo_actions = [e['action'] for e in self.redo_stack]
+        print(f"  Undo: {undo_actions}")
+        print(f"  Redo: {redo_actions}\n")
+
+editor = TextEditor()
+editor.perform_action('type', 'Hello')
+editor.perform_action('bold')
+editor.perform_action('color', 'red')
+editor.undo()
+editor.undo()
+editor.redo()
+editor.perform_action('type', 'World')</code></pre>
+
+        <p><strong>Java Implementation</strong></p>
+        <pre><code>import java.util.ArrayList;
+import java.util.List;
+import java.util.HashMap;
+
+class TextEditor {
+    private List&lt;HashMap&lt;String, Object&gt;&gt; undoStack = new ArrayList&lt;&gt;();
+    private List&lt;HashMap&lt;String, Object&gt;&gt; redoStack = new ArrayList&lt;&gt;();
+
+    public void performAction(String action, String value) {
+        HashMap&lt;String, Object&gt; entry = new HashMap&lt;&gt;();
+        entry.put("action", action);
+        entry.put("value", value);
+        undoStack.add(entry);
+        redoStack.clear();
+        System.out.println("  Performed: " + action + (value != null ? " \"" + value + "\"" : ""));
+        printState();
+    }
+
+    public void undo() {
+        if (undoStack.isEmpty()) { System.out.println("  Nothing to undo"); return; }
+        HashMap&lt;String, Object&gt; entry = undoStack.remove(undoStack.size() - 1);
+        redoStack.add(entry);
+        System.out.println("  Undid: " + entry.get("action"));
+        printState();
+    }
+
+    public void redo() {
+        if (redoStack.isEmpty()) { System.out.println("  Nothing to redo"); return; }
+        HashMap&lt;String, Object&gt; entry = redoStack.remove(redoStack.size() - 1);
+        undoStack.add(entry);
+        System.out.println("  Redid: " + entry.get("action"));
+        printState();
+    }
+
+    public void printState() {
+        List&lt;String&gt; undoActions = new ArrayList&lt;&gt;();
+        for (var e : undoStack) undoActions.add((String) e.get("action"));
+        List&lt;String&gt; redoActions = new ArrayList&lt;&gt;();
+        for (var e : redoStack) redoActions.add((String) e.get("action"));
+        System.out.println("  Undo: " + undoActions);
+        System.out.println("  Redo: " + redoActions + "\n");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        TextEditor editor = new TextEditor();
+        editor.performAction("type", "Hello");
+        editor.performAction("bold", null);
+        editor.performAction("color", "red");
+        editor.undo();
+        editor.undo();
+        editor.redo();
+        editor.performAction("type", "World");
+    }
+}</code></pre>
+    </div>
+</details>
 
 <?php include __DIR__ . '/../includes/prev-next-nav.php'; ?>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>
