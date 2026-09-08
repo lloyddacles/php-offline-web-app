@@ -133,124 +133,60 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // === Syntax Highlighting ===
+    // === Syntax Highlighting (Simple & Robust) ===
 
-    // Keywords and constants (cached at module scope)
-    var phpKeywords = [
-        'abstract', 'and', 'array', 'as', 'break', 'callable', 'case', 'catch',
-        'class', 'clone', 'const', 'continue', 'declare', 'default', 'die', 'do',
-        'echo', 'else', 'elseif', 'empty', 'enddeclare', 'endfor', 'endforeach',
-        'endif', 'endswitch', 'endwhile', 'eval', 'exit', 'extends', 'final',
-        'finally', 'fn', 'for', 'foreach', 'function', 'global', 'goto',
-        'if', 'implements', 'include', 'include_once', 'instanceof', 'insteadof',
-        'interface', 'isset', 'list', 'match', 'namespace', 'new', 'or', 'print',
-        'private', 'protected', 'public', 'readonly', 'require', 'require_once',
-        'return', 'static', 'switch', 'throw', 'trait', 'try', 'unset', 'use',
-        'var', 'while', 'xor', 'yield', 'yield_from', 'enum'
-    ];
-    var phpConstants = ['true', 'false', 'null', 'TRUE', 'FALSE', 'NULL', '__LINE__', '__FILE__', '__DIR__', '__FUNCTION__', '__CLASS__', '__TRAIT__', '__METHOD__', '__NAMESPACE__'];
-    var pyKeywords = [
-        'False', 'None', 'True', 'and', 'as', 'assert', 'async', 'await',
-        'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except',
-        'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is',
-        'lambda', 'nonlocal', 'not', 'or', 'pass', 'raise', 'return',
-        'try', 'while', 'with', 'yield'
-    ];
-    var pyBuiltins = [
-        'print', 'len', 'range', 'int', 'float', 'str', 'list', 'dict',
-        'set', 'tuple', 'input', 'open', 'type', 'isinstance', 'enumerate',
-        'zip', 'map', 'filter', 'sorted', 'sum', 'min', 'max', 'abs',
-        'round', 'format', 'super', 'property', 'staticmethod', 'classmethod'
-    ];
-    var javaKeywords = [
-        'abstract', 'assert', 'boolean', 'break', 'byte', 'case', 'catch',
-        'char', 'class', 'const', 'continue', 'default', 'do', 'double',
-        'else', 'enum', 'extends', 'final', 'finally', 'float', 'for',
-        'goto', 'if', 'implements', 'import', 'instanceof', 'int',
-        'interface', 'long', 'native', 'new', 'package', 'private',
-        'protected', 'public', 'return', 'short', 'static', 'strictfp',
-        'super', 'switch', 'synchronized', 'this', 'throw', 'throws',
-        'transient', 'try', 'void', 'volatile', 'while', 'var', 'record',
-        'sealed', 'permits', 'yield'
-    ];
-    var javaTypes = ['String', 'System', 'Scanner', 'Math', 'Integer', 'Double', 'Boolean', 'ArrayList', 'HashMap', 'Object'];
+    // Simple keyword lists
+    var keywords = {
+        php: ['echo','if','else','elseif','while','for','foreach','function','class','return','true','false','null','new','public','private','protected','static','array','extends','implements','interface','try','catch','throw','finally','switch','case','break','continue','default','include','require','include_once','require_once','use','namespace','as','abstract','final','const','var','global','isset','unset','empty','print','die','exit','list','match','fn','yield','enum','readonly','trait','instanceof','insteadof','callable','goto','declare','enddeclare','endfor','endforeach','endif','endswitch','endwhile','eval','yield_from','and','or','xor','NOT','TRUE','FALSE','NULL'],
+        python: ['def','class','return','if','elif','else','for','while','import','from','as','try','except','finally','raise','with','yield','lambda','pass','break','continue','and','or','not','in','is','True','False','None','del','global','nonlocal','assert','async','await','print','len','range','int','float','str','list','dict','set','tuple','input','open','type','isinstance','enumerate','zip','map','filter','sorted','sum','min','max','abs','round','super','property','staticmethod','classmethod'],
+        java: ['public','private','protected','static','void','int','double','float','boolean','char','String','class','interface','extends','implements','new','return','if','else','for','while','do','switch','case','break','continue','try','catch','finally','throw','throws','this','super','abstract','final','enum','instanceof','import','package','true','false','null','System','Scanner','Math','ArrayList','HashMap','Object','Integer','Double','Boolean','long','short','byte','native','synchronized','transient','volatile','strictfp','record','sealed','permits','yield','var','assert']
+    };
 
-    // Cached regexes
-    var rePhpKw = new RegExp('\\b(' + phpKeywords.join('|') + ')\\b', 'g');
-    var rePhpConst = new RegExp('\\b(' + phpConstants.join('|') + ')\\b', 'g');
-    var rePyKw = new RegExp('\\b(' + pyKeywords.join('|') + ')\\b', 'g');
-    var rePyBuiltins = new RegExp('\\b(' + pyBuiltins.join('|') + ')\\b', 'g');
-    var reJavaKw = new RegExp('\\b(' + javaKeywords.join('|') + ')\\b', 'g');
-    var reJavaTypes = new RegExp('\\b(' + javaTypes.join('|') + ')\\b', 'g');
-    var reNumber = /\b(\d+\.?\d*)\b/g;
-    var reNumberJava = /\b(\d+\.?\d*[fFlL]?)\b/g;
-
-    function highlightPHP(code) {
-        // Remove comments first
-        code = code.replace(/\/\*[\s\S]*?\*\//g, '');
-        code = code.replace(/\/\/[^\n]*/g, '');
-        code = code.replace(/#[^{][^\n]*/g, '');
-
-        var escaped = code
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;');
-
-        escaped = escaped.replace(/(&lt;&lt;&lt;['"]?\w+['"]?[\s\S]*?\w+;)/g, '<span class="code-string">$1</span>');
-        escaped = escaped.replace(/("(?:[^"\\]|\\.)*")/g, '<span class="code-string">$1</span>');
-        escaped = escaped.replace(/('(?:[^'\\]|\\.)*')/g, '<span class="code-string">$1</span>');
-        escaped = escaped.replace(/(&lt;\?php|\?&gt;)/g, '<span class="code-php-tag">$1</span>');
-        escaped = escaped.replace(/(\$[a-zA-Z_]\w*)/g, '<span class="code-variable">$1</span>');
-        escaped = escaped.replace(rePhpKw, '<span class="code-keyword">$1</span>');
-        escaped = escaped.replace(rePhpConst, '<span class="code-constant">$1</span>');
-        escaped = escaped.replace(reNumber, '<span class="code-number">$1</span>');
-
-        return escaped;
+    function escapeHtml(text) {
+        return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
 
-    function highlightPython(code) {
-        // Remove comments first
-        code = code.replace(/"""[\s\S]*?"""/g, '');
-        code = code.replace(/'''[\s\S]*?'''/g, '');
-        code = code.replace(/#[^\n]*/g, '');
+    function highlightCode(code, lang) {
+        // Remove comments
+        if (lang === 'php' || lang === 'java') {
+            code = code.replace(/\/\/[^\n]*/g, '');
+            code = code.replace(/\/\*[\s\S]*?\*\//g, '');
+        }
+        if (lang === 'php') {
+            code = code.replace(/#[^{][^\n]*/g, '');
+        }
+        if (lang === 'python') {
+            code = code.replace(/#[^\n]*/g, '');
+            code = code.replace(/"""[\s\S]*?"""/g, '');
+        }
 
-        var escaped = code
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;');
+        // Escape HTML
+        var html = escapeHtml(code);
 
-        escaped = escaped.replace(/(f?"(?:[^"\\]|\\.)*"|f?'(?:[^'\\]|\\.)*')/g, '<span class="code-string">$1</span>');
-        escaped = escaped.replace(/(@\w+)/g, '<span class="code-keyword">$1</span>');
-        escaped = escaped.replace(rePyKw, '<span class="code-keyword">$1</span>');
-        escaped = escaped.replace(rePyBuiltins, '<span class="code-constant">$1</span>');
-        escaped = escaped.replace(reNumber, '<span class="code-number">$1</span>');
+        // Highlight strings first (replace with placeholders)
+        var strings = [];
+        html = html.replace(/("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')/g, function(match) {
+            strings.push(match);
+            return '\x00STR' + (strings.length - 1) + '\x00';
+        });
 
-        return escaped;
-    }
+        // Highlight keywords
+        var kwList = keywords[lang] || keywords.php;
+        var kwRegex = new RegExp('\\b(' + kwList.join('|') + ')\\b', 'g');
+        html = html.replace(kwRegex, '<span class="code-keyword">$1</span>');
 
-    function highlightJava(code) {
-        // Remove comments first
-        code = code.replace(/\/\*[\s\S]*?\*\//g, '');
-        code = code.replace(/\/\/[^\n]*/g, '');
+        // Highlight numbers
+        html = html.replace(/\b(\d+\.?\d*)\b/g, '<span class="code-number">$1</span>');
 
-        var escaped = code
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;');
+        // Restore strings with highlighting
+        for (var i = 0; i < strings.length; i++) {
+            html = html.replace('\x00STR' + i + '\x00', '<span class="code-string">' + strings[i] + '</span>');
+        }
 
-        escaped = escaped.replace(/("(?:[^"\\]|\\.)*")/g, '<span class="code-string">$1</span>');
-        escaped = escaped.replace(/('(?:[^'\\]|\\.)*')/g, '<span class="code-string">$1</span>');
-        escaped = escaped.replace(/(@\w+)/g, '<span class="code-keyword">$1</span>');
-        escaped = escaped.replace(reJavaKw, '<span class="code-keyword">$1</span>');
-        escaped = escaped.replace(reJavaTypes, '<span class="code-constant">$1</span>');
-        escaped = escaped.replace(/\b(true|false|null)\b/g, '<span class="code-constant">$1</span>');
-        escaped = escaped.replace(reNumberJava, '<span class="code-number">$1</span>');
-
-        return escaped;
+        return html;
     }
 
     // Apply highlighting to all <pre><code> blocks
-    // Store raw code for Run Code feature
     document.querySelectorAll('pre code').forEach(function (block) {
         var raw = block.textContent;
         block.setAttribute('data-raw-code', raw);
@@ -263,12 +199,8 @@ document.addEventListener('DOMContentLoaded', function () {
             else if (cls.indexOf('language-php') !== -1) lang = 'php';
             else lang = 'php';
         }
-        if (lang === 'python') {
-            block.innerHTML = highlightPython(raw);
-        } else if (lang === 'java') {
-            block.innerHTML = highlightJava(raw);
-        } else if (lang === 'php') {
-            block.innerHTML = highlightPHP(raw);
+        if (lang !== 'sql') {
+            block.innerHTML = highlightCode(raw, lang);
         }
     });
 
