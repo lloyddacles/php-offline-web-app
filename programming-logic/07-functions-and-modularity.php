@@ -1,5 +1,5 @@
 <?php $pageTitle = 'Functions & Modularity'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
-<?php $num = 7; $prevNext = getPrevNextLesson($num, 'programming-logic'); ?>
+<?php $num = 7; $sectionDir = 'programming-logic'; $prevNext = getPrevNextLesson($num, $sectionDir); ?>
 
 <div class="lesson-header">
     <span class="lesson-number">Lesson <?= $num ?></span>

@@ -1,5 +1,5 @@
 <?php $pageTitle = 'PHP Operators'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
-<?php $num = 8; $prevNext = getPrevNextLesson($num, 'lessons'); ?>
+<?php $num = 8; $sectionDir = 'lessons'; $prevNext = getPrevNextLesson($num, $sectionDir); ?>
 
 <div class="lesson-header">
     <span class="lesson-number">Lesson <?= $num ?></span>

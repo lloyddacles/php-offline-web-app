@@ -1,5 +1,5 @@
 <?php $pageTitle = 'PHP Sessions'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
-<?php $num = 15; $prevNext = getPrevNextLesson($num, 'lessons'); ?>
+<?php $num = 15; $sectionDir = 'lessons'; $prevNext = getPrevNextLesson($num, $sectionDir); ?>
 
 <div class="lesson-header">
     <span class="lesson-number">Lesson <?= $num ?></span>

@@ -161,6 +161,101 @@ document.addEventListener('DOMContentLoaded', function () {
         var textAll = dashboardProgress.querySelector('.progress-overall .progress-text');
         if (barAll) barAll.style.width = pctAll + '%';
         if (textAll) textAll.textContent = completedAll + ' / ' + totalAll + ' (' + pctAll + '%)';
+
+        // Update quiz stats
+        var quizResults = getQuizResults();
+        var quizTaken = Object.keys(quizResults).length;
+        var quizPerfect = 0;
+        for (var lid in quizResults) {
+            if (quizResults[lid].score === quizResults[lid].total) quizPerfect++;
+        }
+        var quizTakenEl = dashboardProgress.querySelector('.quiz-stat-taken');
+        var quizPerfectEl = dashboardProgress.querySelector('.quiz-stat-perfect');
+        if (quizTakenEl) quizTakenEl.textContent = quizTaken;
+        if (quizPerfectEl) quizPerfectEl.textContent = quizPerfect;
+    }
+
+    // === Quiz System ===
+    var QUIZ_KEY = 'ldtechlab-quizzes';
+
+    function getQuizResults() {
+        try {
+            return JSON.parse(localStorage.getItem(QUIZ_KEY)) || {};
+        } catch (e) {
+            return {};
+        }
+    }
+
+    function saveQuizResult(lessonId, score, total) {
+        var results = getQuizResults();
+        results[lessonId] = { score: score, total: total, date: new Date().toISOString() };
+        localStorage.setItem(QUIZ_KEY, JSON.stringify(results));
+    }
+
+    function getQuizResult(lessonId) {
+        var results = getQuizResults();
+        return results[lessonId] || null;
+    }
+
+    // Quiz submission
+    var quizSection = document.getElementById('quizSection');
+    var quizSubmitBtn = document.getElementById('quizSubmitBtn');
+    var quizResult = document.getElementById('quizResult');
+
+    if (quizSection && quizSubmitBtn && quizResult) {
+        var lessonId = quizSection.getAttribute('data-lesson-id');
+
+        // Check if quiz was already taken
+        var existingResult = getQuizResult(lessonId);
+        if (existingResult) {
+            quizResult.style.display = 'block';
+            quizResult.className = 'quiz-result ' + (existingResult.score === existingResult.total ? 'quiz-pass' : 'quiz-fail');
+            quizResult.innerHTML = '<strong>Previous Result:</strong> ' + existingResult.score + ' / ' + existingResult.total + ' (' + Math.round((existingResult.score / existingResult.total) * 100) + '%)';
+        }
+
+        quizSubmitBtn.addEventListener('click', function () {
+            var questions = quizSection.querySelectorAll('.quiz-question');
+            var score = 0;
+            var total = questions.length;
+            var allAnswered = true;
+
+            questions.forEach(function (q, idx) {
+                var selected = q.querySelector('input[name="q' + idx + '"]:checked');
+                if (!selected) {
+                    allAnswered = false;
+                } else {
+                    // Get correct answer from data attribute
+                    var correctAnswer = q.getAttribute('data-correct');
+                    if (selected.value === correctAnswer) {
+                        score++;
+                        q.classList.add('quiz-correct');
+                    } else {
+                        q.classList.add('quiz-wrong');
+                    }
+                }
+            });
+
+            if (!allAnswered) {
+                quizResult.style.display = 'block';
+                quizResult.className = 'quiz-result quiz-warning';
+                quizResult.innerHTML = 'Please answer all questions before submitting.';
+                return;
+            }
+
+            // Save result
+            saveQuizResult(lessonId, score, total);
+
+            // Show result
+            var pct = Math.round((score / total) * 100);
+            var passed = score === total;
+            quizResult.style.display = 'block';
+            quizResult.className = 'quiz-result ' + (passed ? 'quiz-pass' : 'quiz-fail');
+            quizResult.innerHTML = '<strong>Quiz Complete!</strong> Score: ' + score + ' / ' + total + ' (' + pct + '%)' + (passed ? ' Perfect!' : ' Review the highlighted questions.');
+
+            // Disable submit
+            quizSubmitBtn.disabled = true;
+            quizSubmitBtn.textContent = 'Quiz Submitted';
+        });
     }
 
     // === Sidebar Toggle ===

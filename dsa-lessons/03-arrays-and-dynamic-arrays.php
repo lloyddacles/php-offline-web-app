@@ -1,5 +1,5 @@
 <?php $pageTitle = 'Arrays and Dynamic Arrays'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
-<?php $num = 3; $prevNext = getPrevNextLesson($num, 'dsa-lessons'); ?>
+<?php $num = 3; $sectionDir = 'dsa-lessons'; $prevNext = getPrevNextLesson($num, $sectionDir); ?>
 
 <div class="lesson-header">
     <span class="lesson-number">Lesson <?= $num ?></span>

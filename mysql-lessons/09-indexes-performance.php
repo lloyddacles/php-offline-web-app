@@ -1,5 +1,5 @@
 <?php $pageTitle = 'Indexes and Performance'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
-<?php $num = 9; $prevNext = getPrevNextLesson($num, 'mysql-lessons'); ?>
+<?php $num = 9; $sectionDir = 'mysql-lessons'; $prevNext = getPrevNextLesson($num, $sectionDir); ?>
 
 <div class="lesson-header">
     <span class="lesson-number">Lesson <?= $num ?></span>

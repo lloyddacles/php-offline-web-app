@@ -1,5 +1,5 @@
 <?php $pageTitle = 'Binary Search Trees (BSTs)'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
-<?php $num = 11; $prevNext = getPrevNextLesson($num, 'dsa-lessons'); ?>
+<?php $num = 11; $sectionDir = 'dsa-lessons'; $prevNext = getPrevNextLesson($num, $sectionDir); ?>
 
 <div class="lesson-header">
     <span class="lesson-number">Lesson <?= $num ?></span>

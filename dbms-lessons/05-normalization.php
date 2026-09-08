@@ -1,4 +1,4 @@
-<?php $pageTitle = 'Database Normalization'; require_once __DIR__ . '/../includes/functions.php'; $num = 5; $prevNext = getPrevNextLesson($num, 'dbms-lessons'); require_once __DIR__ . '/../includes/header.php'; ?>
+<?php $pageTitle = 'Database Normalization'; require_once __DIR__ . '/../includes/functions.php'; $num = 5; $sectionDir = 'dbms-lessons'; $prevNext = getPrevNextLesson($num, $sectionDir); require_once __DIR__ . '/../includes/header.php'; ?>
 
 <div class="lesson-header">
     <span class="lesson-number">Lesson <?= $num ?></span>

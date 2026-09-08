@@ -56,6 +56,10 @@ $totalLessons = array_sum($counts);
         </div>
         <span class="progress-text">0 / <?= $totalLessons ?> (0%)</span>
     </div>
+    <div class="progress-stats" style="display: flex; gap: 24px; margin: 12px 0; font-size: 0.9em; color: var(--text-secondary);">
+        <span>Quizzes Taken: <strong class="quiz-stat-taken">0</strong></span>
+        <span>Perfect Scores: <strong class="quiz-stat-perfect">0</strong></span>
+    </div>
     <div class="progress-sections">
         <div class="progress-section-item" data-section="programming-logic">
             <span>Prog. Logic</span>

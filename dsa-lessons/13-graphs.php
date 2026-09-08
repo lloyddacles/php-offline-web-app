@@ -1,5 +1,5 @@
 <?php $pageTitle = 'Graphs and Graph Traversal Algorithms'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
-<?php $num = 13; $prevNext = getPrevNextLesson($num, 'dsa-lessons'); ?>
+<?php $num = 13; $sectionDir = 'dsa-lessons'; $prevNext = getPrevNextLesson($num, $sectionDir); ?>
 
 <div class="lesson-header">
     <span class="lesson-number">Lesson <?= $num ?></span>

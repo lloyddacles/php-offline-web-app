@@ -1,5 +1,5 @@
 <?php $pageTitle = 'PHP Data Types'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
-<?php $num = 5; $prevNext = getPrevNextLesson($num, 'lessons'); ?>
+<?php $num = 5; $sectionDir = 'lessons'; $prevNext = getPrevNextLesson($num, $sectionDir); ?>
 
 <div class="lesson-header">
     <span class="lesson-number">Lesson <?= $num ?></span>

@@ -1,5 +1,5 @@
 <?php $pageTitle = 'Dictionaries & Sets'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
-<?php $num = 8; $prevNext = getPrevNextLesson($num, 'python-lessons'); ?>
+<?php $num = 8; $sectionDir = 'python-lessons'; $prevNext = getPrevNextLesson($num, $sectionDir); ?>
 
 <div class="lesson-header">
     <span class="lesson-number">Lesson <?= $num ?></span>

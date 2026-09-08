@@ -1,5 +1,5 @@
 <?php $pageTitle = 'Arrays & Strings'; require_once __DIR__ . '/../includes/functions.php'; require_once __DIR__ . '/../includes/header.php'; ?>
-<?php $num = 7; $prevNext = getPrevNextLesson($num, 'java-lessons'); ?>
+<?php $num = 7; $sectionDir = 'java-lessons'; $prevNext = getPrevNextLesson($num, $sectionDir); ?>
 
 <div class="lesson-header">
     <span class="lesson-number">Lesson <?= $num ?></span>
