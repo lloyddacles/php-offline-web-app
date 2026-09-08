@@ -10,6 +10,14 @@ require_once __DIR__ . '/../includes/header.php';
     <p class="lesson-desc">Learn Python from scratch with interactive, hands-on code examples. Run code directly in your browser!</p>
 </div>
 
+<div class="section-progress" data-section="python-lessons" data-total="12">
+    <span>Progress:</span>
+    <div class="progress-bar-container">
+        <div class="progress-bar" style="width: 0%"></div>
+    </div>
+    <span class="progress-text">0 / 12</span>
+</div>
+
 <div class="info-box note">
     <div class="box-title">About These Lessons</div>
     <p class="mb-0">These lessons cover Python fundamentals through interactive examples. Each lesson includes a live sandbox where you can edit and run Python code directly in your browser. No installation required!</p>

@@ -10,6 +10,14 @@ require_once __DIR__ . '/../includes/header.php';
     <p class="lesson-desc">Learn database theory, design, and management concepts from scratch.</p>
 </div>
 
+<div class="section-progress" data-section="dbms-lessons" data-total="10">
+    <span>Progress:</span>
+    <div class="progress-bar-container">
+        <div class="progress-bar" style="width: 0%"></div>
+    </div>
+    <span class="progress-text">0 / 10</span>
+</div>
+
 <div class="info-box note">
     <div class="box-title">About These Lessons</div>
     <p class="mb-0">These lessons cover the theoretical foundations of database management systems, including ER diagrams, normalization, transactions, and security. Pair these with the MySQL Lessons for hands-on SQL practice.</p>

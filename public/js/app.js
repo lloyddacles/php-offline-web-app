@@ -23,6 +23,146 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // === Progress Tracking ===
+    var PROGRESS_KEY = 'ldtechlab-progress';
+
+    function getCompletedLessons() {
+        try {
+            return JSON.parse(localStorage.getItem(PROGRESS_KEY)) || [];
+        } catch (e) {
+            return [];
+        }
+    }
+
+    function saveCompletedLessons(list) {
+        localStorage.setItem(PROGRESS_KEY, JSON.stringify(list));
+    }
+
+    function isLessonCompleted(lessonId) {
+        return getCompletedLessons().indexOf(lessonId) !== -1;
+    }
+
+    function toggleLessonComplete(lessonId) {
+        var list = getCompletedLessons();
+        var idx = list.indexOf(lessonId);
+        if (idx === -1) {
+            list.push(lessonId);
+        } else {
+            list.splice(idx, 1);
+        }
+        saveCompletedLessons(list);
+        return idx === -1;
+    }
+
+    function getProgressBySection() {
+        var sections = {
+            'programming-logic': 12,
+            'lessons': 16,
+            'python-lessons': 12,
+            'java-lessons': 12,
+            'mysql-lessons': 10,
+            'dbms-lessons': 10,
+            'dsa-lessons': 18
+        };
+        var completed = getCompletedLessons();
+        var result = {};
+        for (var sec in sections) {
+            var count = 0;
+            for (var i = 1; i <= sections[sec]; i++) {
+                if (completed.indexOf(sec + '/' + i) !== -1) count++;
+            }
+            result[sec] = { completed: count, total: sections[sec] };
+        }
+        return result;
+    }
+
+    // "Mark as Complete" button on lesson pages
+    var completeBtn = document.getElementById('markCompleteBtn');
+    if (completeBtn) {
+        var lessonId = completeBtn.getAttribute('data-lesson-id');
+        if (lessonId) {
+            // Set initial state
+            if (isLessonCompleted(lessonId)) {
+                completeBtn.classList.add('completed');
+                completeBtn.textContent = '✓ Completed';
+            }
+
+            completeBtn.addEventListener('click', function () {
+                var nowComplete = toggleLessonComplete(lessonId);
+                if (nowComplete) {
+                    completeBtn.classList.add('completed');
+                    completeBtn.textContent = '✓ Completed';
+                } else {
+                    completeBtn.classList.remove('completed');
+                    completeBtn.textContent = 'Mark as Complete';
+                }
+            });
+        }
+    }
+
+    // Update sidebar checkmarks
+    document.querySelectorAll('[data-lesson-link]').forEach(function (link) {
+        var lid = link.getAttribute('data-lesson-link');
+        if (isLessonCompleted(lid)) {
+            link.classList.add('completed-lesson');
+        }
+    });
+
+    // Update section progress bars
+    document.querySelectorAll('.section-progress').forEach(function (container) {
+        var section = container.getAttribute('data-section');
+        var total = parseInt(container.getAttribute('data-total')) || 0;
+        var completed = getCompletedLessons();
+        var count = 0;
+        for (var i = 1; i <= total; i++) {
+            if (completed.indexOf(section + '/' + i) !== -1) count++;
+        }
+        var pct = total > 0 ? Math.round((count / total) * 100) : 0;
+        var bar = container.querySelector('.progress-bar');
+        var text = container.querySelector('.progress-text');
+        if (bar) bar.style.width = pct + '%';
+        if (text) text.textContent = count + ' / ' + total;
+    });
+
+    // Update dashboard progress
+    var dashboardProgress = document.getElementById('dashboardProgress');
+    if (dashboardProgress) {
+        var sections = {
+            'programming-logic': 12,
+            'lessons': 16,
+            'python-lessons': 12,
+            'java-lessons': 12,
+            'mysql-lessons': 10,
+            'dbms-lessons': 10,
+            'dsa-lessons': 18
+        };
+        var completed = getCompletedLessons();
+        var totalAll = 0;
+        var completedAll = 0;
+
+        for (var sec in sections) {
+            var total = sections[sec];
+            var count = 0;
+            for (var i = 1; i <= total; i++) {
+                if (completed.indexOf(sec + '/' + i) !== -1) count++;
+            }
+            totalAll += total;
+            completedAll += count;
+
+            var item = dashboardProgress.querySelector('[data-section="' + sec + '"]');
+            if (item) {
+                var textEl = item.querySelector('.progress-text');
+                if (textEl) textEl.textContent = count + '/' + total;
+            }
+        }
+
+        var pctAll = totalAll > 0 ? Math.round((completedAll / totalAll) * 100) : 0;
+        var barAll = dashboardProgress.querySelector('.progress-bar');
+        var textAll = dashboardProgress.querySelector('.progress-overall .progress-text');
+        if (barAll) barAll.style.width = pctAll + '%';
+        if (textAll) textAll.textContent = completedAll + ' / ' + totalAll + ' (' + pctAll + '%)';
+    }
+
     // === Sidebar Toggle ===
     var sidebar = document.getElementById('sidebar');
     var sidebarToggle = document.getElementById('sidebarToggle');

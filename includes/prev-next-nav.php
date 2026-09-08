@@ -1,10 +1,19 @@
 <?php
 /**
  * Previous / Next Navigation partial
- * Expects: $prevNext = getPrevNextLesson($num, $sectionDir)
+ * Expects: $prevNext = getPrevNextLesson($num, $sectionDir), $sectionDir, $num
  */
 
-if (!empty($prevNext['prev']) || !empty($prevNext['next'])): ?>
+$lessonId = $sectionDir . '/' . $num;
+?>
+
+<div class="lesson-complete-section">
+    <button id="markCompleteBtn" class="mark-complete-btn" data-lesson-id="<?= htmlspecialchars($lessonId) ?>">
+        Mark as Complete
+    </button>
+</div>
+
+<?php if (!empty($prevNext['prev']) || !empty($prevNext['next'])): ?>
 <div class="lesson-nav">
     <?php if (!empty($prevNext['prev'])): ?>
         <a href="<?= lessonUrl($prevNext['prev']['num'], $prevNext['prev']['slug'], $prevNext['prev']['dir']) ?>">

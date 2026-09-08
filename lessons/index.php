@@ -10,6 +10,14 @@ require_once __DIR__ . '/../includes/header.php';
     <p class="lesson-desc">Follow these lessons in order for the best learning experience.</p>
 </div>
 
+<div class="section-progress" data-section="lessons" data-total="16">
+    <span>Progress:</span>
+    <div class="progress-bar-container">
+        <div class="progress-bar" style="width: 0%"></div>
+    </div>
+    <span class="progress-text">0 / 16</span>
+</div>
+
 <?php if (empty($lessons)): ?>
     <div class="info-box note">
         <div class="box-title">No Lessons Found</div>

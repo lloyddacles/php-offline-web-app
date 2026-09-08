@@ -47,6 +47,47 @@ $totalLessons = array_sum($counts);
     </div>
 </div>
 
+<!-- Progress Card -->
+<div class="progress-card" id="dashboardProgress">
+    <h3>Your Learning Progress</h3>
+    <div class="progress-overall">
+        <div class="progress-bar-container">
+            <div class="progress-bar" style="width: 0%"></div>
+        </div>
+        <span class="progress-text">0 / <?= $totalLessons ?> (0%)</span>
+    </div>
+    <div class="progress-sections">
+        <div class="progress-section-item" data-section="programming-logic">
+            <span>Prog. Logic</span>
+            <span class="progress-text">0/12</span>
+        </div>
+        <div class="progress-section-item" data-section="lessons">
+            <span>PHP</span>
+            <span class="progress-text">0/16</span>
+        </div>
+        <div class="progress-section-item" data-section="python-lessons">
+            <span>Python</span>
+            <span class="progress-text">0/12</span>
+        </div>
+        <div class="progress-section-item" data-section="java-lessons">
+            <span>Java</span>
+            <span class="progress-text">0/12</span>
+        </div>
+        <div class="progress-section-item" data-section="dsa-lessons">
+            <span>DSA</span>
+            <span class="progress-text">0/18</span>
+        </div>
+        <div class="progress-section-item" data-section="dbms-lessons">
+            <span>DBMS</span>
+            <span class="progress-text">0/10</span>
+        </div>
+        <div class="progress-section-item" data-section="mysql-lessons">
+            <span>MySQL</span>
+            <span class="progress-text">0/10</span>
+        </div>
+    </div>
+</div>
+
 <!-- Teaching Tools -->
 <section class="dashboard-section">
     <h2 class="dashboard-section-title">Interactive Demos</h2>

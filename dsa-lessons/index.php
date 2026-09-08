@@ -10,6 +10,14 @@ $lessons = getLessons('dsa-lessons');
     <p class="lesson-desc">Master fundamental DSA with hands-on PHP implementations. 18 lessons from basics to a complete course project.</p>
 </div>
 
+<div class="section-progress" data-section="dsa-lessons" data-total="18">
+    <span>Progress:</span>
+    <div class="progress-bar-container">
+        <div class="progress-bar" style="width: 0%"></div>
+    </div>
+    <span class="progress-text">0 / 18</span>
+</div>
+
 <div class="lessons-grid">
     <?php foreach ($lessons as $lesson): ?>
         <a href="<?= lessonUrl($lesson['num'], $lesson['slug'], 'dsa-lessons') ?>" class="lesson-card">
